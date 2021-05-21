@@ -4,7 +4,7 @@
 App to create, organize and plan your own recipes
 
 ## Prerequesites
-* Pyhton 3.8.5 or higher
+* Python 3.8.5 or higher
 * Qt 5.12.8 or higher
 
 ### Python dependencies
