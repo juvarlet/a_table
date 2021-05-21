@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="file:///../UI/">
+    <file>images/benchmark/list_frame.png</file>
+    <file>images/icon_chef.png</file>
+  </qresource>
+</RCC>
