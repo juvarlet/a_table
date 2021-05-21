@@ -10,6 +10,9 @@ App to create, organize and plan your own recipes
 ### Python dependencies
 - [ ] list all additional python libraries
 
+## Contributing
+https://github.com/gitextensions/gitextensions/wiki/How-To:-run-Git-Extensions-on-Linux
+
 ## Installation
 * Clone the entire repository to any local folder
 * Launch main.py
