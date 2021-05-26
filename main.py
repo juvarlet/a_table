@@ -1402,13 +1402,30 @@ class MainGUI(QWidget):
     def on_delete_recipe(self):
         #TODO
         #check if a recipe is selected
+        recipe_name = self.lW_recipe.currentItem().text()
+        recipe_object = self.recipe_db.get_recipe_object(recipe_name)
+        if recipe_name != '':
         #confirmation window
+            confirm_dialog = QMessageBox(self)
+            confirm_dialog.setWindowTitle('Attention')
+            confirm_dialog.setWindowModality(Qt.WindowModal)
+            confirm_dialog.setText('Voulez-vous vraiment supprimer la recette "%s" ?' % recipe_name)
+            confirm_dialog.setIcon(QMessageBox.Warning)
+            yesButton = confirm_dialog.addButton("Oui", QMessageBox.YesRole)
+            noButton = confirm_dialog.addButton("Non", QMessageBox.NoRole)
+            confirm_dialog.setDefaultButton(noButton)
+            
+            #confirm_dialog.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            # confirm_dialog.setDetailedText(text)
+            answer = confirm_dialog.exec_()
+            if not answer:
+                print('removing')
         #update recipe_db
         #update qlw
         #backup file
         #update recipe sheet (fully rewrite)
         #info message recipe correctly removed
-        print('removing recipe')
+        print(recipe_name)
     
     def on_cancel_recipe(self):
         # print('cancel recipe')
