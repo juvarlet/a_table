@@ -148,6 +148,8 @@ class MainGUI(QWidget):
         self.pB_modif_2 = self.pW.pB_modif_2
         self.pB_new_recipe: QPushButton
         self.pB_new_recipe = self.pW.pB_new_recipe
+        self.pB_delete: QPushButton
+        self.pB_delete = self.pW.pB_delete
         self.label_newedit: QLabel
         self.label_newedit = self.pW.label_newedit
         self.pB_photo: QPushButton
@@ -384,6 +386,7 @@ class MainGUI(QWidget):
         self.pB_ok_2.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_modif_2.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_new_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_new_recipe.png'))
+        self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
         self.pB_photo.setIcon(QIcon(self.dirname + '/UI/images/icon_photo.png'))
 
     def main(self):
@@ -407,6 +410,7 @@ class MainGUI(QWidget):
         self.pB_print_2.clicked.connect(self.on_print_recipe)
         self.pB_new_recipe.clicked.connect(self.on_new_recipe)
         self.pB_modif_2.clicked.connect(self.on_edit_recipe)
+        self.pB_delete.clicked.connect(self.on_delete_recipe)
         self.pB_ok_2.clicked.connect(self.on_confirm_recipe)
         self.pB_cancel_2.clicked.connect(self.on_cancel_recipe)
         self.pB_add.clicked.connect(self.on_add_ingredient)
@@ -1385,7 +1389,7 @@ class MainGUI(QWidget):
             copy2(self.recipe_db.recipe_file, self.dirname + '/backup/recipe_backup.ods')
             #update recipe sheet (fully rewrite)
             self.recipe_db.update_recipe_file()
-            #info message recipe correctly created/updated
+            #TODO info message recipe correctly created/updated
         #reenable other tabs
         self.tW.setTabEnabled(0, True)
         self.tW.setTabEnabled(2, True)
@@ -1394,6 +1398,17 @@ class MainGUI(QWidget):
         self.pB_modif_2.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
+    
+    def on_delete_recipe(self):
+        #TODO
+        #check if a recipe is selected
+        #confirmation window
+        #update recipe_db
+        #update qlw
+        #backup file
+        #update recipe sheet (fully rewrite)
+        #info message recipe correctly removed
+        print('removing recipe')
     
     def on_cancel_recipe(self):
         # print('cancel recipe')
