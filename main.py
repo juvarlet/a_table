@@ -1421,7 +1421,8 @@ class MainGUI(QWidget):
             answer = confirm_dialog.exec_()
             if not answer:
                 print('removing %s' % recipe_name)
-        #update recipe_db
+                #update recipe_dbs
+                self.recipe_db.remove_recipe(recipe_name)
         #update qlw
         #backup file
         #update recipe sheet (fully rewrite)

@@ -36,6 +36,14 @@ class RecipeDB:
             print('! Recipe %s not in Database !' % recipe_name)
             return None
     
+    def remove_recipe(self, recipe_name):
+        if self.contains(recipe_name):
+            self.recipe_list.remove(self.get_recipe_object(recipe_name))
+            print('successfully removed from DB :')
+            print(not self.contains(recipe_name))
+        else:
+            print('%s not found in DB' % recipe_name)
+    
     def consider_history_update(self, new_history_appendix):
         for i, h in enumerate(new_history_appendix):
             if text_to_date(h[0]) > text_to_date(self.history[-1][0]):#append
