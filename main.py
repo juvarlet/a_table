@@ -1396,6 +1396,7 @@ class MainGUI(QWidget):
         self.cB_search.setEnabled(True)
         self.pB_new_recipe.setEnabled(True)
         self.pB_modif_2.setEnabled(True)
+        self.pB_delete.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
     
@@ -1419,7 +1420,7 @@ class MainGUI(QWidget):
             # confirm_dialog.setDetailedText(text)
             answer = confirm_dialog.exec_()
             if not answer:
-                print('removing')
+                print('removing %s' % recipe_name)
         #update recipe_db
         #update qlw
         #backup file
@@ -1435,6 +1436,7 @@ class MainGUI(QWidget):
         self.cB_search.setEnabled(True)
         self.pB_new_recipe.setEnabled(True)
         self.pB_modif_2.setEnabled(True)
+        self.pB_delete.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
 

@@ -1159,8 +1159,8 @@ icon-size: 40px;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>407</width>
-                <height>177</height>
+                <width>1135</width>
+                <height>599</height>
                </rect>
               </property>
               <attribute name="label">
@@ -3049,11 +3049,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>603</x>
-     <y>364</y>
+     <y>362</y>
     </hint>
     <hint type="destinationlabel">
-     <x>745</x>
-     <y>364</y>
+     <x>733</x>
+     <y>362</y>
     </hint>
    </hints>
   </connection>
@@ -3064,12 +3064,44 @@ p, li { white-space: pre-wrap; }
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>745</x>
-     <y>364</y>
+     <x>733</x>
+     <y>362</y>
     </hint>
     <hint type="destinationlabel">
      <x>603</x>
-     <y>364</y>
+     <y>362</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pB_new_recipe</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pB_delete</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1122</x>
+     <y>644</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1000</x>
+     <y>644</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pB_modif_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pB_delete</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1061</x>
+     <y>644</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1000</x>
+     <y>644</y>
     </hint>
    </hints>
   </connection>

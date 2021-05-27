@@ -871,7 +871,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page_carte, u"Carte")
         self.page_liste = QWidget()
         self.page_liste.setObjectName(u"page_liste")
-        self.page_liste.setGeometry(QRect(0, 0, 407, 177))
+        self.page_liste.setGeometry(QRect(0, 0, 1135, 599))
         self.gridLayout_21 = QGridLayout(self.page_liste)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
         self.frame_liste_courses = QFrame(self.page_liste)
@@ -1729,6 +1729,8 @@ class Ui_MainWindow(object):
         self.cB_tagtips.toggled.connect(self.cB_tagwinter.setDisabled)
         self.pB_option.toggled.connect(self.pB_option_2.setChecked)
         self.pB_option_2.toggled.connect(self.pB_option.setChecked)
+        self.pB_new_recipe.toggled.connect(self.pB_delete.setDisabled)
+        self.pB_modif_2.toggled.connect(self.pB_delete.setDisabled)
 
         self.tabWidget.setCurrentIndex(0)
         self.toolBox.setCurrentIndex(0)
