@@ -39,8 +39,8 @@ class RecipeDB:
     def remove_recipe(self, recipe_name):
         if self.contains(recipe_name):
             self.recipe_list.remove(self.get_recipe_object(recipe_name))
-            print('successfully removed from DB :')
-            print(not self.contains(recipe_name))
+            # print('successfully removed from DB :')
+            # print(not self.contains(recipe_name))
         else:
             print('%s not found in DB' % recipe_name)
     

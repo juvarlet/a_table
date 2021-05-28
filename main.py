@@ -67,6 +67,7 @@ class MainGUI(QWidget):
         self.default_email = ''
         self.recipe_image_path = ''
         self.myThreads = []
+        self.delete_flag = False
 
         #-- ui widgets --
         self.tW: QTabWidget
@@ -631,11 +632,19 @@ class MainGUI(QWidget):
         if self.tab_recipe.isEnabled():#no effect when waiting for user confirmation in history tab
             recipe_name = self.tW_history.item(row, column).text()
             self.tW.setCurrentWidget(self.tab_recipe)
-            lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
-            self.lW_recipe.scrollToItem(lwi)
-            self.lW_recipe.setCurrentItem(lwi)
-            lwi.setSelected(True)
-    
+            try:
+                lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
+                self.lW_recipe.scrollToItem(lwi)
+                self.lW_recipe.setCurrentItem(lwi)
+                lwi.setSelected(True)
+            except:
+                self.on_wrong_recipe_name(recipe_name)
+                # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
+                # lwi = self.lW_recipe.item(0)
+                # self.lW_recipe.scrollToItem(lwi)
+                # self.lW_recipe.setCurrentItem(lwi)
+                # lwi.setSelected(True)
+                    
     def on_tab_changed(self, tab_index):
         if tab_index == 1 and self.lW_recipe.selectedItems() == []: #recipe tab selected
             #select first recipe if nothing previously selected to avoid blank fields
@@ -647,24 +656,28 @@ class MainGUI(QWidget):
             #display title
             recipe_name = self.lW_recipe.currentItem().text()
             self.label_recipe_title.setText(recipe_name)
-            recipe_object = self.recipe_db.get_recipe_object(recipe_name)
-            #display image
-            display_image(recipe_object, self.dirname, self.label_recipe_image, icon = False)
-            #display instructions
-            self.tE_recipe.setText(recipe_object.preparation)
-            #display ingredients
-            self.tE_ingredients.setText(recipe_object.ingredients_string(self.recipe_db).replace('\n', '<br/>'))
-            #update tags
-            tags = [self.tag_vegan, self.tag_kids, self.tag_double, self.tag_summer, self.tag_winter, self.tag_dessert, self.tag_tips]
-            tags_names = ['vegan', 'kids', 'double', 'ete', 'hiver', 'dessert', 'tips']
-            for tag, tag_name in zip(tags, tags_names):
-                load_pic(tag, self.dirname + '/UI/images/tag_%s_%s_LD.png' % (tag_name, ['black', 'color'][recipe_object.isTagged(tag_name)]))
-            if recipe_object.isTagged('midi'):
-                load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_color_LD.png')
-            elif recipe_object.isTagged('soir'):
-                load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_dinner_color_LD.png')
+            if self.recipe_db.contains(recipe_name):
+                recipe_object = self.recipe_db.get_recipe_object(recipe_name)
+                #display image
+                display_image(recipe_object, self.dirname, self.label_recipe_image, icon = False)
+                #display instructions
+                self.tE_recipe.setText(recipe_object.preparation)
+                #display ingredients
+                self.tE_ingredients.setText(recipe_object.ingredients_string(self.recipe_db).replace('\n', '<br/>'))
+                #update tags
+                tags = [self.tag_vegan, self.tag_kids, self.tag_double, self.tag_summer, self.tag_winter, self.tag_dessert, self.tag_tips]
+                tags_names = ['vegan', 'kids', 'double', 'ete', 'hiver', 'dessert', 'tips']
+                for tag, tag_name in zip(tags, tags_names):
+                    load_pic(tag, self.dirname + '/UI/images/tag_%s_%s_LD.png' % (tag_name, ['black', 'color'][recipe_object.isTagged(tag_name)]))
+                if recipe_object.isTagged('midi'):
+                    load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_color_LD.png')
+                elif recipe_object.isTagged('soir'):
+                    load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_dinner_color_LD.png')
+                else:
+                    load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_black_LD.png')
             else:
-                load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_black_LD.png')
+                self.on_wrong_recipe_name(recipe_name)
+                # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
     
     def on_recipe_link(self, link):
         self.previous_recipe_name = self.label_recipe_title.text()
@@ -1238,14 +1251,14 @@ class MainGUI(QWidget):
                     self.pB_remove_list.append(pB_remove)
         else:
             # print('tu en as deja mis!')
-            error_dialog = QMessageBox(self)
-            error_dialog.setWindowTitle('Attention')
-            error_dialog.setWindowModality(Qt.WindowModal)
-            error_dialog.setText('Cet ingrédient est déjà dans la recette : "%s"' % ing_in)
-            error_dialog.setIcon(QMessageBox.Warning)
-            # error_dialog.setDetailedText(text)
-            error_dialog.exec_()
-            
+            self.display_error('Cet ingrédient est déjà dans la recette : "%s"' % ing_in)
+            # error_dialog = QMessageBox(self)
+            # error_dialog.setWindowTitle('Attention')
+            # error_dialog.setWindowModality(Qt.WindowModal)
+            # error_dialog.setText('Cet ingrédient est déjà dans la recette : "%s"' % ing_in)
+            # error_dialog.setIcon(QMessageBox.Warning)
+            # # error_dialog.setDetailedText(text)
+            # error_dialog.exec_()
     
     def on_tag_selected(self, cB):
         tags = {'cB_tagdinner': [1, 0, 1, 1, 0, 1, 1, 1, 0],
@@ -1270,8 +1283,6 @@ class MainGUI(QWidget):
         # print(image_path=='')
         display_new_image(self.recipe_image_path, self.label_image_2)
         
-        
-        
     def on_confirm_recipe(self):
         #check if ok to save
         #title not empty
@@ -1280,21 +1291,23 @@ class MainGUI(QWidget):
         
         #if not ok to save -> warning message
         if title_empty:
-            error_dialog = QMessageBox(self)
-            error_dialog.setWindowTitle('Attention')
-            error_dialog.setWindowModality(Qt.WindowModal)
-            error_dialog.setText('Il manque au moins un titre pour la recette')
-            error_dialog.setIcon(QMessageBox.Warning)
-            # error_dialog.setDetailedText(text)
-            error_dialog.exec_()
+            self.display_error('Il manque au moins un titre pour la recette')
+            # error_dialog = QMessageBox(self)
+            # error_dialog.setWindowTitle('Attention')
+            # error_dialog.setWindowModality(Qt.WindowModal)
+            # error_dialog.setText('Il manque au moins un titre pour la recette')
+            # error_dialog.setIcon(QMessageBox.Warning)
+            # # error_dialog.setDetailedText(text)
+            # error_dialog.exec_()
         elif self.label_newedit.text() == 'Nouvelle Recette' and self.recipe_db.contains(title):#recipe already exists
-            error_dialog = QMessageBox(self)
-            error_dialog.setWindowTitle('Attention')
-            error_dialog.setWindowModality(Qt.WindowModal)
-            error_dialog.setText('Cette recette existe déjà, choisir "Modifier la recette" au lieu de "Nouvelle recette"')
-            error_dialog.setIcon(QMessageBox.Warning)
-            # error_dialog.setDetailedText(text)
-            error_dialog.exec_()
+            self.display_error('Cette recette existe déjà, choisir "Modifier la recette" au lieu de "Nouvelle recette"')
+            # error_dialog = QMessageBox(self)
+            # error_dialog.setWindowTitle('Attention')
+            # error_dialog.setWindowModality(Qt.WindowModal)
+            # error_dialog.setText('Cette recette existe déjà, choisir "Modifier la recette" au lieu de "Nouvelle recette"')
+            # error_dialog.setIcon(QMessageBox.Warning)
+            # # error_dialog.setDetailedText(text)
+            # error_dialog.exec_()
         else:
             #case with/without picture to be saved (filename = new_title.jpg and new_title_icon.jpg)
             if self.recipe_image_path != '':
@@ -1381,9 +1394,10 @@ class MainGUI(QWidget):
                 self.recipe_db.recipe_list.append(newedit_recipe)
                 
             #update qlw
-            self.lW_recipe.clear()
-            recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
-            self.lW_recipe.addItems(recipe_list)
+            self.update_recipe_list()
+            # self.lW_recipe.clear()
+            # recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
+            # self.lW_recipe.addItems(recipe_list)
             
             #backup file
             copy2(self.recipe_db.recipe_file, self.dirname + '/backup/recipe_backup.ods')
@@ -1420,14 +1434,23 @@ class MainGUI(QWidget):
             # confirm_dialog.setDetailedText(text)
             answer = confirm_dialog.exec_()
             if not answer:
-                print('removing %s' % recipe_name)
+                # print('removing %s' % recipe_name)
                 #update recipe_dbs
                 self.recipe_db.remove_recipe(recipe_name)
-        #update qlw
+                #update qlw
+                self.delete_flag = True #to avoid error message displayed twice
+                self.update_recipe_list()
+                self.delete_flag = False
+                lwi = self.lW_recipe.item(0)
+                self.lW_recipe.scrollToItem(lwi)
+                self.lW_recipe.setCurrentItem(lwi)
+                lwi.setSelected(True)
         #backup file
+        copy2(self.recipe_db.recipe_file, self.dirname + '/backup/recipe_backup.ods')
         #update recipe sheet (fully rewrite)
+        self.recipe_db.update_recipe_file()
         #info message recipe correctly removed
-        print(recipe_name)
+        # print(recipe_name)
     
     def on_cancel_recipe(self):
         # print('cancel recipe')
@@ -1440,6 +1463,33 @@ class MainGUI(QWidget):
         self.pB_delete.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
+    
+    def update_recipe_list(self):
+        self.lW_recipe.clear()
+        recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
+        self.lW_recipe.addItems(recipe_list)
+    
+    def display_error(self, text, title = 'Attention'):
+        error_dialog = QMessageBox(self)
+        error_dialog.setWindowTitle(title)
+        error_dialog.setWindowModality(Qt.WindowModal)
+        error_dialog.setText(text)
+        error_dialog.setIcon(QMessageBox.Warning)
+        # error_dialog.setDetailedText(text)
+        error_dialog.exec_()
+    
+    def on_wrong_recipe_name(self, recipe_name):
+        if self.lW_recipe.count() == 0:
+            self.display_error('La base de données est vide ! Aucune recette à afficher')
+        else:
+            if not self.delete_flag:
+                self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
+                lwi = self.lW_recipe.item(0)
+                self.lW_recipe.scrollToItem(lwi)
+                self.lW_recipe.setCurrentItem(lwi)
+                lwi.setSelected(True)
+            else:
+                self.display_error("La recette '%s' a bien été supprimée" % recipe_name)
 
 
 def load_pic(widget, picture_path):
