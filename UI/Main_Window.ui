@@ -1159,8 +1159,8 @@ icon-size: 40px;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>407</width>
-                <height>177</height>
+                <width>1135</width>
+                <height>599</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1370,26 +1370,20 @@ icon-size: 40px;
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
-              <item row="0" column="2">
-               <widget class="QPushButton" name="pB_modif_2">
-                <property name="toolTip">
-                 <string>Modifier cette recette</string>
+              <item row="0" column="1">
+               <spacer name="horizontalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="iconSize">
+                <property name="sizeHint" stdset="0">
                  <size>
                   <width>40</width>
-                  <height>40</height>
+                  <height>20</height>
                  </size>
                 </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
+               </spacer>
               </item>
-              <item row="0" column="3">
+              <item row="0" column="4">
                <widget class="QPushButton" name="pB_new_recipe">
                 <property name="toolTip">
                  <string>Nouvelle recette</string>
@@ -1427,18 +1421,37 @@ icon-size: 40px;
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <spacer name="horizontalSpacer_11">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+              <item row="0" column="3">
+               <widget class="QPushButton" name="pB_modif_2">
+                <property name="toolTip">
+                 <string>Modifier cette recette</string>
                 </property>
-                <property name="sizeHint" stdset="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="iconSize">
                  <size>
                   <width>40</width>
-                  <height>20</height>
+                  <height>40</height>
                  </size>
                 </property>
-               </spacer>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="pB_delete">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>40</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -3036,11 +3049,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>603</x>
-     <y>364</y>
+     <y>362</y>
     </hint>
     <hint type="destinationlabel">
-     <x>745</x>
-     <y>364</y>
+     <x>733</x>
+     <y>362</y>
     </hint>
    </hints>
   </connection>
@@ -3051,12 +3064,44 @@ p, li { white-space: pre-wrap; }
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>745</x>
-     <y>364</y>
+     <x>733</x>
+     <y>362</y>
     </hint>
     <hint type="destinationlabel">
      <x>603</x>
-     <y>364</y>
+     <y>362</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pB_new_recipe</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pB_delete</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1122</x>
+     <y>644</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1000</x>
+     <y>644</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pB_modif_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pB_delete</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1061</x>
+     <y>644</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1000</x>
+     <y>644</y>
     </hint>
    </hints>
   </connection>
