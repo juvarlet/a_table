@@ -831,6 +831,7 @@ class MainGUI(QWidget):
         #update shopping list and menu list
         self.populate_shopping_list()
         self.populate_menu_list()
+        self.compute_score()
         
     def on_save_menu(self):
         #self.recipe_db.history = [['date(yyyy-mm-dd)','lunch','dinner'],...]
