@@ -784,6 +784,7 @@ class Ui_MainWindow(object):
         self.sB_days_2.setMinimumSize(QSize(0, 50))
         self.sB_days_2.setFont(font6)
         self.sB_days_2.setButtonSymbols(QAbstractSpinBox.PlusMinus)
+        self.sB_days_2.setKeyboardTracking(False)
         self.sB_days_2.setValue(7)
 
         self.gridLayout_13.addWidget(self.sB_days_2, 0, 4, 1, 1)
@@ -1819,6 +1820,9 @@ class Ui_MainWindow(object):
         self.pB_modif_2.setToolTip(QCoreApplication.translate("MainWindow", u"Modifier cette recette", None))
 #endif // QT_CONFIG(tooltip)
         self.pB_modif_2.setText("")
+#if QT_CONFIG(tooltip)
+        self.pB_delete.setToolTip(QCoreApplication.translate("MainWindow", u"Supprimer cette recette", None))
+#endif // QT_CONFIG(tooltip)
         self.pB_delete.setText("")
         self.label_newedit.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
 #if QT_CONFIG(tooltip)

@@ -303,6 +303,16 @@ class MainGUI(QWidget):
         self.pW.gridLayout_10.replaceWidget(self.tW_menu, new_tW_menu)
         self.tW_menu = new_tW_menu
         self.pW.tW_menu.setParent(None)
+        
+        new_sB_days = SpinBoxCustom(self.pW)
+        new_sB_days.setMinimumHeight(50)
+        new_sB_days.setButtonSymbols(QAbstractSpinBox.PlusMinus)
+        new_sB_days.setSuffix(' jours')
+        new_sB_days.setValue(7)
+        new_sB_days.setMinimum(1)
+        self.pW.gridLayout_13.replaceWidget(self.sB_days, new_sB_days)
+        self.sB_days = new_sB_days
+        self.pW.sB_days_2.setParent(None)
 
         self.dateEdit.setDate(QDate().currentDate().addDays(1))
         self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -420,6 +430,7 @@ class MainGUI(QWidget):
     def update_modif(self):
         self.dateEdit.dateChanged.connect(self.dummy_function)
         self.tW_menu.cellChanged.connect(self.on_drag_drop_event)
+        self.sB_days.valueChanged.connect(self.on_nb_days_changed)
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
         self.sB_desserts.valueChanged.connect(self.on_dessert_selection)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
@@ -450,11 +461,6 @@ class MainGUI(QWidget):
         self.compute_score()
         self.pB_modif.setEnabled(True)
         self.pB_save.setEnabled(True)
-
-        #TODO
-        #clean code
-        #exe package for windows on VM
-        #bug dessert changed update shopping list
     
     def new_menu(self):
         current_QDate = self.dateEdit.date()
@@ -794,6 +800,38 @@ class MainGUI(QWidget):
             self.populate_shopping_list()
             self.populate_menu_list()
     
+    def on_nb_days_changed(self, number):
+        #add/remove columns to table
+        adding = (number - self.tW_menu.columnCount()) == 1
+        self.tW_menu.setColumnCount(number)
+        self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)        
+        #update existing menu
+        self.current_menu.update(self.recipe_db, number)
+        #update tW_menu with menus
+        table_menu = self.current_menu.full_menu()
+        self.tW_menu.setHorizontalHeaderLabels([m[0] for m in table_menu])
+
+        #update tW_menu with menus
+        recipe_list_lunch = [m[1] for m in table_menu]
+        recipe_list_dinner = [m[2] for m in table_menu]
+        for i, recipes_of_day in enumerate(zip(recipe_list_lunch, recipe_list_dinner)):
+            recipe_lunch, recipe_dinner = recipes_of_day
+            text_lunch, text_dinner = (recipe_lunch.name, recipe_dinner.name)
+            # print((text_lunch, self.recipe_db.background_score(recipe_lunch, self.current_menu.start_day)))
+            qtwi_lunch, qtwi_dinner = (QTableWidgetItem(text_lunch), QTableWidgetItem(text_dinner))
+            qtwi_lunch.setTextAlignment(Qt.AlignCenter)
+            qtwi_dinner.setTextAlignment(Qt.AlignCenter)
+
+            self.tW_menu.setItem(0, i, qtwi_lunch)
+            self.tW_menu.setItem(1, i, qtwi_dinner)
+
+            display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
+            display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
+
+        #update shopping list and menu list
+        self.populate_shopping_list()
+        self.populate_menu_list()
+        
     def on_save_menu(self):
         #self.recipe_db.history = [['date(yyyy-mm-dd)','lunch','dinner'],...]
         #self.current_menu.start_day = datetime.date , datetime.strptime('2021-10-19', '%Y-%m-%d').date()
@@ -1647,6 +1685,15 @@ class TableWidgetCustom(QTableWidget):
         option.decorationPosition = QStyleOptionViewItem.Top
         # return super().viewOptions()
         return option
+
+class SpinBoxCustom(QSpinBox):
+    def __init__(self, parent=None):
+        super(SpinBoxCustom, self).__init__(parent)
+    
+    def keyPressEvent(self, event: PySide2.QtGui.QKeyEvent) -> None:
+        return event.ignore()
+        # return super().keyPressEvent(event)
+    
 
 if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
