@@ -432,6 +432,7 @@ class MainGUI(QWidget):
         self.tW_menu.cellChanged.connect(self.on_drag_drop_event)
         self.sB_days.valueChanged.connect(self.on_nb_days_changed)
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
+        self.lE_title.textChanged.connect(self.on_title_changed)
         self.sB_desserts.valueChanged.connect(self.on_dessert_selection)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
@@ -699,6 +700,11 @@ class MainGUI(QWidget):
         self.lW_recipe.scrollToItem(lwi)
         self.lW_recipe.setCurrentItem(lwi)
         lwi.setSelected(True)
+    
+    def on_title_changed(self):
+        title_ok = self.lE_title.text() != ''
+        self.pB_ok_2.setEnabled(title_ok)
+        self.pB_ok_2.setToolTip(['Il manque un titre pour la recette', 'Enregistrer'][title_ok])
         
     def on_card_modif(self):
         if self.pB_modif.isChecked():
@@ -770,7 +776,6 @@ class MainGUI(QWidget):
             self.compute_score()
     
     def on_dessert_selection(self, number):
-
         #reset dessert row
         self.tW_menu.setRowCount(2)
         self.tW_menu.setRowCount(3)
@@ -831,6 +836,7 @@ class MainGUI(QWidget):
         #update shopping list and menu list
         self.populate_shopping_list()
         self.populate_menu_list()
+        self.compute_score()
         
     def on_save_menu(self):
         #self.recipe_db.history = [['date(yyyy-mm-dd)','lunch','dinner'],...]
@@ -1168,6 +1174,7 @@ class MainGUI(QWidget):
                 self.pB_remove_list.append(pB_remove)
         
         self.cB_ingredient.clear()
+        self.lE_qty.clear()
         self.cB_unit.clear()
         ingredients, units = self.recipe_db.get_ingredients_units_list()
         self.cB_ingredient.addItems([''] + ingredients)
@@ -1205,8 +1212,6 @@ class MainGUI(QWidget):
         
         return pB_widget, pB_remove
         
-        
-        
     def on_delete_ingredient(self):
         for pB in self.pB_remove_list:
             if pB.isChecked():
@@ -1220,7 +1225,6 @@ class MainGUI(QWidget):
             self.tW_ingredients.removeRow(self.tW_ingredients.rowCount()-1)
             self.tW_ingredients.removeRow(self.tW_ingredients.rowCount()-1)
 
-        
     def on_add_ingredient(self):
         ing = self.cB_ingredient.currentText()
         qty = self.lE_qty.text()
@@ -1325,27 +1329,16 @@ class MainGUI(QWidget):
         #check if ok to save
         #title not empty
         title = self.lE_title.text()
-        title_empty =  title == ''
+        #allow auto switch in case of warning message
+        auto_switch = ''
         
         #if not ok to save -> warning message
-        if title_empty:
-            self.display_error('Il manque au moins un titre pour la recette')
-            # error_dialog = QMessageBox(self)
-            # error_dialog.setWindowTitle('Attention')
-            # error_dialog.setWindowModality(Qt.WindowModal)
-            # error_dialog.setText('Il manque au moins un titre pour la recette')
-            # error_dialog.setIcon(QMessageBox.Warning)
-            # # error_dialog.setDetailedText(text)
-            # error_dialog.exec_()
-        elif self.label_newedit.text() == 'Nouvelle Recette' and self.recipe_db.contains(title):#recipe already exists
-            self.display_error('Cette recette existe déjà, choisir "Modifier la recette" au lieu de "Nouvelle recette"')
-            # error_dialog = QMessageBox(self)
-            # error_dialog.setWindowTitle('Attention')
-            # error_dialog.setWindowModality(Qt.WindowModal)
-            # error_dialog.setText('Cette recette existe déjà, choisir "Modifier la recette" au lieu de "Nouvelle recette"')
-            # error_dialog.setIcon(QMessageBox.Warning)
-            # # error_dialog.setDetailedText(text)
-            # error_dialog.exec_()
+        if self.label_newedit.text() == 'Nouvelle Recette' and self.recipe_db.contains(title):#recipe already exists
+            self.display_error('Cette recette existe déjà, vous pouvez la modifier')
+            
+            #enable swicth to edit mode
+            auto_switch = 'edit'
+
         else:
             #case with/without picture to be saved (filename = new_title.jpg and new_title_icon.jpg)
             if self.recipe_image_path != '':
@@ -1377,6 +1370,8 @@ class MainGUI(QWidget):
                 image_cell = ''
                 
             image = ''
+            if self.recipe_db.contains(title):
+                image = self.recipe_db.get_recipe_object(title).image
             if image_cell != '':
                 image = '/images/' + image_cell
             #case with ingredients not empty -> combine ingredients to string
@@ -1441,7 +1436,7 @@ class MainGUI(QWidget):
             copy2(self.recipe_db.recipe_file, self.dirname + '/backup/recipe_backup.ods')
             #update recipe sheet (fully rewrite)
             self.recipe_db.update_recipe_file()
-            #TODO info message recipe correctly created/updated
+            
         #reenable other tabs
         self.tW.setTabEnabled(0, True)
         self.tW.setTabEnabled(2, True)
@@ -1451,6 +1446,17 @@ class MainGUI(QWidget):
         self.pB_delete.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
+        
+        #auto select the newly created/modified recipe
+        #select existing recipe in list
+        lwi = self.lW_recipe.findItems(title, Qt.MatchExactly)[0]
+        self.lW_recipe.scrollToItem(lwi)
+        self.lW_recipe.setCurrentItem(lwi)
+        lwi.setSelected(True)
+        
+        #auto-switch feature
+        if auto_switch == 'edit':
+            self.pB_modif_2.click()
     
     def on_delete_recipe(self):
         #TODO
@@ -1514,7 +1520,7 @@ class MainGUI(QWidget):
         error_dialog.setText(text)
         error_dialog.setIcon(QMessageBox.Warning)
         # error_dialog.setDetailedText(text)
-        error_dialog.exec_()
+        answer = error_dialog.exec_()
     
     def on_wrong_recipe_name(self, recipe_name):
         if self.lW_recipe.count() == 0:
@@ -1530,13 +1536,12 @@ class MainGUI(QWidget):
                 self.display_error("La recette '%s' a bien été supprimée" % recipe_name)
 
 
-def load_pic(widget, picture_path):
-    # picture_path = "/home/jv/Documents/MyScripts/VSCODE/PY/Recipe/UI/images/restaurant_background2.jpg"
+def load_pic(widget, picture_path):#Display image on widget from image path
     picture = QPixmap(picture_path)
     widget.setPixmap(picture)
 
 
-def display_image(recipe_object, dirname, widget, icon = True):
+def display_image(recipe_object, dirname, widget, icon = True):#Scale and display image on Widget from recipe object
     if icon:
         if recipe_object is None:#special case for header icon
             image_path = dirname
@@ -1572,7 +1577,7 @@ def display_image(recipe_object, dirname, widget, icon = True):
         else:
             widget.setPixmap(QPixmap())
 
-def display_new_image(image_path, widget, icon = False):
+def display_new_image(image_path, widget, icon = False):#Scale and display image on Widget from Image path
     qpix = QPixmap(image_path)
 
     if qpix.width() > qpix.height():
@@ -1584,7 +1589,7 @@ def display_new_image(image_path, widget, icon = False):
         
     qpix_to_widget(qpix_scaled, widget, icon)
 
-def qpix_to_widget(qpix, widget, icon = True):
+def qpix_to_widget(qpix, widget, icon = True):#set Image of a Widget rounded from QPixmap object
     x_size, y_size = qpix.width(), qpix.height()
     rounded = QPixmap(x_size, y_size)
     rounded.fill(Qt.transparent)
@@ -1603,7 +1608,7 @@ def qpix_to_widget(qpix, widget, icon = True):
     else:
         widget.setPixmap(rounded)
 
-def image_from_base64(base64_table, image_name):
+def image_from_base64(base64_table, image_name):#Legacy function to store and read images -- can be removed
     with open(base64_table, 'r') as f:
         data = f.readlines()
     for line in data:
@@ -1611,37 +1616,34 @@ def image_from_base64(base64_table, image_name):
             base64 = line.split('ICON_MENU_PATH:<img src="')[1].strip()[:-3]
             return base64
 
-def extract_number(string):
+def extract_number(string):#Extract number from ingredient quantity string
     number = []
     no_decimal = True
     for c in string:
+        # print(c)
         if c.isdigit() or (c == '.' and no_decimal):
             number.append(c)
             if c == '.':
                 no_decimal = False
-        else:
-
-            return ''.join(number)
+        # else:
+        #     return ''.join(number)
+    return ''.join(number)
 
 def start(recipe_db):
-    
     app = QApplication(sys.argv)
     
+    #current working directory
     dirname = os.path.dirname(__file__)
+    #declare and read GUI file
     myUiFile = dirname + '/UI/Main_Window.ui'
     w = QUiLoader().load(myUiFile)
-
+    #Create and display GUI object
     myGUI = MainGUI(parent = w, recipe_db = recipe_db)
-    
-    
     myGUI.main()
-    # for i in range(100):
-    #     myGUI.pB_new_menu.click()
     
     sys.exit(app.exec_())
 
 def debug():
-    
     #Backend code debug
     # input_csv = '/home/jv/Documents/MyScripts/VSCODE/PY/Recipe/MesRecettes.ods'
     # my_recipe_DB = recipe_db.RecipeDB(input_csv)
@@ -1661,21 +1663,22 @@ def debug():
     # print(myMenu.tag_score('vegan'))
     
     # pass
-    
-    s = '1.5c. a c.'
+    s = '2'
     qty = extract_number(s)
     print(qty)
 
-def main():
+def main(): #Entry point
     dirname = os.path.dirname(__file__)
     # input_recipe = dirname + '/MesRecettes (copy).ods'
     input_recipe = dirname + '/MesRecettes.ods'
     input_history = dirname + '/Historique.ods'
     
+    #Create Recipe_db object reading input files
     my_recipe_DB = recipe_db.RecipeDB(recipe_file= input_recipe, history_file= input_history)
+    #Launch app
     start(my_recipe_DB)
 
-class TableWidgetCustom(QTableWidget):
+class TableWidgetCustom(QTableWidget): #Custom TableWidget to adjust item position
     def __init__(self, parent=None):
         super(TableWidgetCustom, self).__init__(parent)
     
@@ -1686,7 +1689,7 @@ class TableWidgetCustom(QTableWidget):
         # return super().viewOptions()
         return option
 
-class SpinBoxCustom(QSpinBox):
+class SpinBoxCustom(QSpinBox): #Custom SpinBox to force +- only, ignoring keyboard input
     def __init__(self, parent=None):
         super(SpinBoxCustom, self).__init__(parent)
     
@@ -1699,16 +1702,5 @@ if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
     main()
     # debug()
-    # app = QApplication(sys.argv)
-    
-    # dirname = os.path.dirname(__file__)
-    # myUiFile = dirname + '/Main_Window.ui'
 
-    # w = QUiLoader().load(myUiFile)
-
-    # myGUI = MainGUI(w)
-    # myGUI.main()
-    
-    
-    # sys.exit(app.exec_())
     
