@@ -65,6 +65,10 @@ class MainGUI(QWidget):
         self.to_cell = ()
         self.html_source_file_shopping = self.dirname + '/shopping_core.html'
         self.default_email = ''
+        self.default_nb_days = 7
+        self.default_storage = self.dirname + '/Mes_Fiches/'
+        self.user_id_file = self.dirname + '/user.id'
+        self.init_user_settings()
         self.recipe_image_path = ''
         self.myThreads = []
         self.delete_flag = False
@@ -72,6 +76,12 @@ class MainGUI(QWidget):
         #-- ui widgets --
         self.tW: QTabWidget
         self.tW = self.pW.tabWidget
+        self.frame: QFrame
+        self.frame = self.pW.frame
+        self.frame_settings: QFrame
+        self.frame_settings = self.pW.frame_settings
+        self.label_user: QLabel
+        self.label_user = self.pW.label_user
         #-tab menu
         self.tab_menus: QWidget
         self.tab_menus = self.pW.tab_menus
@@ -282,6 +292,17 @@ class MainGUI(QWidget):
         self.label_deco_15 = self.pW.label_deco_15
         self.label_deco_16: QLabel
         self.label_deco_16 = self.pW.label_deco_16
+        #tab settings
+        self.pB_ok_3: QPushButton
+        self.pB_ok_3 = self.pW.pB_ok_3
+        self.pB_cancel_3: QPushButton
+        self.pB_cancel_3 = self.pW.pB_cancel_3
+        self.lE_email: QLineEdit
+        self.lE_email = self.pW.lE_email
+        self.sB_days_2: QSpinBox
+        self.sB_days_2 = self.pW.sB_days
+        self.lE_storage: QLineEdit
+        self.lE_storage = self.pW.lE_storage
 
         #default state
         self.window().setWindowState(Qt.WindowMaximized)
@@ -308,9 +329,10 @@ class MainGUI(QWidget):
         new_sB_days.setMinimumHeight(50)
         new_sB_days.setButtonSymbols(QAbstractSpinBox.PlusMinus)
         new_sB_days.setSuffix(' jours')
-        new_sB_days.setValue(7)
+        new_sB_days.setValue(self.default_nb_days)
         new_sB_days.setMinimum(1)
-        self.pW.gridLayout_13.replaceWidget(self.sB_days, new_sB_days)
+        # self.pW.horizontalLayout.replaceWidget(self.sB_days, new_sB_days)
+        self.pW.horizontalLayout.insertWidget(5,new_sB_days)
         self.sB_days = new_sB_days
         self.pW.sB_days_2.setParent(None)
 
@@ -329,6 +351,7 @@ class MainGUI(QWidget):
         self.lW_recipe.addItems(recipe_list)
         self.pB_back.hide()      
 
+        self.frame_settings.hide()
         self.frame_search.hide()
         self.frame_edit_recipe.hide()
         
@@ -343,17 +366,43 @@ class MainGUI(QWidget):
         
         self.reset_history()
         
+        #User settings
+        self.pB_user = QPushButton('', self.pW)
+        self.pB_user.setIconSize(QSize(60,60))
+        self.pB_user.setToolTip('Préférences')
+        self.pB_user.setStyleSheet('''
+                                QPushButton{
+                                    image: url(file:///../UI/images/icon_user.png);
+                                    background-color: #ccc1ae;
+                                    border-width: 0px;
+                                    border-radius: 0px;
+                                    border-color: #ccc1ae;
+                                }
+
+                                QPushButton:hover{
+                                    image: url(file:///../UI/images/icon_user_color.png);
+                                }
+
+                                QPushButton:pressed{
+                                    image: url(file:///../UI/images/icon_user_color_.png);
+                                }
+                                   ''')
+        self.tW.setCornerWidget(self.pB_user)
+        
+        
         #images
         self.window().setWindowIcon(QIcon(self.dirname + '/UI/images/donut.png'))
 
         load_pic(self.label_date, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
         load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
+        load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
         # load_pic(self.label_dessert_2, self.dirname + '/UI/images/tag_dessert_color_LD.png')
         self.tW.setTabIcon(0,QIcon(self.dirname + '/UI/images/icon_chef_3colors.png'))
         self.tW.setTabIcon(1,QIcon(self.dirname + '/UI/images/icon_recipe_3colors.png'))
         self.tW.setTabIcon(2,QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
         self.tB.setItemIcon(0, QIcon(self.dirname + '/UI/images/icon_menu_3colors.png'))
         self.tB.setItemIcon(1, QIcon(self.dirname + '/UI/images/icon_shopping_cart.png'))
+        self.pB_user.setIcon(QIcon(self.dirname + '/UI/images/icon_user_t.png'))
         self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
         self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
@@ -395,6 +444,8 @@ class MainGUI(QWidget):
         self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_cancel_2.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
         self.pB_ok_2.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
+        self.pB_cancel_3.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
+        self.pB_ok_3.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_modif_2.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_new_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_new_recipe.png'))
         self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
@@ -426,6 +477,9 @@ class MainGUI(QWidget):
         self.pB_cancel_2.clicked.connect(self.on_cancel_recipe)
         self.pB_add.clicked.connect(self.on_add_ingredient)
         self.pB_photo.clicked.connect(self.on_add_photo)
+        self.pB_user.clicked.connect(self.on_user_settings)
+        self.pB_ok_3.clicked.connect(self.on_save_settings)
+        self.pB_cancel_3.clicked.connect(self.on_quit_settings)
         
     def update_modif(self):
         self.dateEdit.dateChanged.connect(self.dummy_function)
@@ -973,10 +1027,9 @@ class MainGUI(QWidget):
         copy(string_to_copy)
 
     def on_send_shopping_list(self):        
-        user_id_file = self.dirname + '/user.id'
-        if os.path.isfile(user_id_file):
-            with open(user_id_file, 'r') as f:
-                self.default_email = f.readline().strip()
+        if os.path.isfile(self.user_id_file):
+            with open(self.user_id_file, 'r') as f:
+                self.default_email = f.readline().strip().split(';')[0]
             # print(self.default_email)
         else:
             text, ok = QInputDialog.getText(self, 'Enregistrement de votre adresse email', 'Votre adresse email:')
@@ -984,7 +1037,7 @@ class MainGUI(QWidget):
             if ok:
                 self.default_email = text
 
-                with open(user_id_file, 'w') as f:
+                with open(self.user_id_file, 'w') as f:
                     f.write(self.default_email)
 
         images = [self.dirname + '/UI/images/icon_menu_3colors_LD_t.png']
@@ -1006,7 +1059,7 @@ class MainGUI(QWidget):
         my_mailbox_worker.start()
 
     def on_print_shopping_list(self):
-        pdf_title = self.dirname + '/Mes_Fiches/Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
+        pdf_title = self.default_storage + 'Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
                                                                             self.current_menu.to_day().strftime('%d_%m_%Y'))
         images = [self.dirname + '/UI/images/icon_menu_3colors_LD_t.png']
         images.append(self.dirname + '/UI/images/icon_shopping_cart_LD_t.png')
@@ -1052,7 +1105,7 @@ class MainGUI(QWidget):
 
     def on_print_recipe(self):
         recipe_name = self.lW_recipe.currentItem().text()
-        pdf_title = self.dirname + '/Mes_Fiches/Recettes/%s.pdf' % recipe_name
+        pdf_title = self.default_storage + 'Recettes/%s.pdf' % recipe_name
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
 
         tags_names = ['vegan', 'kids', 'double', 'ete', 'hiver', 'dessert']
@@ -1534,6 +1587,49 @@ class MainGUI(QWidget):
                 lwi.setSelected(True)
             else:
                 self.display_error("La recette '%s' a bien été supprimée" % recipe_name)
+    
+    def init_user_settings(self):
+        if os.path.isfile(self.user_id_file):
+            with open(self.user_id_file, 'r') as f:
+                #for legacy compatibility
+                data = f.readline().strip().split(';')
+                if len(data) == 1:
+                    self.default_email = data[0]
+                else:
+                    self.default_email, nb_days, self.default_storage = data
+                    self.default_nb_days = int(nb_days)
+                    
+    def on_user_settings(self):
+        self.frame_settings.show()
+        self.frame.hide()
+        
+        # if os.path.isfile(self.user_id_file):
+        #     with open(self.user_id_file, 'r') as f:
+        #         #for legacy compatibility
+        #         data = f.readline().strip().split(';')
+        #         if len(data) == 1:
+        #             self.default_email = data[0]
+        #         else:
+        #             self.default_email, nb_days, self.default_storage = data
+        #             self.default_nb_days = int(nb_days)
+        self.lE_email.setText(self.default_email)
+        self.sB_days_2.setValue(self.default_nb_days)
+        self.lE_storage.setText(self.default_storage)
+    
+    def on_save_settings(self):
+        self.default_email = self.lE_email.text()
+        self.default_nb_days = self.sB_days_2.value()
+        self.default_storage = self.lE_storage.text()
+        
+        with open(self.user_id_file, 'w') as f:
+            f.write(';'.join([self.default_email, str(self.default_nb_days), self.default_storage]))
+            
+        self.frame_settings.hide()
+        self.frame.show()
+        
+    def on_quit_settings(self):
+        self.frame_settings.hide()
+        self.frame.show()
 
 
 def load_pic(widget, picture_path):#Display image on widget from image path
