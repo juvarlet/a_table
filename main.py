@@ -1668,6 +1668,9 @@ def debug():
     print(qty)
 
 def main(): #Entry point
+
+    print("Pilou test commit")
+
     dirname = os.path.dirname(__file__)
     # input_recipe = dirname + '/MesRecettes (copy).ods'
     input_recipe = dirname + '/MesRecettes.ods'
