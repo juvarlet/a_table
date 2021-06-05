@@ -693,7 +693,7 @@ icon-size: 40px;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>785</width>
+                <width>806</width>
                 <height>599</height>
                </rect>
               </property>
@@ -1164,7 +1164,7 @@ icon-size: 40px;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>785</width>
+                <width>806</width>
                 <height>599</height>
                </rect>
               </property>
@@ -2797,13 +2797,20 @@ p, li { white-space: pre-wrap; }
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_41">
-             <item row="0" column="1">
+             <item row="1" column="1">
               <widget class="QLineEdit" name="lE_email"/>
              </item>
-             <item row="0" column="0">
+             <item row="0" column="1">
               <widget class="QLabel" name="label_12">
                <property name="text">
                 <string>Email : </string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" rowspan="2">
+              <widget class="QLabel" name="label_email">
+               <property name="text">
+                <string>TextLabel</string>
                </property>
               </widget>
              </item>
@@ -2819,15 +2826,21 @@ p, li { white-space: pre-wrap; }
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_42">
-             <item row="0" column="0">
+             <item row="0" column="1">
               <widget class="QLabel" name="label_13">
                <property name="text">
                 <string>Nombre de jours par défaut :</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
+             <item row="1" column="1">
               <widget class="QSpinBox" name="sB_days">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2845,6 +2858,13 @@ p, li { white-space: pre-wrap; }
                </property>
               </widget>
              </item>
+             <item row="0" column="0" rowspan="2">
+              <widget class="QLabel" name="label_days">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -2857,24 +2877,31 @@ p, li { white-space: pre-wrap; }
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_43">
-             <item row="0" column="0">
+             <item row="0" column="1">
               <widget class="QLabel" name="label_14">
                <property name="text">
                 <string>Enregistrement des fiches :</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
+             <item row="1" column="2">
+              <widget class="QToolButton" name="toolButton">
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
               <widget class="QLineEdit" name="lE_storage">
                <property name="readOnly">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QToolButton" name="toolButton">
+             <item row="0" column="0" rowspan="2">
+              <widget class="QLabel" name="label_storage">
                <property name="text">
-                <string>...</string>
+                <string>TextLabel</string>
                </property>
               </widget>
              </item>
@@ -2910,20 +2937,7 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_user">
-         <property name="toolTip">
-          <string>Préférences</string>
-         </property>
-         <property name="text">
-          <string>User</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QFrame" name="frame_11">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -2993,6 +3007,48 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
+       <item row="2" column="0">
+        <widget class="QFrame" name="frame_15">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_13">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Contact :</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_contact">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_user">
+         <property name="toolTip">
+          <string>Préférences</string>
+         </property>
+         <property name="text">
+          <string>User</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -3026,7 +3082,7 @@ p, li { white-space: pre-wrap; }
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1088</x>
+     <x>759</x>
      <y>649</y>
     </hint>
     <hint type="destinationlabel">
@@ -3042,7 +3098,7 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1088</x>
+     <x>759</x>
      <y>649</y>
     </hint>
     <hint type="destinationlabel">
@@ -3058,11 +3114,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1088</x>
+     <x>759</x>
      <y>649</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1149</x>
+     <x>820</x>
      <y>649</y>
     </hint>
    </hints>
@@ -3074,7 +3130,7 @@ p, li { white-space: pre-wrap; }
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1149</x>
+     <x>820</x>
      <y>649</y>
     </hint>
     <hint type="destinationlabel">
@@ -3090,7 +3146,7 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1149</x>
+     <x>820</x>
      <y>649</y>
     </hint>
     <hint type="destinationlabel">
@@ -3106,11 +3162,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1149</x>
+     <x>820</x>
      <y>649</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1088</x>
+     <x>759</x>
      <y>649</y>
     </hint>
    </hints>
@@ -3122,7 +3178,7 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1149</x>
+     <x>820</x>
      <y>649</y>
     </hint>
     <hint type="destinationlabel">
@@ -3138,7 +3194,7 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1088</x>
+     <x>759</x>
      <y>649</y>
     </hint>
     <hint type="destinationlabel">
@@ -3154,11 +3210,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>775</x>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>925</x>
+     <x>676</x>
      <y>479</y>
     </hint>
    </hints>
@@ -3170,11 +3226,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>775</x>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1043</x>
+     <x>742</x>
      <y>479</y>
     </hint>
    </hints>
@@ -3186,11 +3242,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>775</x>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>620</x>
+     <x>511</x>
      <y>479</y>
     </hint>
    </hints>
@@ -3202,11 +3258,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>775</x>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>679</x>
+     <x>544</x>
      <y>479</y>
     </hint>
    </hints>
@@ -3218,11 +3274,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>775</x>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>984</x>
+     <x>709</x>
      <y>479</y>
     </hint>
    </hints>
@@ -3234,11 +3290,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>775</x>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>807</x>
+     <x>610</x>
      <y>479</y>
     </hint>
    </hints>
@@ -3250,11 +3306,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>775</x>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>748</x>
+     <x>577</x>
      <y>484</y>
     </hint>
    </hints>
@@ -3266,11 +3322,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>775</x>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>866</x>
+     <x>643</x>
      <y>479</y>
     </hint>
    </hints>
@@ -3282,11 +3338,11 @@ p, li { white-space: pre-wrap; }
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>603</x>
+     <x>522</x>
      <y>362</y>
     </hint>
     <hint type="destinationlabel">
-     <x>733</x>
+     <x>558</x>
      <y>362</y>
     </hint>
    </hints>
@@ -3298,11 +3354,11 @@ p, li { white-space: pre-wrap; }
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>733</x>
+     <x>558</x>
      <y>362</y>
     </hint>
     <hint type="destinationlabel">
-     <x>603</x>
+     <x>522</x>
      <y>362</y>
     </hint>
    </hints>
@@ -3314,11 +3370,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1122</x>
+     <x>793</x>
      <y>644</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1000</x>
+     <x>671</x>
      <y>644</y>
     </hint>
    </hints>
@@ -3330,11 +3386,11 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1061</x>
+     <x>732</x>
      <y>644</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1000</x>
+     <x>671</x>
      <y>644</y>
     </hint>
    </hints>

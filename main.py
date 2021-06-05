@@ -72,6 +72,7 @@ class MainGUI(QWidget):
         self.recipe_image_path = ''
         self.myThreads = []
         self.delete_flag = False
+        self.contact = 'notification.a.table@gmail.com'
 
         #-- ui widgets --
         self.tW: QTabWidget
@@ -303,6 +304,16 @@ class MainGUI(QWidget):
         self.sB_days_2 = self.pW.sB_days
         self.lE_storage: QLineEdit
         self.lE_storage = self.pW.lE_storage
+        self.tB_storage: QToolBox
+        self.tB_storage = self.pW.toolButton
+        self.label_contact: QLabel
+        self.label_contact = self.pW.label_contact
+        self.label_email: QLabel
+        self.label_email = self.pW.label_email
+        self.label_days: QLabel
+        self.label_days = self.pW.label_days
+        self.label_storage: QLabel
+        self.label_storage = self.pW.label_storage
 
         #default state
         self.window().setWindowState(Qt.WindowMaximized)
@@ -389,6 +400,9 @@ class MainGUI(QWidget):
                                    ''')
         self.tW.setCornerWidget(self.pB_user)
         
+        self.label_contact.setOpenExternalLinks(True)
+        self.label_contact.setTextFormat(Qt.RichText)
+        self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
         
         #images
         self.window().setWindowIcon(QIcon(self.dirname + '/UI/images/donut.png'))
@@ -450,6 +464,12 @@ class MainGUI(QWidget):
         self.pB_new_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_new_recipe.png'))
         self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
         self.pB_photo.setIcon(QIcon(self.dirname + '/UI/images/icon_photo.png'))
+        
+        self.label_email.setPixmap(QPixmap(self.dirname + '/UI/images/icon_send.png').scaled(40,40))
+        self.label_days.setPixmap(QPixmap(self.dirname + '/UI/images/icon_date_3colors_t_LD.png').scaled(40,40))
+        self.label_storage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_print.png').scaled(40,40))
+        # load_pic(self.label_days, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
+        # load_pic(self.label_storage, self.dirname + '/UI/images/icon_print.png')
 
     def main(self):
         self.pW.show()
@@ -478,6 +498,7 @@ class MainGUI(QWidget):
         self.pB_add.clicked.connect(self.on_add_ingredient)
         self.pB_photo.clicked.connect(self.on_add_photo)
         self.pB_user.clicked.connect(self.on_user_settings)
+        self.tB_storage.clicked.connect(lambda : self.openDir(self.lE_storage, u'de sauvegarde des fiches', dirpath = self.default_storage))
         self.pB_ok_3.clicked.connect(self.on_save_settings)
         self.pB_cancel_3.clicked.connect(self.on_quit_settings)
         
@@ -499,15 +520,19 @@ class MainGUI(QWidget):
     def dummy_function(self, row, column):
         print('dummy function triggered %s %s' % (row, column))
     
-    def print_thread_function(self, data):
+    def print_thread_function(self, data, icon_path = None):
         # print(data)
-        error_dialog = QMessageBox(self)
-        error_dialog.setWindowTitle('Information')
-        error_dialog.setWindowModality(Qt.WindowModal)
-        error_dialog.setText(data)
-        error_dialog.setIcon(QMessageBox.Information)
-        # error_dialog.setDetailedText(text)
-        error_dialog.exec_()
+        info_dialog = QMessageBox(self)
+        info_dialog.setWindowTitle('Information')
+        info_dialog.setWindowModality(Qt.WindowModal)
+        info_dialog.setTextFormat(Qt.RichText)
+        info_dialog.setText(data)
+        if icon_path is None:
+            info_dialog.setIcon(QMessageBox.Information)
+        else:
+            info_dialog.setIconPixmap(QPixmap(icon_path).scaled(50,50))
+        # info_dialog.setDetailedText(text)
+        info_dialog.exec_()
     
     def on_new_menu(self):
         self.new_menu()
@@ -1059,7 +1084,8 @@ class MainGUI(QWidget):
         my_mailbox_worker.start()
 
     def on_print_shopping_list(self):
-        pdf_title = self.default_storage + 'Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
+        os.makedirs(self.default_storage + '/Menus/', exist_ok=True)
+        pdf_title = self.default_storage + '/Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
                                                                             self.current_menu.to_day().strftime('%d_%m_%Y'))
         images = [self.dirname + '/UI/images/icon_menu_3colors_LD_t.png']
         images.append(self.dirname + '/UI/images/icon_shopping_cart_LD_t.png')
@@ -1067,6 +1093,11 @@ class MainGUI(QWidget):
         my_printer = printer.Printer(pdf_title)
         # my_printer = printer.Printer('test.pdf')
         my_printer.print_shopping_list(self.current_menu, icons=images, images=self.compute_score(draw=False))
+        
+        self.print_thread_function('Les menus du %s au %s ont été enregistrés\n(%s)' % (self.current_menu.start_day.strftime('%d/%m/%Y'),
+                                                                                        self.current_menu.to_day().strftime('%d/%m/%Y'), 
+                                                                                        pdf_title),
+                                   icon_path = self.dirname + '/UI/images/icon_print.png')
     
     def on_send_recipe(self):
         user_id_file = self.dirname + '/user.id'
@@ -1091,7 +1122,7 @@ class MainGUI(QWidget):
         icon_dict = {'[ICON_RECIPE_PATH]': 'cid:%s' % (basename(images[0]))}
         icon_dict['[ICON_TABLE_PATH]'] = 'cid:%s' % (basename(images[1]))
 
-        recipe_pdf = self.on_print_recipe()
+        recipe_pdf = self.on_print_recipe(silent=True)
         
         if os.path.isfile(recipe_pdf):
             my_mailbox_worker = mail.Mailbox('recipe', [recipe_object, self.default_email, images, icon_dict, recipe_pdf])
@@ -1103,9 +1134,10 @@ class MainGUI(QWidget):
         else:
             print('error while creating pdf')
 
-    def on_print_recipe(self):
+    def on_print_recipe(self, silent = False):
         recipe_name = self.lW_recipe.currentItem().text()
-        pdf_title = self.default_storage + 'Recettes/%s.pdf' % recipe_name
+        os.makedirs(self.default_storage + '/Recettes/', exist_ok=True)
+        pdf_title = self.default_storage + '/Recettes/%s.pdf' % recipe_name
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
 
         tags_names = ['vegan', 'kids', 'double', 'ete', 'hiver', 'dessert']
@@ -1113,6 +1145,10 @@ class MainGUI(QWidget):
 
         my_printer = printer.Printer(pdf_title)
         my_printer.print_recipe(recipe_object, images)
+        
+        if not silent:
+            self.print_thread_function('La recette "%s" a été enregistrée\n(%s)' % (recipe_name, pdf_title),
+                                    icon_path = self.dirname + '/UI/images/icon_print.png')
 
         return pdf_title
 
@@ -1512,7 +1548,6 @@ class MainGUI(QWidget):
             self.pB_modif_2.click()
     
     def on_delete_recipe(self):
-        #TODO
         #check if a recipe is selected
         recipe_name = self.lW_recipe.currentItem().text()
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
@@ -1619,7 +1654,13 @@ class MainGUI(QWidget):
     def on_save_settings(self):
         self.default_email = self.lE_email.text()
         self.default_nb_days = self.sB_days_2.value()
-        self.default_storage = self.lE_storage.text()
+        storage = self.lE_storage.text()
+        if os.path.isdir(storage):
+            self.default_storage = storage
+        else:
+            self.default_storage = self.dirname + '/Mes_Fiches/'
+            self.display_error("Le chemin pour l'enregistrement des fiches n'est pas valide," +
+                               " l'emplacement par défaut a été sélectionné (%s)" % self.default_storage)
         
         with open(self.user_id_file, 'w') as f:
             f.write(';'.join([self.default_email, str(self.default_nb_days), self.default_storage]))
@@ -1630,6 +1671,12 @@ class MainGUI(QWidget):
     def on_quit_settings(self):
         self.frame_settings.hide()
         self.frame.show()
+    
+    def openDir(self, field, titre, dirpath = ''):
+        if dirpath == '':
+            dirpath = self.dirname
+        path = QFileDialog.getExistingDirectory(self, u"Choix de l'emplacement " + titre, directory = dirpath)
+        field.setText(str(path).replace('\\', '/'))
 
 
 def load_pic(widget, picture_path):#Display image on widget from image path

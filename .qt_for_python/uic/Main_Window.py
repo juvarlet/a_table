@@ -667,7 +667,7 @@ class Ui_MainWindow(object):
         self.toolBox.setFrameShape(QFrame.NoFrame)
         self.page_carte = QWidget()
         self.page_carte.setObjectName(u"page_carte")
-        self.page_carte.setGeometry(QRect(0, 0, 785, 599))
+        self.page_carte.setGeometry(QRect(0, 0, 806, 599))
         self.gridLayout_9 = QGridLayout(self.page_carte)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
         self.frame_carte = QFrame(self.page_carte)
@@ -874,7 +874,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page_carte, u"Carte")
         self.page_liste = QWidget()
         self.page_liste.setObjectName(u"page_liste")
-        self.page_liste.setGeometry(QRect(0, 0, 785, 599))
+        self.page_liste.setGeometry(QRect(0, 0, 806, 599))
         self.gridLayout_21 = QGridLayout(self.page_liste)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
         self.frame_liste_courses = QFrame(self.page_liste)
@@ -1731,12 +1731,17 @@ class Ui_MainWindow(object):
         self.lE_email = QLineEdit(self.frame_12)
         self.lE_email.setObjectName(u"lE_email")
 
-        self.gridLayout_41.addWidget(self.lE_email, 0, 1, 1, 1)
+        self.gridLayout_41.addWidget(self.lE_email, 1, 1, 1, 1)
 
         self.label_12 = QLabel(self.frame_12)
         self.label_12.setObjectName(u"label_12")
 
-        self.gridLayout_41.addWidget(self.label_12, 0, 0, 1, 1)
+        self.gridLayout_41.addWidget(self.label_12, 0, 1, 1, 1)
+
+        self.label_email = QLabel(self.frame_12)
+        self.label_email.setObjectName(u"label_email")
+
+        self.gridLayout_41.addWidget(self.label_email, 0, 0, 2, 1)
 
 
         self.gridLayout_40.addWidget(self.frame_12, 0, 1, 1, 1)
@@ -1750,15 +1755,25 @@ class Ui_MainWindow(object):
         self.label_13 = QLabel(self.frame_13)
         self.label_13.setObjectName(u"label_13")
 
-        self.gridLayout_42.addWidget(self.label_13, 0, 0, 1, 1)
+        self.gridLayout_42.addWidget(self.label_13, 0, 1, 1, 1)
 
         self.sB_days = QSpinBox(self.frame_13)
         self.sB_days.setObjectName(u"sB_days")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sB_days.sizePolicy().hasHeightForWidth())
+        self.sB_days.setSizePolicy(sizePolicy)
         self.sB_days.setMinimumSize(QSize(0, 50))
         self.sB_days.setButtonSymbols(QAbstractSpinBox.PlusMinus)
         self.sB_days.setValue(7)
 
-        self.gridLayout_42.addWidget(self.sB_days, 0, 1, 1, 1)
+        self.gridLayout_42.addWidget(self.sB_days, 1, 1, 1, 1)
+
+        self.label_days = QLabel(self.frame_13)
+        self.label_days.setObjectName(u"label_days")
+
+        self.gridLayout_42.addWidget(self.label_days, 0, 0, 2, 1)
 
 
         self.gridLayout_40.addWidget(self.frame_13, 1, 1, 1, 1)
@@ -1772,18 +1787,23 @@ class Ui_MainWindow(object):
         self.label_14 = QLabel(self.frame_14)
         self.label_14.setObjectName(u"label_14")
 
-        self.gridLayout_43.addWidget(self.label_14, 0, 0, 1, 1)
+        self.gridLayout_43.addWidget(self.label_14, 0, 1, 1, 1)
+
+        self.toolButton = QToolButton(self.frame_14)
+        self.toolButton.setObjectName(u"toolButton")
+
+        self.gridLayout_43.addWidget(self.toolButton, 1, 2, 1, 1)
 
         self.lE_storage = QLineEdit(self.frame_14)
         self.lE_storage.setObjectName(u"lE_storage")
         self.lE_storage.setReadOnly(True)
 
-        self.gridLayout_43.addWidget(self.lE_storage, 1, 0, 1, 1)
+        self.gridLayout_43.addWidget(self.lE_storage, 1, 1, 1, 1)
 
-        self.toolButton = QToolButton(self.frame_14)
-        self.toolButton.setObjectName(u"toolButton")
+        self.label_storage = QLabel(self.frame_14)
+        self.label_storage.setObjectName(u"label_storage")
 
-        self.gridLayout_43.addWidget(self.toolButton, 1, 1, 1, 1)
+        self.gridLayout_43.addWidget(self.label_storage, 0, 0, 2, 1)
 
 
         self.gridLayout_40.addWidget(self.frame_14, 2, 1, 1, 1)
@@ -1798,12 +1818,6 @@ class Ui_MainWindow(object):
 
 
         self.gridLayout_38.addWidget(self.frame_5, 1, 0, 1, 1)
-
-        self.label_user = QLabel(self.frame_settings)
-        self.label_user.setObjectName(u"label_user")
-        self.label_user.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_38.addWidget(self.label_user, 0, 0, 1, 1)
 
         self.frame_11 = QFrame(self.frame_settings)
         self.frame_11.setObjectName(u"frame_11")
@@ -1832,7 +1846,33 @@ class Ui_MainWindow(object):
         self.gridLayout_39.addItem(self.horizontalSpacer_19, 0, 3, 1, 1)
 
 
-        self.gridLayout_38.addWidget(self.frame_11, 2, 0, 1, 1)
+        self.gridLayout_38.addWidget(self.frame_11, 3, 0, 1, 1)
+
+        self.frame_15 = QFrame(self.frame_settings)
+        self.frame_15.setObjectName(u"frame_15")
+        self.frame_15.setFrameShape(QFrame.NoFrame)
+        self.frame_15.setFrameShadow(QFrame.Raised)
+        self.gridLayout_13 = QGridLayout(self.frame_15)
+        self.gridLayout_13.setObjectName(u"gridLayout_13")
+        self.label_15 = QLabel(self.frame_15)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_13.addWidget(self.label_15, 0, 0, 1, 1)
+
+        self.label_contact = QLabel(self.frame_15)
+        self.label_contact.setObjectName(u"label_contact")
+
+        self.gridLayout_13.addWidget(self.label_contact, 0, 1, 1, 1)
+
+
+        self.gridLayout_38.addWidget(self.frame_15, 2, 0, 1, 1)
+
+        self.label_user = QLabel(self.frame_settings)
+        self.label_user.setObjectName(u"label_user")
+        self.label_user.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_38.addWidget(self.label_user, 0, 0, 1, 1)
 
 
         self.gridLayout.addWidget(self.frame_settings, 0, 1, 1, 1)
@@ -2131,14 +2171,13 @@ class Ui_MainWindow(object):
         self.pB_cancel.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_historique), QCoreApplication.translate("MainWindow", u"Historique", None))
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"Email : ", None))
+        self.label_email.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"Nombre de jours par d\u00e9faut :", None))
         self.sB_days.setSuffix(QCoreApplication.translate("MainWindow", u" jours", None))
+        self.label_days.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"Enregistrement des fiches :", None))
         self.toolButton.setText(QCoreApplication.translate("MainWindow", u"...", None))
-#if QT_CONFIG(tooltip)
-        self.label_user.setToolTip(QCoreApplication.translate("MainWindow", u"Pr\u00e9f\u00e9rences", None))
-#endif // QT_CONFIG(tooltip)
-        self.label_user.setText(QCoreApplication.translate("MainWindow", u"User", None))
+        self.label_storage.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
 #if QT_CONFIG(tooltip)
         self.pB_ok_3.setToolTip(QCoreApplication.translate("MainWindow", u"Enregistrer", None))
 #endif // QT_CONFIG(tooltip)
@@ -2147,5 +2186,11 @@ class Ui_MainWindow(object):
         self.pB_cancel_3.setToolTip(QCoreApplication.translate("MainWindow", u"Annuler", None))
 #endif // QT_CONFIG(tooltip)
         self.pB_cancel_3.setText("")
+        self.label_15.setText(QCoreApplication.translate("MainWindow", u"Contact :", None))
+        self.label_contact.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+#if QT_CONFIG(tooltip)
+        self.label_user.setToolTip(QCoreApplication.translate("MainWindow", u"Pr\u00e9f\u00e9rences", None))
+#endif // QT_CONFIG(tooltip)
+        self.label_user.setText(QCoreApplication.translate("MainWindow", u"User", None))
     # retranslateUi
 

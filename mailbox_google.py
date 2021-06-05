@@ -249,8 +249,10 @@ class Mailbox(QThread):#QThread
             # print('Message %s sent to %s' % (subject, to_email))
             self.signal.sig.emit('Message "%s" envoyé à %s' % (subject, to_email))
         except:
-            self.signal.sig.emit("Votre autorisation pour l'envoi de messages a probablement expiré, vous pouvez demander une mise à jour à %s" 
-                                 % self.sender)
+            # self.signal.sig.emit("Votre autorisation pour l'envoi de messages a probablement expiré, vous pouvez demander une mise à jour à %s" 
+            #                      % self.sender)
+            self.signal.sig.emit("Votre autorisation pour l'envoi de messages a probablement expiré, vous pouvez demander une mise à jour à " +
+                                 "<a href='mailto:%s?Subject=Token expiré'>%s</a>" % (self.sender, self.sender))
 
     def send_recipe(self, recipe, to_email, images, images_dict, pdf):
         # print('send recette')
