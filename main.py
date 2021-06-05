@@ -1,5 +1,7 @@
 import os
 from os.path import basename
+
+from PySide2 import QtCore
 from recipe import Recipe
 import sys
 import recipe_db
@@ -436,15 +438,23 @@ class MainGUI(QWidget):
         self.sB_desserts.valueChanged.connect(self.on_dessert_selection)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
+        #self.lE_with.textChanged.connect(self.dynamic_filter)
         
         self.selectable_tags = [self.cB_tagdinner, self.cB_tagdessert, self.cB_tagdouble, self.cB_tagkids,
                                 self.cB_taglunch, self.cB_tagwinter, self.cB_tagsummer, self.cB_tagvegan, self.cB_tagtips]
         for tag in self.selectable_tags:
             tag.toggled.connect(lambda _, cB=tag: self.on_tag_selected(cB))
-        
+
     def dummy_function(self, row, column):
         print('dummy function triggered %s %s' % (row, column))
     
+    def dynamic_filter(self):
+        matching_items = self.lW_recipe.findItems(self.lE_with.text(), QtCore.Qt.MatchRegularExpression)
+        
+        all_items = self.lW_recipe.findItems("", QtCore.Qt.MatchRegularExpression)
+        for item in all_items:
+            self.lW_recipe.setItemHidden(item, not item in matching_items)
+
     def print_thread_function(self, data):
         # print(data)
         error_dialog = QMessageBox(self)
@@ -628,17 +638,23 @@ class MainGUI(QWidget):
         self.lW_menu.addItems(list(dict.fromkeys(['  -  ' + name for name in recipe_db.get_recipe_names(self.dessert_list)])))
 
     def on_card_recipe_selection(self, row, column):
+ 
         recipe_name = self.tW_menu.item(row, column).text()
         self.tW.setCurrentWidget(self.tab_recipe)
+        self.reset_recipes_list()
+        self.reset_filters()
         lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
         self.lW_recipe.scrollToItem(lwi)
         self.lW_recipe.setCurrentItem(lwi)
         lwi.setSelected(True)
+
     
     def on_history_recipe_selection(self, row, column):
         if self.tab_recipe.isEnabled():#no effect when waiting for user confirmation in history tab
             recipe_name = self.tW_history.item(row, column).text()
             self.tW.setCurrentWidget(self.tab_recipe)
+            self.reset_recipes_list()
+            self.reset_filters()
             try:
                 lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
                 self.lW_recipe.scrollToItem(lwi)
@@ -658,7 +674,7 @@ class MainGUI(QWidget):
             self.lW_recipe.setCurrentRow(0)
             self.lW_recipe.setItemSelected(self.lW_recipe.item(0), True)
             
-    def on_recipe_selection(self):
+    def on_recipe_selection(self): #display recipe when selected in the list
         if self.lW_recipe.count() > 0:
             #display title
             recipe_name = self.lW_recipe.currentItem().text()
@@ -687,6 +703,8 @@ class MainGUI(QWidget):
                 # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
     
     def on_recipe_link(self, link):
+        self.reset_recipes_list()
+        self.pB_filter.setChecked(False)
         self.previous_recipe_name = self.label_recipe_title.text()
         lwi = self.lW_recipe.findItems(link.toString(), Qt.MatchFixedString)[0]
         self.lW_recipe.scrollToItem(lwi)
@@ -1074,6 +1092,18 @@ class MainGUI(QWidget):
 
         return [self.dirname + '/UI/images/score_%s_%s.png' % (tag_name, score[tag_name]) for tag, tag_name in zip(tags, tags_names)]
     
+    def reset_recipes_list(self): #reset list of recipes
+        self.lW_recipe.clear()     #reset list
+        self.lW_recipe.addItems(recipe_db.get_recipe_names(self.recipe_db.recipe_list))         #repopulate recipe list
+
+    def reset_filters(self): #reset search/filter section(frame)
+        self.cB_search.setText('Recherche')        #reset search label
+        self.lE_with.setText('')
+        self.lE_without.setText('')
+        self.pB_filter.setChecked(False)
+        if self.frame_search.isVisible():
+            self.cB_search.click()
+
     def on_filter_selection(self):
         if self.pB_filter.isChecked():
             #extract filter values
@@ -1101,12 +1131,7 @@ class MainGUI(QWidget):
             #display result summary on search label
             self.cB_search.setText('Recherche (%s/%s)' % (len(filtered_list), total_recipe_count))
         else:
-            #reset list
-            self.lW_recipe.clear()
-            #repopulate recipe list
-            self.lW_recipe.addItems(recipe_db.get_recipe_names(self.recipe_db.recipe_list))
-
-            #reset search label
+            self.reset_recipes_list()
             self.cB_search.setText('Recherche')
     
     def on_new_recipe(self):
