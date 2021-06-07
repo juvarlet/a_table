@@ -16,6 +16,7 @@ from PySide2.QtWidgets import*
 from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
+from PySide2.QtWebEngineWidgets import QWebEngineView
 # QDate
 
 #COLOR THEME
@@ -73,6 +74,7 @@ class MainGUI(QWidget):
         self.myThreads = []
         self.delete_flag = False
         self.contact = 'notification.a.table@gmail.com'
+        self.homepage = QUrl("https://www.google.com/")
 
         #-- ui widgets --
         self.tW: QTabWidget
@@ -246,6 +248,12 @@ class MainGUI(QWidget):
         self.pB_ok_2 = self.pW.pB_ok_2
         self.pB_cancel_2: QPushButton
         self.pB_cancel_2 = self.pW.pB_cancel_2
+        self.gL_web: QGridLayout
+        self.gL_web = self.pW.gL_web
+        self.hL_tools: QHBoxLayout
+        self.hL_tools = self.pW.hL_tools
+        self.pB_cook: QPushButton
+        self.pB_cook = self.pW.pB_cook
         #-tab historique
         self.tab_history: QWidget
         self.tab_history = self.pW.tab_historique
@@ -378,32 +386,11 @@ class MainGUI(QWidget):
         self.reset_history()
         
         #User settings
-        self.pB_user = QPushButton('', self.pW)
-        self.pB_user.setIconSize(QSize(60,60))
-        self.pB_user.setToolTip('Préférences')
-        self.pB_user.setStyleSheet('''
-                                QPushButton{
-                                    image: url(file:///../UI/images/icon_user.png);
-                                    background-color: #ccc1ae;
-                                    border-width: 0px;
-                                    border-radius: 0px;
-                                    border-color: #ccc1ae;
-                                }
-
-                                QPushButton:hover{
-                                    image: url(file:///../UI/images/icon_user_color.png);
-                                }
-
-                                QPushButton:pressed{
-                                    image: url(file:///../UI/images/icon_user_color_.png);
-                                }
-                                   ''')
-        self.tW.setCornerWidget(self.pB_user)
+        self.user_settings_ui()
         
-        self.label_contact.setOpenExternalLinks(True)
-        self.label_contact.setTextFormat(Qt.RichText)
-        self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
-        
+        #webBrowser
+        self.web_browser_ui()
+         
         #images
         self.window().setWindowIcon(QIcon(self.dirname + '/UI/images/donut.png'))
 
@@ -516,6 +503,8 @@ class MainGUI(QWidget):
                                 self.cB_taglunch, self.cB_tagwinter, self.cB_tagsummer, self.cB_tagvegan, self.cB_tagtips]
         for tag in self.selectable_tags:
             tag.toggled.connect(lambda _, cB=tag: self.on_tag_selected(cB))
+        
+        self.wV.urlChanged.connect(self.update_urlbar)
         
     def dummy_function(self, row, column):
         print('dummy function triggered %s %s' % (row, column))
@@ -1677,7 +1666,96 @@ class MainGUI(QWidget):
             dirpath = self.dirname
         path = QFileDialog.getExistingDirectory(self, u"Choix de l'emplacement " + titre, directory = dirpath)
         field.setText(str(path).replace('\\', '/'))
+        
+    def user_settings_ui(self):
+        self.pB_user = QPushButton('', self.pW)
+        self.pB_user.setIconSize(QSize(60,60))
+        self.pB_user.setToolTip('Préférences')
+        self.pB_user.setStyleSheet('''
+                                QPushButton{
+                                    image: url(file:///../UI/images/icon_user.png);
+                                    background-color: #ccc1ae;
+                                    border-width: 0px;
+                                    border-radius: 0px;
+                                    border-color: #ccc1ae;
+                                }
 
+                                QPushButton:hover{
+                                    image: url(file:///../UI/images/icon_user_color.png);
+                                }
+
+                                QPushButton:pressed{
+                                    image: url(file:///../UI/images/icon_user_color_.png);
+                                }
+                                   ''')
+        self.tW.setCornerWidget(self.pB_user)
+        
+        self.label_contact.setOpenExternalLinks(True)
+        self.label_contact.setTextFormat(Qt.RichText)
+        self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
+
+    def web_browser_ui(self):
+        self.wV = QWebEngineView()
+        
+        self.wV.load(self.homepage)
+        self.gL_web.addWidget(self.wV)
+        self.navtb = QToolBar("Navigation")
+        self.navtb.setIconSize( QSize(40,40) )
+        self.hL_tools.addWidget(self.navtb)
+        
+        back_btn = QAction( QIcon(self.dirname + '/UI/images/icon_back.png'), "Back", self)
+        back_btn.setToolTip("Page précédente")
+        back_btn.triggered.connect( self.wV.back )
+        self.navtb.addAction(back_btn)
+        
+        next_btn = QAction( QIcon(self.dirname + '/UI/images/icon_fwd.png'), "Forward", self)
+        next_btn.setToolTip("Page suivante")
+        next_btn.triggered.connect( self.wV.forward )
+        self.navtb.addAction(next_btn)
+
+        reload_btn = QAction( QIcon(self.dirname + '/UI/images/icon_reload.png'), "Reload", self)
+        reload_btn.setToolTip("Recharger la page")
+        reload_btn.triggered.connect( self.wV.reload )
+        self.navtb.addAction(reload_btn)
+
+        home_btn = QAction( QIcon(self.dirname + '/UI/images/icon_chef.png'), "Home", self)
+        home_btn.setToolTip("Page d'accueil")
+        home_btn.triggered.connect(lambda: self.wV.setUrl(self.homepage))
+        self.navtb.addAction(home_btn)
+        
+        self.httpsicon = QLabel()
+        self.httpsicon.setPixmap( QPixmap( os.path.join('icons','lock-nossl.png') ) )
+        self.navtb.addWidget(self.httpsicon)
+
+        self.urlbar = QLineEdit()
+        self.urlbar.returnPressed.connect( self.navigate_to_url )
+        self.navtb.addWidget(self.urlbar)
+
+        stop_btn = QAction( QIcon(self.dirname + '/UI/images/icon_fork_X.png'), "Stop", self)
+        stop_btn.setToolTip("Interrompre le chargement")
+        stop_btn.triggered.connect( self.wV.stop )
+        self.navtb.addAction(stop_btn)
+    
+    def navigate_to_url(self): # Does not receive the Url
+        q = QUrl( self.urlbar.text() )
+        if q.scheme() == "":
+            q.setScheme("http")
+
+        self.wV.setUrl(q)
+    
+    def update_urlbar(self, q):
+
+        if q.scheme() == 'https':
+            # Secure padlock icon
+            self.httpsicon.setPixmap( QPixmap( os.path.join('icons','lock-ssl.png') ) )
+
+        else:
+            # Insecure padlock icon
+            self.httpsicon.setPixmap( QPixmap( os.path.join('icons','lock-nossl.png') ) )
+
+        self.urlbar.setText( q.toString() )
+        self.urlbar.setCursorPosition(0)
+        
 
 def load_pic(widget, picture_path):#Display image on widget from image path
     picture = QPixmap(picture_path)
