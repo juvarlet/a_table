@@ -1082,19 +1082,7 @@ class Ui_MainWindow(object):
         self.gridLayout_35.addWidget(self.label_7, 0, 0, 1, 1)
 
 
-        self.gridLayout_28.addWidget(self.frame_10, 5, 1, 1, 2)
-
-        self.lE_titre = QLineEdit(self.frame_new_recipe)
-        self.lE_titre.setObjectName(u"lE_titre")
-        font8 = QFont()
-        font8.setFamily(u"Poiret One")
-        font8.setPointSize(20)
-        font8.setBold(True)
-        font8.setItalic(False)
-        font8.setWeight(75)
-        self.lE_titre.setFont(font8)
-
-        self.gridLayout_28.addWidget(self.lE_titre, 2, 0, 1, 3)
+        self.gridLayout_28.addWidget(self.frame_10, 6, 1, 1, 2)
 
         self.frame_tags_2 = QFrame(self.frame_new_recipe)
         self.frame_tags_2.setObjectName(u"frame_tags_2")
@@ -1149,7 +1137,7 @@ class Ui_MainWindow(object):
         self.gridLayout_29.addWidget(self.cB_tagtips, 2, 9, 1, 1)
 
 
-        self.gridLayout_28.addWidget(self.frame_tags_2, 7, 0, 1, 3, Qt.AlignHCenter|Qt.AlignVCenter)
+        self.gridLayout_28.addWidget(self.frame_tags_2, 8, 0, 1, 3, Qt.AlignHCenter|Qt.AlignVCenter)
 
         self.frame_7 = QFrame(self.frame_new_recipe)
         self.frame_7.setObjectName(u"frame_7")
@@ -1270,7 +1258,7 @@ class Ui_MainWindow(object):
         self.gridLayout_34.addWidget(self.label_11, 3, 2, 1, 1, Qt.AlignLeft)
 
 
-        self.gridLayout_28.addWidget(self.frame_7, 5, 0, 1, 1)
+        self.gridLayout_28.addWidget(self.frame_7, 6, 0, 1, 1)
 
         self.frame_8 = QFrame(self.frame_new_recipe)
         self.frame_8.setObjectName(u"frame_8")
@@ -1299,7 +1287,53 @@ class Ui_MainWindow(object):
         self.gridLayout_30.addItem(self.horizontalSpacer_13, 0, 3, 1, 1)
 
 
-        self.gridLayout_28.addWidget(self.frame_8, 8, 0, 1, 3)
+        self.gridLayout_28.addWidget(self.frame_8, 9, 0, 1, 3)
+
+        self.label_newedit = QLabel(self.frame_new_recipe)
+        self.label_newedit.setObjectName(u"label_newedit")
+        self.label_newedit.setFont(font7)
+        self.label_newedit.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_28.addWidget(self.label_newedit, 0, 0, 2, 3)
+
+        self.frame_16 = QFrame(self.frame_new_recipe)
+        self.frame_16.setObjectName(u"frame_16")
+        self.frame_16.setFrameShape(QFrame.NoFrame)
+        self.frame_16.setFrameShadow(QFrame.Raised)
+        self.gridLayout_49 = QGridLayout(self.frame_16)
+        self.gridLayout_49.setObjectName(u"gridLayout_49")
+        self.gridLayout_49.setContentsMargins(-1, 0, -1, 0)
+        self.lE_titre = QLineEdit(self.frame_16)
+        self.lE_titre.setObjectName(u"lE_titre")
+        font8 = QFont()
+        font8.setFamily(u"Poiret One")
+        font8.setPointSize(20)
+        font8.setBold(True)
+        font8.setItalic(False)
+        font8.setWeight(75)
+        self.lE_titre.setFont(font8)
+
+        self.gridLayout_49.addWidget(self.lE_titre, 0, 0, 1, 1)
+
+        self.frame_20 = QFrame(self.frame_16)
+        self.frame_20.setObjectName(u"frame_20")
+        self.frame_20.setFrameShape(QFrame.NoFrame)
+        self.frame_20.setFrameShadow(QFrame.Raised)
+        self.gridLayout_48 = QGridLayout(self.frame_20)
+        self.gridLayout_48.setSpacing(0)
+        self.gridLayout_48.setObjectName(u"gridLayout_48")
+        self.gridLayout_48.setContentsMargins(0, 0, 0, 0)
+        self.cB_web = QCheckBox(self.frame_20)
+        self.cB_web.setObjectName(u"cB_web")
+        self.cB_web.setLayoutDirection(Qt.LeftToRight)
+
+        self.gridLayout_48.addWidget(self.cB_web, 0, 0, 1, 1)
+
+
+        self.gridLayout_49.addWidget(self.frame_20, 0, 1, 1, 1)
+
+
+        self.gridLayout_28.addWidget(self.frame_16, 3, 0, 1, 3)
 
         self.frame_wB = QFrame(self.frame_new_recipe)
         self.frame_wB.setObjectName(u"frame_wB")
@@ -1330,24 +1364,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_44.addWidget(self.frame_17, 1, 0, 1, 1)
 
-        self.frame_18 = QFrame(self.frame_wB)
-        self.frame_18.setObjectName(u"frame_18")
-        self.frame_18.setFrameShape(QFrame.NoFrame)
-        self.frame_18.setFrameShadow(QFrame.Raised)
-        self.gridLayout_45 = QGridLayout(self.frame_18)
-        self.gridLayout_45.setObjectName(u"gridLayout_45")
-        self.pB_cook = QPushButton(self.frame_18)
-        self.pB_cook.setObjectName(u"pB_cook")
-
-        self.gridLayout_45.addWidget(self.pB_cook, 0, 0, 1, 1)
-
-        self.horizontalSpacer_20 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_45.addItem(self.horizontalSpacer_20, 0, 1, 1, 1)
-
-
-        self.gridLayout_44.addWidget(self.frame_18, 2, 0, 1, 1)
-
         self.frame_19 = QFrame(self.frame_wB)
         self.frame_19.setObjectName(u"frame_19")
         self.frame_19.setFrameShape(QFrame.NoFrame)
@@ -1365,40 +1381,7 @@ class Ui_MainWindow(object):
         self.gridLayout_44.addWidget(self.frame_19, 0, 0, 1, 1)
 
 
-        self.gridLayout_28.addWidget(self.frame_wB, 2, 3, 7, 1)
-
-        self.frame_20 = QFrame(self.frame_new_recipe)
-        self.frame_20.setObjectName(u"frame_20")
-        self.frame_20.setFrameShape(QFrame.NoFrame)
-        self.frame_20.setFrameShadow(QFrame.Raised)
-        self.gridLayout_48 = QGridLayout(self.frame_20)
-        self.gridLayout_48.setSpacing(0)
-        self.gridLayout_48.setObjectName(u"gridLayout_48")
-        self.gridLayout_48.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer_21 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_48.addItem(self.horizontalSpacer_21, 0, 0, 1, 1)
-
-        self.cB_web = QCheckBox(self.frame_20)
-        self.cB_web.setObjectName(u"cB_web")
-        self.cB_web.setLayoutDirection(Qt.LeftToRight)
-        self.cB_web.setChecked(True)
-
-        self.gridLayout_48.addWidget(self.cB_web, 0, 1, 1, 1)
-
-        self.horizontalSpacer_22 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_48.addItem(self.horizontalSpacer_22, 0, 2, 1, 1)
-
-
-        self.gridLayout_28.addWidget(self.frame_20, 0, 3, 2, 1)
-
-        self.label_newedit = QLabel(self.frame_new_recipe)
-        self.label_newedit.setObjectName(u"label_newedit")
-        self.label_newedit.setFont(font7)
-        self.label_newedit.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_28.addWidget(self.label_newedit, 0, 0, 2, 3)
+        self.gridLayout_28.addWidget(self.frame_wB, 0, 3, 10, 1)
 
 
         self.gridLayout_31.addWidget(self.frame_new_recipe, 0, 1, 1, 1)
@@ -2110,10 +2093,6 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Pr\u00e9paration :", None))
 #if QT_CONFIG(tooltip)
-        self.lE_titre.setToolTip(QCoreApplication.translate("MainWindow", u"Titre de la recette", None))
-#endif // QT_CONFIG(tooltip)
-        self.lE_titre.setText(QCoreApplication.translate("MainWindow", u"Titre", None))
-#if QT_CONFIG(tooltip)
         self.cB_tagvegan.setToolTip(QCoreApplication.translate("MainWindow", u"Vegan", None))
 #endif // QT_CONFIG(tooltip)
         self.cB_tagvegan.setText("")
@@ -2188,12 +2167,15 @@ class Ui_MainWindow(object):
         self.pB_ok_2.setToolTip(QCoreApplication.translate("MainWindow", u"Enregistrer", None))
 #endif // QT_CONFIG(tooltip)
         self.pB_ok_2.setText("")
-        self.pB_cook.setText("")
+        self.label_newedit.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+#if QT_CONFIG(tooltip)
+        self.lE_titre.setToolTip(QCoreApplication.translate("MainWindow", u"Titre de la recette", None))
+#endif // QT_CONFIG(tooltip)
+        self.lE_titre.setText(QCoreApplication.translate("MainWindow", u"Titre", None))
 #if QT_CONFIG(tooltip)
         self.cB_web.setToolTip(QCoreApplication.translate("MainWindow", u"Rechercher sur Internet", None))
 #endif // QT_CONFIG(tooltip)
         self.cB_web.setText("")
-        self.label_newedit.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Pr\u00e9paration :", None))
         self.tE_recette.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

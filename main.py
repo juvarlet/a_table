@@ -252,8 +252,10 @@ class MainGUI(QWidget):
         self.gL_web = self.pW.gL_web
         self.hL_tools: QHBoxLayout
         self.hL_tools = self.pW.hL_tools
-        self.pB_cook: QPushButton
-        self.pB_cook = self.pW.pB_cook
+        self.frame_wB: QFrame
+        self.frame_wB = self.pW.frame_wB
+        self.cB_web: QCheckBox
+        self.cB_web = self.pW.cB_web
         #-tab historique
         self.tab_history: QWidget
         self.tab_history = self.pW.tab_historique
@@ -1524,6 +1526,7 @@ class MainGUI(QWidget):
         self.pB_delete.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
+        self.cB_web.setChecked(False)
         
         #auto select the newly created/modified recipe
         #select existing recipe in list
@@ -1584,6 +1587,7 @@ class MainGUI(QWidget):
         self.pB_delete.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
+        self.cB_web.setChecked(False)
     
     def update_recipe_list(self):
         self.lW_recipe.clear()
@@ -1695,13 +1699,22 @@ class MainGUI(QWidget):
         self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
 
     def web_browser_ui(self):
+        self.frame_wB.hide()
         self.wV = QWebEngineView()
         
         self.wV.load(self.homepage)
         self.gL_web.addWidget(self.wV)
         self.navtb = QToolBar("Navigation")
-        self.navtb.setIconSize( QSize(40,40) )
+        self.navtb.setIconSize( QSize(30,30) )
         self.hL_tools.addWidget(self.navtb)
+        
+        pB_cook = QPushButton('', self.frame_wB)
+        pB_cook.setFixedSize(60,60)
+        pB_cook.setIconSize(QSize(40,40))
+        pB_cook.setIcon(QIcon(self.dirname + '/UI/images/icon_service.png'))
+        pB_cook.setToolTip('Recopier cette recette')
+        pB_cook.clicked.connect(self.on_parse_html)
+        self.navtb.addWidget(pB_cook)
         
         back_btn = QAction( QIcon(self.dirname + '/UI/images/icon_back.png'), "Back", self)
         back_btn.setToolTip("Page précédente")
@@ -1724,7 +1737,7 @@ class MainGUI(QWidget):
         self.navtb.addAction(home_btn)
         
         self.httpsicon = QLabel()
-        self.httpsicon.setPixmap( QPixmap( os.path.join('icons','lock-nossl.png') ) )
+        self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_nolock_.png') )
         self.navtb.addWidget(self.httpsicon)
 
         self.urlbar = QLineEdit()
@@ -1735,7 +1748,39 @@ class MainGUI(QWidget):
         stop_btn.setToolTip("Interrompre le chargement")
         stop_btn.triggered.connect( self.wV.stop )
         self.navtb.addAction(stop_btn)
+        
+        open_file_action = QAction( QIcon(self.dirname + '/UI/images/icon_open.png'), "Ouvrir une page web...", self)
+        open_file_action.setToolTip("Ouvrir le fichier HTML")
+        open_file_action.triggered.connect( self.open_html )
+        self.navtb.addAction(open_file_action)
+
+        save_file_action = QAction( QIcon(self.dirname + '/UI/images/icon_save.png'), "Enregistrer sous...", self)
+        save_file_action.setToolTip("Enregistrer la page en cours")
+        save_file_action.triggered.connect( self.save_file )
+        self.navtb.addAction(save_file_action)
     
+    def open_html(self):
+        filename, _ = QFileDialog.getOpenFileName(self, "Ouvrir le fichier", "",
+                        "Hypertext Markup Language (*.htm *.html);;"
+                        "Tous types de fichiers (*.*)")
+
+        if filename:
+            with open(filename, 'r') as f:
+                html = f.read()
+
+            self.wV.setHtml( html )
+            self.urlbar.setText( filename )
+    
+    def save_file(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "Enregistrer la page sous", "",
+                        "Hypertext Markup Language (*.htm *html);;"
+                        "Tous types de fichiers (*.*)")
+
+        if filename:
+            html = self.wV.page().toHtml()
+            with open(filename, 'w') as f:
+                f.write(html)
+                
     def navigate_to_url(self): # Does not receive the Url
         q = QUrl( self.urlbar.text() )
         if q.scheme() == "":
@@ -1747,15 +1792,17 @@ class MainGUI(QWidget):
 
         if q.scheme() == 'https':
             # Secure padlock icon
-            self.httpsicon.setPixmap( QPixmap( os.path.join('icons','lock-ssl.png') ) )
+            self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_lock_.png') )
 
         else:
             # Insecure padlock icon
-            self.httpsicon.setPixmap( QPixmap( os.path.join('icons','lock-nossl.png') ) )
+            self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_nolock_.png') )
 
         self.urlbar.setText( q.toString() )
         self.urlbar.setCursorPosition(0)
-        
+    
+    def on_parse_html(self):
+        print('magical html parser')
 
 def load_pic(widget, picture_path):#Display image on widget from image path
     picture = QPixmap(picture_path)
