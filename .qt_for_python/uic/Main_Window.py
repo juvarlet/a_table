@@ -1066,6 +1066,8 @@ class Ui_MainWindow(object):
         self.tB_preparation.setObjectName(u"tB_preparation")
         self.tB_preparation.setFrameShape(QFrame.NoFrame)
         self.tB_preparation.setReadOnly(False)
+        self.tB_preparation.setTextInteractionFlags(Qt.LinksAccessibleByKeyboard|Qt.LinksAccessibleByMouse|Qt.TextBrowserInteraction|Qt.TextEditable|Qt.TextEditorInteraction|Qt.TextSelectableByKeyboard|Qt.TextSelectableByMouse)
+        self.tB_preparation.setOpenExternalLinks(True)
 
         self.gridLayout_35.addWidget(self.tB_preparation, 1, 0, 1, 1)
 
@@ -1997,7 +1999,7 @@ class Ui_MainWindow(object):
         self.pB_modif_2.toggled.connect(self.pB_delete.setDisabled)
         self.cB_web.toggled.connect(self.frame_wB.setVisible)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         self.toolBox.setCurrentIndex(0)
 
 

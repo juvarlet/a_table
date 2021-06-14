@@ -671,7 +671,7 @@ QCheckBox#cB_tagdessert::indicator:hover {
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="iconSize">
           <size>
@@ -1528,6 +1528,12 @@ icon-size: 40px;
                          </property>
                          <property name="readOnly">
                           <bool>false</bool>
+                         </property>
+                         <property name="textInteractionFlags">
+                          <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                         </property>
+                         <property name="openExternalLinks">
+                          <bool>true</bool>
                          </property>
                         </widget>
                        </item>

@@ -6,6 +6,7 @@ import recipe_db
 import menu
 import mailbox_google as mail
 import printer
+import html_parser as web
 from datetime import date, timedelta
 from pyperclip import copy
 from shutil import copy2
@@ -16,7 +17,7 @@ from PySide2.QtWidgets import*
 from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
-from PySide2.QtWebEngineWidgets import QWebEngineView
+from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
 # QDate
 
 #COLOR THEME
@@ -1237,30 +1238,32 @@ class MainGUI(QWidget):
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
         display_image(recipe_object, self.dirname, self.label_image_2, icon=False)
         
-        self.tW_ingredients.clear()
         ing_list = recipe_object.ingredients_string_list()
-        self.tW_ingredients.setColumnCount(1)
-        self.tW_ingredients.setRowCount(len(ing_list))
         
-        #create pushButton list
-        self.pB_remove_list = []
-        for r, ing in enumerate(ing_list):
-            qtwi = QTableWidgetItem(ing)
-            self.tW_ingredients.setItem(r, 0, qtwi)
-            if ing != '' and ing != 'Optionnel :':
-                pB_widget, pB_remove = self.create_qtwi_pb(ing)
+        self.populate_ing_list(ing_list)
+        # self.tW_ingredients.clear()
+        # self.tW_ingredients.setColumnCount(1)
+        # self.tW_ingredients.setRowCount(len(ing_list))
+        
+        # #create pushButton list
+        # self.pB_remove_list = []
+        # for r, ing in enumerate(ing_list):
+        #     qtwi = QTableWidgetItem(ing)
+        #     self.tW_ingredients.setItem(r, 0, qtwi)
+        #     if ing != '' and ing != 'Optionnel :':
+        #         pB_widget, pB_remove = self.create_qtwi_pb(ing)
                 
-                self.tW_ingredients.setCellWidget(r, 0, pB_widget)
-                self.pB_remove_list.append(pB_remove)
+        #         self.tW_ingredients.setCellWidget(r, 0, pB_widget)
+        #         self.pB_remove_list.append(pB_remove)
         
-        self.cB_ingredient.clear()
-        self.lE_qty.clear()
-        self.cB_unit.clear()
-        ingredients, units = self.recipe_db.get_ingredients_units_list()
-        self.cB_ingredient.addItems([''] + ingredients)
-        self.cB_unit.addItems([''] + units)
-        self.cB_ingredient.setCurrentIndex(0)
-        self.cB_unit.setCurrentIndex(0)
+        # self.cB_ingredient.clear()
+        # self.lE_qty.clear()
+        # self.cB_unit.clear()
+        # ingredients, units = self.recipe_db.get_ingredients_units_list()
+        # self.cB_ingredient.addItems([''] + ingredients)
+        # self.cB_unit.addItems([''] + units)
+        # self.cB_ingredient.setCurrentIndex(0)
+        # self.cB_unit.setCurrentIndex(0)
         
         if recipe_object.time is not None:
             self.sB_time.setValue(int(recipe_object.time))
@@ -1291,6 +1294,31 @@ class MainGUI(QWidget):
         layout_pB.setContentsMargins(0,0,0,0)
         
         return pB_widget, pB_remove
+    
+    def populate_ing_list(self, ing_list):
+        self.tW_ingredients.clear()
+        self.tW_ingredients.setColumnCount(1)
+        self.tW_ingredients.setRowCount(len(ing_list))
+        
+        #create pushButton list
+        self.pB_remove_list = []
+        for r, ing in enumerate(ing_list):
+            qtwi = QTableWidgetItem(ing)
+            self.tW_ingredients.setItem(r, 0, qtwi)
+            if ing != '' and ing != 'Optionnel :':
+                pB_widget, pB_remove = self.create_qtwi_pb(ing)
+                
+                self.tW_ingredients.setCellWidget(r, 0, pB_widget)
+                self.pB_remove_list.append(pB_remove)
+        
+        self.cB_ingredient.clear()
+        self.lE_qty.clear()
+        self.cB_unit.clear()
+        ingredients, units = self.recipe_db.get_ingredients_units_list()
+        self.cB_ingredient.addItems([''] + ingredients)
+        self.cB_unit.addItems([''] + units)
+        self.cB_ingredient.setCurrentIndex(0)
+        self.cB_unit.setCurrentIndex(0)
         
     def on_delete_ingredient(self):
         for pB in self.pB_remove_list:
@@ -1697,6 +1725,9 @@ class MainGUI(QWidget):
         self.label_contact.setOpenExternalLinks(True)
         self.label_contact.setTextFormat(Qt.RichText)
         self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
+        
+        #TODO
+        #Add favorite webpage
 
     def web_browser_ui(self):
         self.frame_wB.hide()
@@ -1777,9 +1808,16 @@ class MainGUI(QWidget):
                         "Tous types de fichiers (*.*)")
 
         if filename:
-            html = self.wV.page().toHtml()
-            with open(filename, 'w') as f:
-                f.write(html)
+            
+            def write_html_to_file(html):
+                with open(filename, 'w') as f:
+                    f.write(html)
+
+            self.wV.page().toHtml(write_html_to_file)
+            
+            # html = self.wV.page().toHtml()
+            # with open(filename, 'w') as f:
+            #     f.write(html)
                 
     def navigate_to_url(self): # Does not receive the Url
         q = QUrl( self.urlbar.text() )
@@ -1802,7 +1840,36 @@ class MainGUI(QWidget):
         self.urlbar.setCursorPosition(0)
     
     def on_parse_html(self):
-        print('magical html parser')
+        url = self.urlbar.text()
+        recipe_name, ingredients_list, steps = web.marmiton_parser(url)
+        list_failed = []
+        if recipe_name != '':
+            self.lE_title.setText(recipe_name)
+        else:
+            list_failed.append('- Titre')
+        if ingredients_list != []:
+            self.populate_ing_list(ingredients_list)
+        else:
+            list_failed.append('- Liste des ingrédients')
+        if steps != []:
+            self.tB_preparation.setText('\n'.join(steps))
+        else:
+            list_failed.append('- Préparation')
+            
+        self.sB_time.setValue(0)
+        
+        tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
+                self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
+        tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
+        for tag, tag_name in zip(tags, tag_names):
+            tag.setChecked(False)
+            
+        #TODO
+        #put link to website in description (in case failing to parse)
+        if len(list_failed) > 0:
+            self.display_error("Les éléments suivants n'ont pas pu être copiés :\n%s" % '\n'.join(list_failed))
+        
+        self.tB_preparation.append("<a href='%s'>%s</a>" % (url, url))
 
 def load_pic(widget, picture_path):#Display image on widget from image path
     picture = QPixmap(picture_path)
