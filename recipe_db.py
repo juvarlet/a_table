@@ -155,14 +155,9 @@ def get_recipe_sublist(recipe_list, tagsIn = [], tagsOut = []):
     # print(tagsIn, get_recipe_names(extract_list))
     return extract_list
 
-    
-
-
-    
 def get_recipe_names(recipe_list = []):
     return [recipe.name for recipe in recipe_list]
 
- 
 def date_to_text(date_object):
     return date_object.strftime('%Y-%m-%d')
 
