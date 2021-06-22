@@ -4,57 +4,49 @@ import os
 from bs4 import BeautifulSoup
 import json
 import urllib3
+from PySide2.QtCore import QThread
+from PySide2.QtGui import *
+from PySide2.QtCore import *
+import re
 
-class MyHTMLParser(HTMLParser):
-    def __init__(self, input_file = None):
-        self.input_file = input_file
-        
-    def handle_starttag(self, tag, attrs):
-        print("Start tag:", tag)
-        for attr in attrs:
-            print("     attr:", attr)
+class MySignal(QObject):
+    sig = Signal(str, bool)
+    
+class MyHTMLParser(QThread):#QThread
+    def __init__(self, url):
+        QThread.__init__(self)
+        self.url = url
+        self.signal = MySignal()
 
-    def handle_endtag(self, tag):
-        print("End tag  :", tag)
-
-    def handle_data(self, data):
-        print("Data     :", data)
-
-    def handle_comment(self, data):
-        print("Comment  :", data)
-
-    def handle_entityref(self, name):
-        c = chr(name2codepoint[name])
-        print("Named ent:", c)
-
-    def handle_charref(self, name):
-        if name.startswith('x'):
-            c = chr(int(name[1:], 16))
-        else:
-            c = chr(int(name))
-        print("Num ent  :", c)
-
-    def handle_decl(self, data):
-        print("Decl     :", data)
-
+    def run(self):
+        recipe_name, ingredients_list, steps = marmiton_parser(self.url)
+        okToParse = (recipe_name != '') and (ingredients_list != []) and (steps != [])
+        self.signal.sig.emit(self.url, okToParse)
 
 # 1. option to include link to web page in recipe description (easy)
 # 2. option to print page as pdf and display it/link to it in recipe (medium)
 # 3. implement several famous website parsers (hard)
 
 def marmiton_parser(url):
+    recipe_name = ''
+    ingredients_list = []
+    steps = []
     
-    soup = soup_from_url(url)
-    
-    #method 1
-    # steps = soup.find_all('h3', class_ = "Stepsstyle__StepTitle-sc-1211b9i-1 laOcon")
-    # steps_details = soup.find_all('p', class_ = "Stepsstyle__Text-sc-1211b9i-3 IhwQd")
-    
-    # for step, step_detail in zip(steps, steps_details):
-    #     print('%s - %s' % (step.text, step_detail.text))
-    
-    #method 2 (from json)
-    recipe_name, ingredients_list, steps = extract_from_json(soup)
+    try:
+        soup = soup_from_url(url)
+        
+        #method 1
+        # steps = soup.find_all('h3', class_ = "Stepsstyle__StepTitle-sc-1211b9i-1 laOcon")
+        # steps_details = soup.find_all('p', class_ = "Stepsstyle__Text-sc-1211b9i-3 IhwQd")
+        
+        # for step, step_detail in zip(steps, steps_details):
+        #     print('%s - %s' % (step.text, step_detail.text))
+        
+        #method 2 (from json)
+        recipe_name, ingredients_list, steps = extract_from_json(soup)
+        # recipe_name, ingredients_list, steps = extract_from_json_v2(soup)
+    except:
+        return recipe_name, ingredients_list, steps
     
     return recipe_name, ingredients_list, steps
     
@@ -76,36 +68,97 @@ def extract_from_json(soup):
     ingredients_list = []
     steps = []
     
+    try:
+        for script_content in soup.find_all('script'):
+            if script_content.get('type') == 'application/ld+json':
+                # print(test.string)
+                data = json.loads(script_content.string)
+                # print('json_explore')
+                # print(data)
+                if isinstance(data, dict):
+                    # print('dict')
+                    # print(data)
+                    if 'name' in data.keys():
+                        recipe_name = data['name']
+                    if 'recipeIngredient' in data.keys():
+                        ingredients_list = [ing for ing in data['recipeIngredient'] if ing != '']
+                    if 'recipeInstructions' in data.keys():
+                        instructions = data['recipeInstructions']
+                        steps = []
+                        for i, step in enumerate(instructions):
+                            if isinstance(step, dict):
+                                steps.append(step['text'])
+                            elif isinstance(step, str):
+                                steps.append(step)
+                elif isinstance(data, list):
+                    # print('list')
+                    # print(data)
+                    for step in data:
+                        if isinstance(step, str):
+                            steps.append(step)
+                        elif isinstance(step, dict):
+                            # print('dict in list')
+                            # print(step)
+                            recipe_name, ingredients_list, steps = recursive_json_explore(step)
+                            if recipe_name != '' or ingredients_list != [] or steps != []:
+                                # print('stop')
+                                return recipe_name, ingredients_list, steps
+                    # steps = data
+                    # print(data)
+            
+    except:
+        return recipe_name, ingredients_list, steps
+                
+    return recipe_name, ingredients_list, steps
+
+def extract_from_json_v2(soup):
+    recipe_name = ''
+    ingredients_list = []
+    steps = []
     for script_content in soup.find_all('script'):
         if script_content.get('type') == 'application/ld+json':
             # print(test.string)
             data = json.loads(script_content.string)
-            if isinstance(data, dict):
-                if 'name' in data.keys():
-                    recipe_name = data['name']
-                    # print(recipe_name)
-                if 'recipeIngredient' in data.keys():
-                    ingredients_list = [ing for ing in data['recipeIngredient'] if ing != '']
-                    # print(ingredients_list)
-                if 'recipeInstructions' in data.keys():
-                    # print(type(data['recipeInstructions']))
-                    # steps = ['Étape %s - %s' % (str(i+1), step_dict['text']) for i, step_dict in enumerate(data['recipeInstructions'])]
-                    # print(steps)
-                    
-                    instructions = data['recipeInstructions']
-                    steps = []
-                    for i, step in enumerate(instructions):
-                        if isinstance(step, dict):
-                            # steps.append('*Étape %s*\n%s' % (str(i+1), step['text']))
-                            steps.append(step['text'])
-                        elif isinstance(step, str):
-                            # steps.append('*Étape %s*\n%s' % (str(i+1), step))
-                            steps.append(step)
-            elif isinstance(data, list):
-                steps = data
-                
+            recipe_name, ingredients_list, steps = recursive_json_explore(data)
     return recipe_name, ingredients_list, steps
-    
+
+def recursive_json_explore(data):
+    recipe_name = ''
+    ingredients_list = []
+    steps = []
+    if isinstance(data, dict):
+        if 'name' in data.keys():
+            recipe_name = data['name']
+        if 'recipeIngredient' in data.keys():
+            ingredients_list = [ing for ing in data['recipeIngredient'] if ing != '']
+        if 'recipeInstructions' in data.keys():
+            instructions = data['recipeInstructions']
+            steps = []
+            for i, step in enumerate(instructions):
+                if isinstance(step, dict):
+                    steps.append(step['text'])
+                elif isinstance(step, str):
+                    steps.append(step)
+    elif isinstance(data, list):
+        for i, step in enumerate(data):
+            if isinstance(step, dict):
+                recipe_name, ingredients_list, steps = recursive_json_explore(step)
+            elif isinstance(step, str):
+                steps.append(step)
+    return recipe_name, ingredients_list, steps
+
+def extract_url(string):
+    try:
+        return re.search("(?P<url>https?://[^\s]+)", string).group("url")
+    except:
+        return ''
+
+def with_clickable_links(string):
+    if not '<a href=' in string: #avoid duplicate
+        url = extract_url(string)
+        if url != '':
+            return string.replace(url, "<a href='%s'>%s</a>" % (url, url))
+    return string
     
 def main():
     input_html1 = os.path.dirname(__file__) + '/Mes_Fiches/test_marmiton.html'

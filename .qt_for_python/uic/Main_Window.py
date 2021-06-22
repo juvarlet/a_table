@@ -1417,13 +1417,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_33.addWidget(self.label_6, 1, 0, 1, 1)
 
-        self.tE_recette = QTextEdit(self.frame_9)
-        self.tE_recette.setObjectName(u"tE_recette")
-        self.tE_recette.setFrameShape(QFrame.NoFrame)
-        self.tE_recette.setReadOnly(True)
-
-        self.gridLayout_33.addWidget(self.tE_recette, 2, 0, 1, 1)
-
         self.frame_tags = QFrame(self.frame_9)
         self.frame_tags.setObjectName(u"frame_tags")
         self.frame_tags.setFrameShape(QFrame.NoFrame)
@@ -1472,6 +1465,15 @@ class Ui_MainWindow(object):
 
 
         self.gridLayout_33.addWidget(self.frame_tags, 0, 0, 1, 1, Qt.AlignHCenter)
+
+        self.tE_recette = QTextBrowser(self.frame_9)
+        self.tE_recette.setObjectName(u"tE_recette")
+        self.tE_recette.setFrameShape(QFrame.NoFrame)
+        self.tE_recette.setReadOnly(True)
+        self.tE_recette.setTextInteractionFlags(Qt.LinksAccessibleByKeyboard|Qt.LinksAccessibleByMouse|Qt.TextBrowserInteraction|Qt.TextSelectableByKeyboard|Qt.TextSelectableByMouse)
+        self.tE_recette.setOpenExternalLinks(True)
+
+        self.gridLayout_33.addWidget(self.tE_recette, 2, 0, 1, 1)
 
 
         self.gridLayout_20.addWidget(self.frame_9, 0, 1, 6, 1)
@@ -2179,11 +2181,6 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.cB_web.setText("")
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Pr\u00e9paration :", None))
-        self.tE_recette.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Poiret One'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:400;\"><br /></p></body></html>", None))
 #if QT_CONFIG(tooltip)
         self.label_summer.setToolTip(QCoreApplication.translate("MainWindow", u"Plat d'\u00e9t\u00e9", None))
 #endif // QT_CONFIG(tooltip)
@@ -2216,6 +2213,11 @@ class Ui_MainWindow(object):
         self.label_vegan.setToolTip(QCoreApplication.translate("MainWindow", u"Vegan", None))
 #endif // QT_CONFIG(tooltip)
         self.label_vegan.setText(QCoreApplication.translate("MainWindow", u"tagvegan", None))
+        self.tE_recette.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Poiret One'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
+"<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:400;\"><br /></p></body></html>", None))
 #if QT_CONFIG(tooltip)
         self.pB_back.setToolTip(QCoreApplication.translate("MainWindow", u"Revenir \u00e0 la recette pr\u00e9c\u00e9dente", None))
 #endif // QT_CONFIG(tooltip)

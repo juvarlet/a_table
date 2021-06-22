@@ -7,6 +7,7 @@ import menu
 import mailbox_google as mail
 import printer
 import html_parser as web
+import custom_widgets as cw
 from datetime import date, timedelta
 from pyperclip import copy
 from shutil import copy2
@@ -171,7 +172,7 @@ class MainGUI(QWidget):
         self.pB_photo = self.pW.pB_photo
         self.tE_ingredients: QTextEdit
         self.tE_ingredients = self.pW.tE_ingredients
-        self.tE_recipe: QTextEdit
+        self.tE_recipe: QTextBrowser
         self.tE_recipe = self.pW.tE_recette
         self.lW_recipe: QListWidget
         self.lW_recipe = self.pW.lW_recettes
@@ -329,7 +330,7 @@ class MainGUI(QWidget):
         #default state
         self.window().setWindowState(Qt.WindowMaximized)
         #-replace qtablewidget tW_menu by custom class
-        new_tW_menu = TableWidgetCustom(self.pW)
+        new_tW_menu = cw.TableWidgetCustom(self.pW)
         new_tW_menu.setRowCount(3)
         new_tW_menu.setVerticalHeaderLabels([' Midi ', ' Soir ', ' Desserts '])
         new_tW_menu.hideRow(2)
@@ -347,7 +348,7 @@ class MainGUI(QWidget):
         self.tW_menu = new_tW_menu
         self.pW.tW_menu.setParent(None)
         
-        new_sB_days = SpinBoxCustom(self.pW)
+        new_sB_days = cw.SpinBoxCustom(self.pW)
         new_sB_days.setMinimumHeight(50)
         new_sB_days.setButtonSymbols(QAbstractSpinBox.PlusMinus)
         new_sB_days.setSuffix(' jours')
@@ -739,7 +740,7 @@ class MainGUI(QWidget):
                 #display image
                 display_image(recipe_object, self.dirname, self.label_recipe_image, icon = False)
                 #display instructions
-                self.tE_recipe.setText(recipe_object.preparation)
+                self.tE_recipe.setText(recipe_object.preparation.replace('\n', '<br/>'))
                 #display ingredients
                 self.tE_ingredients.setText(recipe_object.ingredients_string(self.recipe_db).replace('\n', '<br/>'))
                 #update tags
@@ -1276,7 +1277,7 @@ class MainGUI(QWidget):
         for tag, tag_name in zip(tags, tag_names):
             tag.setChecked(recipe_object.isTagged(tag_name))
         
-        self.tB_preparation.setText(recipe_object.preparation)
+        self.tB_preparation.setText(recipe_object.preparation.replace('\n', '<br/>'))
 
     def create_qtwi_pb(self, ingredient):
         pB_widget = QWidget(self.tW_ingredients)
@@ -1490,9 +1491,13 @@ class MainGUI(QWidget):
             for r in range(self.tW_ingredients.rowCount()):
                 full_ing_description = self.tW_ingredients.item(r, 0).text()
                 if full_ing_description != '' and full_ing_description != 'Optionnel :':
-                    raw_ing, raw_qty = full_ing_description.split(' : ')
-                    ing = raw_ing[2:]
-                    qty = extract_number(raw_qty)
+                    if ' : ' in full_ing_description:#manual recipe insertion
+                        raw_ing, raw_qty = full_ing_description.split(' : ')
+                        ing = raw_ing[2:]
+                        qty = extract_number(raw_qty)
+                    else:#automatic recipe insertion
+                        ing = full_ing_description
+                        qty = None
                     if qty is None:
                         qty = '1'
                         unit = '()'
@@ -1514,7 +1519,7 @@ class MainGUI(QWidget):
             tag_checked_list = [tag_name for tag, tag_name in zip(tags, tag_names) if tag.isChecked()]
             tag_cell = '/'.join(tag_checked_list)
             #case with preparation not empty -> combine preparation to string
-            preparation_cell = self.tB_preparation.toPlainText()
+            preparation_cell = web.with_clickable_links(self.tB_preparation.toPlainText())
             #case with preparation time not 0
             time_cell = ''
             if self.sB_time.text() != '0':
@@ -1730,8 +1735,11 @@ class MainGUI(QWidget):
         #Add favorite webpage
 
     def web_browser_ui(self):
+        os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--enable-logging --log-level=3"
         self.frame_wB.hide()
         self.wV = QWebEngineView()
+        page = cw.WebEnginePage(self.wV)
+        self.wV.setPage(page)
         
         self.wV.load(self.homepage)
         self.gL_web.addWidget(self.wV)
@@ -1739,13 +1747,13 @@ class MainGUI(QWidget):
         self.navtb.setIconSize( QSize(30,30) )
         self.hL_tools.addWidget(self.navtb)
         
-        pB_cook = QPushButton('', self.frame_wB)
-        pB_cook.setFixedSize(60,60)
-        pB_cook.setIconSize(QSize(40,40))
-        pB_cook.setIcon(QIcon(self.dirname + '/UI/images/icon_service.png'))
-        pB_cook.setToolTip('Recopier cette recette')
-        pB_cook.clicked.connect(self.on_parse_html)
-        self.navtb.addWidget(pB_cook)
+        self.pB_cook = QPushButton('', self.frame_wB)
+        self.pB_cook.setFixedSize(60,60)
+        self.pB_cook.setIconSize(QSize(40,40))
+        self.pB_cook.setIcon(QIcon(self.dirname + '/UI/images/icon_service.png'))
+        self.pB_cook.setToolTip('Recopier cette recette')
+        self.pB_cook.clicked.connect(self.on_parse_html)
+        self.navtb.addWidget(self.pB_cook)
         
         back_btn = QAction( QIcon(self.dirname + '/UI/images/icon_back.png'), "Back", self)
         back_btn.setToolTip("Page précédente")
@@ -1838,23 +1846,39 @@ class MainGUI(QWidget):
 
         self.urlbar.setText( q.toString() )
         self.urlbar.setCursorPosition(0)
+        
+        my_html_worker = web.MyHTMLParser(self.urlbar.text())
+            
+        my_html_worker.signal.sig.connect(self.on_new_webpage)
+        
+        self.myThreads.append(my_html_worker)
+        my_html_worker.start()
     
     def on_parse_html(self):
         url = self.urlbar.text()
         recipe_name, ingredients_list, steps = web.marmiton_parser(url)
         list_failed = []
+        message = ''
+        
         if recipe_name != '':
             self.lE_title.setText(recipe_name)
         else:
             list_failed.append('- Titre')
+            self.lE_title.setText('Nouvelle Recette')
+            
         if ingredients_list != []:
             self.populate_ing_list(ingredients_list)
         else:
             list_failed.append('- Liste des ingrédients')
+            self.tW_ingredients.clear()
+            self.tW_ingredients.setColumnCount(1)
+            self.tW_ingredients.setRowCount(1)
+            
         if steps != []:
             self.tB_preparation.setText('\n'.join(steps))
         else:
             list_failed.append('- Préparation')
+            self.tB_preparation.clear()
             
         self.sB_time.setValue(0)
         
@@ -1863,14 +1887,24 @@ class MainGUI(QWidget):
         tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
         for tag, tag_name in zip(tags, tag_names):
             tag.setChecked(False)
-            
-        #TODO
-        #put link to website in description (in case failing to parse)
-        if len(list_failed) > 0:
-            self.display_error("Les éléments suivants n'ont pas pu être copiés :\n%s" % '\n'.join(list_failed))
-        
+                    
         self.tB_preparation.append("<a href='%s'>%s</a>" % (url, url))
-
+        message += 'Le lien vers la recette a été ajouté.'
+        
+        if len(list_failed) > 0:
+            message += "\nLes éléments suivants n'ont pas pu être copiés :\n%s" % '\n'.join(list_failed)
+            self.display_error(message)
+        else:
+            message += "<br/>La recette a été correctement importée !"
+            self.print_thread_function(message, icon_path = self.dirname + '/UI/images/icon_service.png')
+       
+    def on_new_webpage(self, url, okToParse):
+        if url == self.urlbar.text():#make sure url validated matches current url (asynchronous thread treatment)
+            icon = QIcon(self.dirname + '/UI/images/icon_service%s.png' % ['_', ''][okToParse])
+            self.pB_cook.setIcon(icon)
+            self.pB_cook.setToolTip(['Copier le lien', 'Importer la recette'][okToParse])
+        
+        
 def load_pic(widget, picture_path):#Display image on widget from image path
     picture = QPixmap(picture_path)
     widget.setPixmap(picture)
@@ -1962,7 +1996,14 @@ def extract_number(string):#Extract number from ingredient quantity string
                 no_decimal = False
         # else:
         #     return ''.join(number)
-    return ''.join(number)
+    try:
+        float_num = float(''.join(number))
+        if str(float_num)[-2:] == '.0':
+            return str(int(float_num))
+        else:
+            return str(float_num)
+    except:
+        return ''.join(number)
 
 def start(recipe_db):
     app = QApplication(sys.argv)
@@ -1998,9 +2039,14 @@ def debug():
     # print(myMenu.tag_score('vegan'))
     
     # pass
-    s = '2'
+    s = '250 l'
     qty = extract_number(s)
     print(qty)
+    # import re
+
+    # myString = "This is my tweet check it out https://example.com/blah"
+
+    # print(re.search("(?P<url>https?://[^\s]+)", myString).group("url"))
 
 def main(): #Entry point
     dirname = os.path.dirname(__file__)
@@ -2013,25 +2059,7 @@ def main(): #Entry point
     #Launch app
     start(my_recipe_DB)
 
-class TableWidgetCustom(QTableWidget): #Custom TableWidget to adjust item position
-    def __init__(self, parent=None):
-        super(TableWidgetCustom, self).__init__(parent)
-    
-    def viewOptions(self) -> PySide2.QtWidgets.QStyleOptionViewItem:
-        option = QTableWidget.viewOptions(self)
-        option.decorationAlignment = Qt.AlignHCenter | Qt.AlignCenter
-        option.decorationPosition = QStyleOptionViewItem.Top
-        # return super().viewOptions()
-        return option
 
-class SpinBoxCustom(QSpinBox): #Custom SpinBox to force +- only, ignoring keyboard input
-    def __init__(self, parent=None):
-        super(SpinBoxCustom, self).__init__(parent)
-    
-    def keyPressEvent(self, event: PySide2.QtGui.QKeyEvent) -> None:
-        return event.ignore()
-        # return super().keyPressEvent(event)
-    
 
 if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
