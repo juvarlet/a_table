@@ -10,10 +10,7 @@ class Recipe:
     
     def isTagged(self, tag):
         try:
-            if tag in self.tags:
-                return True
-            else:
-                return False
+            return tag in self.tags
         except:
             return False
     
@@ -95,8 +92,7 @@ class Recipe:
     def meet_without_criteria(self, without_text):
         if without_text == '':
             return True
-        else:
-            return not self.meet_with_criteria(without_text)
+        return not self.meet_with_criteria(without_text)
     
     def toString_cells(self):
         cells = 6*[None]

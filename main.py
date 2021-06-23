@@ -1,5 +1,7 @@
 import os
 from os.path import basename
+
+from PySide2 import QtCore
 from recipe import Recipe
 import sys
 import recipe_db
@@ -178,6 +180,30 @@ class MainGUI(QWidget):
         self.lW_recipe = self.pW.lW_recettes
         self.cB_search: QCheckBox
         self.cB_search = self.pW.cB_recherche
+        self.cB_search_recipe_name: QCheckBox
+        self.cB_search_recipe_name = self.pW.cB_search_recipe_name
+        self.cB_search_ingredients: QCheckBox
+        self.cB_search_ingredients = self.pW.cB_search_ingredients
+        self.cB_search_preparation: QCheckBox
+        self.cB_search_preparation = self.pW.cB_search_preparation
+        self.cB_search_tag_double: QCheckBox
+        self.cB_search_tag_double = self.pW.cB_search_tag_double
+        self.cB_search_tag_kids: QCheckBox
+        self.cB_search_tag_kids = self.pW.cB_search_tag_kids
+        self.cB_search_tag_vegan: QCheckBox
+        self.cB_search_tag_vegan = self.pW.cB_search_tag_vegan
+        self.cB_search_tag_summer: QCheckBox
+        self.cB_search_tag_summer = self.pW.cB_search_tag_summer
+        self.cB_search_tag_winter: QCheckBox
+        self.cB_search_tag_winter = self.pW.cB_search_tag_winter
+        self.cB_search_tag_dessert: QCheckBox
+        self.cB_search_tag_dessert = self.pW.cB_search_tag_dessert
+        self.cB_search_tag_dinner: QCheckBox
+        self.cB_search_tag_dinner = self.pW.cB_search_tag_dinner
+        self.cB_search_tag_lunch: QCheckBox
+        self.cB_search_tag_lunch = self.pW.cB_search_tag_lunch
+        self.cB_search_tag_tips: QCheckBox
+        self.cB_search_tag_tips = self.pW.cB_search_tag_tips
         self.frame_search: QFrame
         self.frame_search = self.pW.frame_recherche
         self.frame_new_recipe: QFrame
@@ -224,10 +250,6 @@ class MainGUI(QWidget):
         self.cB_tagwinter = self.pW.cB_tagwinter
         self.lE_with: QLineEdit
         self.lE_with = self.pW.lE_with
-        self.lE_without: QLineEdit
-        self.lE_without = self.pW.lE_without
-        self.pB_filter: QPushButton
-        self.pB_filter = self.pW.pB_filter
         self.frame_tags: QFrame
         self.frame_tags = self.pW.frame_tags
         self.tag_vegan: QLabel
@@ -470,7 +492,6 @@ class MainGUI(QWidget):
         self.tW_menu.cellDoubleClicked.connect(self.on_card_recipe_selection)
         self.tW_history.cellDoubleClicked.connect(self.on_history_recipe_selection)
         self.pB_modif.clicked.connect(self.on_card_modif)
-        self.pB_filter.clicked.connect(self.on_filter_selection)
         self.pB_save.clicked.connect(self.on_save_menu)
         self.pB_ok.clicked.connect(self.on_confirm_history_update)
         self.pB_cancel.clicked.connect(self.on_cancel_history_update)
@@ -502,6 +523,19 @@ class MainGUI(QWidget):
         self.sB_desserts.valueChanged.connect(self.on_dessert_selection)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
+        self.lE_with.textChanged.connect(self.dynamic_filter)
+        self.cB_search_ingredients.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_preparation.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_recipe_name.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_dessert.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_dinner.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_lunch.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_double.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_kids.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_summer.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_tips.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_vegan.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_winter.stateChanged.connect(self.dynamic_filter)
         
         self.selectable_tags = [self.cB_tagdinner, self.cB_tagdessert, self.cB_tagdouble, self.cB_tagkids,
                                 self.cB_taglunch, self.cB_tagwinter, self.cB_tagsummer, self.cB_tagvegan, self.cB_tagtips]
@@ -513,6 +547,103 @@ class MainGUI(QWidget):
     def dummy_function(self, row, column):
         print('dummy function triggered %s %s' % (row, column))
     
+    def dynamic_filter_OLD(self):
+        matching_items = self.lW_recipe.findItems(self.lE_with.text(), QtCore.Qt.MatchRegularExpression)
+        
+        all_items = self.lW_recipe.findItems("", QtCore.Qt.MatchRegularExpression)
+        for item in all_items:
+            self.lW_recipe.setItemHidden(item, not item in matching_items)
+
+    def isFilterInRecipeName(self, filter, recipe):
+        if self.cB_search_recipe_name.isChecked():
+            return filter in recipe.name.lower()
+        return False
+
+    def isFilterInIngredientsList(self,filter,recipe):
+        if self.cB_search_ingredients.isChecked() and recipe.ingredients_list_qty is not None: 
+            for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
+                if filter in ingredient:
+                    return True
+        return False
+
+    def isFilterInPreparation(self, filter, recipe):
+        if self.cB_search_preparation.isChecked() and recipe.preparation is not None:
+            return filter in recipe.preparation.lower()
+        return False
+
+    def isFilterInTags(self, recipe):
+        output = True
+        if self.cB_search_tag_double.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("double")
+            else:
+                output = False
+        if self.cB_search_tag_kids.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("kids")
+            else:
+                output = False
+        if self.cB_search_tag_dessert.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("dessert")
+            else:
+                output = False
+        if self.cB_search_tag_dinner.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("soir")
+            else:
+                output = False
+        if self.cB_search_tag_lunch.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("midi")
+            else:
+                output = False
+        if self.cB_search_tag_summer.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("ete")
+            else:
+                output = False
+        if self.cB_search_tag_tips.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("tips")
+            else:
+                output = False
+        if self.cB_search_tag_vegan.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("vegan")
+            else:
+                output = False
+        if self.cB_search_tag_winter.isChecked():
+            if recipe.tags is not None:
+                output = output and recipe.isTagged("hiver")
+            else:
+                output = False
+        return output
+
+    def dynamic_filter(self):
+        with_filters = self.lE_with.text().split(',')
+        recipeCount = 0
+
+        for recipeIndex in range(self.lW_recipe.count()):
+            recipeListItem = self.lW_recipe.item(recipeIndex)
+            recipe = self.recipe_db.get_recipe_object(recipeListItem.text())
+            show_recipe_flag = True
+            
+            for filter in with_filters:
+                filter = filter.strip()
+                isCriteriaMet = self.isFilterInRecipeName(filter, recipe)
+                isCriteriaMet = isCriteriaMet or self.isFilterInIngredientsList(filter, recipe)
+                isCriteriaMet = isCriteriaMet or self.isFilterInPreparation(filter, recipe)
+                
+                show_recipe_flag = show_recipe_flag and isCriteriaMet
+
+            show_recipe_flag = show_recipe_flag and self.isFilterInTags(recipe)
+
+            self.lW_recipe.setItemHidden(recipeListItem, not show_recipe_flag)
+            if show_recipe_flag:
+                recipeCount += 1
+
+    #def print_thread_function(self, data):
     def print_thread_function(self, data, icon_path = None):
         # print(data)
         info_dialog = QMessageBox(self)
@@ -700,17 +831,23 @@ class MainGUI(QWidget):
         self.lW_menu.addItems(list(dict.fromkeys(['  -  ' + name for name in recipe_db.get_recipe_names(self.dessert_list)])))
 
     def on_card_recipe_selection(self, row, column):
+ 
         recipe_name = self.tW_menu.item(row, column).text()
         self.tW.setCurrentWidget(self.tab_recipe)
+        self.reset_recipes_list()
+        self.reset_filters()
         lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
         self.lW_recipe.scrollToItem(lwi)
         self.lW_recipe.setCurrentItem(lwi)
         lwi.setSelected(True)
+
     
     def on_history_recipe_selection(self, row, column):
         if self.tab_recipe.isEnabled():#no effect when waiting for user confirmation in history tab
             recipe_name = self.tW_history.item(row, column).text()
             self.tW.setCurrentWidget(self.tab_recipe)
+            self.reset_recipes_list()
+            self.reset_filters()
             try:
                 lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
                 self.lW_recipe.scrollToItem(lwi)
@@ -730,7 +867,7 @@ class MainGUI(QWidget):
             self.lW_recipe.setCurrentRow(0)
             self.lW_recipe.setItemSelected(self.lW_recipe.item(0), True)
             
-    def on_recipe_selection(self):
+    def on_recipe_selection(self): #display recipe when selected in the list
         if self.lW_recipe.count() > 0:
             #display title
             recipe_name = self.lW_recipe.currentItem().text()
@@ -759,6 +896,7 @@ class MainGUI(QWidget):
                 # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
     
     def on_recipe_link(self, link):
+        self.reset_recipes_list()
         self.previous_recipe_name = self.label_recipe_title.text()
         lwi = self.lW_recipe.findItems(link.toString(), Qt.MatchFixedString)[0]
         self.lW_recipe.scrollToItem(lwi)
@@ -1156,40 +1294,27 @@ class MainGUI(QWidget):
 
         return [self.dirname + '/UI/images/score_%s_%s.png' % (tag_name, score[tag_name]) for tag, tag_name in zip(tags, tags_names)]
     
-    def on_filter_selection(self):
-        if self.pB_filter.isChecked():
-            #extract filter values
-            with_list = self.lE_with.text().split(',')
-            without_list = self.lE_without.text().split(',')
-            filtered_list = []
-            total_recipe_count = self.lW_recipe.count()
-            for recipe_object in [self.recipe_db.get_recipe_object(self.lW_recipe.item(i).text()) for i in range(total_recipe_count)]:
-                #with
-                is_selected = True
-                for with_text in with_list: #must meet all the with criteria
-                    is_selected *= recipe_object.meet_with_criteria(with_text)
-                #without
-                for without_text in without_list: #must meet all the without criteria
-                    is_selected *= recipe_object.meet_without_criteria(without_text)
-                if is_selected:
-                    filtered_list.append(recipe_object)
+    def reset_recipes_list(self): #reset list of recipes
+        self.lW_recipe.clear()     #reset list
+        self.lW_recipe.addItems(recipe_db.get_recipe_names(self.recipe_db.recipe_list))         #repopulate recipe list
 
-            #reset list
-            self.lW_recipe.clear()
-            self.lW_recipe.addItems(recipe_db.get_recipe_names(filtered_list))
-            if filtered_list != []:
-                self.lW_recipe.setCurrentRow(0)
-
-            #display result summary on search label
-            self.cB_search.setText('Recherche (%s/%s)' % (len(filtered_list), total_recipe_count))
-        else:
-            #reset list
-            self.lW_recipe.clear()
-            #repopulate recipe list
-            self.lW_recipe.addItems(recipe_db.get_recipe_names(self.recipe_db.recipe_list))
-
-            #reset search label
-            self.cB_search.setText('Recherche')
+    def reset_filters(self): #reset search/filter section(frame)
+        self.cB_search.setText('Recherche avancée')   
+        self.lE_with.setText('')
+        self.cB_search_recipe_name.setChecked(True)
+        self.cB_search_ingredients.setChecked(False)
+        self.cB_search_preparation.setChecked(False)
+        self.cB_search_tag_lunch.setChecked(False)
+        self.cB_search_tag_dinner.setChecked(False)
+        self.cB_search_tag_dessert.setChecked(False)
+        self.cB_search_tag_double.setChecked(False)
+        self.cB_search_tag_kids.setChecked(False)
+        self.cB_search_tag_summer.setChecked(False)
+        self.cB_search_tag_tips.setChecked(False)
+        self.cB_search_tag_vegan.setChecked(False)
+        self.cB_search_tag_winter.setChecked(False)
+        if self.frame_search.isVisible():
+            self.cB_search.click()
     
     def on_new_recipe(self):
         # print('new recipe')
@@ -1224,8 +1349,6 @@ class MainGUI(QWidget):
         #create pushButton list
         self.pB_remove_list = []
         
-        
-    
     def on_edit_recipe(self):
         #disable other tabs
         self.tW.setTabEnabled(0, False)
@@ -2049,6 +2172,7 @@ def debug():
     # print(re.search("(?P<url>https?://[^\s]+)", myString).group("url"))
 
 def main(): #Entry point
+
     dirname = os.path.dirname(__file__)
     # input_recipe = dirname + '/MesRecettes (copy).ods'
     input_recipe = dirname + '/MesRecettes.ods'
@@ -2067,3 +2191,48 @@ if __name__ == "__main__":
     # debug()
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #def on_filter_selection(self): #DEPRECATED - first recipe search algorithm relying on a button. 
+    #    if self.pB_filter.isChecked():
+    #        #extract filter values
+    #        with_list = self.lE_with.text().split(',')
+    #        #without_list = self.lE_without.text().split(',')
+    #        filtered_list = []
+    #        total_recipe_count = self.lW_recipe.count()
+    #        for recipe_object in [self.recipe_db.get_recipe_object(self.lW_recipe.item(i).text()) for i in range(total_recipe_count)]:
+    #            #with
+    #            is_selected = True
+    #            for with_text in with_list: #must meet all the with criteria
+    #                is_selected *= recipe_object.meet_with_criteria(with_text)
+    #            #without
+    #            for without_text in without_list: #must meet all the without criteria
+    #                is_selected *= recipe_object.meet_without_criteria(without_text)
+    #            if is_selected:
+    #                filtered_list.append(recipe_object)
+    #
+    #        #reset list
+    #        self.lW_recipe.clear()
+    #        self.lW_recipe.addItems(recipe_db.get_recipe_names(filtered_list))
+    #        if filtered_list != []:
+    #            self.lW_recipe.setCurrentRow(0)
+    #
+    #        #display result summary on search label
+    #        self.cB_search.setText('Recherche (%s/%s)' % (len(filtered_list), total_recipe_count))
+    #    else:
+    #        self.reset_recipes_list()
+    #        self.cB_search.setText('Recherche')

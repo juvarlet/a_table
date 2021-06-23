@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="file:///../UI/">
+    <file alias="tag dessert off">images/tag_dessert_black.png</file>
+    <file alias="tag dessert on">images/tag_dessert_color.png</file>
     <file>images/benchmark/list_frame.png</file>
     <file>images/icon_chef.png</file>
   </qresource>
