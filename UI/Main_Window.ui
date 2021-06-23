@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1512</width>
+    <width>2600</width>
     <height>783</height>
    </rect>
   </property>
@@ -690,7 +690,7 @@ QCheckBox#cB_search_tag_dessert::indicator:hover {
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="iconSize">
           <size>
@@ -723,14 +723,14 @@ icon-size: 40px;
               <enum>QFrame::NoFrame</enum>
              </property>
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="page_carte">
               <property name="geometry">
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1135</width>
+                <width>2173</width>
                 <height>599</height>
                </rect>
               </property>
@@ -837,49 +837,18 @@ icon-size: 40px;
                      <enum>QFrame::Raised</enum>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_13">
-                     <item row="0" column="5">
-                      <widget class="QCheckBox" name="cB_restes_2">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>14</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
+                     <item row="0" column="10">
+                      <spacer name="horizontalSpacer_3">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
                        </property>
-                       <property name="toolTip">
-                        <string>Le dernier repas, c'est les restes!</string>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
                        </property>
-                       <property name="text">
-                        <string>Restes</string>
-                       </property>
-                       <property name="checked">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="6">
-                      <widget class="QLabel" name="label_dessert">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>14</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>Desserts</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="pixmap">
-                        <pixmap>../../../../../../../home/pilou/.designer/backup/images/icon_cupcake_t.png</pixmap>
-                       </property>
-                      </widget>
+                      </spacer>
                      </item>
                      <item row="0" column="0">
                       <widget class="QPushButton" name="pB_new_menu_2">
@@ -906,20 +875,29 @@ icon-size: 40px;
                        </property>
                       </widget>
                      </item>
-                     <item>
-                      <widget class="QLabel" name="label_date">
+                     <item row="0" column="5">
+                      <widget class="QCheckBox" name="cB_restes_2">
+                       <property name="font">
+                        <font>
+                         <family>Poiret One</family>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>Le dernier repas, c'est les restes!</string>
+                       </property>
                        <property name="text">
-                        <string/>
+                        <string>Restes</string>
                        </property>
-                       <property name="pixmap">
-                        <pixmap>images/icon_date_3colors_t_LD.png</pixmap>
-                       </property>
-                       <property name="textInteractionFlags">
-                        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+                       <property name="checked">
+                        <bool>true</bool>
                        </property>
                       </widget>
                      </item>
-                     <item>
+                     <item row="0" column="2">
                       <widget class="QDateEdit" name="dateEdit_2">
                        <property name="minimumSize">
                         <size>
@@ -955,31 +933,26 @@ icon-size: 40px;
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="1">
-                      <widget class="QLabel" name="label_date">
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="pixmap">
-                        <pixmap>../../../../../../../home/pilou/.designer/backup/images/icon_date_3colors_t_LD.png</pixmap>
-                       </property>
-                       <property name="textInteractionFlags">
-                        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="10">
-                      <spacer name="horizontalSpacer_3">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
+                     <item row="0" column="7">
+                      <widget class="QSpinBox" name="sB_desserts_2">
+                       <property name="minimumSize">
                         <size>
-                         <width>40</width>
-                         <height>20</height>
+                         <width>0</width>
+                         <height>50</height>
                         </size>
                        </property>
-                      </spacer>
+                       <property name="font">
+                        <font>
+                         <family>Poiret One</family>
+                         <weight>75</weight>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="buttonSymbols">
+                        <enum>QAbstractSpinBox::PlusMinus</enum>
+                       </property>
+                      </widget>
                      </item>
                      <item row="0" column="3">
                       <widget class="QLabel" name="label_9">
@@ -997,7 +970,48 @@ icon-size: 40px;
                        </property>
                       </widget>
                      </item>
-                     <item>
+                     <item row="0" column="11">
+                      <widget class="QPushButton" name="pB_modif">
+                       <property name="font">
+                        <font>
+                         <family>Poiret One</family>
+                         <pointsize>-1</pointsize>
+                         <weight>75</weight>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>Modifier</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>40</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                       <property name="checkable">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_date">
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="pixmap">
+                        <pixmap>images/icon_date_3colors_t_LD.png</pixmap>
+                       </property>
+                       <property name="textInteractionFlags">
+                        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="4">
                       <widget class="QSpinBox" name="sB_days_2">
                        <property name="minimumSize">
                         <size>
@@ -1027,29 +1041,7 @@ icon-size: 40px;
                        </property>
                       </widget>
                      </item>
-                     <item>
-                      <widget class="QCheckBox" name="cB_restes_2">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>14</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>Le dernier repas, c'est les restes!</string>
-                       </property>
-                       <property name="text">
-                        <string>Restes</string>
-                       </property>
-                       <property name="checked">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
+                     <item row="0" column="6">
                       <widget class="QLabel" name="label_dessert">
                        <property name="font">
                         <font>
@@ -1068,68 +1060,6 @@ icon-size: 40px;
                        </property>
                        <property name="pixmap">
                         <pixmap>images/icon_cupcake_t.png</pixmap>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="sB_desserts_2">
-                       <property name="minimumSize">
-                        <size>
-                         <width>0</width>
-                         <height>50</height>
-                        </size>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="buttonSymbols">
-                        <enum>QAbstractSpinBox::PlusMinus</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_3">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="pB_modif">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>-1</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>Modifier</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="iconSize">
-                        <size>
-                         <width>40</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                       <property name="checkable">
-                        <bool>true</bool>
                        </property>
                       </widget>
                      </item>
@@ -1271,7 +1201,7 @@ icon-size: 40px;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1135</width>
+                <width>2223</width>
                 <height>599</height>
                </rect>
               </property>
@@ -3052,335 +2982,6 @@ p, li { white-space: pre-wrap; }
                 </layout>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QFrame" name="frame_details">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_20">
-                 <item row="0" column="1" rowspan="6">
-                  <widget class="QFrame" name="frame_9">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_33">
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label_6">
-                      <property name="font">
-                       <font>
-                        <family>Poiret One</family>
-                        <pointsize>16</pointsize>
-                        <weight>75</weight>
-                        <italic>false</italic>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Préparation :</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="0" alignment="Qt::AlignHCenter">
-                     <widget class="QFrame" name="frame_tags">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QGridLayout" name="gridLayout_8">
-                       <item row="1" column="0">
-                        <widget class="QLabel" name="label_summer">
-                         <property name="toolTip">
-                          <string>Plat d'été</string>
-                         </property>
-                         <property name="text">
-                          <string>tagsum</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="2">
-                        <widget class="QLabel" name="label_dessert_2">
-                         <property name="toolTip">
-                          <string>Dessert</string>
-                         </property>
-                         <property name="text">
-                          <string>tagdesser</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="1">
-                        <widget class="QLabel" name="label_winter">
-                         <property name="toolTip">
-                          <string>Plat d'hiver</string>
-                         </property>
-                         <property name="text">
-                          <string>tagwinter</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="0">
-                        <widget class="QLabel" name="label_double">
-                         <property name="toolTip">
-                          <string>Peut servir pour 2 repas</string>
-                         </property>
-                         <property name="text">
-                          <string>tagdouble</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="3">
-                        <widget class="QLabel" name="label_tips">
-                         <property name="toolTip">
-                          <string>Préparation</string>
-                         </property>
-                         <property name="text">
-                          <string>tagtips</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <widget class="QLabel" name="label_kids">
-                         <property name="toolTip">
-                          <string>Les enfants aiment</string>
-                         </property>
-                         <property name="text">
-                          <string>tagkids</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="2">
-                        <widget class="QLabel" name="label_lunchdinner">
-                         <property name="toolTip">
-                          <string>Midi/Soir</string>
-                         </property>
-                         <property name="text">
-                          <string>tagld</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="3">
-                        <widget class="QLabel" name="label_vegan">
-                         <property name="toolTip">
-                          <string>Vegan</string>
-                         </property>
-                         <property name="text">
-                          <string>tagvegan</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QTextBrowser" name="tE_recette">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                      <property name="html">
-                       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Poiret One'; font-size:11pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                      <property name="textInteractionFlags">
-                       <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                      </property>
-                      <property name="openExternalLinks">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item row="6" column="1">
-                  <widget class="QFrame" name="frame_4">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_26">
-                    <item row="0" column="1" alignment="Qt::AlignLeft">
-                     <widget class="QPushButton" name="pB_back">
-                      <property name="toolTip">
-                       <string>Revenir à la recette précédente</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>40</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="2" alignment="Qt::AlignLeft">
-                     <widget class="QPushButton" name="pB_send_2">
-                      <property name="toolTip">
-                       <string>Envoyer</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>40</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="3" alignment="Qt::AlignLeft">
-                     <widget class="QPushButton" name="pB_print_2">
-                      <property name="toolTip">
-                       <string>Imprimer</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>40</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="0">
-                     <spacer name="horizontalSpacer_10">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item row="0" column="0" rowspan="7">
-                  <widget class="QFrame" name="frame_6">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_32">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_titre">
-                      <property name="font">
-                       <font>
-                        <family>Poiret One</family>
-                        <pointsize>20</pointsize>
-                        <weight>75</weight>
-                        <italic>false</italic>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Titre</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                      <property name="wordWrap">
-                       <bool>true</bool>
-                      </property>
-                      <property name="margin">
-                       <number>3</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0" alignment="Qt::AlignHCenter">
-                     <widget class="QLabel" name="label_image">
-                      <property name="text">
-                       <string>Image</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="label_5">
-                      <property name="font">
-                       <font>
-                        <family>Poiret One</family>
-                        <pointsize>16</pointsize>
-                        <weight>75</weight>
-                        <italic>false</italic>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Ingrédients :</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QTextBrowser" name="tE_ingredients">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                      <property name="textInteractionFlags">
-                       <set>Qt::TextBrowserInteraction</set>
-                      </property>
-                      <property name="openExternalLinks">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QListWidget" name="lW_recettes">
-                <property name="font">
-                 <font>
-                  <family>Poiret One</family>
-                  <pointsize>13</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-                <property name="sortingEnabled">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
            </item>
@@ -4134,38 +3735,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>1088</x>
      <y>649</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_new_recipe</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lW_recettes</receiver>
-   <slot>setHidden(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1149</x>
-     <y>649</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>52</x>
-     <y>388</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_modif_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lW_recettes</receiver>
-   <slot>setHidden(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1088</x>
-     <y>649</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>52</x>
-     <y>388</y>
     </hint>
    </hints>
   </connection>

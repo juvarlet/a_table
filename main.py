@@ -376,8 +376,8 @@ class MainGUI(QWidget):
         new_sB_days.setSuffix(' jours')
         new_sB_days.setValue(self.default_nb_days)
         new_sB_days.setMinimum(1)
-        # self.pW.horizontalLayout.replaceWidget(self.sB_days, new_sB_days)
-        self.pW.horizontalLayout.insertWidget(5,new_sB_days)
+        self.pW.gridLayout_13.replaceWidget(self.sB_days, new_sB_days)
+        # self.pW.horizontalLayout.insertWidget(5,new_sB_days)
         self.sB_days = new_sB_days
         self.pW.sB_days_2.setParent(None)
 
