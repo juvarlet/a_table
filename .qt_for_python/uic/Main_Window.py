@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.setWindowModality(Qt.WindowModal)
-        MainWindow.resize(2304, 867)
+        MainWindow.resize(2600, 783)
         font = QFont()
         font.setFamilies([u"Poiret One"])
         font.setPointSize(15)
@@ -69,11 +69,29 @@ class Ui_MainWindow(object):
 "	height:18px;\n"
 "}\n"
 "\n"
+"QCheckBox#cB_web::indicator:unchecked {\n"
+"    image: url(file:///../UI/images/icon_web_s"
+                        "earch_gp.png);\n"
+"	width:45px;\n"
+"	height:45px;\n"
+"}\n"
+"\n"
+"QCheckBox#cB_web::indicator:checked {\n"
+"    image: url(file:///../UI/images/icon_web_search_pg.png);\n"
+"	width:45px;\n"
+"	height:45px;\n"
+"}\n"
+"\n"
+"QCheckBox#cB_web::indicator:hover{\n"
+"	image: url(file:///../UI/images/icon_web_search_gr.png);	\n"
+"	/*width:45px;\n"
+"	height:45px;*/\n"
+"}\n"
+"\n"
 "/*\n"
 "QGroupBox::indicator:unchecked {\n"
 "    image: url(:/images/icon_unchecked_.png);\n"
-""
-                        "}\n"
+"}\n"
 "\n"
 "QGroupBox::indicator:checked {\n"
 "    image: url(:/images/icon_checked_.png);\n"
@@ -107,7 +125,8 @@ class Ui_MainWindow(object):
 "\n"
 "/**/\n"
 "QTabWidget::pane { /* The tab widget frame */\n"
-"    border-top: 2px solid #077B8A;\n"
+"    borde"
+                        "r-top: 2px solid #077B8A;\n"
 "    position: absolute;\n"
 "    top: -0.5em;\n"
 "}\n"
@@ -122,8 +141,7 @@ class Ui_MainWindow(object):
 "   /* \n"
 "	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                                stop: 0 #A2D5C6, stop: 0.2 #077B8A,\n"
-"                                stop: 0.8 #0"
-                        "77B8A, stop: 1.0 #A2D5C6);\n"
+"                                stop: 0.8 #077B8A, stop: 1.0 #A2D5C6);\n"
 "*/\n"
 "	background-color:#A2D5C6;\n"
 "    border: 2px solid #077B8A;\n"
@@ -139,7 +157,8 @@ class Ui_MainWindow(object):
 "   /* \n"
 "	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                                stop: 0 #077B8A, stop: 0.3 #A2D5C6,\n"
-"                                stop: 0.7 #A2D5C6, stop: 1.0 #077B8A);\n"
+"                                stop: 0.7"
+                        " #A2D5C6, stop: 1.0 #077B8A);\n"
 "	*/\n"
 "	background-color:#077B8A;\n"
 "	color:#A2D5C6;\n"
@@ -157,8 +176,7 @@ class Ui_MainWindow(object):
 "   /* \n"
 "	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                                stop: 0 #077B8A, stop: 0.4 #A2D5C6,\n"
-"                                stop: 0.5 #A2D5C6"
-                        ", stop: 1.0 #077B8A);\n"
+"                                stop: 0.5 #A2D5C6, stop: 1.0 #077B8A);\n"
 "	*/\n"
 "	background-color:#A2D5C6;\n"
 "    border-radius: 5px;\n"
@@ -182,7 +200,8 @@ class Ui_MainWindow(object):
 "QPushButton{\n"
 "     background-color: #5C3C92;\n"
 "     border-style: outset;\n"
-"     border-width: 2px;\n"
+""
+                        "     border-width: 2px;\n"
 "     border-radius: 10px;\n"
 "     border-color: #A2D5C6;\n"
 "     font: bold 18px;\n"
@@ -204,8 +223,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QPushButton#pB_filter{\n"
-"image: url(file:///../"
-                        "UI/images/icon_filter.png);\n"
+"image: url(file:///../UI/images/icon_filter.png);\n"
 "max-width:70px;\n"
 "max-height:70px;\n"
 "}\n"
@@ -224,7 +242,8 @@ class Ui_MainWindow(object):
 "     border-radius: 0px;\n"
 "     border-color: #ccc1ae;\n"
 "     font: 18px;\n"
-"     /*min-width: 10em;*/\n"
+"     /*min-width: 10"
+                        "em;*/\n"
 "     padding: 4px;\n"
 "	color:#077b8a;\n"
 "\n"
@@ -243,8 +262,7 @@ class Ui_MainWindow(object):
 "background-color: #b7cab9;\n"
 "selection-background-color: #5C3C92;\n"
 "selection-color: #A2D5C6;\n"
-"al"
-                        "ternate-background-color: #CCC1AE;\n"
+"alternate-background-color: #CCC1AE;\n"
 "}\n"
 "\n"
 "QTableWidget::item:hover{\n"
@@ -276,7 +294,8 @@ class Ui_MainWindow(object):
 "color:#5C3C92;\n"
 "}\n"
 "\n"
-"QListWidget#lW_menu, QListWidget#lW_courses {\n"
+"QListWidget"
+                        "#lW_menu, QListWidget#lW_courses {\n"
 "background-color: #b7cab9;\n"
 "\n"
 "}\n"
@@ -297,8 +316,7 @@ class Ui_MainWindow(object):
 "    border-radius: 5px;\n"
 "}\n"
 "\n"
-"QL"
-                        "abel#label_vegan, QLabel#label_kids, QLabel#label_double, QLabel#label_summer, QLabel#label_winter, QLabel#label_dessert_2, QLabel#label_lunchdinner, QLabel#label_tips{\n"
+"QLabel#label_vegan, QLabel#label_kids, QLabel#label_double, QLabel#label_summer, QLabel#label_winter, QLabel#label_dessert_2, QLabel#label_lunchdinner, QLabel#label_tips{\n"
 "background-color: #A2D5C6;\n"
 "}\n"
 "\n"
@@ -311,7 +329,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QComboBox {\n"
-"	border: 4px solid #5C3C92;\n"
+"	border"
+                        ": 4px solid #5C3C92;\n"
 "	border-radius: 3px;\n"
 "	/*background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #a2d5c6, stop:0.1 #b7cab9, stop:0.9 #b7cab9, stop:1 #a2d5c6);*/\n"
 "	background: #b7cab9;\n"
@@ -327,8 +346,7 @@ class Ui_MainWindow(object):
 "	width: 20px;\n"
 "\n"
 "	border-top-right-radius: 3px;\n"
-"	borde"
-                        "r-bottom-right-radius: 3px;\n"
+"	border-bottom-right-radius: 3px;\n"
 "}\n"
 "QComboBox::down-arrow {\n"
 "     image: url(file:///../UI/images/icon_down_arrow.png);\n"
@@ -344,7 +362,8 @@ class Ui_MainWindow(object):
 "	background: #b7cab9;\n"
 "	padding: 1px 1px 1px 1px;\n"
 "	min-width: 6em;\n"
-"	color: #077B8A;\n"
+"	color"
+                        ": #077B8A;\n"
 "font-size: 14px;\n"
 "}\n"
 "\n"
@@ -368,8 +387,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "/*QHeaderView { \n"
-"qproper"
-                        "ty-defaultAlignment: AlignHCenter, AlignVCenter;\n"
+"qproperty-defaultAlignment: AlignHCenter, AlignVCenter;\n"
 "qproperty-iconSize: 60p 60px;\n"
 "\n"
 " }*/\n"
@@ -396,7 +414,8 @@ class Ui_MainWindow(object):
 "\n"
 "QFrame#frame_new_recipe{\n"
 "	border: 4px solid #d72631;\n"
-"	border-radius: 10px;\n"
+"	bor"
+                        "der-radius: 10px;\n"
 "	/*background-color:#A2D5C6;*/\n"
 "\n"
 "}\n"
@@ -416,8 +435,7 @@ class Ui_MainWindow(object):
 "    border-radius: 6px;\n"
 "}\n"
 "\n"
-"QLabel#label_confi"
-                        "rm, QLabel#label_warning {\n"
+"QLabel#label_confirm, QLabel#label_warning {\n"
 "background-color: transparent;\n"
 "}\n"
 "\n"
@@ -440,7 +458,8 @@ class Ui_MainWindow(object):
 "	background: #5C3C92;\n"
 "	min-height: 0px;\n"
 "}\n"
-"QScrollBar::add-line:vertical, QScrollBar::add-line:horizontal {\n"
+"QScrollBar::add-line:vertic"
+                        "al, QScrollBar::add-line:horizontal {\n"
 "	background: #5C3C92;\n"
 "	height: 0px;\n"
 "	subcontrol-position: bottom;\n"
@@ -458,8 +477,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QTextBrowser#tB_ingredients, QTextBrowser#tB_preparation{\n"
-"backgroun"
-                        "d: #a2d5c6;\n"
+"background: #a2d5c6;\n"
 "border: 1px solid #077b8a;\n"
 "}\n"
 "\n"
@@ -484,7 +502,8 @@ class Ui_MainWindow(object):
 "	height:45px;\n"
 "}\n"
 "\n"
-"QCheckBox#cB_tagkids::indicator:unchecked {\n"
+"QCheckBox#cB_tagkids::ind"
+                        "icator:unchecked {\n"
 "    image: url(file:///../UI/images/tag_kids_black_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
@@ -502,8 +521,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox#cB_tagvegan::indicator:unchecked {\n"
-"    image: url(file:///../UI/images/tag_vegan"
-                        "_black_LD.png);\n"
+"    image: url(file:///../UI/images/tag_vegan_black_LD.png);\n"
 "	width:60px;\n"
 "	height:60px;\n"
 "}\n"
@@ -526,7 +544,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox#cB_taglunch::indicator:checked {\n"
-"    image: url(file:///../UI/images/tag_lunch_color_LD.png);\n"
+"    image: url(file:///../UI/"
+                        "images/tag_lunch_color_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
 "}\n"
@@ -545,8 +564,7 @@ class Ui_MainWindow(object):
 "QCheckBox#cB_tagdinner::indicator:checked {\n"
 "    image: url(file:///../UI/images/tag_dinner_color_LD.png);\n"
 "	width:50px;\n"
-"	height"
-                        ":50px;\n"
+"	height:50px;\n"
 "}\n"
 "\n"
 "QCheckBox#cB_tagdinner::indicator:hover {\n"
@@ -571,7 +589,8 @@ class Ui_MainWindow(object):
 "	height:45px;\n"
 "}\n"
 "\n"
-"QCheckBox#cB_tagsummer::indicator:unchecked {\n"
+"QCheckBox#cB_tagsummer::indicator:"
+                        "unchecked {\n"
 "    image: url(file:///../UI/images/tag_ete_black_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
@@ -589,8 +608,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox#cB_tagwinter::indicator:unchecked {\n"
-"    image: url(file:///../UI/images/tag_hiver_bla"
-                        "ck_LD.png);\n"
+"    image: url(file:///../UI/images/tag_hiver_black_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
 "}\n"
@@ -613,7 +631,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox#cB_tagdessert::indicator:checked {\n"
-"    image: url(file:///../UI/images/tag_dessert_color_LD.png);\n"
+"    image: url(file:///../"
+                        "UI/images/tag_dessert_color_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
 "}\n"
@@ -632,8 +651,7 @@ class Ui_MainWindow(object):
 "QCheckBox#cB_search_tag_dessert::indicator:checked {\n"
 "    image: url(./UI/images/tag_dessert_color_LD.png);\n"
 "	width:50px;\n"
-""
-                        "	height:50px;\n"
+"	height:50px;\n"
 "}\n"
 "\n"
 "QCheckBox#cB_search_tag_dessert::indicator:hover {\n"
@@ -682,7 +700,7 @@ class Ui_MainWindow(object):
         self.toolBox.setFrameShape(QFrame.NoFrame)
         self.page_carte = QWidget()
         self.page_carte.setObjectName(u"page_carte")
-        self.page_carte.setGeometry(QRect(0, 0, 786, 200))
+        self.page_carte.setGeometry(QRect(0, 0, 2173, 599))
         self.gridLayout_9 = QGridLayout(self.page_carte)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
         self.frame_carte = QFrame(self.page_carte)
@@ -733,8 +751,12 @@ class Ui_MainWindow(object):
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.gridLayout_13 = QGridLayout(self.frame_2)
         self.gridLayout_13.setObjectName(u"gridLayout_13")
-        self.cB_restes_2 = QCheckBox(self.frame_2)
-        self.cB_restes_2.setObjectName(u"cB_restes_2")
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_13.addItem(self.horizontalSpacer_3, 0, 10, 1, 1)
+
+        self.pB_new_menu_2 = QPushButton(self.frame_2)
+        self.pB_new_menu_2.setObjectName(u"pB_new_menu_2")
         font5 = QFont()
         font5.setFamilies([u"Poiret One"])
         font5.setPointSize(14)
@@ -743,25 +765,20 @@ class Ui_MainWindow(object):
         self.cB_restes_2.setFont(font5)
         self.cB_restes_2.setChecked(True)
 
-        self.gridLayout_13.addWidget(self.cB_restes_2, 0, 5, 1, 1)
+        self.gridLayout_13.addWidget(self.pB_new_menu_2, 0, 0, 1, 1)
 
-        self.label_dessert = QLabel(self.frame_2)
-        self.label_dessert.setObjectName(u"label_dessert")
-        self.label_dessert.setFont(font5)
-        self.label_dessert.setPixmap(QPixmap(u"../../../../../../../home/pilou/.designer/backup/images/icon_cupcake_t.png"))
-
-        self.gridLayout_13.addWidget(self.label_dessert, 0, 6, 1, 1)
-
-        self.pB_new_menu_2 = QPushButton(self.frame_2)
-        self.pB_new_menu_2.setObjectName(u"pB_new_menu_2")
+        self.cB_restes_2 = QCheckBox(self.frame_2)
+        self.cB_restes_2.setObjectName(u"cB_restes_2")
         font6 = QFont()
-        font6.setFamilies([u"Poiret One"])
+        font6.setFamily(u"Poiret One")
+        font6.setPointSize(14)
         font6.setBold(True)
         font6.setItalic(False)
-        self.pB_new_menu_2.setFont(font6)
-        self.pB_new_menu_2.setIconSize(QSize(40, 40))
+        font6.setWeight(75)
+        self.cB_restes_2.setFont(font6)
+        self.cB_restes_2.setChecked(True)
 
-        self.gridLayout_13.addWidget(self.pB_new_menu_2, 0, 0, 1, 1)
+        self.gridLayout_13.addWidget(self.cB_restes_2, 0, 5, 1, 1)
 
         self.dateEdit_2 = QDateEdit(self.frame_2)
         self.dateEdit_2.setObjectName(u"dateEdit_2")
@@ -775,22 +792,34 @@ class Ui_MainWindow(object):
 
         self.gridLayout_13.addWidget(self.dateEdit_2, 0, 2, 1, 1)
 
-        self.label_date = QLabel(self.frame_2)
-        self.label_date.setObjectName(u"label_date")
-        self.label_date.setPixmap(QPixmap(u"../../../../../../../home/pilou/.designer/backup/images/icon_date_3colors_t_LD.png"))
-        self.label_date.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+        self.sB_desserts_2 = QSpinBox(self.frame_2)
+        self.sB_desserts_2.setObjectName(u"sB_desserts_2")
+        self.sB_desserts_2.setMinimumSize(QSize(0, 50))
+        self.sB_desserts_2.setFont(font5)
+        self.sB_desserts_2.setButtonSymbols(QAbstractSpinBox.PlusMinus)
 
-        self.gridLayout_13.addWidget(self.label_date, 0, 1, 1, 1)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_13.addItem(self.horizontalSpacer_3, 0, 10, 1, 1)
+        self.gridLayout_13.addWidget(self.sB_desserts_2, 0, 7, 1, 1)
 
         self.label_9 = QLabel(self.frame_2)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setFont(font5)
+        self.label_9.setFont(font6)
 
         self.gridLayout_13.addWidget(self.label_9, 0, 3, 1, 1)
+
+        self.pB_modif = QPushButton(self.frame_2)
+        self.pB_modif.setObjectName(u"pB_modif")
+        self.pB_modif.setFont(font5)
+        self.pB_modif.setIconSize(QSize(40, 40))
+        self.pB_modif.setCheckable(True)
+
+        self.gridLayout_13.addWidget(self.pB_modif, 0, 11, 1, 1)
+
+        self.label_date = QLabel(self.frame_2)
+        self.label_date.setObjectName(u"label_date")
+        self.label_date.setPixmap(QPixmap(u"images/icon_date_3colors_t_LD.png"))
+        self.label_date.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+
+        self.gridLayout_13.addWidget(self.label_date, 0, 1, 1, 1)
 
         self.sB_days_2 = QSpinBox(self.frame_2)
         self.sB_days_2.setObjectName(u"sB_days_2")
@@ -802,21 +831,12 @@ class Ui_MainWindow(object):
 
         self.gridLayout_13.addWidget(self.sB_days_2, 0, 4, 1, 1)
 
-        self.sB_desserts_2 = QSpinBox(self.frame_2)
-        self.sB_desserts_2.setObjectName(u"sB_desserts_2")
-        self.sB_desserts_2.setMinimumSize(QSize(0, 50))
-        self.sB_desserts_2.setFont(font6)
-        self.sB_desserts_2.setButtonSymbols(QAbstractSpinBox.PlusMinus)
+        self.label_dessert = QLabel(self.frame_2)
+        self.label_dessert.setObjectName(u"label_dessert")
+        self.label_dessert.setFont(font6)
+        self.label_dessert.setPixmap(QPixmap(u"images/icon_cupcake_t.png"))
 
-        self.gridLayout_13.addWidget(self.sB_desserts_2, 0, 7, 1, 1)
-
-        self.pB_modif = QPushButton(self.frame_2)
-        self.pB_modif.setObjectName(u"pB_modif")
-        self.pB_modif.setFont(font6)
-        self.pB_modif.setIconSize(QSize(40, 40))
-        self.pB_modif.setCheckable(True)
-
-        self.gridLayout_13.addWidget(self.pB_modif, 0, 11, 1, 1)
+        self.gridLayout_13.addWidget(self.label_dessert, 0, 6, 1, 1)
 
 
         self.gridLayout_10.addWidget(self.frame_2, 0, 0, 1, 1)
@@ -885,7 +905,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page_carte, u"Carte")
         self.page_liste = QWidget()
         self.page_liste.setObjectName(u"page_liste")
-        self.page_liste.setGeometry(QRect(0, 0, 2256, 641))
+        self.page_liste.setGeometry(QRect(0, 0, 2223, 599))
         self.gridLayout_21 = QGridLayout(self.page_liste)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
         self.frame_liste_courses = QFrame(self.page_liste)
@@ -1027,7 +1047,7 @@ class Ui_MainWindow(object):
 
         self.frame_recherche = QFrame(self.frame_searchedit)
         self.frame_recherche.setObjectName(u"frame_recherche")
-        self.frame_recherche.setFont(font5)
+        self.frame_recherche.setFont(font6)
         self.frame_recherche.setFrameShape(QFrame.NoFrame)
         self.frame_recherche.setFrameShadow(QFrame.Raised)
         self.gridLayout_18 = QGridLayout(self.frame_recherche)
@@ -1369,10 +1389,11 @@ class Ui_MainWindow(object):
         self.label_6 = QLabel(self.frame_9)
         self.label_6.setObjectName(u"label_6")
         font7 = QFont()
-        font7.setFamilies([u"Poiret One"])
+        font7.setFamily(u"Poiret One")
         font7.setPointSize(16)
         font7.setBold(True)
         font7.setItalic(False)
+        font7.setWeight(75)
         self.label_6.setFont(font7)
 
         self.gridLayout_33.addWidget(self.label_6, 1, 0, 1, 1)
@@ -1502,10 +1523,11 @@ class Ui_MainWindow(object):
         self.label_titre = QLabel(self.frame_6)
         self.label_titre.setObjectName(u"label_titre")
         font8 = QFont()
-        font8.setFamilies([u"Poiret One"])
+        font8.setFamily(u"Poiret One")
         font8.setPointSize(20)
         font8.setBold(True)
         font8.setItalic(False)
+        font8.setWeight(75)
         self.label_titre.setFont(font8)
         self.label_titre.setAlignment(Qt.AlignCenter)
         self.label_titre.setWordWrap(True)
@@ -1545,41 +1567,92 @@ class Ui_MainWindow(object):
         self.frame_new_recipe.setFrameShadow(QFrame.Raised)
         self.gridLayout_28 = QGridLayout(self.frame_new_recipe)
         self.gridLayout_28.setObjectName(u"gridLayout_28")
-        self.label_newedit = QLabel(self.frame_new_recipe)
-        self.label_newedit.setObjectName(u"label_newedit")
-        self.label_newedit.setFont(font7)
-        self.label_newedit.setAlignment(Qt.AlignCenter)
+        self.frame_10 = QFrame(self.frame_new_recipe)
+        self.frame_10.setObjectName(u"frame_10")
+        self.frame_10.setFrameShape(QFrame.NoFrame)
+        self.frame_10.setFrameShadow(QFrame.Raised)
+        self.gridLayout_35 = QGridLayout(self.frame_10)
+        self.gridLayout_35.setObjectName(u"gridLayout_35")
+        self.tB_preparation = QTextBrowser(self.frame_10)
+        self.tB_preparation.setObjectName(u"tB_preparation")
+        self.tB_preparation.setFrameShape(QFrame.NoFrame)
+        self.tB_preparation.setReadOnly(False)
+        self.tB_preparation.setTextInteractionFlags(Qt.LinksAccessibleByKeyboard|Qt.LinksAccessibleByMouse|Qt.TextBrowserInteraction|Qt.TextEditable|Qt.TextEditorInteraction|Qt.TextSelectableByKeyboard|Qt.TextSelectableByMouse)
+        self.tB_preparation.setOpenExternalLinks(True)
 
-        self.gridLayout_28.addWidget(self.label_newedit, 0, 0, 1, 3)
+        self.gridLayout_35.addWidget(self.tB_preparation, 1, 0, 1, 1)
 
-        self.frame_8 = QFrame(self.frame_new_recipe)
-        self.frame_8.setObjectName(u"frame_8")
-        self.frame_8.setFrameShape(QFrame.NoFrame)
-        self.frame_8.setFrameShadow(QFrame.Raised)
-        self.gridLayout_30 = QGridLayout(self.frame_8)
-        self.gridLayout_30.setObjectName(u"gridLayout_30")
-        self.horizontalSpacer_12 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.label_7 = QLabel(self.frame_10)
+        self.label_7.setObjectName(u"label_7")
+        self.label_7.setFont(font7)
 
-        self.gridLayout_30.addItem(self.horizontalSpacer_12, 0, 0, 1, 1)
+        self.gridLayout_35.addWidget(self.label_7, 0, 0, 1, 1)
 
-        self.pB_cancel_2 = QPushButton(self.frame_8)
-        self.pB_cancel_2.setObjectName(u"pB_cancel_2")
-        self.pB_cancel_2.setIconSize(QSize(40, 40))
+        self.frame_5 = QFrame(self.frame_recherche)
+        self.frame_5.setObjectName(u"frame_5")
+        self.frame_5.setFrameShape(QFrame.NoFrame)
+        self.frame_5.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_3 = QHBoxLayout(self.frame_5)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.cB_search_recipe_name = QCheckBox(self.frame_5)
+        self.cB_search_recipe_name.setObjectName(u"cB_search_recipe_name")
+        self.cB_search_recipe_name.setChecked(True)
 
-        self.gridLayout_30.addWidget(self.pB_cancel_2, 0, 1, 1, 1)
+        self.gridLayout_28.addWidget(self.frame_10, 6, 1, 1, 2)
 
-        self.pB_ok_2 = QPushButton(self.frame_8)
-        self.pB_ok_2.setObjectName(u"pB_ok_2")
-        self.pB_ok_2.setIconSize(QSize(40, 40))
+        self.frame_tags_2 = QFrame(self.frame_new_recipe)
+        self.frame_tags_2.setObjectName(u"frame_tags_2")
+        self.frame_tags_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_tags_2.setFrameShadow(QFrame.Raised)
+        self.gridLayout_29 = QGridLayout(self.frame_tags_2)
+        self.gridLayout_29.setSpacing(3)
+        self.gridLayout_29.setObjectName(u"gridLayout_29")
+        self.cB_tagvegan = QCheckBox(self.frame_tags_2)
+        self.cB_tagvegan.setObjectName(u"cB_tagvegan")
 
-        self.gridLayout_30.addWidget(self.pB_ok_2, 0, 2, 1, 1)
+        self.gridLayout_29.addWidget(self.cB_tagvegan, 2, 3, 1, 1)
 
-        self.horizontalSpacer_13 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.cB_tagwinter = QCheckBox(self.frame_tags_2)
+        self.cB_tagwinter.setObjectName(u"cB_tagwinter")
 
-        self.gridLayout_30.addItem(self.horizontalSpacer_13, 0, 3, 1, 1)
+        self.gridLayout_29.addWidget(self.cB_tagwinter, 2, 5, 1, 1)
+
+        self.cB_tagkids = QCheckBox(self.frame_tags_2)
+        self.cB_tagkids.setObjectName(u"cB_tagkids")
+
+        self.gridLayout_29.addWidget(self.cB_tagkids, 2, 2, 1, 1)
+
+        self.cB_tagdinner = QCheckBox(self.frame_tags_2)
+        self.cB_tagdinner.setObjectName(u"cB_tagdinner")
+
+        self.gridLayout_29.addWidget(self.cB_tagdinner, 2, 8, 1, 1)
+
+        self.cB_tagsummer = QCheckBox(self.frame_tags_2)
+        self.cB_tagsummer.setObjectName(u"cB_tagsummer")
+
+        self.gridLayout_29.addWidget(self.cB_tagsummer, 2, 4, 1, 1)
+
+        self.cB_search_ingredients = QCheckBox(self.frame_5)
+        self.cB_search_ingredients.setObjectName(u"cB_search_ingredients")
+
+        self.horizontalLayout_3.addWidget(self.cB_search_ingredients)
+
+        self.cB_search_preparation = QCheckBox(self.frame_5)
+        self.cB_search_preparation.setObjectName(u"cB_search_preparation")
+
+        self.horizontalLayout_3.addWidget(self.cB_search_preparation)
+
+        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer_8)
 
 
-        self.gridLayout_28.addWidget(self.frame_8, 7, 0, 1, 4)
+        self.gridLayout_18.addWidget(self.frame_5, 2, 1, 1, 1)
+
+        self.label_12 = QLabel(self.frame_recherche)
+        self.label_12.setObjectName(u"label_12")
+
+        self.gridLayout_28.addWidget(self.frame_tags_2, 8, 0, 1, 3, Qt.AlignHCenter|Qt.AlignVCenter)
 
         self.frame_7 = QFrame(self.frame_new_recipe)
         self.frame_7.setObjectName(u"frame_7")
@@ -1700,90 +1773,126 @@ class Ui_MainWindow(object):
         self.gridLayout_34.addWidget(self.label_11, 3, 2, 1, 1, Qt.AlignLeft)
 
 
-        self.gridLayout_28.addWidget(self.frame_7, 4, 0, 1, 1)
+        self.gridLayout_28.addWidget(self.frame_7, 6, 0, 1, 1)
 
-        self.frame_10 = QFrame(self.frame_new_recipe)
-        self.frame_10.setObjectName(u"frame_10")
-        self.frame_10.setFrameShape(QFrame.NoFrame)
-        self.frame_10.setFrameShadow(QFrame.Raised)
-        self.gridLayout_35 = QGridLayout(self.frame_10)
-        self.gridLayout_35.setObjectName(u"gridLayout_35")
-        self.tB_preparation = QTextBrowser(self.frame_10)
-        self.tB_preparation.setObjectName(u"tB_preparation")
-        self.tB_preparation.setFrameShape(QFrame.NoFrame)
-        self.tB_preparation.setReadOnly(False)
+        self.frame_8 = QFrame(self.frame_new_recipe)
+        self.frame_8.setObjectName(u"frame_8")
+        self.frame_8.setFrameShape(QFrame.NoFrame)
+        self.frame_8.setFrameShadow(QFrame.Raised)
+        self.gridLayout_30 = QGridLayout(self.frame_8)
+        self.gridLayout_30.setObjectName(u"gridLayout_30")
+        self.horizontalSpacer_12 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_35.addWidget(self.tB_preparation, 1, 0, 1, 1)
+        self.gridLayout_30.addItem(self.horizontalSpacer_12, 0, 0, 1, 1)
 
-        self.label_7 = QLabel(self.frame_10)
-        self.label_7.setObjectName(u"label_7")
-        self.label_7.setFont(font7)
+        self.pB_cancel_2 = QPushButton(self.frame_8)
+        self.pB_cancel_2.setObjectName(u"pB_cancel_2")
+        self.pB_cancel_2.setIconSize(QSize(40, 40))
 
-        self.gridLayout_35.addWidget(self.label_7, 0, 0, 1, 1)
+        self.gridLayout_30.addWidget(self.pB_cancel_2, 0, 1, 1, 1)
+
+        self.pB_ok_2 = QPushButton(self.frame_8)
+        self.pB_ok_2.setObjectName(u"pB_ok_2")
+        self.pB_ok_2.setIconSize(QSize(40, 40))
+
+        self.gridLayout_30.addWidget(self.pB_ok_2, 0, 2, 1, 1)
+
+        self.horizontalSpacer_13 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_30.addItem(self.horizontalSpacer_13, 0, 3, 1, 1)
 
 
-        self.gridLayout_28.addWidget(self.frame_10, 4, 1, 1, 2)
+        self.gridLayout_28.addWidget(self.frame_8, 9, 0, 1, 3)
 
-        self.lE_titre = QLineEdit(self.frame_new_recipe)
+        self.label_newedit = QLabel(self.frame_new_recipe)
+        self.label_newedit.setObjectName(u"label_newedit")
+        self.label_newedit.setFont(font7)
+        self.label_newedit.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_28.addWidget(self.label_newedit, 0, 0, 2, 3)
+
+        self.frame_16 = QFrame(self.frame_new_recipe)
+        self.frame_16.setObjectName(u"frame_16")
+        self.frame_16.setFrameShape(QFrame.NoFrame)
+        self.frame_16.setFrameShadow(QFrame.Raised)
+        self.gridLayout_49 = QGridLayout(self.frame_16)
+        self.gridLayout_49.setObjectName(u"gridLayout_49")
+        self.gridLayout_49.setContentsMargins(-1, 0, -1, 0)
+        self.lE_titre = QLineEdit(self.frame_16)
         self.lE_titre.setObjectName(u"lE_titre")
         self.lE_titre.setFont(font8)
 
-        self.gridLayout_28.addWidget(self.lE_titre, 1, 0, 1, 3)
+        self.gridLayout_49.addWidget(self.lE_titre, 0, 0, 1, 1)
 
-        self.frame_tags_2 = QFrame(self.frame_new_recipe)
-        self.frame_tags_2.setObjectName(u"frame_tags_2")
-        self.frame_tags_2.setFrameShape(QFrame.StyledPanel)
-        self.frame_tags_2.setFrameShadow(QFrame.Raised)
-        self.gridLayout_29 = QGridLayout(self.frame_tags_2)
-        self.gridLayout_29.setSpacing(3)
-        self.gridLayout_29.setObjectName(u"gridLayout_29")
-        self.cB_tagvegan = QCheckBox(self.frame_tags_2)
-        self.cB_tagvegan.setObjectName(u"cB_tagvegan")
+        self.frame_20 = QFrame(self.frame_16)
+        self.frame_20.setObjectName(u"frame_20")
+        self.frame_20.setFrameShape(QFrame.NoFrame)
+        self.frame_20.setFrameShadow(QFrame.Raised)
+        self.gridLayout_48 = QGridLayout(self.frame_20)
+        self.gridLayout_48.setSpacing(0)
+        self.gridLayout_48.setObjectName(u"gridLayout_48")
+        self.gridLayout_48.setContentsMargins(0, 0, 0, 0)
+        self.cB_web = QCheckBox(self.frame_20)
+        self.cB_web.setObjectName(u"cB_web")
+        self.cB_web.setLayoutDirection(Qt.LeftToRight)
 
-        self.gridLayout_29.addWidget(self.cB_tagvegan, 2, 3, 1, 1)
+        self.gridLayout_48.addWidget(self.cB_web, 0, 0, 1, 1)
 
-        self.cB_tagwinter = QCheckBox(self.frame_tags_2)
-        self.cB_tagwinter.setObjectName(u"cB_tagwinter")
 
-        self.gridLayout_29.addWidget(self.cB_tagwinter, 2, 5, 1, 1)
-
-        self.cB_tagkids = QCheckBox(self.frame_tags_2)
-        self.cB_tagkids.setObjectName(u"cB_tagkids")
-
-        self.gridLayout_29.addWidget(self.cB_tagkids, 2, 2, 1, 1)
-
-        self.cB_tagdinner = QCheckBox(self.frame_tags_2)
-        self.cB_tagdinner.setObjectName(u"cB_tagdinner")
-
-        self.gridLayout_29.addWidget(self.cB_tagdinner, 2, 8, 1, 1)
+        self.gridLayout_49.addWidget(self.frame_20, 0, 1, 1, 1)
 
         self.cB_tagsummer = QCheckBox(self.frame_tags_2)
         self.cB_tagsummer.setObjectName(u"cB_tagsummer")
 
-        self.gridLayout_29.addWidget(self.cB_tagsummer, 2, 4, 1, 1)
+        self.gridLayout_28.addWidget(self.frame_16, 3, 0, 1, 3)
 
-        self.cB_tagdouble = QCheckBox(self.frame_tags_2)
-        self.cB_tagdouble.setObjectName(u"cB_tagdouble")
+        self.frame_wB = QFrame(self.frame_new_recipe)
+        self.frame_wB.setObjectName(u"frame_wB")
+        self.frame_wB.setFrameShape(QFrame.NoFrame)
+        self.frame_wB.setFrameShadow(QFrame.Raised)
+        self.gridLayout_44 = QGridLayout(self.frame_wB)
+        self.gridLayout_44.setSpacing(0)
+        self.gridLayout_44.setObjectName(u"gridLayout_44")
+        self.gridLayout_44.setContentsMargins(0, 0, 0, 0)
+        self.frame_17 = QFrame(self.frame_wB)
+        self.frame_17.setObjectName(u"frame_17")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.frame_17.sizePolicy().hasHeightForWidth())
+        self.frame_17.setSizePolicy(sizePolicy2)
+        self.frame_17.setFrameShape(QFrame.NoFrame)
+        self.frame_17.setFrameShadow(QFrame.Raised)
+        self.gridLayout_47 = QGridLayout(self.frame_17)
+        self.gridLayout_47.setSpacing(0)
+        self.gridLayout_47.setObjectName(u"gridLayout_47")
+        self.gridLayout_47.setContentsMargins(0, 0, 0, 0)
+        self.gL_web = QGridLayout()
+        self.gL_web.setObjectName(u"gL_web")
 
-        self.gridLayout_29.addWidget(self.cB_tagdouble, 2, 1, 1, 1)
-
-        self.cB_tagdessert = QCheckBox(self.frame_tags_2)
-        self.cB_tagdessert.setObjectName(u"cB_tagdessert")
-
-        self.gridLayout_29.addWidget(self.cB_tagdessert, 2, 6, 1, 1)
-
-        self.cB_taglunch = QCheckBox(self.frame_tags_2)
-        self.cB_taglunch.setObjectName(u"cB_taglunch")
-
-        self.gridLayout_29.addWidget(self.cB_taglunch, 2, 7, 1, 1)
-
-        self.cB_tagtips = QCheckBox(self.frame_tags_2)
-        self.cB_tagtips.setObjectName(u"cB_tagtips")
-
-        self.gridLayout_29.addWidget(self.cB_tagtips, 2, 9, 1, 1)
+        self.gridLayout_47.addLayout(self.gL_web, 0, 0, 1, 1)
 
 
-        self.gridLayout_28.addWidget(self.frame_tags_2, 6, 0, 1, 3, Qt.AlignHCenter|Qt.AlignVCenter)
+        self.gridLayout_44.addWidget(self.frame_17, 1, 0, 1, 1)
+
+        self.frame_19 = QFrame(self.frame_wB)
+        self.frame_19.setObjectName(u"frame_19")
+        self.frame_19.setFrameShape(QFrame.NoFrame)
+        self.frame_19.setFrameShadow(QFrame.Raised)
+        self.gridLayout_46 = QGridLayout(self.frame_19)
+        self.gridLayout_46.setSpacing(0)
+        self.gridLayout_46.setObjectName(u"gridLayout_46")
+        self.gridLayout_46.setContentsMargins(0, 0, 0, 0)
+        self.hL_tools = QHBoxLayout()
+        self.hL_tools.setObjectName(u"hL_tools")
+
+        self.gridLayout_46.addLayout(self.hL_tools, 0, 0, 1, 1)
+
+
+        self.gridLayout_44.addWidget(self.frame_19, 0, 0, 1, 1)
+
+
+        self.gridLayout_28.addWidget(self.frame_wB, 0, 3, 10, 1)
 
 
         self.gridLayout_31.addWidget(self.frame_new_recipe, 0, 1, 1, 1)
@@ -2004,6 +2113,170 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
+        self.frame_settings = QFrame(self.centralwidget)
+        self.frame_settings.setObjectName(u"frame_settings")
+        self.frame_settings.setFrameShape(QFrame.NoFrame)
+        self.frame_settings.setFrameShadow(QFrame.Raised)
+        self.gridLayout_38 = QGridLayout(self.frame_settings)
+        self.gridLayout_38.setObjectName(u"gridLayout_38")
+        self.frame_51 = QFrame(self.frame_settings)
+        self.frame_51.setObjectName(u"frame_51")
+        self.frame_51.setFrameShape(QFrame.NoFrame)
+        self.frame_51.setFrameShadow(QFrame.Raised)
+        self.gridLayout_40 = QGridLayout(self.frame_51)
+        self.gridLayout_40.setObjectName(u"gridLayout_40")
+        self.frame_12 = QFrame(self.frame_51)
+        self.frame_12.setObjectName(u"frame_12")
+        self.frame_12.setFrameShape(QFrame.NoFrame)
+        self.frame_12.setFrameShadow(QFrame.Raised)
+        self.gridLayout_41 = QGridLayout(self.frame_12)
+        self.gridLayout_41.setObjectName(u"gridLayout_41")
+        self.lE_email = QLineEdit(self.frame_12)
+        self.lE_email.setObjectName(u"lE_email")
+
+        self.gridLayout_41.addWidget(self.lE_email, 1, 1, 1, 1)
+
+        self.label_121 = QLabel(self.frame_12)
+        self.label_121.setObjectName(u"label_121")
+
+        self.gridLayout_41.addWidget(self.label_121, 0, 1, 1, 1)
+
+        self.label_email = QLabel(self.frame_12)
+        self.label_email.setObjectName(u"label_email")
+
+        self.gridLayout_41.addWidget(self.label_email, 0, 0, 2, 1)
+
+
+        self.gridLayout_40.addWidget(self.frame_12, 0, 1, 1, 1)
+
+        self.frame_13 = QFrame(self.frame_51)
+        self.frame_13.setObjectName(u"frame_13")
+        self.frame_13.setFrameShape(QFrame.NoFrame)
+        self.frame_13.setFrameShadow(QFrame.Raised)
+        self.gridLayout_42 = QGridLayout(self.frame_13)
+        self.gridLayout_42.setObjectName(u"gridLayout_42")
+        self.label_13 = QLabel(self.frame_13)
+        self.label_13.setObjectName(u"label_13")
+
+        self.gridLayout_42.addWidget(self.label_13, 0, 1, 1, 1)
+
+        self.sB_days = QSpinBox(self.frame_13)
+        self.sB_days.setObjectName(u"sB_days")
+        sizePolicy.setHeightForWidth(self.sB_days.sizePolicy().hasHeightForWidth())
+        self.sB_days.setSizePolicy(sizePolicy)
+        self.sB_days.setMinimumSize(QSize(0, 50))
+        self.sB_days.setButtonSymbols(QAbstractSpinBox.PlusMinus)
+        self.sB_days.setValue(7)
+
+        self.gridLayout_42.addWidget(self.sB_days, 1, 1, 1, 1)
+
+        self.label_days = QLabel(self.frame_13)
+        self.label_days.setObjectName(u"label_days")
+
+        self.gridLayout_42.addWidget(self.label_days, 0, 0, 2, 1)
+
+
+        self.gridLayout_40.addWidget(self.frame_13, 1, 1, 1, 1)
+
+        self.frame_14 = QFrame(self.frame_51)
+        self.frame_14.setObjectName(u"frame_14")
+        self.frame_14.setFrameShape(QFrame.NoFrame)
+        self.frame_14.setFrameShadow(QFrame.Raised)
+        self.gridLayout_43 = QGridLayout(self.frame_14)
+        self.gridLayout_43.setObjectName(u"gridLayout_43")
+        self.label_14 = QLabel(self.frame_14)
+        self.label_14.setObjectName(u"label_14")
+
+        self.gridLayout_43.addWidget(self.label_14, 0, 1, 1, 1)
+
+        self.toolButton = QToolButton(self.frame_14)
+        self.toolButton.setObjectName(u"toolButton")
+
+        self.gridLayout_43.addWidget(self.toolButton, 1, 2, 1, 1)
+
+        self.lE_storage = QLineEdit(self.frame_14)
+        self.lE_storage.setObjectName(u"lE_storage")
+        self.lE_storage.setReadOnly(True)
+
+        self.gridLayout_43.addWidget(self.lE_storage, 1, 1, 1, 1)
+
+        self.label_storage = QLabel(self.frame_14)
+        self.label_storage.setObjectName(u"label_storage")
+
+        self.gridLayout_43.addWidget(self.label_storage, 0, 0, 2, 1)
+
+
+        self.gridLayout_40.addWidget(self.frame_14, 2, 1, 1, 1)
+
+        self.horizontalSpacer_17 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_40.addItem(self.horizontalSpacer_17, 1, 0, 1, 1)
+
+        self.horizontalSpacer_18 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_40.addItem(self.horizontalSpacer_18, 1, 2, 1, 1)
+
+
+        self.gridLayout_38.addWidget(self.frame_51, 1, 0, 1, 1)
+
+        self.frame_11 = QFrame(self.frame_settings)
+        self.frame_11.setObjectName(u"frame_11")
+        self.frame_11.setFrameShape(QFrame.NoFrame)
+        self.frame_11.setFrameShadow(QFrame.Raised)
+        self.gridLayout_39 = QGridLayout(self.frame_11)
+        self.gridLayout_39.setObjectName(u"gridLayout_39")
+        self.pB_ok_3 = QPushButton(self.frame_11)
+        self.pB_ok_3.setObjectName(u"pB_ok_3")
+        self.pB_ok_3.setIconSize(QSize(40, 40))
+
+        self.gridLayout_39.addWidget(self.pB_ok_3, 0, 2, 1, 1)
+
+        self.horizontalSpacer_161 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_39.addItem(self.horizontalSpacer_161, 0, 0, 1, 1)
+
+        self.pB_cancel_3 = QPushButton(self.frame_11)
+        self.pB_cancel_3.setObjectName(u"pB_cancel_3")
+        self.pB_cancel_3.setIconSize(QSize(40, 40))
+
+        self.gridLayout_39.addWidget(self.pB_cancel_3, 0, 1, 1, 1)
+
+        self.horizontalSpacer_19 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_39.addItem(self.horizontalSpacer_19, 0, 3, 1, 1)
+
+
+        self.gridLayout_38.addWidget(self.frame_11, 3, 0, 1, 1)
+
+        self.frame_15 = QFrame(self.frame_settings)
+        self.frame_15.setObjectName(u"frame_15")
+        self.frame_15.setFrameShape(QFrame.NoFrame)
+        self.frame_15.setFrameShadow(QFrame.Raised)
+        self.gridLayout_131 = QGridLayout(self.frame_15)
+        self.gridLayout_131.setObjectName(u"gridLayout_131")
+        self.label_15 = QLabel(self.frame_15)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_131.addWidget(self.label_15, 0, 0, 1, 1)
+
+        self.label_contact = QLabel(self.frame_15)
+        self.label_contact.setObjectName(u"label_contact")
+
+        self.gridLayout_131.addWidget(self.label_contact, 0, 1, 1, 1)
+
+
+        self.gridLayout_38.addWidget(self.frame_15, 2, 0, 1, 1)
+
+        self.label_user = QLabel(self.frame_settings)
+        self.label_user.setObjectName(u"label_user")
+        self.label_user.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_38.addWidget(self.label_user, 0, 0, 1, 1)
+
+
+        self.gridLayout.addWidget(self.frame_settings, 0, 1, 1, 1)
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -2026,6 +2299,7 @@ class Ui_MainWindow(object):
         self.pB_option_2.toggled.connect(self.pB_option.setChecked)
         self.pB_new_recipe.toggled.connect(self.pB_delete.setDisabled)
         self.pB_modif_2.toggled.connect(self.pB_delete.setDisabled)
+        self.cB_web.toggled.connect(self.frame_wB.setVisible)
         self.pB_modif_2.toggled.connect(self.frame_liste_recettes.setHidden)
         self.pB_new_recipe.toggled.connect(self.frame_liste_recettes.setHidden)
 
@@ -2043,13 +2317,15 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem1 = self.tW_menu.verticalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Soir", None));
 #if QT_CONFIG(tooltip)
+        self.pB_new_menu_2.setToolTip(QCoreApplication.translate("MainWindow", u"Nouvelle carte", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_new_menu_2.setText("")
+#if QT_CONFIG(tooltip)
         self.cB_restes_2.setToolTip(QCoreApplication.translate("MainWindow", u"Le dernier repas, c'est les restes!", None))
 #endif // QT_CONFIG(tooltip)
         self.cB_restes_2.setText(QCoreApplication.translate("MainWindow", u"Restes", None))
-#if QT_CONFIG(tooltip)
-        self.label_dessert.setToolTip(QCoreApplication.translate("MainWindow", u"Desserts", None))
-#endif // QT_CONFIG(tooltip)
-        self.label_dessert.setText("")
+        self.dateEdit_2.setDisplayFormat(QCoreApplication.translate("MainWindow", u"dd-MM-yyyy", None))
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"pour", None))
 #if QT_CONFIG(tooltip)
         self.pB_new_menu_2.setToolTip(QCoreApplication.translate("MainWindow", u"Nouvelle carte", None))
 #endif // QT_CONFIG(tooltip)
@@ -2062,6 +2338,12 @@ class Ui_MainWindow(object):
         self.pB_modif.setToolTip(QCoreApplication.translate("MainWindow", u"Modifier", None))
 #endif // QT_CONFIG(tooltip)
         self.pB_modif.setText("")
+        self.label_date.setText("")
+        self.sB_days_2.setSuffix(QCoreApplication.translate("MainWindow", u" jours", None))
+#if QT_CONFIG(tooltip)
+        self.label_dessert.setToolTip(QCoreApplication.translate("MainWindow", u"Desserts", None))
+#endif // QT_CONFIG(tooltip)
+        self.label_dessert.setText("")
 #if QT_CONFIG(tooltip)
         self.pB_save.setToolTip(QCoreApplication.translate("MainWindow", u"Enregistrer dans l'Historique", None))
 #endif // QT_CONFIG(tooltip)
@@ -2129,8 +2411,8 @@ class Ui_MainWindow(object):
         self.tE_recette.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;\"><br /></p></body></html>", None))
+"</style></head><body style=\" font-family:'Poiret One'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
+"<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:400;\"><br /></p></body></html>", None))
 #if QT_CONFIG(tooltip)
         self.label_summer.setToolTip(QCoreApplication.translate("MainWindow", u"Plat d'\u00e9t\u00e9", None))
 #endif // QT_CONFIG(tooltip)
@@ -2190,54 +2472,10 @@ class Ui_MainWindow(object):
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Ingr\u00e9dients :", None))
         self.label_titre.setText(QCoreApplication.translate("MainWindow", u"Titre", None))
         self.label_image.setText(QCoreApplication.translate("MainWindow", u"Image", None))
-        self.label_newedit.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-#if QT_CONFIG(tooltip)
-        self.pB_cancel_2.setToolTip(QCoreApplication.translate("MainWindow", u"Annuler", None))
-#endif // QT_CONFIG(tooltip)
-        self.pB_cancel_2.setText("")
-#if QT_CONFIG(tooltip)
-        self.pB_ok_2.setToolTip(QCoreApplication.translate("MainWindow", u"Enregistrer", None))
-#endif // QT_CONFIG(tooltip)
-        self.pB_ok_2.setText("")
-        self.label_8.setText(QCoreApplication.translate("MainWindow", u":", None))
-#if QT_CONFIG(tooltip)
-        self.pB_option.setToolTip(QCoreApplication.translate("MainWindow", u"Optionnel", None))
-#endif // QT_CONFIG(tooltip)
-        self.pB_option.setText(QCoreApplication.translate("MainWindow", u"[", None))
-#if QT_CONFIG(tooltip)
-        self.lE_qty.setToolTip(QCoreApplication.translate("MainWindow", u"Quantit\u00e9", None))
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(tooltip)
-        self.pB_add.setToolTip(QCoreApplication.translate("MainWindow", u"Ajouter cet ingr\u00e9dient", None))
-#endif // QT_CONFIG(tooltip)
-        self.pB_add.setText(QCoreApplication.translate("MainWindow", u"+", None))
-#if QT_CONFIG(tooltip)
-        self.cB_ingredient.setToolTip(QCoreApplication.translate("MainWindow", u"Choix d'ingr\u00e9dient", None))
-#endif // QT_CONFIG(tooltip)
-        self.label.setText(QCoreApplication.translate("MainWindow", u"-", None))
-#if QT_CONFIG(tooltip)
-        self.cB_unit.setToolTip(QCoreApplication.translate("MainWindow", u"Choix d'unit\u00e9", None))
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(tooltip)
-        self.pB_option_2.setToolTip(QCoreApplication.translate("MainWindow", u"Optionnel", None))
-#endif // QT_CONFIG(tooltip)
-        self.pB_option_2.setText(QCoreApplication.translate("MainWindow", u"]", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Ingr\u00e9dients :", None))
-#if QT_CONFIG(tooltip)
-        self.pB_photo.setToolTip(QCoreApplication.translate("MainWindow", u"Choisir une image", None))
-#endif // QT_CONFIG(tooltip)
-        self.pB_photo.setText("")
-        self.label_image_2.setText(QCoreApplication.translate("MainWindow", u"Image", None))
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Temps de pr\u00e9paration :", None))
-        self.label_11.setText(QCoreApplication.translate("MainWindow", u"minutes", None))
 #if QT_CONFIG(tooltip)
         self.tB_preparation.setToolTip(QCoreApplication.translate("MainWindow", u"Instructions pour la pr\u00e9paration", None))
 #endif // QT_CONFIG(tooltip)
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Pr\u00e9paration :", None))
-#if QT_CONFIG(tooltip)
-        self.lE_titre.setToolTip(QCoreApplication.translate("MainWindow", u"Titre de la recette", None))
-#endif // QT_CONFIG(tooltip)
-        self.lE_titre.setText(QCoreApplication.translate("MainWindow", u"Titre", None))
 #if QT_CONFIG(tooltip)
         self.cB_tagvegan.setToolTip(QCoreApplication.translate("MainWindow", u"Vegan", None))
 #endif // QT_CONFIG(tooltip)
@@ -2274,6 +2512,54 @@ class Ui_MainWindow(object):
         self.cB_tagtips.setToolTip(QCoreApplication.translate("MainWindow", u"Pr\u00e9paration (uniquement)", None))
 #endif // QT_CONFIG(tooltip)
         self.cB_tagtips.setText("")
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u":", None))
+#if QT_CONFIG(tooltip)
+        self.pB_option.setToolTip(QCoreApplication.translate("MainWindow", u"Optionnel", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_option.setText(QCoreApplication.translate("MainWindow", u"[", None))
+#if QT_CONFIG(tooltip)
+        self.lE_qty.setToolTip(QCoreApplication.translate("MainWindow", u"Quantit\u00e9", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.pB_add.setToolTip(QCoreApplication.translate("MainWindow", u"Ajouter cet ingr\u00e9dient", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_add.setText(QCoreApplication.translate("MainWindow", u"+", None))
+#if QT_CONFIG(tooltip)
+        self.cB_ingredient.setToolTip(QCoreApplication.translate("MainWindow", u"Choix d'ingr\u00e9dient", None))
+#endif // QT_CONFIG(tooltip)
+        self.label.setText(QCoreApplication.translate("MainWindow", u"-", None))
+#if QT_CONFIG(tooltip)
+        self.cB_unit.setToolTip(QCoreApplication.translate("MainWindow", u"Choix d'unit\u00e9", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.pB_option_2.setToolTip(QCoreApplication.translate("MainWindow", u"Optionnel", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_option_2.setText(QCoreApplication.translate("MainWindow", u"]", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Ingr\u00e9dients :", None))
+#if QT_CONFIG(tooltip)
+        self.pB_photo.setToolTip(QCoreApplication.translate("MainWindow", u"Choisir une image", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_photo.setText("")
+        self.label_image_2.setText(QCoreApplication.translate("MainWindow", u"Image", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Temps de pr\u00e9paration :", None))
+        self.label_11.setText(QCoreApplication.translate("MainWindow", u"minutes", None))
+#if QT_CONFIG(tooltip)
+        self.pB_cancel_2.setToolTip(QCoreApplication.translate("MainWindow", u"Annuler", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_cancel_2.setText("")
+#if QT_CONFIG(tooltip)
+        self.pB_ok_2.setToolTip(QCoreApplication.translate("MainWindow", u"Enregistrer", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_ok_2.setText("")
+        self.label_newedit.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+#if QT_CONFIG(tooltip)
+        self.lE_titre.setToolTip(QCoreApplication.translate("MainWindow", u"Titre de la recette", None))
+#endif // QT_CONFIG(tooltip)
+        self.lE_titre.setText(QCoreApplication.translate("MainWindow", u"Titre", None))
+#if QT_CONFIG(tooltip)
+        self.cB_web.setToolTip(QCoreApplication.translate("MainWindow", u"Rechercher sur Internet", None))
+#endif // QT_CONFIG(tooltip)
+        self.cB_web.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_recettes), QCoreApplication.translate("MainWindow", u"Recettes", None))
         self.label_deco_1.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_deco_8.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -2302,5 +2588,27 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.pB_cancel.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_historique), QCoreApplication.translate("MainWindow", u"Historique", None))
+        self.label_121.setText(QCoreApplication.translate("MainWindow", u"Email : ", None))
+        self.label_email.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"Nombre de jours par d\u00e9faut :", None))
+        self.sB_days.setSuffix(QCoreApplication.translate("MainWindow", u" jours", None))
+        self.label_days.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.label_14.setText(QCoreApplication.translate("MainWindow", u"Enregistrement des fiches :", None))
+        self.toolButton.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.label_storage.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+#if QT_CONFIG(tooltip)
+        self.pB_ok_3.setToolTip(QCoreApplication.translate("MainWindow", u"Enregistrer", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_ok_3.setText("")
+#if QT_CONFIG(tooltip)
+        self.pB_cancel_3.setToolTip(QCoreApplication.translate("MainWindow", u"Annuler", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_cancel_3.setText("")
+        self.label_15.setText(QCoreApplication.translate("MainWindow", u"Contact :", None))
+        self.label_contact.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+#if QT_CONFIG(tooltip)
+        self.label_user.setToolTip(QCoreApplication.translate("MainWindow", u"Pr\u00e9f\u00e9rences", None))
+#endif // QT_CONFIG(tooltip)
+        self.label_user.setText(QCoreApplication.translate("MainWindow", u"User", None))
     # retranslateUi
 
