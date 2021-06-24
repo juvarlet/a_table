@@ -15,7 +15,7 @@ from shutil import copy2
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter
+from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 # QDate
@@ -49,6 +49,19 @@ class MainGUI(QWidget):
         self.initial_state(recipe_db)
         self.connect_actions()
         self.update_modif()
+
+        
+
+        fontDir = self.dirname + '/fonts/aller-font/Aller_It.ttf'
+        print(fontDir)
+
+        QFontDatabase.addApplicationFont(fontDir)
+        #self.setStyleSheet("QWidget{font-size:500px;font-family:'Aller_Rg';}")
+        #self.setStyleSheet("QWidget{background-color:#ccc1ae;font-family:Aller_Rg;font: bold;}")
+
+        #self.parentWidget().setStyleSheet("QWidget{background-color:#ccc1ae;}")
+        #print(self.parentWidget().styleSheet() )
+        self.parentWidget().setStyleSheet("QWidget{font-family:Aller;}" + self.parentWidget().styleSheet())
 
         #generate default menu at startup
         self.pB_new_menu.click()
