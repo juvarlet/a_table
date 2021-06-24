@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
         MainWindow.setStyleSheet(u"/**/\n"
 "QWidget{\n"
 "background-color:#ccc1ae;\n"
-"/*font-family:Ani; */\n"
+"/*font-family:Poiret One;*/\n"
 "font: bold;\n"
 "}\n"
 "/**/\n"
@@ -70,8 +70,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox#cB_web::indicator:unchecked {\n"
-"    image: url(file:///../UI/images/icon_web_s"
-                        "earch_gp.png);\n"
+"    image: url(file:///../UI/images/icon_w"
+                        "eb_search_gp.png);\n"
 "	width:45px;\n"
 "	height:45px;\n"
 "}\n"
@@ -125,8 +125,8 @@ class Ui_MainWindow(object):
 "\n"
 "/**/\n"
 "QTabWidget::pane { /* The tab widget frame */\n"
-"    borde"
-                        "r-top: 2px solid #077B8A;\n"
+"    b"
+                        "order-top: 2px solid #077B8A;\n"
 "    position: absolute;\n"
 "    top: -0.5em;\n"
 "}\n"
@@ -134,6 +134,7 @@ class Ui_MainWindow(object):
 "QTabWidget::tab-bar {\n"
 "    alignment: center;\n"
 "}\n"
+"\n"
 "\n"
 "/* Style the tab using the tab sub-control. Note that\n"
 "    it reads QTabBar _not_ QTabWidget */\n"
@@ -157,8 +158,8 @@ class Ui_MainWindow(object):
 "   /* \n"
 "	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                                stop: 0 #077B8A, stop: 0.3 #A2D5C6,\n"
-"                                stop: 0.7"
-                        " #A2D5C6, stop: 1.0 #077B8A);\n"
+"                                stop:"
+                        " 0.7 #A2D5C6, stop: 1.0 #077B8A);\n"
 "	*/\n"
 "	background-color:#077B8A;\n"
 "	color:#A2D5C6;\n"
@@ -170,6 +171,7 @@ class Ui_MainWindow(object):
 "    border-bottom-color: #077B8A; /* same as pane color */\n"
 "\n"
 "}\n"
+"\n"
 "/**/\n"
 "\n"
 "QToolBox::tab {\n"
@@ -199,9 +201,9 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton{\n"
 "     background-color: #5C3C92;\n"
-"     border-style: outset;\n"
-""
-                        "     border-width: 2px;\n"
+"     border-style: outset;"
+                        "\n"
+"     border-width: 2px;\n"
 "     border-radius: 10px;\n"
 "     border-color: #A2D5C6;\n"
 "     font: bold 18px;\n"
@@ -242,8 +244,8 @@ class Ui_MainWindow(object):
 "     border-radius: 0px;\n"
 "     border-color: #ccc1ae;\n"
 "     font: 18px;\n"
-"     /*min-width: 10"
-                        "em;*/\n"
+"     /*min-widt"
+                        "h: 10em;*/\n"
 "     padding: 4px;\n"
 "	color:#077b8a;\n"
 "\n"
@@ -294,8 +296,8 @@ class Ui_MainWindow(object):
 "color:#5C3C92;\n"
 "}\n"
 "\n"
-"QListWidget"
-                        "#lW_menu, QListWidget#lW_courses {\n"
+"QListW"
+                        "idget#lW_menu, QListWidget#lW_courses {\n"
 "background-color: #b7cab9;\n"
 "\n"
 "}\n"
@@ -329,8 +331,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QComboBox {\n"
-"	border"
-                        ": 4px solid #5C3C92;\n"
+"	b"
+                        "order: 4px solid #5C3C92;\n"
 "	border-radius: 3px;\n"
 "	/*background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #a2d5c6, stop:0.1 #b7cab9, stop:0.9 #b7cab9, stop:1 #a2d5c6);*/\n"
 "	background: #b7cab9;\n"
@@ -362,8 +364,8 @@ class Ui_MainWindow(object):
 "	background: #b7cab9;\n"
 "	padding: 1px 1px 1px 1px;\n"
 "	min-width: 6em;\n"
-"	color"
-                        ": #077B8A;\n"
+"	"
+                        "color: #077B8A;\n"
 "font-size: 14px;\n"
 "}\n"
 "\n"
@@ -414,8 +416,8 @@ class Ui_MainWindow(object):
 "\n"
 "QFrame#frame_new_recipe{\n"
 "	border: 4px solid #d72631;\n"
-"	bor"
-                        "der-radius: 10px;\n"
+""
+                        "	border-radius: 10px;\n"
 "	/*background-color:#A2D5C6;*/\n"
 "\n"
 "}\n"
@@ -458,8 +460,8 @@ class Ui_MainWindow(object):
 "	background: #5C3C92;\n"
 "	min-height: 0px;\n"
 "}\n"
-"QScrollBar::add-line:vertic"
-                        "al, QScrollBar::add-line:horizontal {\n"
+"QScrollBar::add-line:ve"
+                        "rtical, QScrollBar::add-line:horizontal {\n"
 "	background: #5C3C92;\n"
 "	height: 0px;\n"
 "	subcontrol-position: bottom;\n"
@@ -502,8 +504,8 @@ class Ui_MainWindow(object):
 "	height:45px;\n"
 "}\n"
 "\n"
-"QCheckBox#cB_tagkids::ind"
-                        "icator:unchecked {\n"
+"QCheckBox#cB_tagkids:"
+                        ":indicator:unchecked {\n"
 "    image: url(file:///../UI/images/tag_kids_black_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
@@ -544,8 +546,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox#cB_taglunch::indicator:checked {\n"
-"    image: url(file:///../UI/"
-                        "images/tag_lunch_color_LD.png);\n"
+"    image: url(file:///.."
+                        "/UI/images/tag_lunch_color_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
 "}\n"
@@ -589,8 +591,8 @@ class Ui_MainWindow(object):
 "	height:45px;\n"
 "}\n"
 "\n"
-"QCheckBox#cB_tagsummer::indicator:"
-                        "unchecked {\n"
+"QCheckBox#cB_tagsummer::indica"
+                        "tor:unchecked {\n"
 "    image: url(file:///../UI/images/tag_ete_black_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
@@ -631,8 +633,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox#cB_tagdessert::indicator:checked {\n"
-"    image: url(file:///../"
-                        "UI/images/tag_dessert_color_LD.png);\n"
+"    image: url(file://"
+                        "/../UI/images/tag_dessert_color_LD.png);\n"
 "	width:50px;\n"
 "	height:50px;\n"
 "}\n"
@@ -759,22 +761,20 @@ class Ui_MainWindow(object):
         self.pB_new_menu_2.setObjectName(u"pB_new_menu_2")
         font5 = QFont()
         font5.setFamilies([u"Poiret One"])
-        font5.setPointSize(14)
         font5.setBold(True)
         font5.setItalic(False)
-        self.cB_restes_2.setFont(font5)
-        self.cB_restes_2.setChecked(True)
+        self.pB_new_menu_2.setFont(font5)
+        self.pB_new_menu_2.setIconSize(QSize(40, 40))
 
         self.gridLayout_13.addWidget(self.pB_new_menu_2, 0, 0, 1, 1)
 
         self.cB_restes_2 = QCheckBox(self.frame_2)
         self.cB_restes_2.setObjectName(u"cB_restes_2")
         font6 = QFont()
-        font6.setFamily(u"Poiret One")
+        font6.setFamilies([u"Poiret One"])
         font6.setPointSize(14)
         font6.setBold(True)
         font6.setItalic(False)
-        font6.setWeight(75)
         self.cB_restes_2.setFont(font6)
         self.cB_restes_2.setChecked(True)
 
@@ -783,7 +783,7 @@ class Ui_MainWindow(object):
         self.dateEdit_2 = QDateEdit(self.frame_2)
         self.dateEdit_2.setObjectName(u"dateEdit_2")
         self.dateEdit_2.setMinimumSize(QSize(170, 50))
-        self.dateEdit_2.setFont(font6)
+        self.dateEdit_2.setFont(font5)
         self.dateEdit_2.setStyleSheet(u"")
         self.dateEdit_2.setWrapping(True)
         self.dateEdit_2.setAlignment(Qt.AlignCenter)
@@ -824,7 +824,7 @@ class Ui_MainWindow(object):
         self.sB_days_2 = QSpinBox(self.frame_2)
         self.sB_days_2.setObjectName(u"sB_days_2")
         self.sB_days_2.setMinimumSize(QSize(0, 50))
-        self.sB_days_2.setFont(font6)
+        self.sB_days_2.setFont(font5)
         self.sB_days_2.setButtonSymbols(QAbstractSpinBox.PlusMinus)
         self.sB_days_2.setKeyboardTracking(False)
         self.sB_days_2.setValue(7)
@@ -849,7 +849,7 @@ class Ui_MainWindow(object):
         self.gridLayout_14.setObjectName(u"gridLayout_14")
         self.pB_save = QPushButton(self.frame_button_2)
         self.pB_save.setObjectName(u"pB_save")
-        self.pB_save.setFont(font6)
+        self.pB_save.setFont(font5)
         self.pB_save.setIconSize(QSize(40, 40))
 
         self.gridLayout_14.addWidget(self.pB_save, 0, 3, 1, 1)
@@ -905,7 +905,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page_carte, u"Carte")
         self.page_liste = QWidget()
         self.page_liste.setObjectName(u"page_liste")
-        self.page_liste.setGeometry(QRect(0, 0, 2223, 599))
+        self.page_liste.setGeometry(QRect(0, 0, 485, 174))
         self.gridLayout_21 = QGridLayout(self.page_liste)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
         self.frame_liste_courses = QFrame(self.page_liste)
@@ -1041,7 +1041,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.cB_recherche = QCheckBox(self.frame_searchedit)
         self.cB_recherche.setObjectName(u"cB_recherche")
-        self.cB_recherche.setFont(font5)
+        self.cB_recherche.setFont(font6)
 
         self.verticalLayout_2.addWidget(self.cB_recherche)
 
@@ -1389,11 +1389,10 @@ class Ui_MainWindow(object):
         self.label_6 = QLabel(self.frame_9)
         self.label_6.setObjectName(u"label_6")
         font7 = QFont()
-        font7.setFamily(u"Poiret One")
+        font7.setFamilies([u"Poiret One"])
         font7.setPointSize(16)
         font7.setBold(True)
         font7.setItalic(False)
-        font7.setWeight(75)
         self.label_6.setFont(font7)
 
         self.gridLayout_33.addWidget(self.label_6, 1, 0, 1, 1)
@@ -1523,11 +1522,10 @@ class Ui_MainWindow(object):
         self.label_titre = QLabel(self.frame_6)
         self.label_titre.setObjectName(u"label_titre")
         font8 = QFont()
-        font8.setFamily(u"Poiret One")
+        font8.setFamilies([u"Poiret One"])
         font8.setPointSize(20)
         font8.setBold(True)
         font8.setItalic(False)
-        font8.setWeight(75)
         self.label_titre.setFont(font8)
         self.label_titre.setAlignment(Qt.AlignCenter)
         self.label_titre.setWordWrap(True)
@@ -1588,15 +1586,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_35.addWidget(self.label_7, 0, 0, 1, 1)
 
-        self.frame_5 = QFrame(self.frame_recherche)
-        self.frame_5.setObjectName(u"frame_5")
-        self.frame_5.setFrameShape(QFrame.NoFrame)
-        self.frame_5.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_3 = QHBoxLayout(self.frame_5)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.cB_search_recipe_name = QCheckBox(self.frame_5)
-        self.cB_search_recipe_name.setObjectName(u"cB_search_recipe_name")
-        self.cB_search_recipe_name.setChecked(True)
 
         self.gridLayout_28.addWidget(self.frame_10, 6, 1, 1, 2)
 
@@ -1632,25 +1621,26 @@ class Ui_MainWindow(object):
 
         self.gridLayout_29.addWidget(self.cB_tagsummer, 2, 4, 1, 1)
 
-        self.cB_search_ingredients = QCheckBox(self.frame_5)
-        self.cB_search_ingredients.setObjectName(u"cB_search_ingredients")
+        self.cB_tagdouble = QCheckBox(self.frame_tags_2)
+        self.cB_tagdouble.setObjectName(u"cB_tagdouble")
 
-        self.horizontalLayout_3.addWidget(self.cB_search_ingredients)
+        self.gridLayout_29.addWidget(self.cB_tagdouble, 2, 1, 1, 1)
 
-        self.cB_search_preparation = QCheckBox(self.frame_5)
-        self.cB_search_preparation.setObjectName(u"cB_search_preparation")
+        self.cB_tagdessert = QCheckBox(self.frame_tags_2)
+        self.cB_tagdessert.setObjectName(u"cB_tagdessert")
 
-        self.horizontalLayout_3.addWidget(self.cB_search_preparation)
+        self.gridLayout_29.addWidget(self.cB_tagdessert, 2, 6, 1, 1)
 
-        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.cB_taglunch = QCheckBox(self.frame_tags_2)
+        self.cB_taglunch.setObjectName(u"cB_taglunch")
 
-        self.horizontalLayout_3.addItem(self.horizontalSpacer_8)
+        self.gridLayout_29.addWidget(self.cB_taglunch, 2, 7, 1, 1)
 
+        self.cB_tagtips = QCheckBox(self.frame_tags_2)
+        self.cB_tagtips.setObjectName(u"cB_tagtips")
 
-        self.gridLayout_18.addWidget(self.frame_5, 2, 1, 1, 1)
+        self.gridLayout_29.addWidget(self.cB_tagtips, 2, 9, 1, 1)
 
-        self.label_12 = QLabel(self.frame_recherche)
-        self.label_12.setObjectName(u"label_12")
 
         self.gridLayout_28.addWidget(self.frame_tags_2, 8, 0, 1, 3, Qt.AlignHCenter|Qt.AlignVCenter)
 
@@ -1841,8 +1831,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_49.addWidget(self.frame_20, 0, 1, 1, 1)
 
-        self.cB_tagsummer = QCheckBox(self.frame_tags_2)
-        self.cB_tagsummer.setObjectName(u"cB_tagsummer")
 
         self.gridLayout_28.addWidget(self.frame_16, 3, 0, 1, 3)
 
@@ -2303,8 +2291,8 @@ class Ui_MainWindow(object):
         self.pB_modif_2.toggled.connect(self.frame_liste_recettes.setHidden)
         self.pB_new_recipe.toggled.connect(self.frame_liste_recettes.setHidden)
 
-        self.tabWidget.setCurrentIndex(1)
-        self.toolBox.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
+        self.toolBox.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -2326,14 +2314,6 @@ class Ui_MainWindow(object):
         self.cB_restes_2.setText(QCoreApplication.translate("MainWindow", u"Restes", None))
         self.dateEdit_2.setDisplayFormat(QCoreApplication.translate("MainWindow", u"dd-MM-yyyy", None))
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"pour", None))
-#if QT_CONFIG(tooltip)
-        self.pB_new_menu_2.setToolTip(QCoreApplication.translate("MainWindow", u"Nouvelle carte", None))
-#endif // QT_CONFIG(tooltip)
-        self.pB_new_menu_2.setText("")
-        self.dateEdit_2.setDisplayFormat(QCoreApplication.translate("MainWindow", u"dd-MM-yyyy", None))
-        self.label_date.setText("")
-        self.label_9.setText(QCoreApplication.translate("MainWindow", u"pour", None))
-        self.sB_days_2.setSuffix(QCoreApplication.translate("MainWindow", u" jours", None))
 #if QT_CONFIG(tooltip)
         self.pB_modif.setToolTip(QCoreApplication.translate("MainWindow", u"Modifier", None))
 #endif // QT_CONFIG(tooltip)
@@ -2411,8 +2391,8 @@ class Ui_MainWindow(object):
         self.tE_recette.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Poiret One'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:400;\"><br /></p></body></html>", None))
+"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
+"<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;\"><br /></p></body></html>", None))
 #if QT_CONFIG(tooltip)
         self.label_summer.setToolTip(QCoreApplication.translate("MainWindow", u"Plat d'\u00e9t\u00e9", None))
 #endif // QT_CONFIG(tooltip)
