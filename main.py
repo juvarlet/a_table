@@ -696,16 +696,26 @@ class MainGUI(QWidget):
             recipe_lunch, recipe_dinner = recipes_of_day
             text_lunch, text_dinner = (recipe_lunch.name, recipe_dinner.name)
             # print((text_lunch, self.recipe_db.background_score(recipe_lunch, self.current_menu.start_day)))
-            qtwi_lunch, qtwi_dinner = (QTableWidgetItem(text_lunch), QTableWidgetItem(text_dinner))
-            qtwi_lunch.setTextAlignment(Qt.AlignCenter)
-            qtwi_dinner.setTextAlignment(Qt.AlignCenter)
+            # qtwi_lunch, qtwi_dinner = (QTableWidgetItem(text_lunch), QTableWidgetItem(text_dinner))
+            # qtwi_lunch.setTextAlignment(Qt.AlignCenter)
+            # qtwi_dinner.setTextAlignment(Qt.AlignCenter)
 
-            self.tW_menu.setItem(0, i, qtwi_lunch)
-            self.tW_menu.setItem(1, i, qtwi_dinner)
+            # self.tW_menu.setItem(0, i, qtwi_lunch)
+            # self.tW_menu.setItem(1, i, qtwi_dinner)
 
-            display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
-            display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
+            # display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
+            # display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
     
+        #ability to add several recipes to a given slot
+            twig_lunch = cw.TableWidgetItemGroup(text_lunch)
+            twig_dinner = cw.TableWidgetItemGroup(text_dinner)
+            
+            self.tW_menu.setCellWidget(0, i, twig_lunch)
+            self.tW_menu.setCellWidget(1, i, twig_dinner)
+            display_image(recipe_lunch, self.dirname, twig_lunch.label, icon = False)
+            display_image(recipe_dinner, self.dirname, twig_dinner.label, icon = False)
+    
+        
     def on_drag_drop_event(self, row, column):
         
         if self.just_dropped and self.cell_signal_count == 1:

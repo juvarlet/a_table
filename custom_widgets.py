@@ -28,3 +28,21 @@ class SpinBoxCustom(QSpinBox): #Custom SpinBox to force +- only, ignoring keyboa
 class WebEnginePage(QWebEnginePage):
     def javaScriptConsoleMessage(self, level, msg, line, sourceID):
         pass
+    
+class TableWidgetItemGroup(QWidget):
+    def __init__(self, text, parent=None):
+        super(TableWidgetItemGroup,self).__init__(parent)
+
+        layout = QVBoxLayout()
+
+        # adjust spacings to your needs
+        layout.setContentsMargins(0,0,0,0)
+        layout.setSpacing(0)
+        
+        self.label = QLabel(text)
+        self.label.setAlignment(Qt.AlignCenter)
+
+        layout.addWidget(self.label)
+        layout.addWidget(QPushButton('+'))
+
+        self.setLayout(layout)
