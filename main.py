@@ -79,7 +79,7 @@ class MainGUI(QWidget):
         self.delete_flag = False
         self.contact = 'notification.a.table@gmail.com'
         self.homepage = QUrl("https://www.google.com/")
-
+        
         #-- ui widgets --
         self.tW: QTabWidget
         self.tW = self.pW.tabWidget
@@ -420,9 +420,9 @@ class MainGUI(QWidget):
         #images
         self.window().setWindowIcon(QIcon(self.dirname + '/UI/images/donut.png'))
 
-        load_pic(self.label_date, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
-        load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
-        load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
+        cw.load_pic(self.label_date, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
+        cw.load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
+        cw.load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
         # load_pic(self.label_dessert_2, self.dirname + '/UI/images/tag_dessert_color_LD.png')
         self.tW.setTabIcon(0,QIcon(self.dirname + '/UI/images/icon_chef_3colors.png'))
         self.tW.setTabIcon(1,QIcon(self.dirname + '/UI/images/icon_recipe_3colors.png'))
@@ -433,27 +433,27 @@ class MainGUI(QWidget):
         self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
         self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
-        load_pic(self.tag_vegan, self.dirname + '/UI/images/tag_vegan_black_LD.png')
-        load_pic(self.tag_kids, self.dirname + '/UI/images/tag_kids_black_LD.png')
-        load_pic(self.tag_double, self.dirname + '/UI/images/tag_double_black_LD.png')
-        load_pic(self.tag_summer, self.dirname + '/UI/images/tag_ete_black_LD.png')
-        load_pic(self.tag_winter, self.dirname + '/UI/images/tag_hiver_black_LD.png')
-        load_pic(self.tag_dessert, self.dirname + '/UI/images/tag_dessert_black_LD.png')
-        load_pic(self.tag_tips, self.dirname + '/UI/images/tag_tips_black_LD.png')
-        load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_black_LD.png')
+        cw.load_pic(self.tag_vegan, self.dirname + '/UI/images/tag_vegan_black_LD.png')
+        cw.load_pic(self.tag_kids, self.dirname + '/UI/images/tag_kids_black_LD.png')
+        cw.load_pic(self.tag_double, self.dirname + '/UI/images/tag_double_black_LD.png')
+        cw.load_pic(self.tag_summer, self.dirname + '/UI/images/tag_ete_black_LD.png')
+        cw.load_pic(self.tag_winter, self.dirname + '/UI/images/tag_hiver_black_LD.png')
+        cw.load_pic(self.tag_dessert, self.dirname + '/UI/images/tag_dessert_black_LD.png')
+        cw.load_pic(self.tag_tips, self.dirname + '/UI/images/tag_tips_black_LD.png')
+        cw.load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_black_LD.png')
         self.pB_back.setIcon(QIcon(self.dirname + '/UI/images/icon_back.png'))
         self.pB_print_2.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
         self.pB_send_2.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
 
-        load_pic(self.score_vegan, self.dirname + '/UI/images/score_vegan_0.png')
-        load_pic(self.score_kids, self.dirname + '/UI/images/score_kids_0.png')
-        load_pic(self.score_double, self.dirname + '/UI/images/score_double_0.png')
-        load_pic(self.score_summer, self.dirname + '/UI/images/score_ete_0.png')
-        load_pic(self.score_winter, self.dirname + '/UI/images/score_hiver_0.png')
+        cw.load_pic(self.score_vegan, self.dirname + '/UI/images/score_vegan_0.png')
+        cw.load_pic(self.score_kids, self.dirname + '/UI/images/score_kids_0.png')
+        cw.load_pic(self.score_double, self.dirname + '/UI/images/score_double_0.png')
+        cw.load_pic(self.score_summer, self.dirname + '/UI/images/score_ete_0.png')
+        cw.load_pic(self.score_winter, self.dirname + '/UI/images/score_hiver_0.png')
         
-        load_pic(self.label_top, self.dirname + '/UI/images/icon_list.png')
-        load_pic(self.label_icon_carte, self.dirname + '/UI/images/icon_menu_3colors_LD.png')
-        load_pic(self.label_cocktail, self.dirname + '/UI/images/table_cocktails.png')
+        cw.load_pic(self.label_top, self.dirname + '/UI/images/icon_list.png')
+        cw.load_pic(self.label_icon_carte, self.dirname + '/UI/images/icon_menu_3colors_LD.png')
+        cw.load_pic(self.label_cocktail, self.dirname + '/UI/images/table_cocktails.png')
         self.pB_print.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
         self.pB_send.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
         self.pB_copy.setIcon(QIcon(self.dirname + '/UI/images/icon_copy.png'))
@@ -464,9 +464,9 @@ class MainGUI(QWidget):
                   self.label_deco_13,self.label_deco_14,self.label_deco_15,self.label_deco_16]
         
         for i, label in enumerate(labels):
-            load_pic(label, self.dirname + '/UI/images/icon_deco_%s.png' % (i+1))
+            cw.load_pic(label, self.dirname + '/UI/images/icon_deco_%s.png' % (i+1))
         
-        load_pic(self.label_warning, self.dirname + '/UI/images/icon_fork_X_3colors_t_LD.png')
+        cw.load_pic(self.label_warning, self.dirname + '/UI/images/icon_fork_X_3colors_t_LD.png')
         self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
         self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_cancel_2.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
@@ -694,8 +694,8 @@ class MainGUI(QWidget):
         recipe_list_dinner = [m[2] for m in table_menu]
         for i, recipes_of_day in enumerate(zip(recipe_list_lunch, recipe_list_dinner)):
             recipe_lunch, recipe_dinner = recipes_of_day
-            text_lunch, text_dinner = (recipe_lunch.name, recipe_dinner.name)
-            # print((text_lunch, self.recipe_db.background_score(recipe_lunch, self.current_menu.start_day)))
+            # text_lunch, text_dinner = (recipe_lunch.name, recipe_dinner.name)
+            # # print((text_lunch, self.recipe_db.background_score(recipe_lunch, self.current_menu.start_day)))
             # qtwi_lunch, qtwi_dinner = (QTableWidgetItem(text_lunch), QTableWidgetItem(text_dinner))
             # qtwi_lunch.setTextAlignment(Qt.AlignCenter)
             # qtwi_dinner.setTextAlignment(Qt.AlignCenter)
@@ -703,18 +703,20 @@ class MainGUI(QWidget):
             # self.tW_menu.setItem(0, i, qtwi_lunch)
             # self.tW_menu.setItem(1, i, qtwi_dinner)
 
-            # display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
-            # display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
+            # cw.display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
+            # cw.display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
     
         #ability to add several recipes to a given slot
-            twig_lunch = cw.TableWidgetItemGroup(text_lunch)
-            twig_dinner = cw.TableWidgetItemGroup(text_dinner)
-            
-            self.tW_menu.setCellWidget(0, i, twig_lunch)
-            self.tW_menu.setCellWidget(1, i, twig_dinner)
-            display_image(recipe_lunch, self.dirname, twig_lunch.label, icon = False)
-            display_image(recipe_dinner, self.dirname, twig_dinner.label, icon = False)
-    
+            stacked_lunch = cw.create_stack(recipe_lunch, self.recipe_db)
+            stacked_dinner = cw.create_stack(recipe_dinner, self.recipe_db)
+            qtwi_lunch = stacked_lunch.parentWidget()
+            qtwi_dinner = stacked_dinner.parentWidget()
+            # qtwi_lunch.recipe_list.append(recipe_lunch)
+            # qtwi_dinner.recipe_list.append(recipe_dinner)
+            # qtwi_lunch.update_recipes()
+            # qtwi_dinner.update_recipes()
+            self.tW_menu.setCellWidget(0, i, qtwi_lunch)
+            self.tW_menu.setCellWidget(1, i, qtwi_dinner)
         
     def on_drag_drop_event(self, row, column):
         
@@ -740,7 +742,7 @@ class MainGUI(QWidget):
             from_row, from_column = self.from_cell
             self.tW_menu.setItem(from_row, from_column, qtwi)
 
-            display_image(original_to_cell_recipe, self.dirname, qtwi, icon = True)
+            cw.display_image(original_to_cell_recipe, self.dirname, qtwi, icon = True)
 
             #update menu object
             #take from recipe
@@ -790,7 +792,7 @@ class MainGUI(QWidget):
             # self.tW_dessert.setItem(0, i, qtwi_dessert)
             self.tW_menu.setItem(2, i, qtwi_dessert)
 
-            display_image(dessert, self.dirname, qtwi_dessert, icon = True)
+            cw.display_image(dessert, self.dirname, qtwi_dessert, icon = True)
         
         for x in range(self.sB_desserts.value(), self.tW_menu.columnCount()):
             self.tW_menu.setItem(2, x, QTableWidgetItem())
@@ -885,7 +887,7 @@ class MainGUI(QWidget):
             if self.recipe_db.contains(recipe_name):
                 recipe_object = self.recipe_db.get_recipe_object(recipe_name)
                 #display image
-                display_image(recipe_object, self.dirname, self.label_recipe_image, icon = False)
+                cw.display_image(recipe_object, self.dirname, self.label_recipe_image, icon = False)
                 #display instructions
                 self.tE_recipe.setText(recipe_object.preparation.replace('\n', '<br/>'))
                 #display ingredients
@@ -894,13 +896,13 @@ class MainGUI(QWidget):
                 tags = [self.tag_vegan, self.tag_kids, self.tag_double, self.tag_summer, self.tag_winter, self.tag_dessert, self.tag_tips]
                 tags_names = ['vegan', 'kids', 'double', 'ete', 'hiver', 'dessert', 'tips']
                 for tag, tag_name in zip(tags, tags_names):
-                    load_pic(tag, self.dirname + '/UI/images/tag_%s_%s_LD.png' % (tag_name, ['black', 'color'][recipe_object.isTagged(tag_name)]))
+                    cw.load_pic(tag, self.dirname + '/UI/images/tag_%s_%s_LD.png' % (tag_name, ['black', 'color'][recipe_object.isTagged(tag_name)]))
                 if recipe_object.isTagged('midi'):
-                    load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_color_LD.png')
+                    cw.load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_color_LD.png')
                 elif recipe_object.isTagged('soir'):
-                    load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_dinner_color_LD.png')
+                    cw.load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_dinner_color_LD.png')
                 else:
-                    load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_black_LD.png')
+                    cw.load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_black_LD.png')
             else:
                 self.on_wrong_recipe_name(recipe_name)
                 # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
@@ -1002,7 +1004,7 @@ class MainGUI(QWidget):
         self.tW_menu.setVerticalHeaderLabels([' Midi ', ' Soir ', ' Desserts '])
         # self.tW_dessert.setColumnCount(number)
         if number == 0:
-            load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
+            cw.load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
             # self.frame_dessert.setVisible(False)
             
             # self.tW_menu.setRowCount(2)
@@ -1012,7 +1014,7 @@ class MainGUI(QWidget):
             self.current_menu.desserts = []
             self.dessert_list = []
         else:
-            load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake.png')
+            cw.load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake.png')
             # self.frame_dessert.setVisible(True)
 
             # self.tW_menu.setRowCount(3)
@@ -1050,8 +1052,8 @@ class MainGUI(QWidget):
             self.tW_menu.setItem(0, i, qtwi_lunch)
             self.tW_menu.setItem(1, i, qtwi_dinner)
 
-            display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
-            display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
+            cw.display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
+            cw.display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
 
         #update shopping list and menu list
         self.populate_shopping_list()
@@ -1300,7 +1302,7 @@ class MainGUI(QWidget):
         
         if draw:
             for tag, tag_name in zip(tags, tags_names):
-                load_pic(tag, self.dirname + '/UI/images/score_%s_%s.png' % (tag_name, score[tag_name]))
+                cw.load_pic(tag, self.dirname + '/UI/images/score_%s_%s.png' % (tag_name, score[tag_name]))
 
         return [self.dirname + '/UI/images/score_%s_%s.png' % (tag_name, score[tag_name]) for tag, tag_name in zip(tags, tags_names)]
     
@@ -1370,7 +1372,7 @@ class MainGUI(QWidget):
         recipe_name = self.lW_recipe.currentItem().text()
         self.lE_title.setText(recipe_name)
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
-        display_image(recipe_object, self.dirname, self.label_image_2, icon=False)
+        cw.display_image(recipe_object, self.dirname, self.label_image_2, icon=False)
         
         ing_list = recipe_object.ingredients_string_list()
         
@@ -1565,7 +1567,7 @@ class MainGUI(QWidget):
     def on_add_photo(self):
         self.recipe_image_path, filter = QFileDialog.getOpenFileName(self, 'Choisir une image', self.dirname, 'Images (*.png *.jpg)')
         # print(image_path=='')
-        display_new_image(self.recipe_image_path, self.label_image_2)
+        cw.display_new_image(self.recipe_image_path, self.label_image_2)
         
     def on_confirm_recipe(self):
         #check if ok to save
@@ -2038,77 +2040,7 @@ class MainGUI(QWidget):
             self.pB_cook.setToolTip(['Copier le lien', 'Importer la recette'][okToParse])
         
         
-def load_pic(widget, picture_path):#Display image on widget from image path
-    picture = QPixmap(picture_path)
-    widget.setPixmap(picture)
 
-
-def display_image(recipe_object, dirname, widget, icon = True):#Scale and display image on Widget from recipe object
-    if icon:
-        if recipe_object is None:#special case for header icon
-            image_path = dirname
-            icon = QIcon()
-            qpix = QPixmap(image_path)
-            icon.addPixmap(qpix, mode = QIcon.Selected, state = QIcon.On)
-            widget.setSizeHint(QSize(60, 60))
-            widget.setIcon(icon)
-
-        elif recipe_object.image != '' and recipe_object.image != '/images/':
-            image_path = dirname + recipe_object.image + '_icon.jpg'
-            # icon = QIcon()
-            qpix = QPixmap(image_path)
-
-            qpix_to_widget(qpix, widget)
-
-    else:
-        if recipe_object.image != '' and recipe_object.image != '/images/':
-            image_path = dirname + recipe_object.image + '.jpg'
-            qpix = QPixmap(image_path)
-
-
-            if qpix.width() > qpix.height():
-                # qpix_scaled = qpix.scaled(400, 300)
-                qpix_scaled = qpix.scaled(270, 200)
-            else:
-                # qpix_scaled = qpix.scaled(300, 400)
-                qpix_scaled = qpix.scaled(200, 270)
-
-            # print('-%s-' % recipe_object.image)
-            qpix_to_widget(qpix_scaled, widget, icon=False)
-            
-        else:
-            widget.setPixmap(QPixmap())
-
-def display_new_image(image_path, widget, icon = False):#Scale and display image on Widget from Image path
-    qpix = QPixmap(image_path)
-
-    if qpix.width() > qpix.height():
-        # qpix_scaled = qpix.scaled(400, 300)
-        qpix_scaled = qpix.scaled(270, 200)
-    else:
-        # qpix_scaled = qpix.scaled(300, 400)
-        qpix_scaled = qpix.scaled(200, 270)
-        
-    qpix_to_widget(qpix_scaled, widget, icon)
-
-def qpix_to_widget(qpix, widget, icon = True):#set Image of a Widget rounded from QPixmap object
-    x_size, y_size = qpix.width(), qpix.height()
-    rounded = QPixmap(x_size, y_size)
-    rounded.fill(Qt.transparent)
-    path = QPainterPath()
-    path.addRoundedRect(rounded.rect(), 25, 25, mode=Qt.RelativeSize)
-    painter = QPainter()
-    painter.begin(rounded)
-    painter.setClipPath(path)
-    painter.fillRect(rounded.rect(), Qt.transparent)
-    x = int((qpix.width() - x_size)/2)
-    y = int((qpix.height() - y_size)/2)
-    painter.drawPixmap(x, y, qpix.width(), qpix.height(), qpix)
-    painter.end()
-    if icon:
-        widget.setIcon(QIcon(rounded))
-    else:
-        widget.setPixmap(rounded)
 
 def image_from_base64(base64_table, image_name):#Legacy function to store and read images -- can be removed
     with open(base64_table, 'r') as f:

@@ -662,6 +662,13 @@ class Ui_MainWindow(object):
 "	height:45px;\n"
 "}\n"
 "\n"
+"QHeaderView::section {\n"
+"    background-color: #a2d5c6;\n"
+"	color: #077b8a;\n"
+"    border: none;\n"
+"	\n"
+"}\n"
+"\n"
 "")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -912,7 +919,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page_carte, u"Carte")
         self.page_liste = QWidget()
         self.page_liste.setObjectName(u"page_liste")
-        self.page_liste.setGeometry(QRect(0, 0, 2223, 599))
+        self.page_liste.setGeometry(QRect(0, 0, 2173, 599))
         self.gridLayout_21 = QGridLayout(self.page_liste)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
         self.frame_liste_courses = QFrame(self.page_liste)

@@ -647,6 +647,13 @@ QCheckBox#cB_search_tag_dessert::indicator:hover {
 	height:45px;
 }
 
+QHeaderView::section {
+    background-color: #a2d5c6;
+	color: #077b8a;
+    border: none;
+	
+}
+
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -1201,7 +1208,7 @@ icon-size: 40px;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>2223</width>
+                <width>2173</width>
                 <height>599</height>
                </rect>
               </property>

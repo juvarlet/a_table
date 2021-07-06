@@ -364,10 +364,10 @@ def unit_conversion(from_unit, to_unit, value):
 #     text = pattern.sub(lambda m: rep[re.escape(m.group(0))], string)
 #     return text
 
-def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = []):
+def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = [], tagsOUt = ['dessert', 'restes', 'tips']):
     initial_pool = []
     #remove 'dessert', 'leftovers', 'tips' from list
-    initial_pool = recipe_db.get_recipe_sublist(my_recipe_db.recipe_list, tagsOut = ['dessert', 'restes', 'tips'])
+    initial_pool = recipe_db.get_recipe_sublist(my_recipe_db.recipe_list, tagsOut = tagsOUt)
     #seasons
     y = start_day.year
     if datetime(y, 6, 1).date() <= start_day <= datetime(y, 10, 1).date():
