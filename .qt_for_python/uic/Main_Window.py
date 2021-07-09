@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.setWindowModality(Qt.WindowModal)
-        MainWindow.resize(2600, 783)
+        MainWindow.resize(2109, 783)
         font = QFont()
         font.setFamily(u"Poiret One")
         font.setPointSize(15)
@@ -202,11 +202,11 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton{\n"
 "     background-color: #5C3C92;\n"
-"     border-style: outset;\n"
+"     border-style: solid;\n"
 ""
                         "     border-width: 2px;\n"
 "     border-radius: 10px;\n"
-"     border-color: #A2D5C6;\n"
+"     border-color: #5C3C92;\n"
 "     font: bold 18px;\n"
 "     /*min-width: 10em;*/\n"
 "     padding: 8px;\n"
@@ -712,7 +712,7 @@ class Ui_MainWindow(object):
         self.toolBox.setFrameShape(QFrame.NoFrame)
         self.page_carte = QWidget()
         self.page_carte.setObjectName(u"page_carte")
-        self.page_carte.setGeometry(QRect(0, 0, 2173, 599))
+        self.page_carte.setGeometry(QRect(0, 0, 1732, 599))
         self.gridLayout_9 = QGridLayout(self.page_carte)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
         self.frame_carte = QFrame(self.page_carte)
@@ -919,7 +919,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page_carte, u"Carte")
         self.page_liste = QWidget()
         self.page_liste.setObjectName(u"page_liste")
-        self.page_liste.setGeometry(QRect(0, 0, 2173, 599))
+        self.page_liste.setGeometry(QRect(0, 0, 1732, 599))
         self.gridLayout_21 = QGridLayout(self.page_liste)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
         self.frame_liste_courses = QFrame(self.page_liste)

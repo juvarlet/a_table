@@ -18,6 +18,7 @@ class Ui_Form(object):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(398, 300)
+        Form.setMouseTracking(True)
         Form.setStyleSheet(u"QWidget{\n"
 "background-color:#ccc1ae;\n"
 "font-family:Poiret One;\n"
@@ -26,10 +27,10 @@ class Ui_Form(object):
 "\n"
 "QPushButton{\n"
 "     background-color: #5C3C92;\n"
-"     border-style: outset;\n"
+"     border-style: solid;\n"
 "     border-width: 2px;\n"
 "     border-radius: 10px;\n"
-"     border-color: #A2D5C6;\n"
+"     border-color: #5C3C92;\n"
 "     font: bold 18px;\n"
 "     /*min-width: 10em;*/\n"
 "     padding: 8px;\n"
@@ -37,32 +38,39 @@ class Ui_Form(object):
 "\n"
 "}\n"
 "\n"
-"QPushButton:hover{\n"
-"	border-color: #D72631;\n"
-"}\n"
-"\n"
-"QPushButton:pressed,  QPushButton:checked{\n"
+"QPushButton:pressed/*,  QPushButton:checked*/{\n"
 "    border-width: 5px;\n"
 "	border-radius: 15px;\n"
 "	font:  15px;\n"
 "	border-color: #D72631;\n"
 "}\n"
 "\n"
+"QPushButton:checked{\n"
+"	border-color: #5c3c92;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	border-color: #D72631;\n"
+"	/*border-width: 3px;\n"
+"	border-radius: 8px;*/\n"
+"}\n"
+"\n"
+"\n"
 "QComboBox {\n"
-"	border: 4px solid #5C3C92;\n"
+"	border: 2px solid #5C3C92;\n"
 "	border-radius: 3px;\n"
 "	/*background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #a2d5c6, stop:0.1 #b7cab9, stop:0.9 #b7cab9, stop:1 #a2d5c6);*/\n"
 "	background: #b7cab9;\n"
 "	padding: 1px 23px 1px 3px;\n"
 "	min-width: 6em;\n"
-"	color: #077B8A;\n"
+"	color: #077"
+                        "B8A;\n"
 "font-size: 18px;\n"
 "\n"
 "}\n"
 "QComboBox::drop-down {\n"
 "	subcontrol-origin: padding;\n"
-"	subcontrol-position: to"
-                        "p right;\n"
+"	subcontrol-position: top right;\n"
 "	width: 20px;\n"
 "\n"
 "	border-top-right-radius: 3px;\n"
@@ -90,6 +98,50 @@ class Ui_Form(object):
 "    padding: 2px;\n"
 "    background-color: #CCC1AE;\n"
 "\n"
+"}\n"
+"\n"
+"QComboBox {\n"
+"	border: 4px solid #5C3C92;\n"
+"	border-radius: 3px;\n"
+"	/*background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #a2d5c6, stop:0.1 #b7cab9, stop:0.9 #b7cab9, stop:1 #a2d5c6);*/\n"
+"	background: #b7cab9;\n"
+"	padding:"
+                        " 1px 23px 1px 3px;\n"
+"	min-width: 6em;\n"
+"	color: #077B8A;\n"
+"font-size: 18px;\n"
+"\n"
+"}\n"
+"QComboBox::drop-down {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	width: 20px;\n"
+"\n"
+"	border-top-right-radius: 3px;\n"
+"	border-bottom-right-radius: 3px;\n"
+"}\n"
+"QComboBox::down-arrow {\n"
+"     image: url(file:///../UI/images/icon_down_arrow.png);\n"
+"	/*image: url(file:///../UI/images/icon_edit.png);*/\n"
+"	width: 20px;\n"
+"	height: 20px;\n"
+"}\n"
+"\n"
+" \n"
+"QComboBox QAbstractItemView{\n"
+"	background-color: #CCC1AE;\n"
+"	/*color: #077B8A;*/\n"
+" 	\n"
+"	selection-background-color: #5C3C92;\n"
+"	/*selection-color: #A2D5C6;*/\n"
+"}\n"
+"\n"
+"QFrame #frame_buttons{\n"
+"background-color:transparent;\n"
+"}\n"
+"\n"
+"QMenu::item {\n"
+"    icon-size:50px 50px;\n"
 "}")
         self.gridLayout = QGridLayout(Form)
         self.gridLayout.setSpacing(0)
@@ -116,55 +168,67 @@ class Ui_Form(object):
         self.gridLayout_5.setSpacing(0)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.frame_2 = QFrame(self.frame_card)
-        self.frame_2.setObjectName(u"frame_2")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
-        self.frame_2.setSizePolicy(sizePolicy1)
-        self.frame_2.setFrameShape(QFrame.NoFrame)
-        self.frame_2.setFrameShadow(QFrame.Raised)
-        self.gridLayout_3 = QGridLayout(self.frame_2)
-        self.gridLayout_3.setSpacing(0)
-        self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.gridLayout_3.setSizeConstraint(QLayout.SetMinimumSize)
-        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.pB_delete = QPushButton(self.frame_2)
-        self.pB_delete.setObjectName(u"pB_delete")
-        self.pB_delete.setMaximumSize(QSize(25, 25))
-
-        self.gridLayout_3.addWidget(self.pB_delete, 2, 0, 1, 1)
-
-        self.pB_next = QPushButton(self.frame_2)
-        self.pB_next.setObjectName(u"pB_next")
-        self.pB_next.setMaximumSize(QSize(25, 25))
-
-        self.gridLayout_3.addWidget(self.pB_next, 0, 0, 1, 1)
-
-        self.pB_add = QPushButton(self.frame_2)
-        self.pB_add.setObjectName(u"pB_add")
-        self.pB_add.setMaximumSize(QSize(25, 25))
-
-        self.gridLayout_3.addWidget(self.pB_add, 1, 0, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_3.addItem(self.verticalSpacer, 3, 0, 1, 1)
-
-
-        self.gridLayout_5.addWidget(self.frame_2, 0, 2, 2, 1)
-
         self.label_image = QLabel(self.frame_card)
         self.label_image.setObjectName(u"label_image")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.label_image.sizePolicy().hasHeightForWidth())
-        self.label_image.setSizePolicy(sizePolicy2)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.label_image.sizePolicy().hasHeightForWidth())
+        self.label_image.setSizePolicy(sizePolicy1)
         self.label_image.setAlignment(Qt.AlignCenter)
 
         self.gridLayout_5.addWidget(self.label_image, 0, 0, 1, 2)
+
+        self.frame_buttons = QFrame(self.frame_card)
+        self.frame_buttons.setObjectName(u"frame_buttons")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.frame_buttons.sizePolicy().hasHeightForWidth())
+        self.frame_buttons.setSizePolicy(sizePolicy2)
+        self.frame_buttons.setFrameShape(QFrame.NoFrame)
+        self.frame_buttons.setFrameShadow(QFrame.Raised)
+        self.gridLayout_3 = QGridLayout(self.frame_buttons)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setSizeConstraint(QLayout.SetMinimumSize)
+        self.gridLayout_3.setHorizontalSpacing(0)
+        self.gridLayout_3.setVerticalSpacing(1)
+        self.gridLayout_3.setContentsMargins(1, 1, 1, 1)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_3.addItem(self.verticalSpacer, 4, 0, 1, 1)
+
+        self.pB_edit = QPushButton(self.frame_buttons)
+        self.pB_edit.setObjectName(u"pB_edit")
+        self.pB_edit.setMaximumSize(QSize(30, 30))
+        self.pB_edit.setIconSize(QSize(23, 23))
+        self.pB_edit.setCheckable(True)
+
+        self.gridLayout_3.addWidget(self.pB_edit, 2, 0, 1, 1)
+
+        self.pB_next = QPushButton(self.frame_buttons)
+        self.pB_next.setObjectName(u"pB_next")
+        self.pB_next.setMaximumSize(QSize(30, 30))
+        self.pB_next.setIconSize(QSize(23, 23))
+
+        self.gridLayout_3.addWidget(self.pB_next, 0, 0, 1, 1)
+
+        self.pB_delete = QPushButton(self.frame_buttons)
+        self.pB_delete.setObjectName(u"pB_delete")
+        self.pB_delete.setMaximumSize(QSize(30, 30))
+        self.pB_delete.setIconSize(QSize(23, 23))
+
+        self.gridLayout_3.addWidget(self.pB_delete, 3, 0, 1, 1)
+
+        self.pB_add = QPushButton(self.frame_buttons)
+        self.pB_add.setObjectName(u"pB_add")
+        self.pB_add.setMaximumSize(QSize(30, 30))
+        self.pB_add.setIconSize(QSize(23, 23))
+
+        self.gridLayout_3.addWidget(self.pB_add, 1, 0, 1, 1)
+
+
+        self.gridLayout_5.addWidget(self.frame_buttons, 0, 1, 3, 1)
 
         self.label_title = QLabel(self.frame_card)
         self.label_title.setObjectName(u"label_title")
@@ -176,11 +240,7 @@ class Ui_Form(object):
         self.label_title.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
         self.label_title.setWordWrap(True)
 
-        self.gridLayout_5.addWidget(self.label_title, 2, 0, 1, 3)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_5.addItem(self.horizontalSpacer, 1, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.label_title, 3, 0, 1, 3)
 
         self.frame_3 = QFrame(self.frame_card)
         self.frame_3.setObjectName(u"frame_3")
@@ -205,7 +265,16 @@ class Ui_Form(object):
         self.gridLayout_4.addItem(self.horizontalSpacer_3, 0, 2, 1, 1)
 
 
-        self.gridLayout_5.addWidget(self.frame_3, 3, 0, 1, 3)
+        self.gridLayout_5.addWidget(self.frame_3, 4, 0, 1, 3)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_5.addItem(self.horizontalSpacer, 2, 0, 1, 1)
+
+        self.comboBox = QComboBox(self.frame_card)
+        self.comboBox.setObjectName(u"comboBox")
+
+        self.gridLayout_5.addWidget(self.comboBox, 1, 0, 1, 1)
 
 
         self.gridLayout_2.addWidget(self.frame_card, 0, 1, 1, 5)
@@ -221,19 +290,23 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+        self.label_image.setText("")
 #if QT_CONFIG(tooltip)
-        self.pB_delete.setToolTip(QCoreApplication.translate("Form", u"Supprimer cette recette", None))
+        self.pB_edit.setToolTip(QCoreApplication.translate("Form", u"Changer de recette", None))
 #endif // QT_CONFIG(tooltip)
-        self.pB_delete.setText("")
+        self.pB_edit.setText("")
 #if QT_CONFIG(tooltip)
         self.pB_next.setToolTip(QCoreApplication.translate("Form", u"Recette suivante", None))
 #endif // QT_CONFIG(tooltip)
         self.pB_next.setText("")
 #if QT_CONFIG(tooltip)
+        self.pB_delete.setToolTip(QCoreApplication.translate("Form", u"Supprimer cette recette", None))
+#endif // QT_CONFIG(tooltip)
+        self.pB_delete.setText("")
+#if QT_CONFIG(tooltip)
         self.pB_add.setToolTip(QCoreApplication.translate("Form", u"Ajouter une recette", None))
 #endif // QT_CONFIG(tooltip)
         self.pB_add.setText("")
-        self.label_image.setText("")
         self.label_title.setText(QCoreApplication.translate("Form", u"Title", None))
     # retranslateUi
 
