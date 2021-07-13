@@ -153,7 +153,7 @@ class Menu:
 
     def tag_score(self, tag):
         score = 0
-        for recipe in self.table:
+        for recipe in recipe_db.extract_recipes(self.table):
             if recipe.isTagged(tag):
                 score += 1
         #percentage with number of recipes
@@ -170,7 +170,9 @@ class Menu:
         #count recipe once when tagged double (appears twice in table)
         recipe_double = []
         missing_recipe_double = []
-        for recipe in self.table + self.desserts:
+        recipe_list = recipe_db.extract_recipes(self.table + self.desserts)
+        for recipe in recipe_list:
+            
             if recipe.ingredients_list_qty is not None:
                 if recipe.name not in recipe_double:
                     recipe_double.append(recipe.name)
@@ -224,6 +226,8 @@ class Menu:
             else:
                 self.table = self.table[:-2]
 
+
+                    
     
     # def toHtml(self, html_source_file):
     #     #create email body in HTML containing full menu and shopping list
@@ -364,10 +368,10 @@ def unit_conversion(from_unit, to_unit, value):
 #     text = pattern.sub(lambda m: rep[re.escape(m.group(0))], string)
 #     return text
 
-def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = []):
+def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = [], tagsOUt = ['dessert', 'restes', 'tips']):
     initial_pool = []
     #remove 'dessert', 'leftovers', 'tips' from list
-    initial_pool = recipe_db.get_recipe_sublist(my_recipe_db.recipe_list, tagsOut = ['dessert', 'restes', 'tips'])
+    initial_pool = recipe_db.get_recipe_sublist(my_recipe_db.recipe_list, tagsOut = tagsOUt)
     #seasons
     y = start_day.year
     if datetime(y, 6, 1).date() <= start_day <= datetime(y, 10, 1).date():
@@ -435,9 +439,11 @@ def debug():
     myRecipeDB = recipe_db.RecipeDB(input_recipe, input_history)
     my_menu = Menu()
     my_menu.generate_random_menu(myRecipeDB)
-    my_menu.generate_dessert_full_menu(myRecipeDB, 1)
-    my_menu.get_shopping_list()
-    print(my_menu.toHtml(html_source_file))
+    # my_menu.generate_dessert_full_menu(myRecipeDB, 1)
+    # my_menu.get_shopping_list()
+    # print(my_menu.toHtml(html_source_file))
+    
+    print(recipe_db.extract_recipes(my_menu.table + [[my_menu.table[0]]]))
 
 if __name__ == "__main__":
     debug()

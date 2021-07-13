@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.setWindowModality(Qt.WindowModal)
-        MainWindow.resize(2600, 783)
+        MainWindow.resize(2109, 783)
         font = QFont()
         font.setFamily(u"Poiret One")
         font.setPointSize(15)
@@ -202,11 +202,11 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton{\n"
 "     background-color: #5C3C92;\n"
-"     border-style: outset;\n"
+"     border-style: solid;\n"
 ""
                         "     border-width: 2px;\n"
 "     border-radius: 10px;\n"
-"     border-color: #A2D5C6;\n"
+"     border-color: #5C3C92;\n"
 "     font: bold 18px;\n"
 "     /*min-width: 10em;*/\n"
 "     padding: 8px;\n"
@@ -662,6 +662,13 @@ class Ui_MainWindow(object):
 "	height:45px;\n"
 "}\n"
 "\n"
+"QHeaderView::section {\n"
+"    background-color: #a2d5c6;\n"
+"	color: #077b8a;\n"
+"    border: none;\n"
+"	\n"
+"}\n"
+"\n"
 "")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -705,7 +712,7 @@ class Ui_MainWindow(object):
         self.toolBox.setFrameShape(QFrame.NoFrame)
         self.page_carte = QWidget()
         self.page_carte.setObjectName(u"page_carte")
-        self.page_carte.setGeometry(QRect(0, 0, 2173, 599))
+        self.page_carte.setGeometry(QRect(0, 0, 1732, 599))
         self.gridLayout_9 = QGridLayout(self.page_carte)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
         self.frame_carte = QFrame(self.page_carte)
@@ -912,7 +919,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.page_carte, u"Carte")
         self.page_liste = QWidget()
         self.page_liste.setObjectName(u"page_liste")
-        self.page_liste.setGeometry(QRect(0, 0, 2223, 599))
+        self.page_liste.setGeometry(QRect(0, 0, 1732, 599))
         self.gridLayout_21 = QGridLayout(self.page_liste)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
         self.frame_liste_courses = QFrame(self.page_liste)
@@ -1405,13 +1412,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_33.addWidget(self.label_6, 1, 0, 1, 1)
 
-        self.tE_recette = QTextEdit(self.frame_9)
-        self.tE_recette.setObjectName(u"tE_recette")
-        self.tE_recette.setFrameShape(QFrame.NoFrame)
-        self.tE_recette.setReadOnly(True)
-
-        self.gridLayout_33.addWidget(self.tE_recette, 2, 0, 1, 1)
-
         self.frame_tags = QFrame(self.frame_9)
         self.frame_tags.setObjectName(u"frame_tags")
         self.frame_tags.setFrameShape(QFrame.NoFrame)
@@ -1460,6 +1460,15 @@ class Ui_MainWindow(object):
 
 
         self.gridLayout_33.addWidget(self.frame_tags, 0, 0, 1, 1, Qt.AlignHCenter)
+
+        self.tE_recette = QTextBrowser(self.frame_9)
+        self.tE_recette.setObjectName(u"tE_recette")
+        self.tE_recette.setFrameShape(QFrame.NoFrame)
+        self.tE_recette.setReadOnly(True)
+        self.tE_recette.setTextInteractionFlags(Qt.TextBrowserInteraction)
+        self.tE_recette.setOpenExternalLinks(True)
+
+        self.gridLayout_33.addWidget(self.tE_recette, 2, 0, 1, 1)
 
 
         self.gridLayout_20.addWidget(self.frame_9, 0, 1, 6, 1)
@@ -2397,11 +2406,6 @@ class Ui_MainWindow(object):
         self.cB_search_preparation.setText(QCoreApplication.translate("MainWindow", u"Preparation", None))
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"dans", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Pr\u00e9paration :", None))
-        self.tE_recette.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Poiret One'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:400;\"><br /></p></body></html>", None))
 #if QT_CONFIG(tooltip)
         self.label_summer.setToolTip(QCoreApplication.translate("MainWindow", u"Plat d'\u00e9t\u00e9", None))
 #endif // QT_CONFIG(tooltip)
@@ -2434,6 +2438,11 @@ class Ui_MainWindow(object):
         self.label_vegan.setToolTip(QCoreApplication.translate("MainWindow", u"Vegan", None))
 #endif // QT_CONFIG(tooltip)
         self.label_vegan.setText(QCoreApplication.translate("MainWindow", u"tagvegan", None))
+        self.tE_recette.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Poiret One'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
+"<p align=\"justify\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:400;\"><br /></p></body></html>", None))
 #if QT_CONFIG(tooltip)
         self.pB_send_2.setToolTip(QCoreApplication.translate("MainWindow", u"Envoyer", None))
 #endif // QT_CONFIG(tooltip)
