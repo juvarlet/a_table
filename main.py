@@ -671,6 +671,8 @@ class MainGUI(QWidget):
         self.new_menu()
         self.populate_tW_menu(self.current_menu)
         # self.on_dessert_selection(self.sB_desserts.value()) #includes dessert, menu_list, shopping list #DEPRECATED
+        self.populate_shopping_list()
+        self.populate_menu_list()
         self.compute_score()
         # self.pB_modif.setEnabled(True)
         self.pB_save.setEnabled(True)
@@ -724,8 +726,17 @@ class MainGUI(QWidget):
             idminus = '-' + idplus
             idplus = '+' + idplus
             
-            stacked_lunch = cw.create_stack([recipe_lunch], self.recipe_db, id = idplus)
-            stacked_dinner = cw.create_stack([recipe_dinner], self.recipe_db, id = idminus)
+            if type(recipe_lunch) == Recipe:
+                recipe_lunch_stack = [recipe_lunch]
+            elif type(recipe_lunch) == list:
+                recipe_lunch_stack = recipe_lunch
+            if type(recipe_dinner) == Recipe:
+                recipe_dinner_stack = [recipe_dinner]
+            elif type(recipe_dinner) == list:
+                recipe_dinner_stack = recipe_dinner
+            
+            stacked_lunch = cw.create_stack(recipe_lunch_stack, self.recipe_db, id = idplus)
+            stacked_dinner = cw.create_stack(recipe_dinner_stack, self.recipe_db, id = idminus)
             
             stacked_lunch.signal.sig.connect(self.on_enter_recipe_stack)
             stacked_lunch.signal2.sig2.connect(self.on_lock_for_edition)
@@ -773,10 +784,16 @@ class MainGUI(QWidget):
             self.sB_desserts.setEnabled(True)
             self.cB_restes.setEnabled(True)
             self.pB_save.setEnabled(True)
+            self.populate_shopping_list()
+            self.populate_menu_list()
+            self.compute_score()
     
     def on_update_current_menu(self, recipe_list, row, column):
         table_index = row + column*2
         self.current_menu.table[table_index] = recipe_list
+        self.populate_shopping_list()
+        self.populate_menu_list()
+        self.compute_score()
         # print(self.current_menu.table)
     
     def on_drag_drop_event(self, row, column):
@@ -949,7 +966,10 @@ class MainGUI(QWidget):
 
     def on_card_recipe_selection(self, row, column):
  
-        recipe_name = self.tW_menu.item(row, column).text()
+        # recipe_name = self.tW_menu.item(row, column).text()
+        id = self.tW_menu.item(row, column).text()
+        stack = self.stacks[id]
+        recipe_name = stack.get_current_recipe().name
         self.tW.setCurrentWidget(self.tab_recipe)
         self.reset_recipes_list()
         self.reset_filters()
@@ -961,7 +981,7 @@ class MainGUI(QWidget):
     
     def on_history_recipe_selection(self, row, column):
         if self.tab_recipe.isEnabled():#no effect when waiting for user confirmation in history tab
-            recipe_name = self.tW_history.item(row, column).text()
+            recipe_name = self.tW_history.item(row, column).text().split(' | ')[0] #only available for first recipe if stack of recipes
             self.tW.setCurrentWidget(self.tab_recipe)
             self.reset_recipes_list()
             self.reset_filters()
@@ -1178,8 +1198,15 @@ class MainGUI(QWidget):
         verticalHeader_labels = [self.tW_history.verticalHeaderItem(r).text() for r in range(self.tW_history.rowCount())]
         for i in range(self.current_menu.number_of_days):
             date = self.current_menu.start_day + timedelta(days = i)
-            lunch_recipe_name = self.tW_menu.item(0, i).text()
-            dinner_recipe_name = self.tW_menu.item(1, i).text()
+            # lunch_recipe_name = self.tW_menu.item(0, i).text()
+            # dinner_recipe_name = self.tW_menu.item(1, i).text()
+            
+            lunch_id = self.tW_menu.item(0, i).text()
+            dinner_id = self.tW_menu.item(1, i).text()
+            lunch_recipe_name = ' | '.join(recipe_db.get_recipe_names(self.stacks[lunch_id].recipe_list))
+            dinner_recipe_name = ' | '.join(recipe_db.get_recipe_names(self.stacks[dinner_id].recipe_list))
+            
+            
             date_text = recipe_db.date_to_text(date)
             #build new history list
             new_history.append([date_text, lunch_recipe_name, dinner_recipe_name])

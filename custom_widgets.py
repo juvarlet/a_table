@@ -282,6 +282,9 @@ class StackedRecipes(QWidget):
             load_pic(label_pos, self.dirname + '/UI/images/icon_circle_full.png')
             self.hL.insertWidget(index - 1, label_pos)
             self.layout_widgets.append(label_pos)
+    
+    def get_current_recipe(self):
+        return self.recipe_list[self.current_index]
 
 def id_to_row_column(id):
     if id[0] == '+':
