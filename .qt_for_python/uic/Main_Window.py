@@ -409,14 +409,14 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QFrame#frame_details{\n"
-"	border: 4px solid #5C3C92;\n"
+"	border: 2px solid #5C3C92;\n"
 "	border-radius: 10px;\n"
 "	/*background-color:#A2D5C6;*/\n"
 "\n"
 "}\n"
 "\n"
 "QFrame#frame_new_recipe{\n"
-"	border: 4px solid #d72631;\n"
+"	border: 2px solid #d72631;\n"
 "	bor"
                         "der-radius: 10px;\n"
 "	/*background-color:#A2D5C6;*/\n"
@@ -1379,7 +1379,6 @@ class Ui_MainWindow(object):
         self.lW_recettes.setObjectName(u"lW_recettes")
         self.lW_recettes.setFont(font4)
         self.lW_recettes.setFrameShape(QFrame.NoFrame)
-        self.lW_recettes.setAlternatingRowColors(True)
         self.lW_recettes.setWordWrap(True)
         self.lW_recettes.setSortingEnabled(True)
 
@@ -2046,7 +2045,6 @@ class Ui_MainWindow(object):
         self.tW_historique.setFrameShape(QFrame.NoFrame)
         self.tW_historique.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.tW_historique.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.tW_historique.setAlternatingRowColors(True)
         self.tW_historique.setSortingEnabled(False)
 
         self.gridLayout_23.addWidget(self.tW_historique, 0, 0, 1, 1)

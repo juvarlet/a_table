@@ -400,14 +400,14 @@ QFrame#frame_bottom{
 }
 
 QFrame#frame_details{
-	border: 4px solid #5C3C92;
+	border: 2px solid #5C3C92;
 	border-radius: 10px;
 	/*background-color:#A2D5C6;*/
 
 }
 
 QFrame#frame_new_recipe{
-	border: 4px solid #d72631;
+	border: 2px solid #d72631;
 	border-radius: 10px;
 	/*background-color:#A2D5C6;*/
 
@@ -1937,9 +1937,6 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
                    </property>
-                   <property name="alternatingRowColors">
-                    <bool>true</bool>
-                   </property>
                    <property name="wordWrap">
                     <bool>true</bool>
                    </property>
@@ -3204,9 +3201,6 @@ p, li { white-space: pre-wrap; }
                    </property>
                    <property name="editTriggers">
                     <set>QAbstractItemView::NoEditTriggers</set>
-                   </property>
-                   <property name="alternatingRowColors">
-                    <bool>true</bool>
                    </property>
                    <property name="sortingEnabled">
                     <bool>false</bool>
