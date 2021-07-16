@@ -1996,28 +1996,20 @@ class MainGUI(QWidget):
         add_to_menu = QMenu('Prévoir cette recette...', right_click_menu)
         add_to_menu.setToolTipsVisible(True)
         
-        # self.lunchActions = []
-        lunch_recipe_name = self.lW_recipe.currentItem().text()
-        lunch_recipe = self.recipe_db.get_recipe_object(lunch_recipe_name)
-            
+        mapper = QSignalMapper(self) #instead of lambda to connect action signals properly
+         
         for i in range(self.tW_menu.columnCount()):
             menuDay = QMenu(self.tW_menu.horizontalHeaderItem(i).text(), add_to_menu)
             menuDay.setToolTipsVisible(True)
+            
             actionLunch = QAction(menuDay)
             actionLunch.setText('Midi')
             actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color.png'))
             lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(0, i)].recipe_list))
             actionLunch.setToolTip(lunchToolTip)
             
-            # lunch_stack = self.stacks[cw.row_column_to_id(0, i)]
-            # print(lunch_stack.recipe_list[0].name)
-            
-            # self.lunchActions.append(actionLunch)
-            
-            # actionLunch.triggered.connect(lambda: lunch_stack.on_add_random_recipe(recipe = lunch_recipe))
-            # actionLunch.triggered.connect(lambda: self.tW.setCurrentWidget(self.tab_menus))
-            # actionLunch.triggered.connect(lambda: self.on_add_recipe_right_click(id = cw.row_column_to_id(0, i)))
-            
+            mapper.setMapping(actionLunch, cw.row_column_to_id(0, i))
+            actionLunch.triggered.connect(mapper.map)
             
             actionDinner = QAction(menuDay)
             actionDinner.setText('Soir')
@@ -2025,27 +2017,29 @@ class MainGUI(QWidget):
             dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(1, i)].recipe_list))
             actionDinner.setToolTip(dinnerToolTip)
             
+            mapper.setMapping(actionDinner, cw.row_column_to_id(1, i))
+            actionDinner.triggered.connect(mapper.map)
+            
             menuDay.addAction(actionLunch)
             menuDay.addAction(actionDinner)
             add_to_menu.addMenu(menuDay)
-        
-        # for c, lA in enumerate(self.lunchActions):
-        #     lunch_stack = self.stacks[cw.row_column_to_id(0, c)]
-        #     lA.triggered.connect(lambda: lunch_stack.on_add_random_recipe(recipe = lunch_recipe))
         
         right_click_menu.addMenu(add_to_menu)
         right_click_menu.addSeparator()
         right_click_menu.addAction(actionModify)
         right_click_menu.addAction(actionPrint)
         right_click_menu.addAction(actionSend)
+        mapper.mappedString.connect(self.on_add_recipe_right_click)
         
         right_click_menu.exec_(globalPos)
-    
-    # def on_add_recipe_right_click(self, recipe, stack):
-    #     stack.on_add_random_recipe(recipe = recipe)
-    #     self.tW.setCurrentWidget(self.tab_menus)
-    # def on_add_recipe_right_click(self, **kwargs):
-    #     print(kwargs)
+        
+    def on_add_recipe_right_click(self, id):
+        lunch_recipe_name = self.lW_recipe.currentItem().text()
+        lunch_recipe = self.recipe_db.get_recipe_object(lunch_recipe_name)
+        lunch_stack = self.stacks[id]
+        lunch_stack.on_add_random_recipe(recipe = lunch_recipe)
+        self.tW.setCurrentWidget(self.tab_menus)
+        
     
     def openDir(self, field, titre, dirpath = ''):
         if dirpath == '':
