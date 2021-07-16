@@ -403,6 +403,7 @@ class MainGUI(QWidget):
         # self.tW_shopping.setVisible(False)
         recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
         self.lW_recipe.addItems(recipe_list)
+        self.lW_recipe.setContextMenuPolicy(Qt.CustomContextMenu)
         self.pB_back.hide()      
 
         self.frame_settings.hide()
@@ -522,6 +523,7 @@ class MainGUI(QWidget):
         self.tB_storage.clicked.connect(lambda : self.openDir(self.lE_storage, u'de sauvegarde des fiches', dirpath = self.default_storage))
         self.pB_ok_3.clicked.connect(self.on_save_settings)
         self.pB_cancel_3.clicked.connect(self.on_quit_settings)
+        self.lW_recipe.customContextMenuRequested.connect(self.on_recipe_right_click)
         
     def update_modif(self):
         self.dateEdit.dateChanged.connect(self.dummy_function)
@@ -1423,7 +1425,7 @@ class MainGUI(QWidget):
         my_printer.print_recipe(recipe_object, images)
         
         if not silent:
-            self.print_thread_function('La recette "%s" a été enregistrée\n(%s)' % (recipe_name, pdf_title),
+            self.print_thread_function('La recette "%s" a été enregistrée<br/>(%s)' % (recipe_name, pdf_title),
                                     icon_path = self.dirname + '/UI/images/icon_print.png')
 
         return pdf_title
@@ -1965,6 +1967,79 @@ class MainGUI(QWidget):
     def on_quit_settings(self):
         self.frame_settings.hide()
         self.frame.show()
+        
+    def on_recipe_right_click(self, pos):
+        # print('right clicked')
+        # print(pos)
+        globalPos = self.lW_recipe.mapToGlobal(pos)
+        # print(globalPos)
+        #create right-click menu
+        right_click_menu = QMenu(self)
+        right_click_menu.setToolTipsVisible(True)
+        
+        #modify
+        actionModify = QAction(right_click_menu)
+        actionModify.setText('Modifier')
+        actionModify.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
+        actionModify.triggered.connect(self.pB_modif_2.click)
+        #print
+        actionPrint = QAction(right_click_menu)
+        actionPrint.setText('Imprimer')
+        actionPrint.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
+        actionPrint.triggered.connect(self.pB_print_2.click)
+        #send
+        actionSend = QAction(right_click_menu)
+        actionSend.setText('Envoyer')
+        actionSend.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
+        actionSend.triggered.connect(self.pB_send_2.click)
+        #add to menu -> days -> lunch/dinner -> add/replace
+        add_to_menu = QMenu('Prévoir cette recette...', right_click_menu)
+        add_to_menu.setToolTipsVisible(True)
+        
+        mapper = QSignalMapper(self) #instead of lambda to connect action signals properly
+         
+        for i in range(self.tW_menu.columnCount()):
+            menuDay = QMenu(self.tW_menu.horizontalHeaderItem(i).text(), add_to_menu)
+            menuDay.setToolTipsVisible(True)
+            
+            actionLunch = QAction(menuDay)
+            actionLunch.setText('Midi')
+            actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color.png'))
+            lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(0, i)].recipe_list))
+            actionLunch.setToolTip(lunchToolTip)
+            
+            mapper.setMapping(actionLunch, cw.row_column_to_id(0, i))
+            actionLunch.triggered.connect(mapper.map)
+            
+            actionDinner = QAction(menuDay)
+            actionDinner.setText('Soir')
+            actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color.png'))
+            dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(1, i)].recipe_list))
+            actionDinner.setToolTip(dinnerToolTip)
+            
+            mapper.setMapping(actionDinner, cw.row_column_to_id(1, i))
+            actionDinner.triggered.connect(mapper.map)
+            
+            menuDay.addAction(actionLunch)
+            menuDay.addAction(actionDinner)
+            add_to_menu.addMenu(menuDay)
+        
+        right_click_menu.addMenu(add_to_menu)
+        right_click_menu.addSeparator()
+        right_click_menu.addAction(actionModify)
+        right_click_menu.addAction(actionPrint)
+        right_click_menu.addAction(actionSend)
+        mapper.mappedString.connect(self.on_add_recipe_right_click)
+        
+        right_click_menu.exec_(globalPos)
+        
+    def on_add_recipe_right_click(self, id):
+        lunch_recipe_name = self.lW_recipe.currentItem().text()
+        lunch_recipe = self.recipe_db.get_recipe_object(lunch_recipe_name)
+        lunch_stack = self.stacks[id]
+        lunch_stack.on_add_random_recipe(recipe = lunch_recipe)
+        self.tW.setCurrentWidget(self.tab_menus)
+        
     
     def openDir(self, field, titre, dirpath = ''):
         if dirpath == '':
