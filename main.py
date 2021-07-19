@@ -23,13 +23,14 @@ from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
 # QDate
 
-#COLOR THEME
+#COLOR THEME HISTORY
 RED = '#d72631' #215,38,49
 LIGHT_GREEN = '#a2d5c6' #162,213,198
 FADED_LIGHT_GREEN = '#b7cab9' #183,202,185
 GREEN = '#077b8a' #7,123,138
 VIOLET = '#5c3c92' #92,60,146
 BEIGE = '#ccc1ae' #204,193,174
+LIGHT_BEIGE = '#e8ddc8' #232,221,200
 
 #TAGS
 '''
@@ -352,6 +353,24 @@ class MainGUI(QWidget):
         self.label_storage: QLabel
         self.label_storage = self.pW.label_storage
 
+        self.init_colors = {'RED' :         ('#d72631', [215,38,49]),
+                    'LIGHT_GREEN' :         ('#a2d5c6', [162,213,198]),
+                    'FADED_LIGHT_GREEN' :   ('#b7cab9', [183,202,185]),
+                    'GREEN' :               ('#077b8a', [7,123,138]),
+                    'VIOLET' :              ('#5c3c92', [92,60,146]),
+                    'BEIGE' :               ('#ccc1ae', [204,193,174]),
+                    'LIGHT_BEIGE' :         ('#e8ddc8', [232,221,200])
+                    }
+        self.colors = {'RED' :              ('#d62828', [214,40,40]),
+                    'LIGHT_GREEN' :         ('#fcbf49', [252,192,73]),
+                    'FADED_LIGHT_GREEN' :   ('#fcbf49', [252,192,73]),
+                    'GREEN' :               ('#003049', [0,48,73]),
+                    'VIOLET' :              ('#f77f00', [247,127,0]),
+                    'BEIGE' :               ('#eae2b7', [234,226,183]),
+                    'LIGHT_BEIGE' :         ('#eae2b7', [234,226,183])
+                    }
+        cw.style_factory(self.pW, init_colors = self.init_colors, colors = self.colors)
+        
         #default state
         self.window().setWindowState(Qt.WindowMaximized)
         #-replace qtablewidget tW_menu by custom class
@@ -369,6 +388,7 @@ class MainGUI(QWidget):
         new_tW_menu.setSelectionMode(self.tW_menu.selectionMode())
         new_tW_menu.setTextElideMode(self.tW_menu.textElideMode())
         new_tW_menu.setFont(self.tW_menu.font())
+        new_tW_menu.setStyleSheet(self.pW.styleSheet())
         self.pW.gridLayout_10.replaceWidget(self.tW_menu, new_tW_menu)
         self.tW_menu = new_tW_menu
         self.pW.tW_menu.setParent(None)
@@ -752,7 +772,9 @@ class MainGUI(QWidget):
             
             qtwi_lunch = stacked_lunch.parentWidget()
             qtwi_dinner = stacked_dinner.parentWidget()
-
+            qtwi_lunch = cw.style_factory(qtwi_lunch, self.init_colors, self.colors)
+            qtwi_dinner = cw.style_factory(qtwi_dinner, self.init_colors, self.colors)
+            
             self.tW_menu.setCellWidget(0, i, qtwi_lunch)
             self.tW_menu.setCellWidget(1, i, qtwi_dinner)
             
@@ -848,7 +870,6 @@ class MainGUI(QWidget):
             
             qtwi_to = new_stacked_to.parentWidget()
             qtwi_from = new_stacked_from.parentWidget()
-            
             self.tW_menu.setCellWidget(from_row, from_column, qtwi_from)
             self.tW_menu.setCellWidget(row, column, qtwi_to)
             
@@ -1241,9 +1262,9 @@ class MainGUI(QWidget):
                 self.tW_history.setItem(self.tW_history.rowCount()-1, 1, qtwi_dinner)
                 verticalHeader_labels.append(date_text)
 
-
-            qtwi_lunch.setTextColor(QColor(215,38,49))
-            qtwi_dinner.setTextColor(QColor(215,38,49))
+            r,g,b = self.colors['RED'][1]
+            qtwi_lunch.setTextColor(QColor(r,g,b))
+            qtwi_dinner.setTextColor(QColor(r,g,b))
         
         self.tW_history.setVerticalHeaderLabels(verticalHeader_labels)
         #show warning and disable other actions
@@ -1275,7 +1296,8 @@ class MainGUI(QWidget):
         for i in range(self.tW_history.rowCount()):
             qtwi_lunch = self.tW_history.item(i, 0)
             qtwi_dinner = self.tW_history.item(i, 1)
-            if qtwi_lunch.textColor().getRgb() == (215,38,49,255):
+            r,g,b = self.colors['RED'][1]
+            if qtwi_lunch.textColor().getRgb() == (r,g,b,255):
                 # print(i,qtwi_lunch.textColor().getRgb())
                 #take new entry
                 lunch_recipe_name = qtwi_lunch.text().split(' -> ')[-1]
@@ -1307,7 +1329,8 @@ class MainGUI(QWidget):
     def on_ingredient_selection(self):
         #reset list menu background
         for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
-            item.setBackground(QBrush(QColor(183,202,185)))
+            r,g,b = self.colors['FADED_LIGHT_GREEN'][1]
+            item.setBackground(QBrush(QColor(r,g,b)))
             item.setTextColor(QColor(0, 0, 0))
         
         #get ingredient text
@@ -1317,10 +1340,13 @@ class MainGUI(QWidget):
             for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
 
                 if self.recipe_db.get_recipe_object(item.text()[5:]).hasIngredient(ingredient):
-                    item.setBackground(QBrush(QColor(92,60,146)))
-                    item.setTextColor(QColor(162,213,198))
+                    r,g,b = self.colors['VIOLET'][1]
+                    item.setBackground(QBrush(QColor(r,g,b)))
+                    r,g,b = self.colors['LIGHT_GREEN'][1]
+                    item.setTextColor(QColor(r,g,b))
                 else:
-                    item.setBackground(QBrush(QColor(183,202,185)))
+                    r,g,b = self.colors['FADED_LIGHT_GREEN'][1]
+                    item.setBackground(QBrush(QColor(r,g,b)))
     
     def on_copy_shopping_list(self):
         string_to_copy = 'Liste de courses:\n'
@@ -2054,10 +2080,10 @@ class MainGUI(QWidget):
         self.pB_user.setStyleSheet('''
                                 QPushButton{
                                     image: url(file:///../UI/images/icon_user.png);
-                                    background-color: #ccc1ae;
+                                    background-color: %s;
                                     border-width: 0px;
                                     border-radius: 0px;
-                                    border-color: #ccc1ae;
+                                    border-color: %s;
                                 }
 
                                 QPushButton:hover{
@@ -2067,7 +2093,7 @@ class MainGUI(QWidget):
                                 QPushButton:pressed{
                                     image: url(file:///../UI/images/icon_user_color_.png);
                                 }
-                                   ''')
+                                   ''' % (self.colors['BEIGE'][0], self.colors['BEIGE'][0]))
         self.tW.setCornerWidget(self.pB_user)
         
         self.label_contact.setOpenExternalLinks(True)

@@ -12,6 +12,7 @@ import recipe_db
 class TableWidgetCustom(QTableWidget): #Custom TableWidget to adjust item position
     def __init__(self, parent=None):
         super(TableWidgetCustom, self).__init__(parent)
+        self.setStyleSheet(parent.styleSheet())
     
     def viewOptions(self) -> PySide2.QtWidgets.QStyleOptionViewItem:
         option = QTableWidget.viewOptions(self)
@@ -23,6 +24,7 @@ class TableWidgetCustom(QTableWidget): #Custom TableWidget to adjust item positi
 class SpinBoxCustom(QSpinBox): #Custom SpinBox to force +- only, ignoring keyboard input
     def __init__(self, parent=None):
         super(SpinBoxCustom, self).__init__(parent)
+        self.setStyleSheet(parent.styleSheet())
     
     def keyPressEvent(self, event: PySide2.QtGui.QKeyEvent) -> None:
         return event.ignore()
@@ -400,5 +402,15 @@ def qpix_to_widget(qpix, widget, icon = True):#set Image of a Widget rounded fro
     else:
         widget.setPixmap(rounded)
 
-        
+def style_factory(widget : QWidget, init_colors, colors):
+    init_stylesheet = widget.styleSheet()
+    stylesheet = init_stylesheet
+    #replace init stylesheet
+    for color in colors:
+        old_hex = init_colors[color][0]
+        new_hex = colors[color][0]
+        stylesheet = stylesheet.replace(old_hex, new_hex)
+    widget.setStyleSheet(stylesheet)
+    return widget
+    # return colors
         
