@@ -982,6 +982,7 @@ class MainGUI(QWidget):
 
     
     def on_history_recipe_selection(self, row, column):
+        #TODO context menu when multiple recipes
         if self.tab_recipe.isEnabled():#no effect when waiting for user confirmation in history tab
             recipe_name = self.tW_history.item(row, column).text().split(' | ')[0] #only available for first recipe if stack of recipes
             self.tW.setCurrentWidget(self.tab_recipe)
@@ -2039,6 +2040,7 @@ class MainGUI(QWidget):
         lunch_stack = self.stacks[id]
         lunch_stack.on_add_random_recipe(recipe = lunch_recipe)
         self.tW.setCurrentWidget(self.tab_menus)
+        #TODO highlight success and keep current tab
         
     
     def openDir(self, field, titre, dirpath = ''):
