@@ -361,15 +361,15 @@ class MainGUI(QWidget):
                     'BEIGE' :               ('#ccc1ae', [204,193,174]),
                     'LIGHT_BEIGE' :         ('#e8ddc8', [232,221,200])
                     }
-        self.colors = {'RED' :              ('#d62828', [214,40,40]),
-                    'LIGHT_GREEN' :         ('#fcbf49', [252,192,73]),
-                    'FADED_LIGHT_GREEN' :   ('#fcbf49', [252,192,73]),
-                    'GREEN' :               ('#003049', [0,48,73]),
-                    'VIOLET' :              ('#f77f00', [247,127,0]),
-                    'BEIGE' :               ('#eae2b7', [234,226,183]),
-                    'LIGHT_BEIGE' :         ('#eae2b7', [234,226,183])
+        self.colors = {'#color2#' :    ('#d62828', [214,40,40]),
+                    '#color4#' :       ('#fcbf49', [252,192,73]),
+                    '#color4_bright#' :('#fdd686', [253,213,134]),
+                    '#color1_dark#' :  ('#003049', [0,48,73]),
+                    '#color3#' :       ('#f77f00', [247,127,0]),
+                    '#color5#' :       ('#eae2b7', [234,226,183]),
+                    '#color5_bright#' :('#faf9ef', [250,249,47])
                     }
-        cw.style_factory(self.pW, init_colors = self.init_colors, colors = self.colors)
+        # cw.style_factory(self.pW, init_colors = self.init_colors, colors = self.colors)
         
         #default state
         self.window().setWindowState(Qt.WindowMaximized)
@@ -772,8 +772,8 @@ class MainGUI(QWidget):
             
             qtwi_lunch = stacked_lunch.parentWidget()
             qtwi_dinner = stacked_dinner.parentWidget()
-            qtwi_lunch = cw.style_factory(qtwi_lunch, self.init_colors, self.colors)
-            qtwi_dinner = cw.style_factory(qtwi_dinner, self.init_colors, self.colors)
+            # qtwi_lunch = cw.style_factory(qtwi_lunch, self.init_colors, self.colors)
+            # qtwi_dinner = cw.style_factory(qtwi_dinner, self.init_colors, self.colors)
             
             self.tW_menu.setCellWidget(0, i, qtwi_lunch)
             self.tW_menu.setCellWidget(1, i, qtwi_dinner)
@@ -1262,7 +1262,7 @@ class MainGUI(QWidget):
                 self.tW_history.setItem(self.tW_history.rowCount()-1, 1, qtwi_dinner)
                 verticalHeader_labels.append(date_text)
 
-            r,g,b = self.colors['RED'][1]
+            r,g,b = self.colors['#color2#'][1]
             qtwi_lunch.setTextColor(QColor(r,g,b))
             qtwi_dinner.setTextColor(QColor(r,g,b))
         
@@ -1296,7 +1296,7 @@ class MainGUI(QWidget):
         for i in range(self.tW_history.rowCount()):
             qtwi_lunch = self.tW_history.item(i, 0)
             qtwi_dinner = self.tW_history.item(i, 1)
-            r,g,b = self.colors['RED'][1]
+            r,g,b = self.colors['#color2#'][1]
             if qtwi_lunch.textColor().getRgb() == (r,g,b,255):
                 # print(i,qtwi_lunch.textColor().getRgb())
                 #take new entry
@@ -1329,7 +1329,7 @@ class MainGUI(QWidget):
     def on_ingredient_selection(self):
         #reset list menu background
         for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
-            r,g,b = self.colors['FADED_LIGHT_GREEN'][1]
+            r,g,b = self.colors['#color4_bright#'][1]
             item.setBackground(QBrush(QColor(r,g,b)))
             item.setTextColor(QColor(0, 0, 0))
         
@@ -1340,12 +1340,12 @@ class MainGUI(QWidget):
             for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
 
                 if self.recipe_db.get_recipe_object(item.text()[5:]).hasIngredient(ingredient):
-                    r,g,b = self.colors['VIOLET'][1]
+                    r,g,b = self.colors['#color3#'][1]
                     item.setBackground(QBrush(QColor(r,g,b)))
-                    r,g,b = self.colors['LIGHT_GREEN'][1]
+                    r,g,b = self.colors['#color4#'][1]
                     item.setTextColor(QColor(r,g,b))
                 else:
-                    r,g,b = self.colors['FADED_LIGHT_GREEN'][1]
+                    r,g,b = self.colors['#color4_bright#'][1]
                     item.setBackground(QBrush(QColor(r,g,b)))
     
     def on_copy_shopping_list(self):
@@ -2093,7 +2093,7 @@ class MainGUI(QWidget):
                                 QPushButton:pressed{
                                     image: url(file:///../UI/images/icon_user_color_.png);
                                 }
-                                   ''' % (self.colors['BEIGE'][0], self.colors['BEIGE'][0]))
+                                   ''' % (self.colors['#color5#'][0], self.colors['#color5#'][0]))
         self.tW.setCornerWidget(self.pB_user)
         
         self.label_contact.setOpenExternalLinks(True)
