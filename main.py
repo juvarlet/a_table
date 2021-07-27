@@ -361,13 +361,22 @@ class MainGUI(QWidget):
                     'BEIGE' :               ('#ccc1ae', [204,193,174]),
                     'LIGHT_BEIGE' :         ('#e8ddc8', [232,221,200])
                     }
-        self.colors = {'#color2#' :    ('#d62828', [214,40,40]),
-                    '#color4#' :       ('#fcbf49', [252,192,73]),
-                    '#color4_bright#' :('#fdd686', [253,213,134]),
-                    '#color1_dark#' :  ('#003049', [0,48,73]),
-                    '#color3#' :       ('#f77f00', [247,127,0]),
-                    '#color5#' :       ('#eae2b7', [234,226,183]),
-                    '#color5_bright#' :('#faf9ef', [250,249,47])
+        self.colors = {
+                    '#color1#'          : '#005d8f',
+                    '#color1_bright#'   : '#0085cc',
+                    '#color1_dark#'     : '#003049',
+                    '#color2#'          : '#d62828',
+                    '#color2_bright#'   : '#e36464',
+                    '#color2_dark#'     : '#ac2020',
+                    '#color3#'          : '#f77f00',
+                    '#color3_bright#'   : '#ff9c33',
+                    '#color3_dark#'     : '#b85f00',
+                    '#color4#'          : '#fcbf49',
+                    '#color4_bright#'   : '#fdd686',
+                    '#color4_dark#'     : '#fbac0e',
+                    '#color5#'          : '#eae2b7',
+                    '#color5_bright#'   : '#faf9ef',
+                    '#color5_dark#'     : '#dfd390'
                     }
         # cw.style_factory(self.pW, init_colors = self.init_colors, colors = self.colors)
         
@@ -388,6 +397,8 @@ class MainGUI(QWidget):
         new_tW_menu.setSelectionMode(self.tW_menu.selectionMode())
         new_tW_menu.setTextElideMode(self.tW_menu.textElideMode())
         new_tW_menu.setFont(self.tW_menu.font())
+        new_tW_menu.setLineWidth(0)
+        new_tW_menu.setShowGrid(False)
         new_tW_menu.setStyleSheet(self.pW.styleSheet())
         self.pW.gridLayout_10.replaceWidget(self.tW_menu, new_tW_menu)
         self.tW_menu = new_tW_menu
@@ -1262,9 +1273,9 @@ class MainGUI(QWidget):
                 self.tW_history.setItem(self.tW_history.rowCount()-1, 1, qtwi_dinner)
                 verticalHeader_labels.append(date_text)
 
-            r,g,b = self.colors['#color2#'][1]
-            qtwi_lunch.setTextColor(QColor(r,g,b))
-            qtwi_dinner.setTextColor(QColor(r,g,b))
+
+            qtwi_lunch.setTextColor(QColor(self.colors['#color2#']))
+            qtwi_dinner.setTextColor(QColor(self.colors['#color2#']))
         
         self.tW_history.setVerticalHeaderLabels(verticalHeader_labels)
         #show warning and disable other actions
@@ -1296,7 +1307,7 @@ class MainGUI(QWidget):
         for i in range(self.tW_history.rowCount()):
             qtwi_lunch = self.tW_history.item(i, 0)
             qtwi_dinner = self.tW_history.item(i, 1)
-            r,g,b = self.colors['#color2#'][1]
+            r,g,b = tuple(int(self.colors['#color2#'].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
             if qtwi_lunch.textColor().getRgb() == (r,g,b,255):
                 # print(i,qtwi_lunch.textColor().getRgb())
                 #take new entry
@@ -1305,8 +1316,8 @@ class MainGUI(QWidget):
                 qtwi_lunch.setText(lunch_recipe_name)
                 qtwi_dinner.setText(dinner_recipe_name)
                 #reset color
-                qtwi_lunch.setTextColor(QColor(0,0,0))
-                qtwi_dinner.setTextColor(QColor(0,0,0))
+                qtwi_lunch.setTextColor(QColor(self.colors['#color1_dark#']))
+                qtwi_dinner.setTextColor(QColor(self.colors['#color1_dark#']))
         
         #backup file
         copy2(self.recipe_db.history_file, self.dirname + '/backup/history_backup.ods')
@@ -1329,9 +1340,11 @@ class MainGUI(QWidget):
     def on_ingredient_selection(self):
         #reset list menu background
         for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
-            r,g,b = self.colors['#color4_bright#'][1]
-            item.setBackground(QBrush(QColor(r,g,b)))
-            item.setTextColor(QColor(0, 0, 0))
+            # r,g,b = self.colors['#color3_bright#'][1]
+            # item.setBackground(QBrush(QColor(r,g,b)))
+            item.setBackground(QBrush(QColor(self.colors['#color3_bright#'])))
+            # item.setTextColor(QColor(0, 0, 0))
+            item.setTextColor(QColor(self.colors['#color1_dark#']))
         
         #get ingredient text
         if len(self.lW_shopping.selectedItems()) > 0:
@@ -1340,13 +1353,17 @@ class MainGUI(QWidget):
             for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
 
                 if self.recipe_db.get_recipe_object(item.text()[5:]).hasIngredient(ingredient):
-                    r,g,b = self.colors['#color3#'][1]
-                    item.setBackground(QBrush(QColor(r,g,b)))
-                    r,g,b = self.colors['#color4#'][1]
-                    item.setTextColor(QColor(r,g,b))
+                    # r,g,b = self.colors['#color3#'][1]
+                    # item.setBackground(QBrush(QColor(r,g,b)))
+                    item.setBackground(QBrush(QColor(self.colors['#color3#'])))
+                    # r,g,b = self.colors['#color4#'][1]
+                    # item.setTextColor(QColor(r,g,b))
+                    item.setTextColor(QColor(self.colors['#color4_bright#']))
                 else:
-                    r,g,b = self.colors['#color4_bright#'][1]
-                    item.setBackground(QBrush(QColor(r,g,b)))
+                    # r,g,b = self.colors['#color4_bright#'][1]
+                    # item.setBackground(QBrush(QColor(r,g,b)))
+                    item.setBackground(QBrush(QColor(self.colors['#color3_bright#'])))
+                    item.setTextColor(QColor(self.colors['#color1_dark#']))
     
     def on_copy_shopping_list(self):
         string_to_copy = 'Liste de courses:\n'
@@ -2093,7 +2110,7 @@ class MainGUI(QWidget):
                                 QPushButton:pressed{
                                     image: url(file:///../UI/images/icon_user_color_.png);
                                 }
-                                   ''' % (self.colors['#color5#'][0], self.colors['#color5#'][0]))
+                                   ''' % (self.colors['#color5#'], self.colors['#color5#']))
         self.tW.setCornerWidget(self.pB_user)
         
         self.label_contact.setOpenExternalLinks(True)
@@ -2113,6 +2130,7 @@ class MainGUI(QWidget):
         self.wV.load(self.homepage)
         self.gL_web.addWidget(self.wV)
         self.navtb = QToolBar("Navigation")
+        self.navtb.setStyleSheet('QToolBar{background-color:transparent;}')
         self.navtb.setIconSize( QSize(30,30) )
         self.hL_tools.addWidget(self.navtb)
         

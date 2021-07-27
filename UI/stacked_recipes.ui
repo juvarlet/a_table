@@ -17,21 +17,23 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget{
-background-color:#eae2b7;
-font-family:Poiret One;
-font: bold;
+   <string notr="true">
+
+QWidget{
+    background-color:#eae2b7;
+    font-family:Poiret One;
+    font: bold;
 }
 
 QPushButton{
-     background-color: #b85f00;
-     border-style: solid;
-     border-width: 2px;
-     border-radius: 10px;
-     border-color: #b85f00;
-     font: bold 18px;
-     /*min-width: 10em;*/
-     padding: 8px;
+    background-color: #b85f00;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: #b85f00;
+    font: bold 18px;
+    /*min-width: 10em;*/
+    padding: 8px;
 	color:#005d8f;
 
 }
@@ -53,23 +55,20 @@ QPushButton:hover{
 	border-radius: 8px;*/
 }
 
-
 QComboBox {
 	border: 2px solid #b85f00;
 	border-radius: 3px;
-	/*background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #005d8f, stop:0.1 #0085cc, stop:0.9 #0085cc, stop:1 #005d8f);*/
 	background: #0085cc;
 	padding: 1px 23px 1px 3px;
 	min-width: 6em;
 	color: #003049;
-font-size: 18px;
-
+    font-size: 18px;
 }
+
 QComboBox::drop-down {
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
 	width: 20px;
-
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
@@ -83,42 +82,38 @@ QComboBox::down-arrow {
 QComboBox QAbstractItemView{
 	background-color: #eae2b7;
 	/*color: #003049;*/
- 	
 	selection-background-color: #b85f00;
 	/*selection-color: #005d8f;*/
 }
 
 QToolTip {
-opacity: 300;
+    opacity: 300;
 	border: 2px solid #b85f00;
     border-radius: 4px;
     padding: 2px;
     background-color: #eae2b7;
-
 }
 
 QComboBox {
 	border: 4px solid #b85f00;
 	border-radius: 3px;
-	/*background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #005d8f, stop:0.1 #0085cc, stop:0.9 #0085cc, stop:1 #005d8f);*/
 	background: #0085cc;
 	padding: 1px 23px 1px 3px;
 	min-width: 6em;
 	color: #003049;
-font-size: 18px;
-
+    font-size: 18px;
 }
+
 QComboBox::drop-down {
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
 	width: 20px;
-
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
+
 QComboBox::down-arrow {
-     image: url(file:///../UI/images/icon_down_arrow.png);
-	/*image: url(file:///../UI/images/icon_edit.png);*/
+    image: url(file:///../UI/images/icon_down_arrow.png);
 	width: 20px;
 	height: 20px;
 }
@@ -127,13 +122,12 @@ QComboBox::down-arrow {
 QComboBox QAbstractItemView{
 	background-color: #eae2b7;
 	/*color: #003049;*/
- 	
 	selection-background-color: #b85f00;
 	/*selection-color: #005d8f;*/
 }
 
 QFrame #frame_buttons{
-background-color:transparent;
+    background-color:transparent;
 }
 
 QMenu::item {
