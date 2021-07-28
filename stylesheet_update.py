@@ -5,7 +5,7 @@ def main():
     uiFiles = ['Main_Window', 'stacked_recipes']
     color_hex = {
                     '#color1_bright#'   : '#36a9d3',
-                    '#color1#'          : '#227c9d',
+                    '#color1#'          : '#2584a7',
                     '#color1_dark#'     : '#1a5d75',
                     '#color2_bright#'   : '#fe9a9d',
                     '#color2#'          : '#fe6d73',

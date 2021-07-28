@@ -34,7 +34,7 @@ QPushButton{
     font: bold 18px;
     /*min-width: 10em;*/
     padding: 8px;
-	color:#227c9d;
+	color:#2584a7;
 
 }
 
@@ -83,7 +83,7 @@ QComboBox QAbstractItemView{
 	background-color: #fdf1d9;
 	/*color: #1a5d75;*/
 	selection-background-color: #ffc05c;
-	/*selection-color: #227c9d;*/
+	/*selection-color: #2584a7;*/
 }
 
 QToolTip {
@@ -123,7 +123,7 @@ QComboBox QAbstractItemView{
 	background-color: #fdf1d9;
 	/*color: #1a5d75;*/
 	selection-background-color: #ffc05c;
-	/*selection-color: #227c9d;*/
+	/*selection-color: #2584a7;*/
 }
 
 QFrame #frame_buttons{

@@ -361,9 +361,28 @@ class MainGUI(QWidget):
                     'BEIGE' :               ('#ccc1ae', [204,193,174]),
                     'LIGHT_BEIGE' :         ('#e8ddc8', [232,221,200])
                     }
+
+        self.init_colors = {
+                    '#color1_bright#'   : '#16d9f3',
+                    '#color1#'          : '#0aacc2',
+                    '#color1_dark#'     : '#077b8a',
+                    '#color2_bright#'   : '#e3636c',
+                    '#color2#'          : '#d72631',
+                    '#color2_dark#'     : '#ad1f28',
+                    '#color3_bright#'   : '#7751b8',
+                    '#color3#'          : '#5c3c92',
+                    '#color3_dark#'     : '#3f2965',
+                    '#color4_bright#'   : '#b7cab9',
+                    '#color4#'          : '#a2d5c6',
+                    '#color4_dark#'     : '#80c6b1',
+                    '#color5_bright#'   : '#e8ddc8',
+                    '#color5#'          : '#ccc1ae',
+                    '#color5_dark#'     : '#b8a98e'
+        }
+        
         self.colors = {
                     '#color1_bright#'   : '#36a9d3',
-                    '#color1#'          : '#227c9d',
+                    '#color1#'          : '#2584a7',
                     '#color1_dark#'     : '#1a5d75',
                     '#color2_bright#'   : '#fe9a9d',
                     '#color2#'          : '#fe6d73',
@@ -378,6 +397,7 @@ class MainGUI(QWidget):
                     '#color5#'          : '#fdf1d9',
                     '#color5_dark#'     : '#fae2b2'
                     }
+        
         # cw.style_factory(self.pW, init_colors = self.init_colors, colors = self.colors)
         
         #default state
