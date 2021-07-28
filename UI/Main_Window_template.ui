@@ -440,6 +440,7 @@
         selection-color: ##color3_bright#;
         alternate-background-color: ##color5#;
         color: ##color1_dark#;
+        border-radius: 6px;
     }
     
     QTableWidget::item:hover{
@@ -568,7 +569,7 @@
     }
 
     QToolTip {
-    opacity: 300;
+        opacity: 300;
         border: 2px solid ##color3_dark#;
         border-radius: 4px;
         padding: 2px;
@@ -602,6 +603,7 @@
     QTextBrowser{
         white-space: pre-line;
         color: ##color1_dark#;
+        border-radius: 6px;
     }
     
     QTextBrowser#tE_ingredients, QTextBrowser#tE_recette{

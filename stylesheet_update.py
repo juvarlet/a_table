@@ -4,21 +4,21 @@ def main():
     dirname = os.path.dirname(__file__)
     uiFiles = ['Main_Window', 'stacked_recipes']
     color_hex = {
-            '#color1#'          : '#005d8f',
-            '#color1_bright#'   : '#0085cc',
-            '#color1_dark#'     : '#003049',
-            '#color2#'          : '#d62828',
-            '#color2_bright#'   : '#e36464',
-            '#color2_dark#'     : '#ac2020',
-            '#color3#'          : '#f77f00',
-            '#color3_bright#'   : '#ff9c33',
-            '#color3_dark#'     : '#b85f00',
-            '#color4#'          : '#fcbf49',
-            '#color4_bright#'   : '#fdd686',
-            '#color4_dark#'     : '#fbac0e',
-            '#color5#'          : '#eae2b7',
-            '#color5_bright#'   : '#faf9ef',
-            '#color5_dark#'     : '#dfd390'
+                    '#color1_bright#'   : '#36a9d3',
+                    '#color1#'          : '#227c9d',
+                    '#color1_dark#'     : '#1a5d75',
+                    '#color2_bright#'   : '#fe9a9d',
+                    '#color2#'          : '#fe6d73',
+                    '#color2_dark#'     : '#fe484e',
+                    '#color3_bright#'   : '#ffe0ad',
+                    '#color3#'          : '#ffcb77',
+                    '#color3_dark#'     : '#ffc05c',
+                    '#color4_bright#'   : '#24e5d2',
+                    '#color4#'          : '#17c3b2',
+                    '#color4_dark#'     : '#13a496',
+                    '#color5_bright#'   : '#fef9ef',
+                    '#color5#'          : '#fdf1d9',
+                    '#color5_dark#'     : '#fae2b2'
             }
     
     for uiFile in uiFiles:
