@@ -18,4 +18,5 @@ https://github.com/gitextensions/gitextensions/wiki/How-To:-run-Git-Extensions-o
 * Launch main.py
 
 ## Repository visualization
+Interactive HTML visualization: ![Diagram](https://octo-repo-visualization.vercel.app/?repo=juvarlet%2Fa_table)
 ![Visualization of this repo](./diagram.svg)
