@@ -1,0 +1,10 @@
+name: Generate Diagram
+on: push
+jobs:
+  get_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+      - name: Update diagram
+        uses: githubocto/repo-visualizer@main

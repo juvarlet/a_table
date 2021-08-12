@@ -16,3 +16,6 @@ https://github.com/gitextensions/gitextensions/wiki/How-To:-run-Git-Extensions-o
 ## Installation
 * Clone the entire repository to any local folder
 * Launch main.py
+
+## Repository visualization
+![Visualization of this repo](./diagram.svg)
