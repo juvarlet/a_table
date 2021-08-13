@@ -2,6 +2,7 @@ import os
 from os.path import basename
 
 from PySide2 import QtCore
+from PySide2 import QtGui
 from recipe import Recipe
 import sys
 import recipe_db
@@ -17,7 +18,7 @@ from shutil import copy2
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase
+from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase, QFont
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
@@ -53,20 +54,24 @@ class MainGUI(QWidget):
         self.connect_actions()
         self.update_modif()
 
-        
-        fontDir = self.dirname + '/fonts/aller-font/Aller_It.ttf'
-        print(fontDir)
-
-        QFontDatabase.addApplicationFont(fontDir)
-        #self.setStyleSheet("QWidget{font-size:500px;font-family:'Aller_Rg';}")
-        #self.setStyleSheet("QWidget{background-color:#ccc1ae;font-family:Aller_Rg;font: bold;}")
-
-        #self.parentWidget().setStyleSheet("QWidget{background-color:#ccc1ae;}")
-        #print(self.parentWidget().styleSheet() )
-        self.parentWidget().setStyleSheet("QWidget{font-family:Aller;}" + self.parentWidget().styleSheet())
+        self.set_custom_font()
 
         #generate default menu at startup
         self.pB_new_menu.click()
+
+    def set_custom_font(self):
+        fontDir = self.dirname + '/fonts/aller-font/Aller_It.ttf'
+        QFontDatabase.addApplicationFont(fontDir)
+       
+        self.parentWidget().setStyleSheet("QWidget{font-family:Aller;}" + self.parentWidget().styleSheet())
+        self.tB.setFont(QFont('Aller', 20, QtGui.QFont.Light))
+        self.lW_shopping.setFont(QFont('Aller', 13, QtGui.QFont.Bold))
+        self.lW_menu.setFont(QFont('Aller', 13, QtGui.QFont.Bold))
+        self.tW_menu.setFont(QFont('Aller', 13, QtGui.QFont.Light))
+        self.tW_menu.verticalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
+        self.tW_menu.horizontalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
+        self.dateEdit.setFont(QFont('Aller', 11, QtGui.QFont.Bold))
+        self.cB_restes.setFont(QFont('Aller', 14, QtGui.QFont.Bold))
         
     def initial_state(self, my_recipe_db):
         #variables
@@ -377,7 +382,11 @@ class MainGUI(QWidget):
         #new_tW_menu.setAlternatingRowColors(True)
         new_tW_menu.setSelectionMode(self.tW_menu.selectionMode())
         new_tW_menu.setTextElideMode(self.tW_menu.textElideMode())
+        
         new_tW_menu.setFont(self.tW_menu.font())
+        new_tW_menu.verticalHeader().setFont(QFont('Aller', 11, QtGui.QFont.Bold))
+        new_tW_menu.horizontalHeader().setFont(QFont('Aller', 11, QtGui.QFont.Bold))
+        
         self.pW.gridLayout_10.replaceWidget(self.tW_menu, new_tW_menu)
         self.tW_menu = new_tW_menu
         self.pW.tW_menu.setParent(None)

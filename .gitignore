@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+.qt_for_python/
+
 # Distribution / packaging
 .Python
 build/

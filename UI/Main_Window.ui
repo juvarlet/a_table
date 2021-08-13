@@ -13,26 +13,31 @@
     <height>783</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <family>Poiret One</family>
-    <pointsize>15</pointsize>
-    <weight>75</weight>
-    <italic>false</italic>
-    <bold>true</bold>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>À Table !</string>
   </property>
   <property name="styleSheet">
    <string notr="true">/**/
 QWidget{
-background-color:#ccc1ae;
-/*font-family:Poiret One;*/
-font: bold;
+	background-color:#ccc1ae;
+	font: bold;
 }
 /**/
+
+
+
+/*
+font-family:Poiret One;
+
+QWidget{
+	background-color:#ccc1ae;
+	font: bold;
+}
+
+QMainWindow{
+	font-family:Aller;        /*    [Times/Ubuntu/Aller/Poiret One]   
+}
+*/
 
 QCheckBox#cB_restes_2::indicator:unchecked {
     image: url(file:///../UI/images/icon_recycle_uncheck.png);
@@ -676,7 +681,6 @@ QCheckBox#cB_search_tag_dessert::indicator:hover {
         <widget class="QTabWidget" name="tabWidget">
          <property name="font">
           <font>
-           <family>Poiret One</family>
            <pointsize>26</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -707,8 +711,7 @@ QCheckBox#cB_search_tag_dessert::indicator:hover {
             <widget class="QToolBox" name="toolBox">
              <property name="font">
               <font>
-               <family>Poiret One</family>
-               <pointsize>18</pointsize>
+               <pointsize>20</pointsize>
                <weight>75</weight>
                <italic>false</italic>
                <bold>true</bold>
@@ -716,7 +719,7 @@ QCheckBox#cB_search_tag_dessert::indicator:hover {
              </property>
              <property name="styleSheet">
               <string notr="true">QToolBox {
-icon-size: 40px;
+	icon-size: 40px;
 }</string>
              </property>
              <property name="frameShape">
@@ -731,7 +734,7 @@ icon-size: 40px;
                 <x>0</x>
                 <y>0</y>
                 <width>2173</width>
-                <height>599</height>
+                <height>595</height>
                </rect>
               </property>
               <attribute name="label">
@@ -749,15 +752,6 @@ icon-size: 40px;
                  <layout class="QGridLayout" name="gridLayout_10">
                   <item row="1" column="0">
                    <widget class="QTableWidget" name="tW_menu">
-                    <property name="font">
-                     <font>
-                      <family>Poiret One</family>
-                      <pointsize>13</pointsize>
-                      <weight>75</weight>
-                      <italic>false</italic>
-                      <bold>true</bold>
-                     </font>
-                    </property>
                     <property name="mouseTracking">
                      <bool>true</bool>
                     </property>
@@ -877,15 +871,6 @@ icon-size: 40px;
                      </item>
                      <item row="0" column="5">
                       <widget class="QCheckBox" name="cB_restes_2">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>14</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
                        <property name="toolTip">
                         <string>Le dernier repas, c'est les restes!</string>
                        </property>
@@ -904,14 +889,6 @@ icon-size: 40px;
                          <width>170</width>
                          <height>50</height>
                         </size>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
                        </property>
                        <property name="styleSheet">
                         <string notr="true"/>
@@ -958,7 +935,6 @@ icon-size: 40px;
                       <widget class="QLabel" name="label_9">
                        <property name="font">
                         <font>
-                         <family>Poiret One</family>
                          <pointsize>14</pointsize>
                          <weight>75</weight>
                          <italic>false</italic>
@@ -1018,14 +994,6 @@ icon-size: 40px;
                          <width>0</width>
                          <height>50</height>
                         </size>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
                        </property>
                        <property name="buttonSymbols">
                         <enum>QAbstractSpinBox::PlusMinus</enum>
@@ -1201,8 +1169,8 @@ icon-size: 40px;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>485</width>
-                <height>174</height>
+                <width>2173</width>
+                <height>595</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1238,15 +1206,6 @@ icon-size: 40px;
                        <layout class="QGridLayout" name="gridLayout_24">
                         <item row="0" column="0" colspan="4">
                          <widget class="QListWidget" name="lW_courses">
-                          <property name="font">
-                           <font>
-                            <family>Poiret One</family>
-                            <pointsize>13</pointsize>
-                            <weight>75</weight>
-                            <italic>false</italic>
-                            <bold>true</bold>
-                           </font>
-                          </property>
                           <property name="frameShape">
                            <enum>QFrame::NoFrame</enum>
                           </property>
@@ -1340,15 +1299,6 @@ icon-size: 40px;
                     <layout class="QGridLayout" name="gridLayout_15">
                      <item row="1" column="0">
                       <widget class="QListWidget" name="lW_menu">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>13</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
                        <property name="frameShape">
                         <enum>QFrame::NoFrame</enum>
                        </property>
