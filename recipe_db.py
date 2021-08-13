@@ -156,7 +156,7 @@ def get_recipe_sublist(recipe_list, tagsIn = [], tagsOut = []):
     return extract_list
 
 def get_recipe_names(recipe_list = []):
-    return [recipe.name for recipe in recipe_list]
+    return [recipe.name for recipe in extract_recipes(recipe_list)]
 
 def date_to_text(date_object):
     return date_object.strftime('%Y-%m-%d')
@@ -267,6 +267,14 @@ def write_recipe(input_csv, sheet_name, input_list):
     with ExcelWriter(input_csv) as writer:
         df.to_excel(writer, sheet_name = sheet_name, index = False)
 
+def extract_recipes(initial_list):
+    recipe_list = []
+    for element in initial_list:
+        if type(element) == Recipe:
+            recipe_list.append(element)
+        elif type(element) == list:
+            recipe_list = recipe_list + extract_recipes(element)
+    return recipe_list
 
 def debug():
     input_csv = '/home/jv/Documents/MyScripts/VSCODE/PY/Recipe/MesRecettes.ods'
