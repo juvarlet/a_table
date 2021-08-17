@@ -125,7 +125,7 @@ class MainGUI(QWidget):
         self.sB_desserts: QSpinBox
         self.sB_desserts = self.pW.sB_desserts_2
         self.sB_days: QSpinBox
-        self.sB_days = self.pW.sB_days_2
+        self.sB_days = self.pW.sB_days
         self.p_carte: QWidget
         self.p_carte = self.pW.page_carte
         self.pB_save: QPushButton
@@ -354,20 +354,20 @@ class MainGUI(QWidget):
         self.pB_cancel_3 = self.pW.pB_cancel_3
         self.lE_email: QLineEdit
         self.lE_email = self.pW.lE_email
-        self.sB_days_2: QSpinBox
-        self.sB_days_2 = self.pW.sB_days
+        self.sB_settings_days: QSpinBox
+        self.sB_settings_days = self.pW.sB_settings_days
         self.lE_storage: QLineEdit
         self.lE_storage = self.pW.lE_storage
         self.tB_storage: QToolBox
         self.tB_storage = self.pW.toolButton
         self.label_contact: QLabel
         self.label_contact = self.pW.label_contact
-        self.label_email: QLabel
-        self.label_email = self.pW.label_email
-        self.label_days: QLabel
-        self.label_days = self.pW.label_days
-        self.label_storage: QLabel
-        self.label_storage = self.pW.label_storage
+        self.img_settings_email: QLabel
+        self.img_settings_email = self.pW.img_settings_email
+        self.img_settings_days: QLabel
+        self.img_settings_days = self.pW.img_settings_days
+        self.img_settings_storage: QLabel
+        self.img_settings_storage = self.pW.img_settings_storage
 
         #default state
         self.window().setWindowState(Qt.WindowMaximized)
@@ -403,7 +403,7 @@ class MainGUI(QWidget):
         self.pW.gridLayout_13.replaceWidget(self.sB_days, new_sB_days)
         # self.pW.horizontalLayout.insertWidget(5,new_sB_days)
         self.sB_days = new_sB_days
-        self.pW.sB_days_2.setParent(None)
+        self.pW.sB_days.setParent(None)
 
         self.dateEdit.setDate(QDate().currentDate().addDays(1))
         self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -509,11 +509,11 @@ class MainGUI(QWidget):
         self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
         self.pB_photo.setIcon(QIcon(self.dirname + '/UI/images/icon_photo.png'))
         
-        self.label_email.setPixmap(QPixmap(self.dirname + '/UI/images/icon_send.png').scaled(40,40))
-        self.label_days.setPixmap(QPixmap(self.dirname + '/UI/images/icon_date_3colors_t_LD.png').scaled(40,40))
-        self.label_storage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_print.png').scaled(40,40))
-        # load_pic(self.label_days, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
-        # load_pic(self.label_storage, self.dirname + '/UI/images/icon_print.png')
+        self.img_settings_email.setPixmap(QPixmap(self.dirname + '/UI/images/icon_send.png').scaled(40,40))
+        self.img_settings_days.setPixmap(QPixmap(self.dirname + '/UI/images/icon_date_3colors_t_LD.png').scaled(40,40))
+        self.img_settings_storage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_print.png').scaled(40,40))
+        # load_pic(self.img_settings_days, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
+        # load_pic(self.img_settings_storage, self.dirname + '/UI/images/icon_print.png')
 
     def main(self):
         self.pW.show()
@@ -1965,12 +1965,12 @@ class MainGUI(QWidget):
         #             self.default_email, nb_days, self.default_storage = data
         #             self.default_nb_days = int(nb_days)
         self.lE_email.setText(self.default_email)
-        self.sB_days_2.setValue(self.default_nb_days)
+        self.sB_settings_days.setValue(self.default_nb_days)
         self.lE_storage.setText(self.default_storage)
     
     def on_save_settings(self):
         self.default_email = self.lE_email.text()
-        self.default_nb_days = self.sB_days_2.value()
+        self.default_nb_days = self.sB_settings_days.value()
         storage = self.lE_storage.text()
         if os.path.isdir(storage):
             self.default_storage = storage
