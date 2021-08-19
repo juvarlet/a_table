@@ -1,5 +1,5 @@
-# ![donut.png](https://github.com/juvarlet/a_table/blob/main/UI/images/donut_icon.png?raw=true) À Table !
-![app_screenshot.png](https://github.com/juvarlet/a_table/blob/main/images/app_screenshot.png?raw=true)
+# ![donut.png](https://github.com/juvarlet/a_table/blob/ju_branch/UI/images/donut_icon.png?raw=true) À Table !
+![app_screenshot.png](https://github.com/juvarlet/a_table/blob/ju_branch/images/app_screenshot.png?raw=true)
 
 App to create, organize and plan your own recipes
 
