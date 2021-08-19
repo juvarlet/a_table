@@ -23,13 +23,14 @@ from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
 # QDate
 
-#COLOR THEME
+#COLOR THEME HISTORY
 RED = '#d72631' #215,38,49
 LIGHT_GREEN = '#a2d5c6' #162,213,198
 FADED_LIGHT_GREEN = '#b7cab9' #183,202,185
 GREEN = '#077b8a' #7,123,138
 VIOLET = '#5c3c92' #92,60,146
 BEIGE = '#ccc1ae' #204,193,174
+LIGHT_BEIGE = '#e8ddc8' #232,221,200
 
 #TAGS
 '''
@@ -352,6 +353,53 @@ class MainGUI(QWidget):
         self.label_storage: QLabel
         self.label_storage = self.pW.label_storage
 
+        self.init_colors = {'RED' :         ('#d72631', [215,38,49]),
+                    'LIGHT_GREEN' :         ('#a2d5c6', [162,213,198]),
+                    'FADED_LIGHT_GREEN' :   ('#b7cab9', [183,202,185]),
+                    'GREEN' :               ('#077b8a', [7,123,138]),
+                    'VIOLET' :              ('#5c3c92', [92,60,146]),
+                    'BEIGE' :               ('#ccc1ae', [204,193,174]),
+                    'LIGHT_BEIGE' :         ('#e8ddc8', [232,221,200])
+                    }
+
+        self.init_colors = {
+                    '#color1_bright#'   : '#16d9f3',
+                    '#color1#'          : '#0aacc2',
+                    '#color1_dark#'     : '#077b8a',
+                    '#color2_bright#'   : '#e3636c',
+                    '#color2#'          : '#d72631',
+                    '#color2_dark#'     : '#ad1f28',
+                    '#color3_bright#'   : '#7751b8',
+                    '#color3#'          : '#5c3c92',
+                    '#color3_dark#'     : '#3f2965',
+                    '#color4_bright#'   : '#b7cab9',
+                    '#color4#'          : '#a2d5c6',
+                    '#color4_dark#'     : '#80c6b1',
+                    '#color5_bright#'   : '#e8ddc8',
+                    '#color5#'          : '#ccc1ae',
+                    '#color5_dark#'     : '#b8a98e'
+        }
+        
+        self.colors = {
+                    '#color1_bright#'   : '#36a9d3',
+                    '#color1#'          : '#2584a7',
+                    '#color1_dark#'     : '#1a5d75',
+                    '#color2_bright#'   : '#fe9a9d',
+                    '#color2#'          : '#fe6d73',
+                    '#color2_dark#'     : '#fe484e',
+                    '#color3_bright#'   : '#ffe0ad',
+                    '#color3#'          : '#ffcb77',
+                    '#color3_dark#'     : '#ffc05c',
+                    '#color4_bright#'   : '#24e5d2',
+                    '#color4#'          : '#17c3b2',
+                    '#color4_dark#'     : '#13a496',
+                    '#color5_bright#'   : '#fef9ef',
+                    '#color5#'          : '#fdf1d9',
+                    '#color5_dark#'     : '#fae2b2'
+                    }
+        
+        # cw.style_factory(self.pW, init_colors = self.init_colors, colors = self.colors)
+        
         #default state
         self.window().setWindowState(Qt.WindowMaximized)
         #-replace qtablewidget tW_menu by custom class
@@ -369,6 +417,9 @@ class MainGUI(QWidget):
         new_tW_menu.setSelectionMode(self.tW_menu.selectionMode())
         new_tW_menu.setTextElideMode(self.tW_menu.textElideMode())
         new_tW_menu.setFont(self.tW_menu.font())
+        new_tW_menu.setLineWidth(0)
+        new_tW_menu.setShowGrid(False)
+        new_tW_menu.setStyleSheet(self.pW.styleSheet())
         self.pW.gridLayout_10.replaceWidget(self.tW_menu, new_tW_menu)
         self.tW_menu = new_tW_menu
         self.pW.tW_menu.setParent(None)
@@ -463,7 +514,7 @@ class MainGUI(QWidget):
         
         cw.load_pic(self.label_top, self.dirname + '/UI/images/icon_list.png')
         cw.load_pic(self.label_icon_carte, self.dirname + '/UI/images/icon_menu_3colors_LD.png')
-        cw.load_pic(self.label_cocktail, self.dirname + '/UI/images/table_cocktails.png')
+        cw.load_pic(self.label_cocktail, self.dirname + '/UI/images/icon_cocktail_3colors_LD.png')
         self.pB_print.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
         self.pB_send.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
         self.pB_copy.setIcon(QIcon(self.dirname + '/UI/images/icon_copy.png'))
@@ -752,7 +803,9 @@ class MainGUI(QWidget):
             
             qtwi_lunch = stacked_lunch.parentWidget()
             qtwi_dinner = stacked_dinner.parentWidget()
-
+            # qtwi_lunch = cw.style_factory(qtwi_lunch, self.init_colors, self.colors)
+            # qtwi_dinner = cw.style_factory(qtwi_dinner, self.init_colors, self.colors)
+            
             self.tW_menu.setCellWidget(0, i, qtwi_lunch)
             self.tW_menu.setCellWidget(1, i, qtwi_dinner)
             
@@ -848,7 +901,6 @@ class MainGUI(QWidget):
             
             qtwi_to = new_stacked_to.parentWidget()
             qtwi_from = new_stacked_from.parentWidget()
-            
             self.tW_menu.setCellWidget(from_row, from_column, qtwi_from)
             self.tW_menu.setCellWidget(row, column, qtwi_to)
             
@@ -1243,8 +1295,8 @@ class MainGUI(QWidget):
                 verticalHeader_labels.append(date_text)
 
 
-            qtwi_lunch.setTextColor(QColor(215,38,49))
-            qtwi_dinner.setTextColor(QColor(215,38,49))
+            qtwi_lunch.setTextColor(QColor(self.colors['#color2#']))
+            qtwi_dinner.setTextColor(QColor(self.colors['#color2#']))
         
         self.tW_history.setVerticalHeaderLabels(verticalHeader_labels)
         #show warning and disable other actions
@@ -1276,7 +1328,8 @@ class MainGUI(QWidget):
         for i in range(self.tW_history.rowCount()):
             qtwi_lunch = self.tW_history.item(i, 0)
             qtwi_dinner = self.tW_history.item(i, 1)
-            if qtwi_lunch.textColor().getRgb() == (215,38,49,255):
+            r,g,b = tuple(int(self.colors['#color2#'].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+            if qtwi_lunch.textColor().getRgb() == (r,g,b,255):
                 # print(i,qtwi_lunch.textColor().getRgb())
                 #take new entry
                 lunch_recipe_name = qtwi_lunch.text().split(' -> ')[-1]
@@ -1284,8 +1337,8 @@ class MainGUI(QWidget):
                 qtwi_lunch.setText(lunch_recipe_name)
                 qtwi_dinner.setText(dinner_recipe_name)
                 #reset color
-                qtwi_lunch.setTextColor(QColor(0,0,0))
-                qtwi_dinner.setTextColor(QColor(0,0,0))
+                qtwi_lunch.setTextColor(QColor(self.colors['#color1_dark#']))
+                qtwi_dinner.setTextColor(QColor(self.colors['#color1_dark#']))
         
         #backup file
         copy2(self.recipe_db.history_file, self.dirname + '/backup/history_backup.ods')
@@ -1308,8 +1361,11 @@ class MainGUI(QWidget):
     def on_ingredient_selection(self):
         #reset list menu background
         for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
-            item.setBackground(QBrush(QColor(183,202,185)))
-            item.setTextColor(QColor(0, 0, 0))
+            # r,g,b = self.colors['#color3_bright#'][1]
+            # item.setBackground(QBrush(QColor(r,g,b)))
+            item.setBackground(QBrush(QColor(self.colors['#color3_bright#'])))
+            # item.setTextColor(QColor(0, 0, 0))
+            item.setTextColor(QColor(self.colors['#color1_dark#']))
         
         #get ingredient text
         if len(self.lW_shopping.selectedItems()) > 0:
@@ -1318,10 +1374,17 @@ class MainGUI(QWidget):
             for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
 
                 if self.recipe_db.get_recipe_object(item.text()[5:]).hasIngredient(ingredient):
-                    item.setBackground(QBrush(QColor(92,60,146)))
-                    item.setTextColor(QColor(162,213,198))
+                    # r,g,b = self.colors['#color3#'][1]
+                    # item.setBackground(QBrush(QColor(r,g,b)))
+                    item.setBackground(QBrush(QColor(self.colors['#color3#'])))
+                    # r,g,b = self.colors['#color4#'][1]
+                    # item.setTextColor(QColor(r,g,b))
+                    item.setTextColor(QColor(self.colors['#color1_dark#']))
                 else:
-                    item.setBackground(QBrush(QColor(183,202,185)))
+                    # r,g,b = self.colors['#color4_bright#'][1]
+                    # item.setBackground(QBrush(QColor(r,g,b)))
+                    item.setBackground(QBrush(QColor(self.colors['#color3_bright#'])))
+                    item.setTextColor(QColor(self.colors['#color1_dark#']))
     
     def on_copy_shopping_list(self):
         string_to_copy = 'Liste de courses:\n'
@@ -1555,7 +1618,7 @@ class MainGUI(QWidget):
         pB_remove = QPushButton('', self.tW_ingredients)
         pB_remove.setFixedSize(25,25)
         pB_remove.setIconSize(QSize(18,18))
-        pB_remove.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
+        pB_remove.setIcon(QIcon(self.dirname + '/UI/images/icon_bin_2.png'))
         pB_remove.setToolTip('Supprimer : ' + ingredient)
         pB_remove.setCheckable(True)
         pB_remove.clicked.connect(self.on_delete_ingredient)
@@ -1977,6 +2040,8 @@ class MainGUI(QWidget):
         #create right-click menu
         right_click_menu = QMenu(self)
         right_click_menu.setToolTipsVisible(True)
+        right_click_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
+                                       (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
         
         #modify
         actionModify = QAction(right_click_menu)
@@ -2005,7 +2070,7 @@ class MainGUI(QWidget):
             
             actionLunch = QAction(menuDay)
             actionLunch.setText('Midi')
-            actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color.png'))
+            actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color_2.png'))
             lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(0, i)].recipe_list))
             actionLunch.setToolTip(lunchToolTip)
             
@@ -2014,7 +2079,7 @@ class MainGUI(QWidget):
             
             actionDinner = QAction(menuDay)
             actionDinner.setText('Soir')
-            actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color.png'))
+            actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color_2.png'))
             dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(1, i)].recipe_list))
             actionDinner.setToolTip(dinnerToolTip)
             
@@ -2056,10 +2121,10 @@ class MainGUI(QWidget):
         self.pB_user.setStyleSheet('''
                                 QPushButton{
                                     image: url(file:///../UI/images/icon_user.png);
-                                    background-color: #ccc1ae;
+                                    background-color: %s;
                                     border-width: 0px;
                                     border-radius: 0px;
-                                    border-color: #ccc1ae;
+                                    border-color: %s;
                                 }
 
                                 QPushButton:hover{
@@ -2069,7 +2134,7 @@ class MainGUI(QWidget):
                                 QPushButton:pressed{
                                     image: url(file:///../UI/images/icon_user_color_.png);
                                 }
-                                   ''')
+                                   ''' % (self.colors['#color5#'], self.colors['#color5#']))
         self.tW.setCornerWidget(self.pB_user)
         
         self.label_contact.setOpenExternalLinks(True)
@@ -2089,6 +2154,7 @@ class MainGUI(QWidget):
         self.wV.load(self.homepage)
         self.gL_web.addWidget(self.wV)
         self.navtb = QToolBar("Navigation")
+        self.navtb.setStyleSheet('QToolBar{background-color:transparent;}QToolButton{background:transparent;}')
         self.navtb.setIconSize( QSize(30,30) )
         self.hL_tools.addWidget(self.navtb)
         
