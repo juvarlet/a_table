@@ -514,7 +514,7 @@ class MainGUI(QWidget):
         
         cw.load_pic(self.label_top, self.dirname + '/UI/images/icon_list.png')
         cw.load_pic(self.label_icon_carte, self.dirname + '/UI/images/icon_menu_3colors_LD.png')
-        cw.load_pic(self.label_cocktail, self.dirname + '/UI/images/table_cocktails.png')
+        cw.load_pic(self.label_cocktail, self.dirname + '/UI/images/icon_cocktail_3colors_LD.png')
         self.pB_print.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
         self.pB_send.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
         self.pB_copy.setIcon(QIcon(self.dirname + '/UI/images/icon_copy.png'))
@@ -1378,7 +1378,7 @@ class MainGUI(QWidget):
                     item.setBackground(QBrush(QColor(self.colors['#color3#'])))
                     # r,g,b = self.colors['#color4#'][1]
                     # item.setTextColor(QColor(r,g,b))
-                    item.setTextColor(QColor(self.colors['#color4_bright#']))
+                    item.setTextColor(QColor(self.colors['#color1_dark#']))
                 else:
                     # r,g,b = self.colors['#color4_bright#'][1]
                     # item.setBackground(QBrush(QColor(r,g,b)))
@@ -1617,7 +1617,7 @@ class MainGUI(QWidget):
         pB_remove = QPushButton('', self.tW_ingredients)
         pB_remove.setFixedSize(25,25)
         pB_remove.setIconSize(QSize(18,18))
-        pB_remove.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
+        pB_remove.setIcon(QIcon(self.dirname + '/UI/images/icon_bin_2.png'))
         pB_remove.setToolTip('Supprimer : ' + ingredient)
         pB_remove.setCheckable(True)
         pB_remove.clicked.connect(self.on_delete_ingredient)
@@ -2039,6 +2039,8 @@ class MainGUI(QWidget):
         #create right-click menu
         right_click_menu = QMenu(self)
         right_click_menu.setToolTipsVisible(True)
+        right_click_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
+                                       (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
         
         #modify
         actionModify = QAction(right_click_menu)
@@ -2067,7 +2069,7 @@ class MainGUI(QWidget):
             
             actionLunch = QAction(menuDay)
             actionLunch.setText('Midi')
-            actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color.png'))
+            actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color_2.png'))
             lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(0, i)].recipe_list))
             actionLunch.setToolTip(lunchToolTip)
             
@@ -2076,7 +2078,7 @@ class MainGUI(QWidget):
             
             actionDinner = QAction(menuDay)
             actionDinner.setText('Soir')
-            actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color.png'))
+            actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color_2.png'))
             dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(1, i)].recipe_list))
             actionDinner.setToolTip(dinnerToolTip)
             

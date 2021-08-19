@@ -86,6 +86,24 @@ class StackedRecipes(QWidget):
         self.comboBox: QComboBox
         self.comboBox = self.pW.comboBox
         
+        self.colors = {
+                    '#color1_bright#'   : '#36a9d3',
+                    '#color1#'          : '#2584a7',
+                    '#color1_dark#'     : '#1a5d75',
+                    '#color2_bright#'   : '#fe9a9d',
+                    '#color2#'          : '#fe6d73',
+                    '#color2_dark#'     : '#fe484e',
+                    '#color3_bright#'   : '#ffe0ad',
+                    '#color3#'          : '#ffcb77',
+                    '#color3_dark#'     : '#ffc05c',
+                    '#color4_bright#'   : '#24e5d2',
+                    '#color4#'          : '#17c3b2',
+                    '#color4_dark#'     : '#13a496',
+                    '#color5_bright#'   : '#fef9ef',
+                    '#color5#'          : '#fdf1d9',
+                    '#color5_dark#'     : '#fae2b2'
+                    }
+        
         self.frame_buttons.setVisible(False)
         self.comboBox.setVisible(False)
         self.current_index = len(self.recipe_list) - 1
@@ -103,7 +121,7 @@ class StackedRecipes(QWidget):
         self.show_hide_buttons()
         self.update_index()
         
-        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_new_recipe.png'))
+        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe.png'))
         self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
         self.pB_next.setIcon(QIcon(self.dirname + '/UI/images/icon_right_arrow.png'))
         self.pB_edit.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
@@ -112,6 +130,8 @@ class StackedRecipes(QWidget):
     
     def add_button_menu(self):
         self.pB_add_menu = QMenu(self)
+        self.pB_add_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
+                                       (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
         
         self.actionRandomRecipe = QAction(self)
         self.actionRandomRecipe.setText('Plat au hasard')

@@ -433,6 +433,18 @@
         width:45px;
         height:45px;
     }
+
+    QCheckBox#cB_search_recipe_name::indicator:checked, QCheckBox#cB_search_preparation::indicator:checked, QCheckBox#cB_search_ingredients::indicator:checked {
+        image: url(./UI/images/icon_check.png);
+        width:20px;
+        height:20px;
+    }
+
+    QCheckBox#cB_search_recipe_name::indicator:unchecked, QCheckBox#cB_search_preparation::indicator:unchecked, QCheckBox#cB_search_ingredients::indicator:unchecked {
+        image: url(./UI/images/icon_uncheck.png);
+        width:20px;
+        height:20px;
+    }
     
     QTableWidget {
         background-color: #fdf1d9;
@@ -450,7 +462,7 @@
     QTableWidget#tW_historique {
         background-color: #fdf1d9;
         selection-background-color: #ffcb77;
-        selection-color: #24e5d2;
+        selection-color: #1a5d75;
     }
 
     QTableWidget#tW_ingredients{
@@ -574,6 +586,7 @@
         border-radius: 4px;
         padding: 2px;
         background-color: #fdf1d9;
+        color: #1a5d75;
     
     }
     
@@ -844,8 +857,8 @@
                        </property>
                        <property name="iconSize">
                         <size>
-                         <width>40</width>
-                         <height>40</height>
+                         <width>50</width>
+                         <height>50</height>
                         </size>
                        </property>
                       </widget>
@@ -1069,8 +1082,8 @@
                        </property>
                        <property name="iconSize">
                         <size>
-                         <width>40</width>
-                         <height>40</height>
+                         <width>50</width>
+                         <height>50</height>
                         </size>
                        </property>
                       </widget>
@@ -1250,8 +1263,8 @@
                           </property>
                           <property name="iconSize">
                            <size>
-                            <width>40</width>
-                            <height>40</height>
+                            <width>50</width>
+                            <height>50</height>
                            </size>
                           </property>
                          </widget>
@@ -1266,8 +1279,8 @@
                           </property>
                           <property name="iconSize">
                            <size>
-                            <width>40</width>
-                            <height>40</height>
+                            <width>50</width>
+                            <height>50</height>
                            </size>
                           </property>
                          </widget>
@@ -1282,8 +1295,8 @@
                           </property>
                           <property name="iconSize">
                            <size>
-                            <width>40</width>
-                            <height>40</height>
+                            <width>50</width>
+                            <height>50</height>
                            </size>
                           </property>
                          </widget>
@@ -1851,14 +1864,14 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                           <item>
                            <widget class="QCheckBox" name="cB_search_ingredients">
                             <property name="text">
-                             <string>Ingredients</string>
+                             <string>Ingrédients</string>
                             </property>
                            </widget>
                           </item>
                           <item>
                            <widget class="QCheckBox" name="cB_search_preparation">
                             <property name="text">
-                             <string>Preparation</string>
+                             <string>Préparation</string>
                             </property>
                            </widget>
                           </item>
@@ -2087,8 +2100,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                      </widget>
@@ -2116,8 +2129,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                      </widget>
@@ -2132,8 +2145,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                      </widget>
@@ -2148,8 +2161,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                      </widget>
@@ -2164,8 +2177,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                       <property name="checkable">
@@ -2183,8 +2196,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                       <property name="checkable">
@@ -2629,8 +2642,8 @@ p, li { white-space: pre-wrap; }
                          </property>
                          <property name="iconSize">
                           <size>
-                           <width>40</width>
-                           <height>40</height>
+                           <width>50</width>
+                           <height>50</height>
                           </size>
                          </property>
                         </widget>
