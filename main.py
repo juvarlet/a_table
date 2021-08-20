@@ -13,6 +13,7 @@ import custom_widgets as cw
 from datetime import date, timedelta
 from pyperclip import copy
 from shutil import copy2
+import pyautogui
 
 import PySide2
 from PySide2.QtWidgets import*
@@ -83,6 +84,7 @@ class MainGUI(QWidget):
         self.stacks = {}
         self.lockKeyId = 'xx'
         self.lockedForEdition = False
+        self.recipeMultiSelection = []
         
         #-- ui widgets --
         self.tW: QTabWidget
@@ -469,6 +471,7 @@ class MainGUI(QWidget):
         self.tW_history.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_history.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_history.setColumnCount(2)
+        self.tW_history.setContextMenuPolicy(Qt.CustomContextMenu)
         
         self.reset_history()
         
@@ -575,6 +578,7 @@ class MainGUI(QWidget):
         self.pB_ok_3.clicked.connect(self.on_save_settings)
         self.pB_cancel_3.clicked.connect(self.on_quit_settings)
         self.lW_recipe.customContextMenuRequested.connect(self.on_recipe_right_click)
+        self.tW_history.customContextMenuRequested.connect(self.on_history_right_click)
         
     def update_modif(self):
         self.dateEdit.dateChanged.connect(self.dummy_function)
@@ -1034,25 +1038,51 @@ class MainGUI(QWidget):
 
     
     def on_history_recipe_selection(self, row, column):
-        #TODO context menu when multiple recipes
         if self.tab_recipe.isEnabled():#no effect when waiting for user confirmation in history tab
-            recipe_name = self.tW_history.item(row, column).text().split(' | ')[0] #only available for first recipe if stack of recipes
-            self.tW.setCurrentWidget(self.tab_recipe)
-            self.reset_recipes_list()
-            self.reset_filters()
-            try:
-                lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
-                self.lW_recipe.scrollToItem(lwi)
-                self.lW_recipe.setCurrentItem(lwi)
-                lwi.setSelected(True)
-            except:
-                self.on_wrong_recipe_name(recipe_name)
-                # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
-                # lwi = self.lW_recipe.item(0)
-                # self.lW_recipe.scrollToItem(lwi)
-                # self.lW_recipe.setCurrentItem(lwi)
-                # lwi.setSelected(True)
-                    
+            recipes = self.tW_history.item(row, column).text().split(' | ')
+            if len(recipes) == 1:
+                recipe_name = recipes[0]
+                self.switch_to_recipe(recipe_name)
+            else:
+                #display context menu with choices
+                self.recipeMultiSelection = recipes
+                pyautogui.click(button='right')
+    
+    def on_history_right_click(self, pos):
+        if self.recipeMultiSelection != []:
+            globalPos = self.tW_history.mapToGlobal(pos)
+            
+            right_click_menu = QMenu(self)
+            right_click_menu.setToolTipsVisible(True)
+            right_click_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
+                                        (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
+            
+            mapper = QSignalMapper(self)
+            
+            for recipe_name in self.recipeMultiSelection:
+                action = QAction(right_click_menu)
+                action.setText(recipe_name)
+                mapper.setMapping(action, recipe_name)
+                action.triggered.connect(mapper.map)
+                right_click_menu.addAction(action)
+            
+            self.recipeMultiSelection = []
+            
+            mapper.mappedString.connect(self.switch_to_recipe)
+            right_click_menu.exec_(globalPos)
+            
+    def switch_to_recipe(self, recipe_name):
+        self.tW.setCurrentWidget(self.tab_recipe)
+        self.reset_recipes_list()
+        self.reset_filters()
+        try:
+            lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
+            self.lW_recipe.scrollToItem(lwi)
+            self.lW_recipe.setCurrentItem(lwi)
+            lwi.setSelected(True)
+        except:
+            self.on_wrong_recipe_name(recipe_name)
+    
     def on_tab_changed(self, tab_index):
         if tab_index == 1 and self.lW_recipe.selectedItems() == []: #recipe tab selected
             #select first recipe if nothing previously selected to avoid blank fields
