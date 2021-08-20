@@ -579,6 +579,7 @@ class MainGUI(QWidget):
         self.pB_cancel_3.clicked.connect(self.on_quit_settings)
         self.lW_recipe.customContextMenuRequested.connect(self.on_recipe_right_click)
         self.tW_history.customContextMenuRequested.connect(self.on_history_right_click)
+        self.cB_web.stateChanged.connect(self.on_show_web)
         
     def update_modif(self):
         self.dateEdit.dateChanged.connect(self.dummy_function)
@@ -1352,6 +1353,7 @@ class MainGUI(QWidget):
 
         self.frame_confirm.hide()
         
+        self.tW_history.scrollToBottom()
     
     def on_confirm_history_update(self):
         #update rows where recipe has been replaced
@@ -2130,13 +2132,15 @@ class MainGUI(QWidget):
         right_click_menu.exec_(globalPos)
         
     def on_add_recipe_right_click(self, id):
-        lunch_recipe_name = self.lW_recipe.currentItem().text()
-        lunch_recipe = self.recipe_db.get_recipe_object(lunch_recipe_name)
-        lunch_stack = self.stacks[id]
-        lunch_stack.on_add_random_recipe(recipe = lunch_recipe)
-        self.tW.setCurrentWidget(self.tab_menus)
-        #TODO highlight success and keep current tab
+        recipe_name = self.lW_recipe.currentItem().text()
+        recipe = self.recipe_db.get_recipe_object(recipe_name)
+        stack = self.stacks[id]
+        stack.on_add_random_recipe(recipe = recipe)
         
+        #highlight success and keep current tab
+        # self.tW.setCurrentWidget(self.tab_menus)
+        self.print_thread_function('Recette "%s" ajoutée aux Menus !' % recipe_name,
+                                   icon_path = self.dirname + '/UI/images/icon_choice_recipe.png')
     
     def openDir(self, field, titre, dirpath = ''):
         if dirpath == '':
@@ -2321,13 +2325,14 @@ class MainGUI(QWidget):
             list_failed.append('- Préparation')
             self.tB_preparation.clear()
             
-        self.sB_time.setValue(0)
+        #TBC to avoid previous settings removal, following lines commented
+        # self.sB_time.setValue(0)
         
-        tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
-                self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
-        tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
-        for tag, tag_name in zip(tags, tag_names):
-            tag.setChecked(False)
+        # tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
+        #         self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
+        # tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
+        # for tag, tag_name in zip(tags, tag_names):
+        #     tag.setChecked(False)
                     
         self.tB_preparation.append("<a href='%s'>%s</a>" % (url, url))
         message += 'Le lien vers la recette a été ajouté.'
@@ -2344,8 +2349,15 @@ class MainGUI(QWidget):
             icon = QIcon(self.dirname + '/UI/images/icon_service%s.png' % ['_', ''][okToParse])
             self.pB_cook.setIcon(icon)
             self.pB_cook.setToolTip(['Copier le lien', 'Importer la recette'][okToParse])
-        
-        
+    
+    def on_show_web(self):
+        if self.cB_web.isChecked():
+            if self.lE_title.text() != 'Nouveau Titre':
+                new_search = QUrl("https://www.google.com/search?q=%s" %
+                                  self.lE_title.text().replace(' ', '+'))
+                self.wV.setUrl(new_search)
+        else:
+            self.wV.setUrl(self.homepage)
 
 
 def image_from_base64(base64_table, image_name):#Legacy function to store and read images -- can be removed
