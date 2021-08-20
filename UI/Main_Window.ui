@@ -27,632 +27,609 @@
   </property>
   <property name="styleSheet">
    <string notr="true">/**/
-QWidget{
-background-color:#ccc1ae;
-font-family:Poiret One;
-font: bold;
-}
-/**/
+    
+
+    QWidget{
+        background-color:#fdf1d9;
+        font-family:Poiret One;
+        font: bold;
+    }
+
+    QMainWindow{
+        background-color: #fdf1d9;
+    }
+    
+    QFrame#frame_tags_2 {
+        background-color: #36a9d3;
+        border: 2px solid #1a5d75;
+        /*border-bottom-color: #1a5d75;  same as the pane color */
+        /*border-top-left-radius: 5px;*/
+        border-radius: 5px;
+    }
+
+    QFrame#frame_tags{
+        background-color: #ffe0ad;
+        border: 2px solid #ffe0ad;
+        border-radius: 5px;
+    }
+
+    QFrame#frame_bottom{
+        border: 4px solid #ffe0ad;
+        border-radius: 10px;
+        background-color:#ffe0ad;
+    }
+    
+    QFrame#frame_details, QFrame#frame_new_recipe, QFrame#frame_6, 
+    QFrame#frame_4, QFrame#frame_16, QFrame#frame_8, QFrame#frame_9, 
+    QFrame#frame_7, QFrame#frame_10, QFrame#frame_20, QFrame#frame_ingredients,
+    QFrame#frame_wB, QFrame#frame_17, QFrame#frame_19{
+        border: 2px solid #ffe0ad;
+        border-radius: 10px;
+        background-color:#ffe0ad;
+    }
+    
+    QFrame#frame_add_ingredient{
+        border: 1px solid #17c3b2;
+        border-radius: 3px;
+        background-color:#17c3b2;
+    }
+    
+    QFrame#frame_confirm {
+        background-color: #36a9d3;
+        border: 4px solid #fe6d73;
+        /*border-bottom-color: #1a5d75;  same as the pane color */
+        /*border-top-left-radius: 5px;*/
+        border-radius: 6px;
+    }
+    
+    QTabWidget::pane { /* The tab widget frame */
+        border-top: 2px solid #1a5d75;
+        position: absolute;
+        top: -0.5em;
+    }
+    
+    QTabWidget::tab-bar {
+        alignment: center;
+    }
+    
+    /* Style the tab using the tab sub-control. Note that
+        it reads QTabBar _not_ QTabWidget */
+    QTabBar::tab {
+        background-color:#36a9d3;
+        border: 2px solid #1a5d75;
+        border-bottom-color: #1a5d75; /* same as the pane color */
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        min-width: 8ex;
+        padding: 5px;
+        color:#1a5d75;
+    }
+    
+    QTabBar::tab:selected, QTabBar::tab:hover {
+        background-color:#1a5d75;
+        color:#36a9d3;
+    }
+    
+    QTabBar::tab:selected {
+        border-color: #1a5d75;
+        border-bottom-color: #1a5d75; /* same as pane color */
+    }
+    
+    QToolBox {
+        icon-size: 40px;
+    }
+    
+    QToolBox::tab {
+        background-color:#36a9d3;
+        border-radius: 5px;
+        color: #1a5d75;
+    }
+    QToolBox::tab:hover, QToolBox::tab:selected {
+        background-color:#1a5d75;
+        border-radius: 5px;
+        color: #36a9d3;
+    }
+    
+    QToolBox::tab:selected {
+    
+    }
+    
+    QPushButton{
+        background-color: #ffc05c;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        border-color: #ffc05c;
+        font: bold 18px;
+        /*min-width: 10em;*/
+        padding: 8px;
+        color:#1a5d75;
+    
+    }
+    
+    QPushButton:hover{
+        border-color: #fe6d73;
+    }
+    
+    QPushButton:pressed,  QPushButton:checked{
+        border-width: 5px;
+        border-radius: 15px;
+        font:  15px;
+        border-color: #fe6d73;
+    }
+    
+    QPushButton#pB_filter{
+        image: url(file:///../UI/images/icon_filter.png);
+        max-width:70px;
+        max-height:70px;
+    }
+    
+    QPushButton#pB_filter:pressed,  QPushButton#pB_filter:checked{
+        border-width: 5px;
+        border-radius: 15px;
+        image: url(file:///../UI/images/icon_filter_red.png);
+        border-color: #fe6d73;
+    }
+    
+    QPushButton#pB_option, QPushButton#pB_option_2 {
+        background-color: #fdf1d9;
+        border-style: outset;
+        border-width: 0px;
+        border-radius: 0px;
+        border-color: #fdf1d9;
+        font: 18px;
+        /*min-width: 10em;*/
+        padding: 4px;
+        color:#1a5d75;
+    
+    }
+    
+    QPushButton#pB_option:hover, QPushButton#pB_option_2:hover {
+        color:#fe6d73;
+    }
+    
+    QPushButton#pB_option:pressed, QPushButton#pB_option_2:pressed, QPushButton#pB_option:checked, QPushButton#pB_option_2:checked {
+        color:#ffc05c;
+        font: bold 20px;
+    }
+
+    QCheckBox {
+        color: #1a5d75;
+    }
+    
+    QCheckBox#cB_restes_2::indicator:unchecked {
+        image: url(file:///../UI/images/icon_recycle_uncheck.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_restes_2::indicator:checked {
+        image: url(file:///../UI/images/icon_recycle_check.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_restes_2::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    
+    QCheckBox#cB_recherche::indicator:unchecked {
+        image: url(file:///../UI/images/icon_up_arrow.png);
+        width:20px;
+        height:20px;
+    }
+    
+    QCheckBox#cB_recherche::indicator:checked {
+        image: url(file:///../UI/images/icon_down_arrow.png);
+        width:20px;
+        height:20px;
+    }
+    
+    QCheckBox#cB_recherche::indicator:hover{
+        width:18px;
+        height:18px;
+    }
+
+    QCheckBox#cB_web{
+        background-color:transparent;
+        color:transparent;
+    }
+    
+    QCheckBox#cB_web::indicator:unchecked {
+        image: url(file:///../UI/images/icon_web_search_gp.png);
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_web::indicator:checked {
+        image: url(file:///../UI/images/icon_web_search_pg.png);
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_web::indicator:hover{
+        image: url(file:///../UI/images/icon_web_search_gr.png);	
+        /*width:45px;
+        height:45px;*/
+    }
+        
+    QCheckBox#cB_tagdouble, QCheckBox#cB_tagkids, QCheckBox#cB_tagvegan, QCheckBox#cB_tagsummer, QCheckBox#cB_tagwinter, QCheckBox#cB_tagdessert, QCheckBox#cB_taglunch, QCheckBox#cB_tagdinner, QCheckBox#cB_tagtips{
+        background-color: #36a9d3;
+    }
+    
+    
+    /**
+    CheckBox icons for new recipe
+    **/
+    
+    QCheckBox#cB_tagdouble::indicator:unchecked {
+        image: url(file:///../UI/images/tag_double_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagdouble::indicator:checked {
+        image: url(file:///../UI/images/tag_double_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagdouble::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_tagkids::indicator:unchecked {
+        image: url(file:///../UI/images/tag_kids_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagkids::indicator:checked {
+        image: url(file:///../UI/images/tag_kids_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagkids::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_tagvegan::indicator:unchecked {
+        image: url(file:///../UI/images/tag_vegan_black_LD.png);
+        width:60px;
+        height:60px;
+    }
+    
+    QCheckBox#cB_tagvegan::indicator:checked {
+        image: url(file:///../UI/images/tag_vegan_color_LD.png);
+        width:60px;
+        height:560px;
+    }
+    
+    QCheckBox#cB_tagvegan::indicator:hover {
+        width:55px;
+        height:55px;
+    }
+    
+    QCheckBox#cB_taglunch::indicator:unchecked {
+        image: url(file:///../UI/images/tag_lunch_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_taglunch::indicator:checked {
+        image: url(file:///../UI/images/tag_lunch_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_taglunch::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_tagdinner::indicator:unchecked {
+        image: url(file:///../UI/images/tag_dinner_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagdinner::indicator:checked {
+        image: url(file:///../UI/images/tag_dinner_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagdinner::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_tagtips::indicator:unchecked {
+        image: url(file:///../UI/images/tag_tips_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagtips::indicator:checked {
+        image: url(file:///../UI/images/tag_tips_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagtips::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_tagsummer::indicator:unchecked {
+        image: url(file:///../UI/images/tag_ete_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagsummer::indicator:checked {
+        image: url(file:///../UI/images/tag_ete_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagsummer::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_tagwinter::indicator:unchecked {
+        image: url(file:///../UI/images/tag_hiver_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagwinter::indicator:checked {
+        image: url(file:///../UI/images/tag_hiver_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagwinter::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_tagdessert::indicator:unchecked {
+        image: url(file:///../UI/images/tag_dessert_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagdessert::indicator:checked {
+        image: url(file:///../UI/images/tag_dessert_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_tagdessert::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+    
+    QCheckBox#cB_search_tag_dessert::indicator:unchecked {
+        image: url(./UI/images/tag_dessert_black_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_search_tag_dessert::indicator:checked {
+        image: url(./UI/images/tag_dessert_color_LD.png);
+        width:50px;
+        height:50px;
+    }
+    
+    QCheckBox#cB_search_tag_dessert::indicator:hover {
+        width:45px;
+        height:45px;
+    }
+
+    QCheckBox#cB_search_recipe_name::indicator:checked, QCheckBox#cB_search_preparation::indicator:checked, QCheckBox#cB_search_ingredients::indicator:checked {
+        image: url(./UI/images/icon_check.png);
+        width:20px;
+        height:20px;
+    }
+
+    QCheckBox#cB_search_recipe_name::indicator:unchecked, QCheckBox#cB_search_preparation::indicator:unchecked, QCheckBox#cB_search_ingredients::indicator:unchecked {
+        image: url(./UI/images/icon_uncheck.png);
+        width:20px;
+        height:20px;
+    }
+    
+    QTableWidget {
+        background-color: #fdf1d9;
+        selection-background-color: #ffe0ad;
+        selection-color: #ffe0ad;
+        alternate-background-color: #fdf1d9;
+        color: #1a5d75;
+        border-radius: 6px;
+    }
+    
+    QTableWidget::item:hover{
+        color:#ffc05c;
+    }
+    
+    QTableWidget#tW_historique {
+        background-color: #fdf1d9;
+        selection-background-color: #ffcb77;
+        selection-color: #1a5d75;
+    }
+
+    QTableWidget#tW_ingredients{
+        background-color: #17c3b2;
+        border-color: #17c3b2;
+    }
+
+    QHeaderView::section {
+        background-color: #ffe0ad;
+        color: #1a5d75;
+        border: none;
+        
+    }
+
+    QDateEdit {
+        background-color: #36a9d3;
+        color: #1a5d75;
+        font: bold 18px;
+    }
+    
+    QSpinBox {
+        background-color: #36a9d3;
+        color: #1a5d75;
+    }
+    
+    QListWidget {
+        background-color: #fdf1d9;
+        selection-background-color: #ffc05c;
+        selection-color: #1a5d75;
+        alternate-background-color: #fdf1d9;
+        color: #1a5d75;
+    }
+    
+    QListWidget::item:hover{
+        color:#ffc05c;
+    }
+    
+    QListWidget#lW_menu, QListWidget#lW_courses {
+        background-color: #ffe0ad;
+    }
+    
+    QListWidget#lW_menu {
+        border: 1px solid #ffe0ad;
+        border-radius: 10px;
+    }
+    
+    QLineEdit {
+        background-color: #36a9d3;
+        color: #1a5d75;
+    }
+    
+
+    QLabel {
+        color: #1a5d75;
+        background-color: transparent;
+    }
+    
+    QLabel#label_vegan, QLabel#label_kids, QLabel#label_double, QLabel#label_summer, QLabel#label_winter, QLabel#label_dessert_2, QLabel#label_lunchdinner, QLabel#label_tips{
+        background-color: #ffe0ad;
+    }
+    
+    QLabel#label_newedit{
+        color: #fe6d73;
+    }
+
+    QLabel#label_confirm, QLabel#label_warning {
+        background-color: transparent;
+    }
+        
+    
+    QComboBox {
+        border: 4px solid #ffc05c;
+        border-radius: 3px;
+        background: #36a9d3;
+        padding: 1px 23px 1px 3px;
+        min-width: 6em;
+        color: #1a5d75;
+        font-size: 18px;
+    
+    }
+    QComboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 20px;
+    
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    QComboBox::down-arrow {
+        image: url(file:///../UI/images/icon_down_arrow.png);
+        width: 20px;
+        height: 20px;
+    }
+    
+    QComboBox#cB_ingredient, QComboBox#cB_unit{
+        border: 1px solid #ffc05c;
+        border-radius: 2px;
+        background: #36a9d3;
+        padding: 1px 1px 1px 1px;
+        min-width: 6em;
+        color: #1a5d75;
+        font-size: 14px;
+    }
+    
+    QComboBox#cB_ingredient::down-arrow, QComboBox#cB_unit::down-arrow {
+        width: 15px;
+        height: 15px;
+    }
+    
+     
+    QComboBox QAbstractItemView{
+        background-color: #fdf1d9;
+        /*color: #1a5d75;*/
+        selection-background-color: #ffc05c;
+        /*selection-color: #1a5d75;*/
+    }
+
+    QToolTip {
+        opacity: 300;
+        border: 2px solid #ffc05c;
+        border-radius: 4px;
+        padding: 2px;
+        background-color: #fdf1d9;
+        color: #1a5d75;
+    
+    }
+    
+    QScrollBar:vertical, QScrollBar:horizontal {
+        border: 1px solid #1a5d75;
+        background:#fdf1d9;
+        width:10px; 
+        margin: 0px 0px 0px 0px;
+      }
+    QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+        background: #ffc05c;
+        min-height: 0px;
+    }
+    QScrollBar::add-line:vertical, QScrollBar::add-line:horizontal {
+        background: #ffc05c;
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+    }
+    QScrollBar::sub-line:vertical, QScrollBar::sub-line:horizontal {
+        background: #ffc05c;
+        height: 0 px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+    }
+    
+    QTextBrowser{
+        white-space: pre-line;
+        color: #1a5d75;
+        border-radius: 6px;
+    }
+    
+    QTextBrowser#tE_ingredients, QTextBrowser#tE_recette{
+        background: #17c3b2;
+        border: 1px solid #17c3b2;
+    }
+
+    QTextBrowser#tB_preparation{
+        background: #36a9d3;
+        border: 1px solid #36a9d3;
+    }
+    
 
-QCheckBox#cB_restes_2::indicator:unchecked {
-    image: url(file:///../UI/images/icon_recycle_uncheck.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_restes_2::indicator:checked {
-    image: url(file:///../UI/images/icon_recycle_check.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_restes_2::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-
-QCheckBox#cB_recherche::indicator:unchecked {
-    image: url(file:///../UI/images/icon_up_arrow.png);
-	width:20px;
-	height:20px;
-}
-
-QCheckBox#cB_recherche::indicator:checked {
-    image: url(file:///../UI/images/icon_down_arrow.png);
-	width:20px;
-	height:20px;
-}
-
-QCheckBox#cB_recherche::indicator:hover{
-	width:18px;
-	height:18px;
-}
-
-QCheckBox#cB_web::indicator:unchecked {
-    image: url(file:///../UI/images/icon_web_search_gp.png);
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_web::indicator:checked {
-    image: url(file:///../UI/images/icon_web_search_pg.png);
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_web::indicator:hover{
-	image: url(file:///../UI/images/icon_web_search_gr.png);	
-	/*width:45px;
-	height:45px;*/
-}
-
-/*
-QGroupBox::indicator:unchecked {
-    image: url(:/images/icon_unchecked_.png);
-}
-
-QGroupBox::indicator:checked {
-    image: url(:/images/icon_checked_.png);
-background:white;
-}
-
-QGroupBox::indicator {
-    width: 30px;
-    height: 31px;
-}
-*/
-
-/*
-QTabBar::tab {
-    background: transparent;
-}
-
-QTabBar::tab:selected {
-	background:white;
-font: bold;
-}
-
-QTabBar::tab:!selected {
-    margin-top: 2px; 
-}
-
-QTabWidget::tab-bar {
-    left: 5px; 
-}
-*/
-
-/**/
-QTabWidget::pane { /* The tab widget frame */
-    border-top: 2px solid #077B8A;
-    position: absolute;
-    top: -0.5em;
-}
-
-QTabWidget::tab-bar {
-    alignment: center;
-}
-
-
-/* Style the tab using the tab sub-control. Note that
-    it reads QTabBar _not_ QTabWidget */
-QTabBar::tab {
-   /* 
-	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #A2D5C6, stop: 0.2 #077B8A,
-                                stop: 0.8 #077B8A, stop: 1.0 #A2D5C6);
-*/
-	background-color:#A2D5C6;
-    border: 2px solid #077B8A;
-    border-bottom-color: #077B8A; /* same as the pane color */
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    min-width: 8ex;
-    padding: 5px;
-	color:#077B8A;
-}
-
-QTabBar::tab:selected, QTabBar::tab:hover {
-   /* 
-	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #077B8A, stop: 0.3 #A2D5C6,
-                                stop: 0.7 #A2D5C6, stop: 1.0 #077B8A);
-	*/
-	background-color:#077B8A;
-	color:#A2D5C6;
-
-}
-
-QTabBar::tab:selected {
-    border-color: #077B8A;
-    border-bottom-color: #077B8A; /* same as pane color */
-
-}
-
-/**/
-
-QToolBox::tab {
-   /* 
-	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #077B8A, stop: 0.4 #A2D5C6,
-                                stop: 0.5 #A2D5C6, stop: 1.0 #077B8A);
-	*/
-	background-color:#A2D5C6;
-    border-radius: 5px;
-	color: #077B8A;
-}
-QToolBox::tab:hover, QToolBox::tab:selected {
-   /* 
-	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #D1D1D1, stop: 1.0 #EEEEEE);
-   */
-	 background-color:#077B8A;
-	border-radius: 5px;
-    color: #A2D5C6;
-	
-}
-
-QToolBox::tab:selected {
-
-}
-
-QPushButton{
-     background-color: #5C3C92;
-     border-style: solid;
-     border-width: 2px;
-     border-radius: 10px;
-     border-color: #5C3C92;
-     font: bold 18px;
-     /*min-width: 10em;*/
-     padding: 8px;
-	color:#A2D5C6;
-
-}
-
-QPushButton:hover{
-	border-color: #D72631;
-}
-
-QPushButton:pressed,  QPushButton:checked{
-    border-width: 5px;
-	border-radius: 15px;
-	font:  15px;
-	border-color: #D72631;
-}
-
-QPushButton#pB_filter{
-image: url(file:///../UI/images/icon_filter.png);
-max-width:70px;
-max-height:70px;
-}
-
-QPushButton#pB_filter:pressed,  QPushButton#pB_filter:checked{
-    border-width: 5px;
-	border-radius: 15px;
-	image: url(file:///../UI/images/icon_filter_red.png);
-	border-color: #D72631;
-}
-
-QPushButton#pB_option, QPushButton#pB_option_2 {
-     background-color: #ccc1ae;
-     border-style: outset;
-     border-width: 0px;
-     border-radius: 0px;
-     border-color: #ccc1ae;
-     font: 18px;
-     /*min-width: 10em;*/
-     padding: 4px;
-	color:#077b8a;
-
-}
-
-QPushButton#pB_option:hover, QPushButton#pB_option_2:hover {
-	color:#d72631;
-}
-
-QPushButton#pB_option:pressed, QPushButton#pB_option_2:pressed, QPushButton#pB_option:checked, QPushButton#pB_option_2:checked {
-	color:#5c3c92;
-font: bold 20px;
-}
-
-QTableWidget {
-background-color: #b7cab9;
-selection-background-color: #5C3C92;
-selection-color: #A2D5C6;
-alternate-background-color: #CCC1AE;
-}
-
-QTableWidget::item:hover{
-color:#5C3C92;
-}
-
-QTableWidget#tW_historique {
-background-color: #e8ddc8;
-
-}
-
-QDateEdit {
-
-background-color: #A2D5C6;
-}
-
-QSpinBox {
-background-color: #A2D5C6;
-}
-
-QListWidget {
-background-color: #e8ddc8;
-selection-background-color: #5C3C92;
-selection-color: #b7cab9;
-alternate-background-color: #CCC1AE;
-}
-
-QListWidget::item:hover{
-color:#5C3C92;
-}
-
-QListWidget#lW_menu, QListWidget#lW_courses {
-background-color: #b7cab9;
-
-}
-
-QListWidget#lW_menu {
-border: 1px solid #077b8a;
-}
-
-QLineEdit {
-background-color: #A2D5C6;
-}
-
-QFrame#frame_tags, QFrame#frame_tags_2 {
-    background-color: #A2D5C6;
-	border: 2px solid #077B8A;
-    /*border-bottom-color: #077B8A;  same as the pane color */
-    /*border-top-left-radius: 5px;*/
-    border-radius: 5px;
-}
-
-QLabel#label_vegan, QLabel#label_kids, QLabel#label_double, QLabel#label_summer, QLabel#label_winter, QLabel#label_dessert_2, QLabel#label_lunchdinner, QLabel#label_tips{
-background-color: #A2D5C6;
-}
-
-QLabel#label_newedit{
-color: #5c3c92;
-}
-
-QCheckBox#cB_tagdouble, QCheckBox#cB_tagkids, QCheckBox#cB_tagvegan, QCheckBox#cB_tagsummer, QCheckBox#cB_tagwinter, QCheckBox#cB_tagdessert, QCheckBox#cB_taglunch, QCheckBox#cB_tagdinner, QCheckBox#cB_tagtips{
-background-color: #A2D5C6;
-}
-
-QComboBox {
-	border: 4px solid #5C3C92;
-	border-radius: 3px;
-	/*background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #a2d5c6, stop:0.1 #b7cab9, stop:0.9 #b7cab9, stop:1 #a2d5c6);*/
-	background: #b7cab9;
-	padding: 1px 23px 1px 3px;
-	min-width: 6em;
-	color: #077B8A;
-font-size: 18px;
-
-}
-QComboBox::drop-down {
-	subcontrol-origin: padding;
-	subcontrol-position: top right;
-	width: 20px;
-
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
-}
-QComboBox::down-arrow {
-     image: url(file:///../UI/images/icon_down_arrow.png);
-	/*image: url(file:///../UI/images/icon_edit.png);*/
-	width: 20px;
-	height: 20px;
-}
-
-QComboBox#cB_ingredient, QComboBox#cB_unit{
-border: 1px solid #5C3C92;
-	border-radius: 2px;
-	/*background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #a2d5c6, stop:0.1 #b7cab9, stop:0.9 #b7cab9, stop:1 #a2d5c6);*/
-	background: #b7cab9;
-	padding: 1px 1px 1px 1px;
-	min-width: 6em;
-	color: #077B8A;
-font-size: 14px;
-}
-
-QComboBox#cB_ingredient::down-arrow, QComboBox#cB_unit::down-arrow {
-	width: 15px;
-	height: 15px;
-}
-/*
-QComboBox::down-arrow:hover {
-	width: 18px;
-	height: 18px;
-}*/
-
- 
-QComboBox QAbstractItemView{
-	background-color: #CCC1AE;
-	/*color: #077B8A;*/
- 	
-	selection-background-color: #5C3C92;
-	/*selection-color: #A2D5C6;*/
-}
-
-/*QHeaderView { 
-qproperty-defaultAlignment: AlignHCenter, AlignVCenter;
-qproperty-iconSize: 60p 60px;
-
- }*/
-
-/*
-QFrame#frame_courses{
-image: url(file:///../UI/images/benchmark/list_frame2.png) ;
-
-}*/
-
-QFrame#frame_bottom{
-	border: 4px solid #5C3C92;
-	border-radius: 10px;
-	background-color:#b7cab9;
-
-}
-
-QFrame#frame_details{
-	border: 2px solid #5C3C92;
-	border-radius: 10px;
-	/*background-color:#A2D5C6;*/
-
-}
-
-QFrame#frame_new_recipe{
-	border: 2px solid #d72631;
-	border-radius: 10px;
-	/*background-color:#A2D5C6;*/
-
-}
-
-QFrame#frame_add_ingredient{
-	border: 1px solid #077b8a;
-	border-radius: 3px;
-	/*background-color:#A2D5C6;*/
-
-}
-
-QFrame#frame_confirm {
-    background-color: #A2D5C6;
-	border: 4px solid #D72631;
-    /*border-bottom-color: #077B8A;  same as the pane color */
-    /*border-top-left-radius: 5px;*/
-    border-radius: 6px;
-}
-
-QLabel#label_confirm, QLabel#label_warning {
-background-color: transparent;
-}
-
-QToolTip {
-opacity: 300;
-	border: 2px solid #5C3C92;
-    border-radius: 4px;
-    padding: 2px;
-    background-color: #CCC1AE;
-
-}
-
-QScrollBar:vertical, QScrollBar:horizontal {
-	border: 1px solid #077B8A;
-	background:#CCC1AE;
-	width:10px; 
-	margin: 0px 0px 0px 0px;
-  }
- QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
-	background: #5C3C92;
-	min-height: 0px;
-}
-QScrollBar::add-line:vertical, QScrollBar::add-line:horizontal {
-	background: #5C3C92;
-	height: 0px;
-	subcontrol-position: bottom;
-	subcontrol-origin: margin;
-}
-QScrollBar::sub-line:vertical, QScrollBar::sub-line:horizontal {
-	background: #5C3C92;
-	height: 0 px;
-	subcontrol-position: top;
-	subcontrol-origin: margin;
-}
-
-QTextBrowser{
-white-space: pre-line;
-}
-
-QTextBrowser#tB_ingredients, QTextBrowser#tB_preparation{
-background: #a2d5c6;
-border: 1px solid #077b8a;
-}
-
-/**
-CheckBox icons for new recipe
-**/
-
-QCheckBox#cB_tagdouble::indicator:unchecked {
-    image: url(file:///../UI/images/tag_double_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagdouble::indicator:checked {
-    image: url(file:///../UI/images/tag_double_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagdouble::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_tagkids::indicator:unchecked {
-    image: url(file:///../UI/images/tag_kids_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagkids::indicator:checked {
-    image: url(file:///../UI/images/tag_kids_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagkids::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_tagvegan::indicator:unchecked {
-    image: url(file:///../UI/images/tag_vegan_black_LD.png);
-	width:60px;
-	height:60px;
-}
-
-QCheckBox#cB_tagvegan::indicator:checked {
-    image: url(file:///../UI/images/tag_vegan_color_LD.png);
-	width:60px;
-	height:560px;
-}
-
-QCheckBox#cB_tagvegan::indicator:hover {
-	width:55px;
-	height:55px;
-}
-
-QCheckBox#cB_taglunch::indicator:unchecked {
-    image: url(file:///../UI/images/tag_lunch_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_taglunch::indicator:checked {
-    image: url(file:///../UI/images/tag_lunch_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_taglunch::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_tagdinner::indicator:unchecked {
-    image: url(file:///../UI/images/tag_dinner_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagdinner::indicator:checked {
-    image: url(file:///../UI/images/tag_dinner_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagdinner::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_tagtips::indicator:unchecked {
-    image: url(file:///../UI/images/tag_tips_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagtips::indicator:checked {
-    image: url(file:///../UI/images/tag_tips_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagtips::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_tagsummer::indicator:unchecked {
-    image: url(file:///../UI/images/tag_ete_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagsummer::indicator:checked {
-    image: url(file:///../UI/images/tag_ete_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagsummer::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_tagwinter::indicator:unchecked {
-    image: url(file:///../UI/images/tag_hiver_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagwinter::indicator:checked {
-    image: url(file:///../UI/images/tag_hiver_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagwinter::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_tagdessert::indicator:unchecked {
-    image: url(file:///../UI/images/tag_dessert_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagdessert::indicator:checked {
-    image: url(file:///../UI/images/tag_dessert_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_tagdessert::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QCheckBox#cB_search_tag_dessert::indicator:unchecked {
-    image: url(./UI/images/tag_dessert_black_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_search_tag_dessert::indicator:checked {
-    image: url(./UI/images/tag_dessert_color_LD.png);
-	width:50px;
-	height:50px;
-}
-
-QCheckBox#cB_search_tag_dessert::indicator:hover {
-	width:45px;
-	height:45px;
-}
-
-QHeaderView::section {
-    background-color: #a2d5c6;
-	color: #077b8a;
-    border: none;
-	
-}
 
 </string>
   </property>
@@ -722,9 +699,7 @@ QHeaderView::section {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QToolBox {
-icon-size: 40px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
@@ -771,6 +746,9 @@ icon-size: 40px;
                     <property name="frameShape">
                      <enum>QFrame::NoFrame</enum>
                     </property>
+                    <property name="lineWidth">
+                     <number>0</number>
+                    </property>
                     <property name="editTriggers">
                      <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
                     </property>
@@ -794,6 +772,9 @@ icon-size: 40px;
                     </property>
                     <property name="textElideMode">
                      <enum>Qt::ElideMiddle</enum>
+                    </property>
+                    <property name="showGrid">
+                     <bool>false</bool>
                     </property>
                     <row>
                      <property name="text">
@@ -876,8 +857,8 @@ icon-size: 40px;
                        </property>
                        <property name="iconSize">
                         <size>
-                         <width>40</width>
-                         <height>40</height>
+                         <width>50</width>
+                         <height>50</height>
                         </size>
                        </property>
                       </widget>
@@ -1101,8 +1082,8 @@ icon-size: 40px;
                        </property>
                        <property name="iconSize">
                         <size>
-                         <width>40</width>
-                         <height>40</height>
+                         <width>50</width>
+                         <height>50</height>
                         </size>
                        </property>
                       </widget>
@@ -1282,8 +1263,8 @@ icon-size: 40px;
                           </property>
                           <property name="iconSize">
                            <size>
-                            <width>40</width>
-                            <height>40</height>
+                            <width>50</width>
+                            <height>50</height>
                            </size>
                           </property>
                          </widget>
@@ -1298,8 +1279,8 @@ icon-size: 40px;
                           </property>
                           <property name="iconSize">
                            <size>
-                            <width>40</width>
-                            <height>40</height>
+                            <width>50</width>
+                            <height>50</height>
                            </size>
                           </property>
                          </widget>
@@ -1314,8 +1295,8 @@ icon-size: 40px;
                           </property>
                           <property name="iconSize">
                            <size>
-                            <width>40</width>
-                            <height>40</height>
+                            <width>50</width>
+                            <height>50</height>
                            </size>
                           </property>
                          </widget>
@@ -1883,14 +1864,14 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                           <item>
                            <widget class="QCheckBox" name="cB_search_ingredients">
                             <property name="text">
-                             <string>Ingredients</string>
+                             <string>Ingrédients</string>
                             </property>
                            </widget>
                           </item>
                           <item>
                            <widget class="QCheckBox" name="cB_search_preparation">
                             <property name="text">
-                             <string>Preparation</string>
+                             <string>Préparation</string>
                             </property>
                            </widget>
                           </item>
@@ -2119,8 +2100,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                      </widget>
@@ -2148,8 +2129,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                      </widget>
@@ -2164,8 +2145,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                      </widget>
@@ -2180,8 +2161,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                      </widget>
@@ -2196,8 +2177,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                       <property name="checkable">
@@ -2215,8 +2196,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>40</width>
-                        <height>40</height>
+                        <width>50</width>
+                        <height>50</height>
                        </size>
                       </property>
                       <property name="checkable">
@@ -2606,6 +2587,9 @@ p, li { white-space: pre-wrap; }
                           </item>
                           <item row="0" column="0">
                            <widget class="QTableWidget" name="tW_ingredients">
+                            <property name="frameShape">
+                                <enum>QFrame::NoFrame</enum>
+                            </property>
                             <property name="editTriggers">
                              <set>QAbstractItemView::NoEditTriggers</set>
                             </property>
@@ -2658,8 +2642,8 @@ p, li { white-space: pre-wrap; }
                          </property>
                          <property name="iconSize">
                           <size>
-                           <width>40</width>
-                           <height>40</height>
+                           <width>50</width>
+                           <height>50</height>
                           </size>
                          </property>
                         </widget>
