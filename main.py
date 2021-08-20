@@ -71,16 +71,18 @@ class MainGUI(QWidget):
         self.from_cell = ()
         self.to_cell = ()
         self.html_source_file_shopping = self.dirname + '/shopping_core.html'
+        
         self.default_email = ''
         self.default_nb_days = 7
         self.default_storage = self.dirname + '/Mes_Fiches/'
+        self.homepage = QUrl("https://www.google.com/")
         self.user_id_file = self.dirname + '/user.id'
         self.init_user_settings()
+        
         self.recipe_image_path = ''
         self.myThreads = []
         self.delete_flag = False
         self.contact = 'notification.a.table@gmail.com'
-        self.homepage = QUrl("https://www.google.com/")
         self.stacks = {}
         self.lockKeyId = 'xx'
         self.lockedForEdition = False
@@ -346,6 +348,8 @@ class MainGUI(QWidget):
         self.lE_storage = self.pW.lE_storage
         self.tB_storage: QToolBox
         self.tB_storage = self.pW.toolButton
+        self.lE_homepage: QLineEdit
+        self.lE_homepage = self.pW.lE_homepage
         self.label_contact: QLabel
         self.label_contact = self.pW.label_contact
         self.label_email: QLabel
@@ -354,6 +358,9 @@ class MainGUI(QWidget):
         self.label_days = self.pW.label_days
         self.label_storage: QLabel
         self.label_storage = self.pW.label_storage
+        self.label_homepage: QLabel
+        self.label_homepage = self.pW.label_homepage
+        
 
         self.init_colors = {'RED' :         ('#d72631', [215,38,49]),
                     'LIGHT_GREEN' :         ('#a2d5c6', [162,213,198]),
@@ -545,6 +552,8 @@ class MainGUI(QWidget):
         self.label_email.setPixmap(QPixmap(self.dirname + '/UI/images/icon_send.png').scaled(40,40))
         self.label_days.setPixmap(QPixmap(self.dirname + '/UI/images/icon_date_3colors_t_LD.png').scaled(40,40))
         self.label_storage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_print.png').scaled(40,40))
+        self.label_homepage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_web_search_gp.png').scaled(40,40))
+        
         # load_pic(self.label_days, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
         # load_pic(self.label_storage, self.dirname + '/UI/images/icon_print.png')
 
@@ -2022,9 +2031,13 @@ class MainGUI(QWidget):
                 data = f.readline().strip().split(';')
                 if len(data) == 1:
                     self.default_email = data[0]
-                else:
+                elif len(data) == 3:
                     self.default_email, nb_days, self.default_storage = data
                     self.default_nb_days = int(nb_days)
+                elif len(data) == 4:
+                    self.default_email, nb_days, self.default_storage, homepage = data
+                    self.default_nb_days = int(nb_days)
+                    self.homepage = QUrl(homepage)
                     
     def on_user_settings(self):
         self.frame_settings.show()
@@ -2042,6 +2055,7 @@ class MainGUI(QWidget):
         self.lE_email.setText(self.default_email)
         self.sB_days_2.setValue(self.default_nb_days)
         self.lE_storage.setText(self.default_storage)
+        self.lE_homepage.setText(self.homepage.toString())
     
     def on_save_settings(self):
         self.default_email = self.lE_email.text()
@@ -2054,8 +2068,13 @@ class MainGUI(QWidget):
             self.display_error("Le chemin pour l'enregistrement des fiches n'est pas valide," +
                                " l'emplacement par défaut a été sélectionné (%s)" % self.default_storage)
         
+        self.homepage = QUrl(self.lE_homepage.text())
+        
         with open(self.user_id_file, 'w') as f:
-            f.write(';'.join([self.default_email, str(self.default_nb_days), self.default_storage]))
+            f.write(';'.join([self.default_email, 
+                              str(self.default_nb_days), 
+                              self.default_storage,
+                              self.homepage.toString()]))
             
         self.frame_settings.hide()
         self.frame.show()
@@ -2175,9 +2194,6 @@ class MainGUI(QWidget):
         self.label_contact.setTextFormat(Qt.RichText)
         self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
         
-        #TODO
-        #Add favorite webpage
-
     def web_browser_ui(self):
         os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--enable-logging --log-level=3"
         self.frame_wB.hide()
