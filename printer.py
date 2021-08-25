@@ -1,3 +1,4 @@
+from recipe import Recipe
 from reportlab.lib import pagesizes
 # from xhtml2pdf import pisa             # import python module
 # import fitz
@@ -81,13 +82,35 @@ class Printer:
 
         for i in range(math.ceil(length/7)):
             full_menu = my_menu.full_menu()[i*7:(i+1)*7]
-            desserts = my_menu.desserts[i*7:(i+1)*7]
-            data = [[''],['Midi'],['Soir'],['Desserts']]
+            # desserts = my_menu.desserts[i*7:(i+1)*7]
+            # data = [[''],['Midi'],['Soir'],['Desserts']]
+            data = [[''],['Midi'],['Soir']]
 
             data[0] += [col[0] for col in full_menu]
-            data[1] += [col[1].name for col in full_menu]
-            data[2] += [col[2].name for col in full_menu]
-            data[3] += [dessert.name for dessert in desserts]
+            
+            menuLunch_list = []
+            menuDinner_list = []
+            for col in full_menu:
+                if type(col[1]) == Recipe:
+                    menuLunch_list.append(col[1].name)
+                elif type(col[1]) == list:
+                    menuLunch_list.append(' | '.join([c.name for c in col[1]]))
+                if type(col[2]) == Recipe:
+                    menuDinner_list.append(col[2].name)
+                elif type(col[2]) == list:
+                    menuDinner_list.append(' | '.join([c.name for c in col[2]]))
+            data[1] += menuLunch_list
+            data[2] += menuDinner_list
+            
+            # try:
+            #     data[1] += [col[1].name for col in full_menu]
+            # except:
+            #     data[1] += [' | '.join([c.name for c in col[1]]) for col in full_menu]
+            # try:
+            #     data[2] += [col[2].name for col in full_menu]
+            # except:
+            #     data[2] += [' | '.join([c.name for c in col[2]]) for col in full_menu]
+            # data[3] += [dessert.name for dessert in desserts]
 
             if math.ceil(length/7) - 1 > 0 and i == math.ceil(length/7) - 1 and length%7 != 0:#last iteration
                 data[0] += [''] * (7 - length%7)
