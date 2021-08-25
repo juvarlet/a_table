@@ -878,7 +878,7 @@
                         <string>Le dernier repas, c'est les restes!</string>
                        </property>
                        <property name="text">
-                        <string>Restes</string>
+                        <string></string>
                        </property>
                        <property name="checked">
                         <bool>true</bool>
@@ -1048,6 +1048,22 @@
                        </property>
                        <property name="pixmap">
                         <pixmap>images/icon_cupcake_t.png</pixmap>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="8">
+                      <widget class="QPushButton" name="pB_import">
+                       <property name="toolTip">
+                        <string>Importer l'Historique</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>50</width>
+                         <height>50</height>
+                        </size>
                        </property>
                       </widget>
                      </item>

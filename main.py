@@ -134,6 +134,8 @@ class MainGUI(QWidget):
         self.score_summer = self.pW.label_s_ete
         self.score_winter: QLabel
         self.score_winter = self.pW.label_s_hiver
+        self.pB_import: QPushButton
+        self.pB_import = self.pW.pB_import
         #--page shopping
         self.p_list: QWidget
         self.p_list = self.pW.page_liste
@@ -502,7 +504,8 @@ class MainGUI(QWidget):
         self.tB.setItemIcon(1, QIcon(self.dirname + '/UI/images/icon_shopping_cart.png'))
         self.pB_user.setIcon(QIcon(self.dirname + '/UI/images/icon_user_t.png'))
         self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
-        # self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
+        self.pB_import.setIcon(QIcon(self.dirname + '/UI/images/icon_import.png'))
+                # self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
         cw.load_pic(self.tag_vegan, self.dirname + '/UI/images/tag_vegan_black_LD.png')
         cw.load_pic(self.tag_kids, self.dirname + '/UI/images/tag_kids_black_LD.png')
@@ -562,6 +565,7 @@ class MainGUI(QWidget):
 
     def connect_actions(self):
         self.pB_new_menu.clicked.connect(self.on_new_menu)
+        self.pB_import.clicked.connect(self.on_import)
         self.tW_menu.cellDoubleClicked.connect(self.on_card_recipe_selection)
         self.tW_history.cellDoubleClicked.connect(self.on_history_recipe_selection)
         # self.pB_modif.clicked.connect(self.on_card_modif)
@@ -987,6 +991,17 @@ class MainGUI(QWidget):
     #     for x in range(self.sB_desserts.value(), self.tW_menu.columnCount()):
     #         self.tW_menu.setItem(2, x, QTableWidgetItem())
     #         self.tW_menu.item(2, x).setBackground(QColor(204,193,174))
+    
+    def on_import(self):
+        
+        #if dates overlap with existing history
+        
+        #qmessage ok/cancel with modifications
+        #else
+        #print_thread_function
+        self.populate_shopping_list()
+        self.populate_menu_list()
+        self.compute_score()
     
     def populate_shopping_list(self):
         #reset list
