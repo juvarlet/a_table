@@ -18,7 +18,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">
-
+/**/
 QWidget{
     background-color:#fdf1d9;
     font-family:Poiret One;
@@ -132,7 +132,9 @@ QFrame #frame_buttons{
 
 QMenu::item {
     icon-size:50px 50px;
-}</string>
+}
+/**/
+</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">

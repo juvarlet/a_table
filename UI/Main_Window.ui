@@ -26,9 +26,8 @@
    <string>À Table !</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/**/
-    
-
+   <string notr="true">
+/**/
     QWidget{
         background-color:#fdf1d9;
         font-family:Poiret One;
@@ -628,8 +627,7 @@
         background: #36a9d3;
         border: 1px solid #36a9d3;
     }
-    
-
+/**/
 
 </string>
   </property>
