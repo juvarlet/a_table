@@ -1,3 +1,7 @@
+from re import split
+from ingredient import Ingredient
+import string
+from ingredient_item import IngredientItem
 import os
 from os.path import basename
 
@@ -237,8 +241,15 @@ class MainGUI(QWidget):
         self.lE_title = self.pW.lE_titre
         self.label_image_2: QLabel
         self.label_image_2 = self.pW.label_image_2
-        self.tW_ingredients: QTableWidget
-        self.tW_ingredients = self.pW.tW_ingredients
+
+
+        #self.tW_ingredients: QTableWidget
+        #self.tW_ingredients = self.pW.tW_ingredients
+
+        self.lw_ingredients:QListWidget
+        self.lw_ingredients = self.pW.lw_ingredients
+
+
         self.cB_ingredient: QComboBox
         self.cB_ingredient = self.pW.cB_ingredient
         self.lE_qty: QLineEdit
@@ -481,8 +492,8 @@ class MainGUI(QWidget):
         self.frame_search.hide()
         self.frame_edit_recipe.hide()
         
-        self.tW_ingredients.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tW_ingredients.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        #self.tW_ingredients.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        #self.tW_ingredients.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         
         self.lE_qty.setValidator(QDoubleValidator(0, 1000, 2))
 
@@ -1576,21 +1587,16 @@ class MainGUI(QWidget):
         self.cB_search_tag_winter.setChecked(False)
         if self.frame_search.isVisible():
             self.cB_search.click()
-    
-    def on_new_recipe(self):
-        # print('new recipe')
-        #disable other tabs
-        self.tW.setTabEnabled(0, False)
-        self.tW.setTabEnabled(2, False)
-        self.cB_search.setEnabled(False)
-        self.pB_new_recipe.setEnabled(False)
-        #reset all fields
-        self.label_newedit.setText('Nouvelle Recette')
-        self.lE_title.setText('Nouveau Titre')
+
+
+
+
+
+    def clear_edit_recipe_window(self): #OK
         self.label_image_2.setPixmap(QPixmap())
-        self.tW_ingredients.clear()
-        self.tW_ingredients.setColumnCount(1)
-        self.tW_ingredients.setRowCount(0)
+
+        self.lw_ingredients.clear()
+
         self.lE_qty.clear()
         self.tB_preparation.clear()
         tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
@@ -1607,217 +1613,72 @@ class MainGUI(QWidget):
         self.cB_unit.setCurrentIndex(0)
         
         self.sB_time.setValue(0)
-        #create pushButton list
-        self.pB_remove_list = []
-        
-    def on_edit_recipe(self):
-        #disable other tabs
+
+    def disable_other_tabs(self): #OK
         self.tW.setTabEnabled(0, False)
         self.tW.setTabEnabled(2, False)
         self.cB_search.setEnabled(False)
+        self.pB_new_recipe.setEnabled(False)
         self.pB_modif_2.setEnabled(False)
+
+    def on_new_recipe(self): #OK
+        self.disable_other_tabs()
+        #reset all fields
+        self.label_newedit.setText('Nouvelle Recette')
+        self.lE_title.setText('Nouveau Titre')
+        #self.clear_edit_recipe_window()
+        
+    def on_edit_recipe(self): #OK
+        self.disable_other_tabs()
         #populate all fields
         self.label_newedit.setText('Modifier la recette')
-        recipe_name = self.lW_recipe.currentItem().text()
-        self.lE_title.setText(recipe_name)
-        recipe_object = self.recipe_db.get_recipe_object(recipe_name)
-        cw.display_image(recipe_object, self.dirname, self.label_image_2, icon=False)
-        
-        ing_list = recipe_object.ingredients_string_list()
-        
-        self.populate_ing_list(ing_list)
-        # self.tW_ingredients.clear()
-        # self.tW_ingredients.setColumnCount(1)
-        # self.tW_ingredients.setRowCount(len(ing_list))
-        
-        # #create pushButton list
-        # self.pB_remove_list = []
-        # for r, ing in enumerate(ing_list):
-        #     qtwi = QTableWidgetItem(ing)
-        #     self.tW_ingredients.setItem(r, 0, qtwi)
-        #     if ing != '' and ing != 'Optionnel :':
-        #         pB_widget, pB_remove = self.create_qtwi_pb(ing)
-                
-        #         self.tW_ingredients.setCellWidget(r, 0, pB_widget)
-        #         self.pB_remove_list.append(pB_remove)
-        
-        # self.cB_ingredient.clear()
-        # self.lE_qty.clear()
-        # self.cB_unit.clear()
-        # ingredients, units = self.recipe_db.get_ingredients_units_list()
-        # self.cB_ingredient.addItems([''] + ingredients)
-        # self.cB_unit.addItems([''] + units)
-        # self.cB_ingredient.setCurrentIndex(0)
-        # self.cB_unit.setCurrentIndex(0)
-        
-        if recipe_object.time is not None:
-            self.sB_time.setValue(int(recipe_object.time))
+        #self.clear_edit_recipe_window()
+
+        recipe:Recipe
+        recipe = self.recipe_db.get_recipe_object(self.lW_recipe.currentItem().text())
+        self.lE_title.setText(recipe.name)
+        cw.display_image(recipe, self.dirname, self.label_image_2, icon=False)
+        self.populate_ing_list(recipe)
+        if recipe.time is not None:
+            self.sB_time.setValue(int(recipe.time))
         else:
             self.sB_time.setValue(0)
-        
         tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
                 self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
         tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
         for tag, tag_name in zip(tags, tag_names):
-            tag.setChecked(recipe_object.isTagged(tag_name))
-        
-        self.tB_preparation.setText(recipe_object.preparation.replace('\n', '<br/>'))
+            tag.setChecked(recipe.isTagged(tag_name))
+        self.tB_preparation.setText(recipe.preparation.replace('\n', '<br/>'))
 
-    def create_qtwi_pb(self, ingredient):
-        pB_widget = QWidget(self.tW_ingredients)
-        pB_remove = QPushButton('', self.tW_ingredients)
-        pB_remove.setFixedSize(25,25)
-        pB_remove.setIconSize(QSize(18,18))
-        pB_remove.setIcon(QIcon(self.dirname + '/UI/images/icon_bin_2.png'))
-        pB_remove.setToolTip('Supprimer : ' + ingredient)
-        pB_remove.setCheckable(True)
-        pB_remove.clicked.connect(self.on_delete_ingredient)
-        label_ing = QLabel(ingredient, self.tW_ingredients)
-        layout_pB = QHBoxLayout(pB_widget)
-        layout_pB.addWidget(label_ing)
-        layout_pB.addWidget(pB_remove)
-        layout_pB.setContentsMargins(0,0,0,0)
-        
-        return pB_widget, pB_remove
-    
-    def populate_ing_list(self, ing_list):
-        self.tW_ingredients.clear()
-        self.tW_ingredients.setColumnCount(1)
-        self.tW_ingredients.setRowCount(len(ing_list))
-        
-        #create pushButton list
-        self.pB_remove_list = []
-        for r, ing in enumerate(ing_list):
-            qtwi = QTableWidgetItem(ing)
-            self.tW_ingredients.setItem(r, 0, qtwi)
-            if ing != '' and ing != 'Optionnel :':
-                pB_widget, pB_remove = self.create_qtwi_pb(ing)
-                
-                self.tW_ingredients.setCellWidget(r, 0, pB_widget)
-                self.pB_remove_list.append(pB_remove)
-        
-        self.cB_ingredient.clear()
-        self.lE_qty.clear()
-        self.cB_unit.clear()
-        ingredients, units = self.recipe_db.get_ingredients_units_list()
-        self.cB_ingredient.addItems([''] + ingredients)
-        self.cB_unit.addItems([''] + units)
-        self.cB_ingredient.setCurrentIndex(0)
-        self.cB_unit.setCurrentIndex(0)
-        
-    def on_delete_ingredient(self):
-        for pB in self.pB_remove_list:
-            if pB.isChecked():
-                ing = pB.toolTip().split('Supprimer : ')[-1]
-                self.tW_ingredients.removeRow(self.tW_ingredients.findItems(ing, Qt.MatchExactly)[0].row())
-                self.pB_remove_list.remove(pB)
-                break
-        
-        #if last optional deleted, delete last 2 rows
-        if self.tW_ingredients.item(self.tW_ingredients.rowCount()-1, 0).text() == 'Optionnel :':
-            self.tW_ingredients.removeRow(self.tW_ingredients.rowCount()-1)
-            self.tW_ingredients.removeRow(self.tW_ingredients.rowCount()-1)
+    def populate_ing_list(self, recipe:Recipe): #OK but can be improved
+        if recipe.ing_list is None:
+            return
+        mand_ing_list, opt_ing_list = recipe.get_mandatory_and_optional_ing_lists()
+        for ingredient in mand_ing_list:
+            self.add_new_ingredient_to_list(ingredient)
+        #self.lw_ingredients.addItem(QListWidgetItem("Optionels : "))
+        for ingredient in opt_ing_list:
+            self.add_new_ingredient_to_list(ingredient)
 
-    def on_add_ingredient(self):
-        ing = self.cB_ingredient.currentText()
-        qty = self.lE_qty.text()
-        unit = self.cB_unit.currentText()
-        
-        text = '- %s : %s%s' % (ing, qty, unit)
-        
-        #if not optional and optional does not exist, append
-        #if not optional and optional exists, add before optional row
-        #if optional and optional does not exist, create optional row and append
-        #if optional and optional exists, append
-        already_in = False
-        ing_in = ''
-        for r in range(self.tW_ingredients.rowCount()):
-            # print('--%s--' % ing, '--%s--' % self.tW_ingredients.item(r, 0).text().split(' :')[0].split('- ')[-1])
-            if ing == self.tW_ingredients.item(r, 0).text().split(' :')[0].split('- ')[-1]:
-                already_in = True
-                ing_in = self.tW_ingredients.item(r, 0).text()
-                break
-        
-        if not already_in:#make sure ingredient does not already exist (avoid conflict with delete function)
-        
-            if self.pB_option.isChecked():#if optional
-                if self.tW_ingredients.findItems('Optionnel :', Qt.MatchExactly) == []:#and optional does not exist
-                    #create optional row 
-                    rowCount = self.tW_ingredients.rowCount()
-                    self.tW_ingredients.insertRow(rowCount)
-                    self.tW_ingredients.setItem(rowCount, 0, QTableWidgetItem(''))
-                    self.tW_ingredients.insertRow(rowCount+1)
-                    self.tW_ingredients.setItem(rowCount+1, 0, QTableWidgetItem('Optionnel :'))
-                    self.tW_ingredients.insertRow(rowCount+2)
-                    #and append
-                    qtwi = QTableWidgetItem(text)
-                    self.tW_ingredients.setItem(rowCount+2, 0, qtwi)
-                    pB_widget, pB_remove = self.create_qtwi_pb(text)
-                    self.tW_ingredients.setCellWidget(rowCount+2, 0, pB_widget)
-                    self.pB_remove_list.append(pB_remove)
-                
-                else:#and optional exists
-                    #append
-                    rowCount = self.tW_ingredients.rowCount()
-                    self.tW_ingredients.insertRow(rowCount)
-                    qtwi = QTableWidgetItem(text)
-                    self.tW_ingredients.setItem(rowCount, 0, qtwi)
-                    pB_widget, pB_remove = self.create_qtwi_pb(text)
-                    self.tW_ingredients.setCellWidget(rowCount, 0, pB_widget)
-                    self.pB_remove_list.append(pB_remove)
-            else:#if not optional
-                if self.tW_ingredients.findItems('Optionnel :', Qt.MatchExactly) == []:#and optional does not exist
-                    #append
-                    rowCount = self.tW_ingredients.rowCount()
-                    self.tW_ingredients.insertRow(rowCount)
-                    qtwi = QTableWidgetItem(text)
-                    self.tW_ingredients.setItem(rowCount, 0, qtwi)
-                    pB_widget, pB_remove = self.create_qtwi_pb(text)
-                    self.tW_ingredients.setCellWidget(rowCount, 0, pB_widget)
-                    self.pB_remove_list.append(pB_remove)
-                else:#and optional exists
-                    #add before optional row
-                    r = self.tW_ingredients.findItems('Optionnel :', Qt.MatchExactly)[0].row()-1
-                    self.tW_ingredients.insertRow(r)
-                    qtwi = QTableWidgetItem(text)
-                    self.tW_ingredients.setItem(r, 0, qtwi)
-                    pB_widget, pB_remove = self.create_qtwi_pb(text)
-                    self.tW_ingredients.setCellWidget(r, 0, pB_widget)
-                    self.pB_remove_list.append(pB_remove)
-        else:
-            # print('tu en as deja mis!')
-            self.display_error('Cet ingrédient est déjà dans la recette : "%s"' % ing_in)
-            # error_dialog = QMessageBox(self)
-            # error_dialog.setWindowTitle('Attention')
-            # error_dialog.setWindowModality(Qt.WindowModal)
-            # error_dialog.setText('Cet ingrédient est déjà dans la recette : "%s"' % ing_in)
-            # error_dialog.setIcon(QMessageBox.Warning)
-            # # error_dialog.setDetailedText(text)
-            # error_dialog.exec_()
+    def on_add_ingredient(self): #OK
+        ing_name = self.cB_ingredient.currentText()
+        ing_qty = self.lE_qty.text()
+        ing_qty_unit = self.cB_unit.currentText()
+        ing_is_optional = self.pB_option.isChecked()
+
+        self.add_new_ingredient_to_list(Ingredient(ing_name, float(ing_qty), ing_qty_unit, ing_is_optional))
+
+    def add_new_ingredient_to_list(self, ingredient:Ingredient): #OK
+        #TODO : handle the case were the ingredient is already in the list
+        ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
+        ing_item = IngredientItem(ingredient, self.lw_ingredients, parent = QUiLoader().load(ui_file))
+
+        list_widget_item = QListWidgetItem()
+        list_widget_item.setSizeHint(QSize(0,30))
+
+        self.lw_ingredients.addItem(list_widget_item)
+        self.lw_ingredients.setItemWidget(list_widget_item,ing_item.parent_widget)
     
-    def on_tag_selected(self, cB):
-        tags = {'cB_tagdinner': [1, 0, 1, 1, 0, 1, 1, 1, 0],
-                'cB_tagdessert': [0, 1, 0, 1, 0, 1, 1, 1, 0],
-                'cB_tagdouble': [1, 0, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagkids': [1, 1, 1, 1, 1, 1, 1, 1, 0],
-                'cB_taglunch': [0, 0, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagwinter': [1, 1, 1, 1, 1, 1, 0, 1, 0],
-                'cB_tagsummer': [1, 1, 1, 1, 1, 0, 1, 1, 0],
-                'cB_tagvegan': [1, 1, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagtips': [0, 0 ,0, 0, 0, 0, 0, 0, 1]
-        }
-        
-        if cB.isChecked():
-            bool_matrix = tags[cB.objectName()]
-            for other_cB, checkable in zip(self.selectable_tags, bool_matrix):
-                if other_cB.isChecked() and not checkable:
-                    other_cB.setChecked(checkable)
-    
-    def on_add_photo(self):
-        self.recipe_image_path, filter = QFileDialog.getOpenFileName(self, 'Choisir une image', self.dirname, 'Images (*.png *.jpg)')
-        # print(image_path=='')
-        cw.display_new_image(self.recipe_image_path, self.label_image_2)
-        
     def on_confirm_recipe(self):
         #check if ok to save
         #title not empty
@@ -1831,7 +1692,6 @@ class MainGUI(QWidget):
             
             #enable swicth to edit mode
             auto_switch = 'edit'
-
         else:
             #case with/without picture to be saved (filename = new_title.jpg and new_title_icon.jpg)
             if self.recipe_image_path != '':
@@ -1869,33 +1729,13 @@ class MainGUI(QWidget):
                 image = '/images/' + image_cell
             #case with ingredients not empty -> combine ingredients to string
             now_optionals = False
-            ing_cell = ''
-            ing_list = []
             ing_dict = {}
-            for r in range(self.tW_ingredients.rowCount()):
-                full_ing_description = self.tW_ingredients.item(r, 0).text()
-                if full_ing_description != '' and full_ing_description != 'Optionnel :':
-                    if ' : ' in full_ing_description:#manual recipe insertion
-                        raw_ing, raw_qty = full_ing_description.split(' : ')
-                        ing = raw_ing[2:]
-                        qty = extract_number(raw_qty)
-                    else:#automatic recipe insertion
-                        ing = full_ing_description
-                        qty = None
-                    if qty is None:
-                        qty = '1'
-                        unit = '()'
-                    else:
-                        unit = raw_qty.replace(qty, '')
-                    if now_optionals:
-                        ing = '[%s]' % ing
-                    ing_dict[ing] = [qty, unit]
-                else:
-                    now_optionals = True
-                
-                ing_list.append('%s,%s,%s' % (ing, qty, unit))
-            ing_cell = '/'.join(ing_list)
-                    
+
+            for ing_index in range(self.lw_ingredients.count()):
+                ing_item:IngredientItem
+                ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index)).findChild(IngredientItem)
+                ing_dict[ing_item.lbl_ing_name.text()] = [ing_item.sb_ing_qty.value(), ing_item.le_ing_qty_unit.text()]
+
             #combine tags to string
             tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
                     self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
@@ -1913,15 +1753,14 @@ class MainGUI(QWidget):
             if time_cell != '':
                 time = time_cell
 
-            #update recipe_db
-            newedit_recipe = Recipe(title, ing_dict, preparation_cell, time, tag_checked_list, image)
-            if self.label_newedit.text() == 'Modifier la recette':#update recipe_db
+            #add recipe to database
+            recipe = Recipe(title, ing_dict, preparation_cell, time, tag_checked_list, image)
+            if self.label_newedit.text() == 'Modifier la recette':  #update existing recipe
                 initial_recipe_name = self.lW_recipe.currentItem().text()
                 index_of_recipe = recipe_db.get_recipe_names(self.recipe_db.recipe_list).index(initial_recipe_name)
-                self.recipe_db.recipe_list[index_of_recipe] = newedit_recipe
-                
-            else:#add new recipe
-                self.recipe_db.recipe_list.append(newedit_recipe)
+                self.recipe_db.recipe_list[index_of_recipe] = recipe
+            else:   #add new recipe
+                self.recipe_db.recipe_list.append(recipe)
                 
             #update qlw
             self.update_recipe_list()
@@ -1935,15 +1774,7 @@ class MainGUI(QWidget):
             self.recipe_db.update_recipe_file()
             
         #reenable other tabs
-        self.tW.setTabEnabled(0, True)
-        self.tW.setTabEnabled(2, True)
-        self.cB_search.setEnabled(True)
-        self.pB_new_recipe.setEnabled(True)
-        self.pB_modif_2.setEnabled(True)
-        self.pB_delete.setEnabled(True)
-        self.pB_new_recipe.setChecked(False)
-        self.pB_modif_2.setChecked(False)
-        self.cB_web.setChecked(False)
+        self.reenable_other_tabs()
         
         #auto select the newly created/modified recipe
         #select existing recipe in list
@@ -1955,6 +1786,47 @@ class MainGUI(QWidget):
         #auto-switch feature
         if auto_switch == 'edit':
             self.pB_modif_2.click()
+
+        self.clear_edit_recipe_window()
+
+    def reenable_other_tabs(self): #OK
+        self.tW.setTabEnabled(0, True)
+        self.tW.setTabEnabled(2, True)
+        self.cB_search.setEnabled(True)
+        self.pB_new_recipe.setEnabled(True)
+        self.pB_modif_2.setEnabled(True)
+        self.pB_delete.setEnabled(True)
+        self.pB_new_recipe.setChecked(False)
+        self.pB_modif_2.setChecked(False)
+        self.cB_web.setChecked(False)
+
+
+
+
+
+
+    def on_tag_selected(self, cB):
+        tags = {'cB_tagdinner': [1, 0, 1, 1, 0, 1, 1, 1, 0],
+                'cB_tagdessert': [0, 1, 0, 1, 0, 1, 1, 1, 0],
+                'cB_tagdouble': [1, 0, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagkids': [1, 1, 1, 1, 1, 1, 1, 1, 0],
+                'cB_taglunch': [0, 0, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagwinter': [1, 1, 1, 1, 1, 1, 0, 1, 0],
+                'cB_tagsummer': [1, 1, 1, 1, 1, 0, 1, 1, 0],
+                'cB_tagvegan': [1, 1, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagtips': [0, 0 ,0, 0, 0, 0, 0, 0, 1]
+        }
+        
+        if cB.isChecked():
+            bool_matrix = tags[cB.objectName()]
+            for other_cB, checkable in zip(self.selectable_tags, bool_matrix):
+                if other_cB.isChecked() and not checkable:
+                    other_cB.setChecked(checkable)
+    
+    def on_add_photo(self):
+        self.recipe_image_path, filter = QFileDialog.getOpenFileName(self, 'Choisir une image', self.dirname, 'Images (*.png *.jpg)')
+        # print(image_path=='')
+        cw.display_new_image(self.recipe_image_path, self.label_image_2)
     
     def on_delete_recipe(self):
         #check if a recipe is selected
@@ -1994,17 +1866,8 @@ class MainGUI(QWidget):
         # print(recipe_name)
     
     def on_cancel_recipe(self):
-        # print('cancel recipe')
-        #reenable other tabs
-        self.tW.setTabEnabled(0, True)
-        self.tW.setTabEnabled(2, True)
-        self.cB_search.setEnabled(True)
-        self.pB_new_recipe.setEnabled(True)
-        self.pB_modif_2.setEnabled(True)
-        self.pB_delete.setEnabled(True)
-        self.pB_new_recipe.setChecked(False)
-        self.pB_modif_2.setChecked(False)
-        self.cB_web.setChecked(False)
+        self.reenable_other_tabs()
+        self.clear_edit_recipe_window()
     
     def update_recipe_list(self):
         self.lW_recipe.clear()
@@ -2330,7 +2193,12 @@ class MainGUI(QWidget):
             self.lE_title.setText('Nouvelle Recette')
             
         if ingredients_list != []:
-            self.populate_ing_list(ingredients_list)
+            ing_dict = {}
+            for ing in ingredients_list:
+                ing_qty, ing_name = ing.split(" ", 1)
+                ing_dict[ing_name] = [ing_qty,""]
+            recipe = Recipe("", ing_dict)
+            self.populate_ing_list(recipe)
         else:
             list_failed.append('- Liste des ingrédients')
             self.tW_ingredients.clear()

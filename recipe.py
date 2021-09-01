@@ -1,8 +1,12 @@
 
+from ingredient import Ingredient
+
+
 class Recipe:
     def __init__(self, name, ingredients_list_qty = {}, preparation = '', time = 0, tags = [], image = ''):
         self.name = name
         self.ingredients_list_qty = ingredients_list_qty
+        self.ing_list = self.init_ing_list()  #new implementation using the Ingredient class
         self.preparation = preparation
         self.time = time
         self.tags = tags
@@ -14,6 +18,34 @@ class Recipe:
         except:
             return False
     
+    def init_ing_list(self):
+        output = []
+        if self.ingredients_list_qty is not None: 
+            for ing, qty_unit in self.ingredients_list_qty.items():
+                if ing[0] == '[' and ing[-1] == ']':
+                    name = ing[1:-1]
+                    is_optional = True
+                else :
+                    name = ing
+                    is_optional = False
+                qty, unit = qty_unit
+
+                ingredient = Ingredient(name, qty, unit, is_optional)
+                output.append(ingredient)
+        return output
+
+    def get_mandatory_and_optional_ing_lists(self):
+        mand_ing_list = []
+        opt_ing_list = []
+        if self.ing_list is None:
+            return
+        for ing in self.ing_list:
+            if ing.is_optional:
+                opt_ing_list.append(ing)
+            else:
+                mand_ing_list.append(ing)
+        return [mand_ing_list, opt_ing_list]
+
     def ingredients_string(self, my_recipe_db):
         string = ''
         string_option = '\nOptionnel :\n'
