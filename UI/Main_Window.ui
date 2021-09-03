@@ -665,7 +665,7 @@
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="iconSize">
           <size>
@@ -3680,6 +3680,77 @@ p, li { white-space: pre-wrap; }
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>pB_option</tabstop>
+  <tabstop>cB_ingredient</tabstop>
+  <tabstop>lE_qty</tabstop>
+  <tabstop>cB_unit</tabstop>
+  <tabstop>pB_add</tabstop>
+  <tabstop>sB_time</tabstop>
+  <tabstop>cB_tagdouble</tabstop>
+  <tabstop>cB_tagkids</tabstop>
+  <tabstop>cB_tagvegan</tabstop>
+  <tabstop>cB_tagsummer</tabstop>
+  <tabstop>cB_tagwinter</tabstop>
+  <tabstop>cB_tagdessert</tabstop>
+  <tabstop>cB_taglunch</tabstop>
+  <tabstop>cB_tagdinner</tabstop>
+  <tabstop>cB_tagtips</tabstop>
+  <tabstop>tB_preparation</tabstop>
+  <tabstop>pB_cancel_2</tabstop>
+  <tabstop>pB_ok_2</tabstop>
+  <tabstop>cB_search_tag_vegan</tabstop>
+  <tabstop>cB_search_tag_summer</tabstop>
+  <tabstop>cB_search_tag_winter</tabstop>
+  <tabstop>cB_search_tag_dessert</tabstop>
+  <tabstop>cB_search_tag_lunch</tabstop>
+  <tabstop>cB_search_tag_dinner</tabstop>
+  <tabstop>cB_search_tag_tips</tabstop>
+  <tabstop>cB_search_recipe_name</tabstop>
+  <tabstop>cB_search_ingredients</tabstop>
+  <tabstop>cB_search_preparation</tabstop>
+  <tabstop>lW_recettes</tabstop>
+  <tabstop>tE_recette</tabstop>
+  <tabstop>pB_send_2</tabstop>
+  <tabstop>pB_back</tabstop>
+  <tabstop>pB_print_2</tabstop>
+  <tabstop>pB_delete</tabstop>
+  <tabstop>pB_modif_2</tabstop>
+  <tabstop>pB_new_recipe</tabstop>
+  <tabstop>tE_ingredients</tabstop>
+  <tabstop>cB_recherche</tabstop>
+  <tabstop>pB_save</tabstop>
+  <tabstop>pB_send</tabstop>
+  <tabstop>sB_days</tabstop>
+  <tabstop>lW_menu</tabstop>
+  <tabstop>lW_courses</tabstop>
+  <tabstop>pB_modif</tabstop>
+  <tabstop>pB_print</tabstop>
+  <tabstop>pB_copy</tabstop>
+  <tabstop>lE_with</tabstop>
+  <tabstop>cB_search_tag_double</tabstop>
+  <tabstop>cB_search_tag_kids</tabstop>
+  <tabstop>lE_titre</tabstop>
+  <tabstop>cB_web</tabstop>
+  <tabstop>pB_photo</tabstop>
+  <tabstop>lw_ingredients</tabstop>
+  <tabstop>dateEdit_2</tabstop>
+  <tabstop>tW_menu</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>cB_restes_2</tabstop>
+  <tabstop>pB_new_menu_2</tabstop>
+  <tabstop>pB_option_2</tabstop>
+  <tabstop>sB_desserts_2</tabstop>
+  <tabstop>tW_historique</tabstop>
+  <tabstop>pB_ok</tabstop>
+  <tabstop>pB_cancel</tabstop>
+  <tabstop>lE_email</tabstop>
+  <tabstop>sB_settings_days</tabstop>
+  <tabstop>toolButton</tabstop>
+  <tabstop>lE_storage</tabstop>
+  <tabstop>pB_ok_3</tabstop>
+  <tabstop>pB_cancel_3</tabstop>
+ </tabstops>
  <resources>
   <include location="resource2.qrc"/>
  </resources>

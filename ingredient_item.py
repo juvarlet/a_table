@@ -21,23 +21,71 @@ class IngredientItem(UIDWidget):
         else:
             self.lbl_ing_name.setText(ingredient.name)
 
+        self.lbl_ing_qty:QLabel
+        self.lbl_ing_qty = self.parent_widget.lbl_ing_qty
+        self.lbl_ing_qty.setText(str(ingredient.qty))
+
+        self.lbl_ing_qty_unit:QLabel
+        self.lbl_ing_qty_unit = self.parent_widget.lbl_ing_qty_unit
+        self.lbl_ing_qty_unit.setText(ingredient.qty_unit)
+
+        self.le_ing_name:QLineEdit
+        self.le_ing_name = self.parent_widget.le_ing_name
+
         self.sb_ing_qty : QSpinBox
         self.sb_ing_qty = self.parent_widget.sb_ing_qty
-        self.sb_ing_qty.setValue(float(ingredient.qty))
 
         self.le_ing_qty_unit:QLineEdit
         self.le_ing_qty_unit = self.parent_widget.le_ing_qty_unit
-        self.le_ing_qty_unit.setText(ingredient.qty_unit)
-
         #TODO : IMPROVE THE WAY YOU AUTOCOMPLETE UNITES
-        ing_possible_units = ["c.a.s", "g", "Kg", "cl", "c.a.c"]
+        ing_possible_units = ["", "c.a.s", "g", "Kg", "cl", "c.a.c"]
         completer = QCompleter(ing_possible_units)
         self.le_ing_qty_unit.setCompleter(completer)
+
+        self.widget_show_ing:QWidget
+        self.widget_show_ing = self.parent_widget.widget_show_ing
+
+        self.widget_edit_ing:QWidget
+        self.widget_edit_ing = self.parent_widget.widget_edit_ing
+        self.widget_edit_ing.setVisible(False)
 
         self.btn_remove_ing : QPushButton
         self.btn_remove_ing = self.parent_widget.btn_remove_ing
         self.btn_remove_ing.setIcon(QtGui.QIcon(os.path.dirname(__file__) + '/UI/images/icon_bin_2.png'))
         self.btn_remove_ing.clicked.connect(self.removeItemFromList)
+
+        self.btn_edit_ing:QPushButton
+        self.btn_edit_ing = self.parent_widget.btn_edit_ing
+        self.btn_edit_ing.setIcon(QtGui.QIcon(os.path.dirname(__file__) + '/UI/images/icon_edit_2.png'))
+        self.btn_edit_ing.clicked.connect(self.showEditWidget)
+
+        self.btn_cancel_changes:QPushButton
+        self.btn_cancel_changes = self.parent_widget.btn_cancel_changes
+        self.btn_cancel_changes.setIcon(QtGui.QIcon(os.path.dirname(__file__) + '/UI/images/icon_cancel.png'))
+        self.btn_cancel_changes.clicked.connect(self.cancelChanges)
+
+        self.btn_confirm_changes:QPushButton
+        self.btn_confirm_changes = self.parent_widget.btn_confirm_changes
+        self.btn_confirm_changes.setIcon(QtGui.QIcon(os.path.dirname(__file__) + '/UI/images/icon_ok.png'))
+        self.btn_confirm_changes.clicked.connect(self.confirmChanges)
+
+    def showEditWidget(self):
+        self.widget_show_ing.hide()
+        self.widget_edit_ing.show()
+        self.le_ing_name.setText(self.lbl_ing_name.text())
+        self.sb_ing_qty.setValue(float(self.lbl_ing_qty.text()))
+        self.le_ing_qty_unit.setText(self.lbl_ing_qty_unit.text())
+
+    def cancelChanges(self):
+        self.widget_show_ing.show()
+        self.widget_edit_ing.hide()
+
+    def confirmChanges(self):
+        self.widget_show_ing.show()
+        self.widget_edit_ing.hide()
+        self.lbl_ing_name.setText(self.le_ing_name.text())
+        self.lbl_ing_qty.setText(str(self.sb_ing_qty.value()))
+        self.lbl_ing_qty_unit.setText(self.le_ing_qty_unit.text())
 
     def removeItemFromList(self):
          for i in range(0, self.lw_ingredients.count()):

@@ -1668,6 +1668,7 @@ class MainGUI(QWidget):
         ing_is_optional = self.pB_option.isChecked()
 
         self.add_new_ingredient_to_list(Ingredient(ing_name, float(ing_qty), ing_qty_unit, ing_is_optional))
+        self.clear_add_new_ing_frame()
 
     def add_new_ingredient_to_list(self, ingredient:Ingredient): #OK
         #TODO : handle the case were the ingredient is already in the list
@@ -1680,6 +1681,11 @@ class MainGUI(QWidget):
         self.lw_ingredients.addItem(list_widget_item)
         self.lw_ingredients.setItemWidget(list_widget_item,ing_item.parent_widget)
     
+    def clear_add_new_ing_frame(self):
+        self.cB_ingredient.clear()
+        self.lE_qty.clear()
+        self.cB_unit.clear()
+
     def on_confirm_recipe(self):
         #check if ok to save
         #title not empty
@@ -1735,7 +1741,7 @@ class MainGUI(QWidget):
             for ing_index in range(self.lw_ingredients.count()):
                 ing_item:IngredientItem
                 ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index)).findChild(IngredientItem)
-                ing_dict[ing_item.lbl_ing_name.text()] = [ing_item.sb_ing_qty.value(), ing_item.le_ing_qty_unit.text()]
+                ing_dict[ing_item.lbl_ing_name.text()] = [float(ing_item.lbl_ing_qty.text()), ing_item.lbl_ing_qty_unit.text()]
 
             #combine tags to string
             tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
