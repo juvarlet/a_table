@@ -19,6 +19,7 @@ from datetime import date, timedelta
 from pyperclip import copy
 from shutil import copy2
 import pyautogui
+import uuid
 
 import PySide2
 from PySide2.QtWidgets import*
@@ -1754,7 +1755,7 @@ class MainGUI(QWidget):
                 time = time_cell
 
             #add recipe to database
-            recipe = Recipe(title, ing_dict, preparation_cell, time, tag_checked_list, image)
+            recipe = Recipe(uuid.uuid4(), title, ing_dict, preparation_cell, time, tag_checked_list, image)
             if self.label_newedit.text() == 'Modifier la recette':  #update existing recipe
                 initial_recipe_name = self.lW_recipe.currentItem().text()
                 index_of_recipe = recipe_db.get_recipe_names(self.recipe_db.recipe_list).index(initial_recipe_name)
@@ -2191,13 +2192,13 @@ class MainGUI(QWidget):
         else:
             list_failed.append('- Titre')
             self.lE_title.setText('Nouvelle Recette')
-            
+
         if ingredients_list != []:
             ing_dict = {}
             for ing in ingredients_list:
                 ing_qty, ing_name = ing.split(" ", 1)
                 ing_dict[ing_name] = [ing_qty,""]
-            recipe = Recipe("", ing_dict)
+            recipe = Recipe(uuid.uuid4(), "", ing_dict)
             self.populate_ing_list(recipe)
         else:
             list_failed.append('- Liste des ingrédients')
@@ -2321,8 +2322,8 @@ def main(): #Entry point
 
     dirname = os.path.dirname(__file__)
     # input_recipe = dirname + '/MesRecettes (copy).ods'
-    input_recipe = dirname + '/MesRecettes.ods'
-    input_history = dirname + '/Historique.ods'
+    input_recipe = dirname + '/MesRecettes.csv'
+    input_history = dirname + '/Historique.csv'
     
     #Create Recipe_db object reading input files
     my_recipe_DB = recipe_db.RecipeDB(recipe_file= input_recipe, history_file= input_history)

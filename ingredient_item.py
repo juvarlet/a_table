@@ -28,6 +28,8 @@ class IngredientItem(UIDWidget):
         self.le_ing_qty_unit:QLineEdit
         self.le_ing_qty_unit = self.parent_widget.le_ing_qty_unit
         self.le_ing_qty_unit.setText(ingredient.qty_unit)
+
+        #TODO : IMPROVE THE WAY YOU AUTOCOMPLETE UNITES
         ing_possible_units = ["c.a.s", "g", "Kg", "cl", "c.a.c"]
         completer = QCompleter(ing_possible_units)
         self.le_ing_qty_unit.setCompleter(completer)

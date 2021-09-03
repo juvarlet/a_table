@@ -1,9 +1,11 @@
 
 from recipe import Recipe
 from pandas_ods_reader import read_ods
-from pandas import read_excel, DataFrame, ExcelWriter
+from pandas import read_csv, read_excel, DataFrame, ExcelWriter
+import pandas as pd
 import os
 from datetime import datetime
+import csv
 
 
 class RecipeDB:
@@ -83,7 +85,7 @@ class RecipeDB:
     
     def update_recipe_file(self):
         # print('update recipe file')
-        write_recipe(self.recipe_file, 'Liste_Recettes', self.get_recipe_string_list())
+        write_recipe(self.recipe_file, self.get_recipe_string_list())
     
 
     def background_score(self, recipe_object, date):
@@ -170,29 +172,28 @@ def read_recipe(input_csv):
     #load a sheet based on its name
     sheet_name = "Liste_Recettes"
     if input_csv[-4:] == '.ods':
-            df = read_ods(input_csv, sheet_name)
+        df = read_ods(input_csv, sheet_name)
     elif input_csv[-4:] in ['.xls', 'xlsx']:
         df = read_excel(input_csv, sheet_name)
+    elif input_csv[-4:] in ['.csv']:
+        df = read_csv(input_csv, sep=";")
     else:
         print('unsupported (yet) file format for %s' % input_csv)
         df = DataFrame()
-    #iterate over rows
     for row in df.itertuples(index=True, name=None):
-        i, name, ingredients_list_qty_cell, preparation, time_cell, tags_cell, image_cell = row
-        #refactor data to meet Recipe object inputs
+        i, uid, name, ingredients_list_qty_cell, time_cell, tags_cell, image_cell, preparation = row
         ingredients_list_qty = cell_to_recipe_input(ingredients_list_qty_cell, 'dict')
         time = cell_to_recipe_input(time_cell, 'time')
         tags = cell_to_recipe_input(tags_cell, 'tags')
         image = ''
-        if image_cell is not None:
+        if image_cell is not None and not pd.isna(image_cell):
             image = '/images/' + image_cell
-        #create recipe objects to populate recipe_list
-        recipe_list.append(Recipe(name, ingredients_list_qty, preparation, time, tags, image))
+        recipe_list.append(Recipe(uid, name, ingredients_list_qty, preparation, time, tags, image))
     return recipe_list
 
 def cell_to_recipe_input(cell_value, recipe_input_type):
     recipe_input = None
-    if cell_value is not None and cell_value != '':
+    if cell_value is not None and cell_value != '' and not pd.isna(cell_value):
         if recipe_input_type == 'dict': #ingredients
             recipe_input = {}
             ingredients = cell_value.split('/')
@@ -224,6 +225,8 @@ def read_history(input_csv):
             df = read_ods(input_csv, sheet_name)
         elif input_csv[-4:] in ['.xls', 'xlsx']:
             df = read_excel(input_csv, sheet_name)
+        elif input_csv[-4:] == '.csv':
+            df = read_csv(input_csv, delimiter=";")
         else:
             print('unsupported (yet) file format for %s' % input_csv)
             df = DataFrame()
@@ -244,28 +247,31 @@ def read_history(input_csv):
     return background, history
 
 def write_history(input_csv, sheet_name, input_list):
-    # print('update history sheet with new history table')
     df = DataFrame()
     for h in input_list:#output_list should be self.history
         date, lunch, dinner = h
         df = df.append([[date, lunch]], ignore_index=True)
         df = df.append([[date, dinner]], ignore_index=True)
-    
     df = df.set_axis(['Date', 'Recette'], axis='columns')
-    # print(df)
-    with ExcelWriter(input_csv) as writer:
-        df.to_excel(writer, sheet_name = sheet_name, index = False)
+    if input_csv[-4:] == '.csv':
+        df.to_csv(input_csv, sep=';', index=False)
+    else:
+        with ExcelWriter(input_csv) as writer:
+            df.to_excel(writer, sheet_name = sheet_name, index = False)
 
-def write_recipe(input_csv, sheet_name, input_list):
+
+def write_recipe(input_csv, input_list, sheet_name=""):
     df = DataFrame()
     for r in input_list:
         # name, ingredients, preparation, time, tags, image = r
         df = df.append([r], ignore_index=True)
     
-    df = df.set_axis(['Nom', 'Ingredients (nom,qty,unit/...)', 'Preparation', 'Temps (mn)', 'Tags', 'Image'], axis = 'columns')
-    
-    with ExcelWriter(input_csv) as writer:
-        df.to_excel(writer, sheet_name = sheet_name, index = False)
+    df = df.set_axis(['UID', 'Nom', 'Ingredients (nom,qty,unit/...)', 'Temps (mn)', 'Tags', 'Image', 'Preparation'], axis = 'columns')
+    if input_csv[-4:] == '.csv':
+        df.to_csv(input_csv, sep=';', index=False)
+    else:
+        with ExcelWriter(input_csv) as writer:
+            df.to_excel(writer, sheet_name = sheet_name, index = False)
 
 def extract_recipes(initial_list):
     recipe_list = []
