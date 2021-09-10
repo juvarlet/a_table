@@ -203,7 +203,7 @@ class MainGUI(QWidget):
         self.tE_ingredients: QTextEdit
         self.tE_ingredients = self.pW.tE_ingredients
         self.tE_recipe: QTextBrowser
-        self.tE_recipe = self.pW.tE_recette
+        self.tE_recipe = self.pW.tE_recipe
         self.lW_recipe: QListWidget
         self.lW_recipe = self.pW.lW_recettes
         self.cB_search: QCheckBox
@@ -240,8 +240,8 @@ class MainGUI(QWidget):
         self.frame_edit_recipe = self.pW.frame_edit_recipe
         self.lE_title: QLineEdit
         self.lE_title = self.pW.lE_titre
-        self.label_image_2: QLabel
-        self.label_image_2 = self.pW.label_image_2
+        self.img_dish: QLabel
+        self.img_dish = self.pW.img_dish
 
 
         #self.tW_ingredients: QTableWidget
@@ -643,32 +643,25 @@ class MainGUI(QWidget):
         
     def dummy_function(self, row, column):
         print('dummy function triggered %s %s' % (row, column))
-    
-    def dynamic_filter_OLD(self):
-        matching_items = self.lW_recipe.findItems(self.lE_with.text(), QtCore.Qt.MatchRegularExpression)
-        
-        all_items = self.lW_recipe.findItems("", QtCore.Qt.MatchRegularExpression)
-        for item in all_items:
-            self.lW_recipe.setItemHidden(item, not item in matching_items)
 
-    def isFilterInRecipeName(self, filter, recipe):
+    def is_filter_in_recipe_name(self, filter, recipe):
         if self.cB_search_recipe_name.isChecked():
             return filter in recipe.name.lower()
         return False
 
-    def isFilterInIngredientsList(self,filter,recipe):
+    def is_filter_in_ing_list(self,filter,recipe):
         if self.cB_search_ingredients.isChecked() and recipe.ingredients_list_qty is not None: 
             for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
                 if filter in ingredient:
                     return True
         return False
 
-    def isFilterInPreparation(self, filter, recipe):
+    def is_filter_in_preparation(self, filter, recipe):
         if self.cB_search_preparation.isChecked() and recipe.preparation is not None:
             return filter in recipe.preparation.lower()
         return False
 
-    def isFilterInTags(self, recipe):
+    def is_filter_in_tags(self, recipe):
         output = True
         if self.cB_search_tag_double.isChecked():
             if recipe.tags is not None:
@@ -728,13 +721,13 @@ class MainGUI(QWidget):
             
             for filter in with_filters:
                 filter = filter.strip()
-                isCriteriaMet = self.isFilterInRecipeName(filter, recipe)
-                isCriteriaMet = isCriteriaMet or self.isFilterInIngredientsList(filter, recipe)
-                isCriteriaMet = isCriteriaMet or self.isFilterInPreparation(filter, recipe)
+                isCriteriaMet = self.is_filter_in_recipe_name(filter, recipe)
+                isCriteriaMet = isCriteriaMet or self.is_filter_in_ing_list(filter, recipe)
+                isCriteriaMet = isCriteriaMet or self.is_filter_in_preparation(filter, recipe)
                 
                 show_recipe_flag = show_recipe_flag and isCriteriaMet
 
-            show_recipe_flag = show_recipe_flag and self.isFilterInTags(recipe)
+            show_recipe_flag = show_recipe_flag and self.is_filter_in_tags(recipe)
 
             self.lW_recipe.setItemHidden(recipeListItem, not show_recipe_flag)
             if show_recipe_flag:
@@ -1589,12 +1582,8 @@ class MainGUI(QWidget):
         if self.frame_search.isVisible():
             self.cB_search.click()
 
-
-
-
-
-    def clear_edit_recipe_window(self): #OK
-        self.label_image_2.setPixmap(QPixmap())
+    def clear_edit_recipe_window(self):
+        self.img_dish.setPixmap(QPixmap())
 
         self.lw_ingredients.clear()
 
@@ -1612,33 +1601,30 @@ class MainGUI(QWidget):
         self.cB_unit.addItems([''] + units)
         self.cB_ingredient.setCurrentIndex(0)
         self.cB_unit.setCurrentIndex(0)
-        
         self.sB_time.setValue(0)
 
-    def disable_other_tabs(self): #OK
+    def disable_other_tabs(self):
         self.tW.setTabEnabled(0, False)
         self.tW.setTabEnabled(2, False)
         self.cB_search.setEnabled(False)
         self.pB_new_recipe.setEnabled(False)
         self.pB_modif_2.setEnabled(False)
 
-    def on_new_recipe(self): #OK
+    def on_new_recipe(self):
         self.disable_other_tabs()
         #reset all fields
         self.label_newedit.setText('Nouvelle Recette')
         self.lE_title.setText('Nouveau Titre')
-        #self.clear_edit_recipe_window()
+        self.add_new_ingredient_to_list(Ingredient()) #Add empty ing for input
         
-    def on_edit_recipe(self): #OK
+    def on_edit_recipe(self):
         self.disable_other_tabs()
         #populate all fields
         self.label_newedit.setText('Modifier la recette')
-        #self.clear_edit_recipe_window()
-
         recipe:Recipe
         recipe = self.recipe_db.get_recipe_object(self.lW_recipe.currentItem().text())
         self.lE_title.setText(recipe.name)
-        cw.display_image(recipe, self.dirname, self.label_image_2, icon=False)
+        cw.display_image(recipe, self.dirname, self.img_dish, icon=False)
         self.populate_ing_list(recipe)
         if recipe.time is not None:
             self.sB_time.setValue(int(recipe.time))
@@ -1660,8 +1646,9 @@ class MainGUI(QWidget):
         #self.lw_ingredients.addItem(QListWidgetItem("Optionels : "))
         for ingredient in opt_ing_list:
             self.add_new_ingredient_to_list(ingredient)
+        self.add_new_ingredient_to_list(Ingredient()) # Add extra line for new ing input
 
-    def on_add_ingredient(self): #OK
+    def on_add_ingredient(self):
         ing_name = self.cB_ingredient.currentText()
         ing_qty = self.lE_qty.text()
         ing_qty_unit = self.cB_unit.currentText()
@@ -1670,10 +1657,12 @@ class MainGUI(QWidget):
         self.add_new_ingredient_to_list(Ingredient(ing_name, float(ing_qty), ing_qty_unit, ing_is_optional))
         self.clear_add_new_ing_frame()
 
-    def add_new_ingredient_to_list(self, ingredient:Ingredient): #OK
+    def add_new_ingredient_to_list(self, ingredient:Ingredient):
         #TODO : handle the case were the ingredient is already in the list
         ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
         ing_item = IngredientItem(ingredient, self.lw_ingredients, parent = QUiLoader().load(ui_file))
+        if ingredient.name == "" and ingredient.qty_unit == "" and ingredient.qty == -1:
+            ing_item.selectWidgetMode(IngredientItem.WIDGET_EDIT_ING_MODE)
 
         list_widget_item = QListWidgetItem()
         list_widget_item.setSizeHint(QSize(0,30))
@@ -1738,7 +1727,7 @@ class MainGUI(QWidget):
             now_optionals = False
             ing_dict = {}
 
-            for ing_index in range(self.lw_ingredients.count()):
+            for ing_index in range(self.lw_ingredients.count()-1): # "-1 in order to ignore the last 'input' line"
                 ing_item:IngredientItem
                 ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index)).findChild(IngredientItem)
                 ing_dict[ing_item.lbl_ing_name.text()] = [float(ing_item.lbl_ing_qty.text()), ing_item.lbl_ing_qty_unit.text()]
@@ -1796,7 +1785,7 @@ class MainGUI(QWidget):
 
         self.clear_edit_recipe_window()
 
-    def reenable_other_tabs(self): #OK
+    def reenable_other_tabs(self):
         self.tW.setTabEnabled(0, True)
         self.tW.setTabEnabled(2, True)
         self.cB_search.setEnabled(True)
@@ -1806,11 +1795,6 @@ class MainGUI(QWidget):
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
         self.cB_web.setChecked(False)
-
-
-
-
-
 
     def on_tag_selected(self, cB):
         tags = {'cB_tagdinner': [1, 0, 1, 1, 0, 1, 1, 1, 0],
@@ -1833,7 +1817,7 @@ class MainGUI(QWidget):
     def on_add_photo(self):
         self.recipe_image_path, filter = QFileDialog.getOpenFileName(self, 'Choisir une image', self.dirname, 'Images (*.png *.jpg)')
         # print(image_path=='')
-        cw.display_new_image(self.recipe_image_path, self.label_image_2)
+        cw.display_new_image(self.recipe_image_path, self.img_dish)
     
     def on_delete_recipe(self):
         #check if a recipe is selected

@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2439</width>
+    <width>2457</width>
     <height>1015</height>
    </rect>
   </property>
@@ -610,7 +610,7 @@
         border-radius: 6px;
     }
     
-    QTextBrowser#tE_ingredients, QTextBrowser#tE_recette{
+    QTextBrowser#tE_ingredients, QTextBrowser#tE_recipe{
         background: #17c3b2;
         border: 1px solid #17c3b2;
     }
@@ -665,7 +665,7 @@
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="iconSize">
           <size>
@@ -703,7 +703,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1997</width>
+                <width>2015</width>
                 <height>823</height>
                </rect>
               </property>
@@ -1995,7 +1995,7 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                      </widget>
                     </item>
                     <item row="2" column="0">
-                     <widget class="QTextBrowser" name="tE_recette">
+                     <widget class="QTextBrowser" name="tE_recipe">
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
                       </property>
@@ -2723,16 +2723,19 @@ p, li { white-space: pre-wrap; }
                        <item>
                         <widget class="QWidget" name="widget" native="true">
                          <property name="sizePolicy">
-                          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <layout class="QHBoxLayout" name="horizontalLayout_4">
-                          <item>
-                           <widget class="QLabel" name="label_image_2">
+                         <property name="layoutDirection">
+                          <enum>Qt::RightToLeft</enum>
+                         </property>
+                         <layout class="QGridLayout" name="gridLayout_7">
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="img_dish">
                             <property name="sizePolicy">
-                             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
@@ -2741,27 +2744,66 @@ p, li { white-space: pre-wrap; }
                              <string/>
                             </property>
                             <property name="pixmap">
-                             <pixmap>../../recipe_pic_placeholder_icon.jpg</pixmap>
+                             <pixmap>../images/placeholder_dish_icon.jpg</pixmap>
                             </property>
                             <property name="scaledContents">
                              <bool>true</bool>
                             </property>
                            </widget>
                           </item>
-                          <item>
-                           <widget class="QPushButton" name="pB_photo">
-                            <property name="toolTip">
-                             <string>Choisir une image</string>
+                          <item row="0" column="0">
+                           <widget class="QWidget" name="widget_dish_button" native="true">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
                             </property>
-                            <property name="text">
-                             <string/>
+                            <property name="styleSheet">
+                             <string notr="true">QFrame #widget_dish_button{
+    background-color:transparent;
+}</string>
                             </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>50</width>
-                              <height>50</height>
-                             </size>
-                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_5">
+                             <item>
+                              <widget class="QPushButton" name="pB_photo">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="toolTip">
+                                <string>Choisir une image</string>
+                               </property>
+                               <property name="layoutDirection">
+                                <enum>Qt::RightToLeft</enum>
+                               </property>
+                               <property name="text">
+                                <string/>
+                               </property>
+                               <property name="iconSize">
+                                <size>
+                                 <width>50</width>
+                                 <height>50</height>
+                                </size>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="verticalSpacer_2">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>40</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                            </layout>
                            </widget>
                           </item>
                          </layout>
@@ -2801,22 +2843,6 @@ p, li { white-space: pre-wrap; }
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="1" column="0">
-                           <widget class="QLabel" name="label_2">
-                            <property name="font">
-                             <font>
-                              <family>Poiret One</family>
-                              <pointsize>16</pointsize>
-                              <weight>75</weight>
-                              <italic>false</italic>
-                              <bold>true</bold>
-                             </font>
-                            </property>
-                            <property name="text">
-                             <string>Ingrédients :</string>
                             </property>
                            </widget>
                           </item>
@@ -2924,6 +2950,22 @@ p, li { white-space: pre-wrap; }
                               </widget>
                              </item>
                             </layout>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="label_2">
+                            <property name="font">
+                             <font>
+                              <family>Poiret One</family>
+                              <pointsize>16</pointsize>
+                              <weight>75</weight>
+                              <italic>false</italic>
+                              <bold>true</bold>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Ingrédients :</string>
+                            </property>
                            </widget>
                           </item>
                          </layout>
@@ -3710,7 +3752,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>cB_search_ingredients</tabstop>
   <tabstop>cB_search_preparation</tabstop>
   <tabstop>lW_recettes</tabstop>
-  <tabstop>tE_recette</tabstop>
+  <tabstop>tE_recipe</tabstop>
   <tabstop>pB_send_2</tabstop>
   <tabstop>pB_back</tabstop>
   <tabstop>pB_print_2</tabstop>
@@ -3732,7 +3774,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>cB_search_tag_kids</tabstop>
   <tabstop>lE_titre</tabstop>
   <tabstop>cB_web</tabstop>
-  <tabstop>pB_photo</tabstop>
   <tabstop>lw_ingredients</tabstop>
   <tabstop>dateEdit_2</tabstop>
   <tabstop>tW_menu</tabstop>

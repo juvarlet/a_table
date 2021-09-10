@@ -386,7 +386,13 @@ def display_image(recipe_object, dirname, widget, icon = True):#Scale and displa
             qpix_to_widget(qpix_scaled, widget, icon=False)
             
         else:
-            widget.setPixmap(QPixmap())
+            image_path = dirname + "/images/placeholder_dish_icon.jpg"
+            qpix = QPixmap(image_path)
+            if qpix.width() > qpix.height():
+                qpix_scaled = qpix.scaled(270, 200)
+            else:
+                qpix_scaled = qpix.scaled(200, 270)
+            qpix_to_widget(qpix_scaled, widget, icon=False)
 
 def display_new_image(image_path, widget, icon = False):#Scale and display image on Widget from Image path
     qpix = QPixmap(image_path)

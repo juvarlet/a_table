@@ -186,6 +186,8 @@ def read_recipe(input_csv):
         time = cell_to_recipe_input(time_cell, 'time')
         tags = cell_to_recipe_input(tags_cell, 'tags')
         image = ''
+        if pd.isna(preparation) :
+            preparation = ''
         if image_cell is not None and not pd.isna(image_cell):
             image = '/images/' + image_cell
         recipe_list.append(Recipe(uid, name, ingredients_list_qty, preparation, time, tags, image))
