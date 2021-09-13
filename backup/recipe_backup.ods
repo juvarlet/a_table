@@ -1,7 +1,7 @@
 UID;Nom;Ingredients (nom,qty,unit/...);Temps (mn);Tags;Image;Preparation
 27fca115-ac6e-4229-888c-f8e9a47b7bf2;Amandine aux fruits rouges;;;dessert/ete;amandine;C'est tres bon une amandine aux fruits rouges
 6ac39d4f-4c9d-4aeb-8741-b18e91d274a9;Apéro ++;;;soir/kids;apero;Tout mettre sur la table et partager
-e30cf376-8f07-4306-b1c3-7fca7c4d5768;Aubergines roulées;Aubergines,1,/fromage,1,/oeufs,1,g/[tofu],500,g;;double/vegan;aubergines;test
+bbaa9607-a119-4d17-af71-960933ea463e;Aubergines roulées;Aubergines,1.0,/fromage,1.0,/oeufs,1.0,g/tofu,500.0,g;;double/vegan;aubergines;test
 5de6c597-09d5-4ff7-b677-0ae8b3d221b4;Banofee;;;dessert;banofee;
 f849fb18-0b31-4f00-9bbb-ea077ddaeaaa;BBQ;;;midi/ete;;
 c232f004-5acc-4551-932d-255528eec999;Bechamel;;;tips;;
@@ -25,7 +25,7 @@ Cuire pendant 11-12 minutes. Laisser refroidir 10 mn sur la plaque du four."
 a50c4ab6-489b-4544-8313-2fbf9af7b79b;Chili sin carne;;;vegan/double;chili_sin;
 a2f11a9b-45af-4911-8e14-a41dfb27ca04;Chou rouge boudin;;;kids/midi/hiver;;
 13140aa0-582b-49a7-b3f9-e27b644259c3;Choucroute;;;double/midi;;
-cfd3c77d-6b16-4921-84bf-7c883a12a017;Choux de bruxelles graines;;;vegan;;
+23b87bf6-a639-40de-9d56-b9a81dd572ba;Choux de bruxelles graines;choux,10.0,;;vegan;;
 ecf23d25-5df2-4429-b486-d500d136d988;Clafoutis marbré tomates tapenade;farine,120,g/parmesan,35,g/herbes de provence,1,c. à c./oeufs,3,()/huile d’olive,3,c. à s./lait vegetal,250,mL/[feta],100,g/tapenade,50,g/tomate,2,();;vegan/double;clafoutis_tomate;"Dans un grand saladier, mélanger la farine, 1 pincée de sel, le parmesan et les herbes de Provence. 
 Incorporer les œufs, puis l’huile et le lait. 
 Ajouter la feta émiettée. Verser la pâte dans un plat à gratin. 
@@ -172,7 +172,7 @@ f79068f6-fd29-4f76-ad2c-64472aa9b1fb;Salade nouilles soba;nouilles soba,1,()/avo
 fa75ee8a-c6b7-4c9c-a47d-1bde38d93b27;Tarte fraises verveine;;;dessert;;
 4f260863-d134-4f75-82b8-6e8b29746acf;Lasagnes aux blettes;;;double/vegan;;
 57eb30ab-a1f6-4715-b007-2508ec94d6b0;Légumes rotis;;;vegan;;
-ca209ed0-d617-4a1a-a015-1d94d717599c;A - Recette de rien du tout tout neuf;tomates,1.0,kilo/lait,0.2,L/sucre,3.0,c. a c./Levure,400.0,g/(tofu),200.0,/champignons,200.0,g/(yaourt nature),1.0,pot de yaourt/laurier,3.0,feuilles/thym,4.0,feuilles;;;;Une recette avec rien dedans et plus encore. Tres bien pour tester.
+b3db7163-d5ec-48b2-838b-aa2effae6ac5;A - Recette de rien du tout tout neuf;tomates,1.0,kilo/lait,0.2,L/sucre,3.0,c. a c./Levure,400.0,g/(tofu),200.0,/(champignons),200.0,g/(yaourt nature),1.0,pot de yaourt/laurier,3.0,feuilles/basilique,2.0,feuilles/menthe,3.0,/ketchup,1.0,c.a.c/(mayo),1.0,c.a.c;;;;Une recette avec rien dedans et plus encore. Tres bien pour tester.
 a85eab3c-60bf-4c5c-abad-8a052988c4ab;Moussaka vegetarienne;Aubergines,2,/tomate,2,/oignon,2,/tofu,250,g/oeufs,2,/lait,200,mL/fromage,50,g/origan,,/estragon,,/cannelle,,;;double/kids/ete/vegan;;"1. Couper les aubergines en rondelles et faites-les dorer a la poele dans de l'huile d'olive
 
 2. Dans une cocotte, faites revenir les tomates, les oignons haches et le tofu emiette pendant 10 minutes.

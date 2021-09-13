@@ -11,6 +11,9 @@ class IngredientItem(UIDWidget):
     WIDGET_EDIT_ING_MODE = "0000"
     WIDGET_SH0W_ING_MODE = "0001"
 
+    on_btn_confirm_changes_clicked = Signal(str)
+    on_btn_rm_item_clicked = Signal(str)
+
     def __init__(self, ingredient:Ingredient, lw_ingredients=None, parent=None):
         super(IngredientItem, self).__init__(parent)
 
@@ -78,26 +81,47 @@ class IngredientItem(UIDWidget):
         else:
             print("IngredientItem > selectWidgetToShow : There something wrong here !!!")
 
-
     def showEditWidget(self):
         self.selectWidgetMode(self.WIDGET_EDIT_ING_MODE)
-        self.le_ing_name.setText(self.lbl_ing_name.text())
+        ing_name = self.lbl_ing_name.text()
+        if ing_name[0] == '(' and ing_name[-1] == ')' :
+            self.btn_ing_is_optional.setChecked(True)
+            self.le_ing_name.setText(ing_name[1:-1])
+        else:
+            self.btn_ing_is_optional.setChecked(False)
+            self.le_ing_name.setText(self.lbl_ing_name.text())
         self.sb_ing_qty.setValue(float(self.lbl_ing_qty.text()))
         self.le_ing_qty_unit.setText(self.lbl_ing_qty_unit.text())
 
     def cancelChanges(self):
-        self.selectWidgetMode()
+        if not self.isCurrentIngredientEmpty():
+            self.selectWidgetMode()
+        #else:
+        #   display warning message ?
 
     def confirmChanges(self):
-        self.selectWidgetMode()
-        self.lbl_ing_name.setText(self.le_ing_name.text())
-        self.lbl_ing_qty.setText(str(self.sb_ing_qty.value()))
-        self.lbl_ing_qty_unit.setText(self.le_ing_qty_unit.text())
+        if not self.isNewIngredientEmpty():
+            self.selectWidgetMode()
+            if self.btn_ing_is_optional.isChecked():
+                self.lbl_ing_name.setText('(' + self.le_ing_name.text() + ')')
+            else :    
+                self.lbl_ing_name.setText(self.le_ing_name.text())
+            self.lbl_ing_qty.setText(str(self.sb_ing_qty.value()))
+            self.lbl_ing_qty_unit.setText(self.le_ing_qty_unit.text())
 
+            self.on_btn_confirm_changes_clicked.emit(self.getUID())
+        #else:
+        #   display warning message ?
+    
     def removeItemFromList(self):
-         for i in range(0, self.lw_ingredients.count()):
-            widget:UIDWidget
-            widget = self.lw_ingredients.itemWidget(self.lw_ingredients.item(i)).findChild(IngredientItem)
-            if self.getUID() == widget.getUID():
-                self.lw_ingredients.takeItem(i)
-                break
+        self.on_btn_rm_item_clicked.emit(self.getUID())
+
+    def isCurrentIngredientEmpty(self):
+        if self.lbl_ing_name.text() == '' or self.lbl_ing_qty.text() == '0':
+            return True
+        return False
+
+    def isNewIngredientEmpty(self):
+        if self.le_ing_name.text() == '' or self.sb_ing_qty.value() == 0:
+            return True
+        return False

@@ -1,4 +1,5 @@
 from re import split
+from uid_widget import UIDWidget
 from ingredient import Ingredient
 import string
 from ingredient_item import IngredientItem
@@ -251,16 +252,6 @@ class MainGUI(QWidget):
         self.lw_ingredients = self.pW.lw_ingredients
 
 
-        self.cB_ingredient: QComboBox
-        self.cB_ingredient = self.pW.cB_ingredient
-        self.lE_qty: QLineEdit
-        self.lE_qty = self.pW.lE_qty
-        self.cB_unit: QComboBox
-        self.cB_unit = self.pW.cB_unit
-        self.pB_add: QPushButton
-        self.pB_add = self.pW.pB_add
-        self.pB_option: QPushButton
-        self.pB_option = self.pW.pB_option
         self.sB_time: QSpinBox
         self.sB_time = self.pW.sB_time
         self.tB_preparation: QTextBrowser
@@ -496,8 +487,6 @@ class MainGUI(QWidget):
         #self.tW_ingredients.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         #self.tW_ingredients.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         
-        self.lE_qty.setValidator(QDoubleValidator(0, 1000, 2))
-
         self.tW_history.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_history.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_history.setColumnCount(2)
@@ -601,7 +590,6 @@ class MainGUI(QWidget):
         self.pB_delete.clicked.connect(self.on_delete_recipe)
         self.pB_ok_2.clicked.connect(self.on_confirm_recipe)
         self.pB_cancel_2.clicked.connect(self.on_cancel_recipe)
-        self.pB_add.clicked.connect(self.on_add_ingredient)
         self.pB_photo.clicked.connect(self.on_add_photo)
         self.pB_user.clicked.connect(self.on_user_settings)
         self.tB_storage.clicked.connect(lambda : self.openDir(self.lE_storage, u'de sauvegarde des fiches', dirpath = self.default_storage))
@@ -1587,20 +1575,16 @@ class MainGUI(QWidget):
 
         self.lw_ingredients.clear()
 
-        self.lE_qty.clear()
         self.tB_preparation.clear()
         tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
                 self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
         for tag in tags:
             tag.setChecked(False)
         
-        self.cB_ingredient.clear()
-        self.cB_unit.clear()
-        ingredients, units = self.recipe_db.get_ingredients_units_list()
-        self.cB_ingredient.addItems([''] + ingredients)
-        self.cB_unit.addItems([''] + units)
-        self.cB_ingredient.setCurrentIndex(0)
-        self.cB_unit.setCurrentIndex(0)
+        # We keep that for now to remember how to add ing/units items to combo box
+        #ingredients, units = self.recipe_db.get_ingredients_units_list()
+        #self.cB_unit.addItems([''] + units)
+        #self.cB_unit.setCurrentIndex(0)
         self.sB_time.setValue(0)
 
     def disable_other_tabs(self):
@@ -1615,6 +1599,7 @@ class MainGUI(QWidget):
         #reset all fields
         self.label_newedit.setText('Nouvelle Recette')
         self.lE_title.setText('Nouveau Titre')
+        
         self.add_new_ingredient_to_list(Ingredient()) #Add empty ing for input
         
     def on_edit_recipe(self):
@@ -1648,19 +1633,26 @@ class MainGUI(QWidget):
             self.add_new_ingredient_to_list(ingredient)
         self.add_new_ingredient_to_list(Ingredient()) # Add extra line for new ing input
 
-    def on_add_ingredient(self):
-        ing_name = self.cB_ingredient.currentText()
-        ing_qty = self.lE_qty.text()
-        ing_qty_unit = self.cB_unit.currentText()
-        ing_is_optional = self.pB_option.isChecked()
+    def on_btn_confirm_changes_clicked(self, ing_item_id):
+        ing_item:IngredientItem
+        ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(self.lw_ingredients.count()-1)).findChild(IngredientItem)
+        if ing_item.getUID() == ing_item_id:
+            self.add_new_ingredient_to_list(Ingredient())
 
-        self.add_new_ingredient_to_list(Ingredient(ing_name, float(ing_qty), ing_qty_unit, ing_is_optional))
-        self.clear_add_new_ing_frame()
+    def rm_ing_item_from_list(self, ing_item_id):
+        for i in range(0, self.lw_ingredients.count()):
+            ing_item:IngredientItem
+            ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(i)).findChild(IngredientItem)
+            if ing_item_id == ing_item.getUID():
+                self.lw_ingredients.takeItem(i)
+                break
 
     def add_new_ingredient_to_list(self, ingredient:Ingredient):
         #TODO : handle the case were the ingredient is already in the list
         ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
         ing_item = IngredientItem(ingredient, self.lw_ingredients, parent = QUiLoader().load(ui_file))
+        ing_item.on_btn_confirm_changes_clicked.connect(self.on_btn_confirm_changes_clicked)
+        ing_item.on_btn_rm_item_clicked.connect(self.rm_ing_item_from_list)
         if ingredient.name == "" and ingredient.qty_unit == "" and ingredient.qty == -1:
             ing_item.selectWidgetMode(IngredientItem.WIDGET_EDIT_ING_MODE)
 
@@ -1669,11 +1661,6 @@ class MainGUI(QWidget):
 
         self.lw_ingredients.addItem(list_widget_item)
         self.lw_ingredients.setItemWidget(list_widget_item,ing_item.parent_widget)
-    
-    def clear_add_new_ing_frame(self):
-        self.cB_ingredient.clear()
-        self.lE_qty.clear()
-        self.cB_unit.clear()
 
     def on_confirm_recipe(self):
         #check if ok to save
