@@ -7,6 +7,7 @@ import sys
 import recipe_db
 import menu
 import mailbox_google as mail
+import calendar_google as cal
 import printer
 import html_parser as web
 import custom_widgets as cw
@@ -118,6 +119,8 @@ class MainGUI(QWidget):
         self.p_carte = self.pW.page_carte
         self.pB_save: QPushButton
         self.pB_save = self.pW.pB_save
+        self.pB_calendar: QPushButton
+        self.pB_calendar = self.pW.pB_calendar
         self.pB_new_menu: QPushButton
         self.pB_new_menu = self.pW.pB_new_menu_2
         self.pB_modif: QPushButton
@@ -134,8 +137,6 @@ class MainGUI(QWidget):
         self.score_summer = self.pW.label_s_ete
         self.score_winter: QLabel
         self.score_winter = self.pW.label_s_hiver
-        self.pB_import: QPushButton
-        self.pB_import = self.pW.pB_import
         #--page shopping
         self.p_list: QWidget
         self.p_list = self.pW.page_liste
@@ -504,9 +505,9 @@ class MainGUI(QWidget):
         self.tB.setItemIcon(1, QIcon(self.dirname + '/UI/images/icon_shopping_cart.png'))
         self.pB_user.setIcon(QIcon(self.dirname + '/UI/images/icon_user_t.png'))
         self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
-        self.pB_import.setIcon(QIcon(self.dirname + '/UI/images/icon_import.png'))
                 # self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
+        self.pB_calendar.setIcon(QIcon(self.dirname + '/UI/images/icon_calendar.png'))
         cw.load_pic(self.tag_vegan, self.dirname + '/UI/images/tag_vegan_black_LD.png')
         cw.load_pic(self.tag_kids, self.dirname + '/UI/images/tag_kids_black_LD.png')
         cw.load_pic(self.tag_double, self.dirname + '/UI/images/tag_double_black_LD.png')
@@ -565,11 +566,11 @@ class MainGUI(QWidget):
 
     def connect_actions(self):
         self.pB_new_menu.clicked.connect(self.on_new_menu)
-        self.pB_import.clicked.connect(self.on_import)
         self.tW_menu.cellDoubleClicked.connect(self.on_card_recipe_selection)
         self.tW_history.cellDoubleClicked.connect(self.on_history_recipe_selection)
         # self.pB_modif.clicked.connect(self.on_card_modif)
         self.pB_save.clicked.connect(self.on_save_menu)
+        self.pB_calendar.clicked.connect(self.on_calendar)
         self.pB_ok.clicked.connect(self.on_confirm_history_update)
         self.pB_cancel.clicked.connect(self.on_cancel_history_update)
         self.tE_ingredients.anchorClicked.connect(self.on_recipe_link)
@@ -992,17 +993,6 @@ class MainGUI(QWidget):
     #         self.tW_menu.setItem(2, x, QTableWidgetItem())
     #         self.tW_menu.item(2, x).setBackground(QColor(204,193,174))
     
-    def on_import(self):
-        
-        #if dates overlap with existing history
-        
-        #qmessage ok/cancel with modifications
-        #else
-        #print_thread_function
-        self.populate_shopping_list()
-        self.populate_menu_list()
-        self.compute_score()
-    
     def populate_shopping_list(self):
         #reset list
         self.lW_shopping.clear()
@@ -1414,6 +1404,13 @@ class MainGUI(QWidget):
         self.tW.setTabEnabled(1, True)
         self.reset_history()
 
+    def on_calendar(self):
+        my_calendar_worker = cal.MyCalendar(self.current_menu)
+        my_calendar_worker.signal.sig.connect(self.print_thread_function)
+        
+        self.myThreads.append(my_calendar_worker)
+        my_calendar_worker.start()
+    
     def on_ingredient_selection(self):
         #reset list menu background
         for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
