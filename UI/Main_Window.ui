@@ -13,15 +13,6 @@
     <height>783</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <family>Poiret One</family>
-    <pointsize>15</pointsize>
-    <weight>75</weight>
-    <italic>false</italic>
-    <bold>true</bold>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>À Table !</string>
   </property>
@@ -618,7 +609,7 @@
         border-radius: 6px;
     }
     
-    QTextBrowser#tE_ingredients, QTextBrowser#tE_recette{
+    QTextBrowser#tE_ingredients, QTextBrowser#tE_recipe{
         background: #17c3b2;
         border: 1px solid #17c3b2;
     }
@@ -672,7 +663,7 @@
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="iconSize">
           <size>
@@ -690,7 +681,7 @@
              <property name="font">
               <font>
                <family>Poiret One</family>
-               <pointsize>18</pointsize>
+               <pointsize>20</pointsize>
                <weight>75</weight>
                <italic>false</italic>
                <bold>true</bold>
@@ -729,15 +720,6 @@
                  <layout class="QGridLayout" name="gridLayout_10">
                   <item row="1" column="0">
                    <widget class="QTableWidget" name="tW_menu">
-                    <property name="font">
-                     <font>
-                      <family>Poiret One</family>
-                      <pointsize>13</pointsize>
-                      <weight>75</weight>
-                      <italic>false</italic>
-                      <bold>true</bold>
-                     </font>
-                    </property>
                     <property name="mouseTracking">
                      <bool>true</bool>
                     </property>
@@ -844,10 +826,13 @@
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="9">
-                      <spacer name="horizontalSpacer_3">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
+                     <item row="0" column="5">
+                      <widget class="QCheckBox" name="cB_restes_2">
+                       <property name="toolTip">
+                        <string>Le dernier repas, c'est les restes!</string>
+                       </property>
+                       <property name="text">
+                        <string>Restes</string>
                        </property>
                        <property name="sizeHint" stdset="0">
                         <size>
@@ -961,20 +946,12 @@
                       </widget>
                      </item>
                      <item row="0" column="4">
-                      <widget class="QSpinBox" name="sB_days_2">
+                      <widget class="QSpinBox" name="sB_days">
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
                          <height>50</height>
                         </size>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
                        </property>
                        <property name="buttonSymbols">
                         <enum>QAbstractSpinBox::PlusMinus</enum>
@@ -1241,15 +1218,6 @@
                        <layout class="QGridLayout" name="gridLayout_24">
                         <item row="0" column="0" colspan="4">
                          <widget class="QListWidget" name="lW_courses">
-                          <property name="font">
-                           <font>
-                            <family>Poiret One</family>
-                            <pointsize>13</pointsize>
-                            <weight>75</weight>
-                            <italic>false</italic>
-                            <bold>true</bold>
-                           </font>
-                          </property>
                           <property name="frameShape">
                            <enum>QFrame::NoFrame</enum>
                           </property>
@@ -1343,15 +1311,6 @@
                     <layout class="QGridLayout" name="gridLayout_15">
                      <item row="1" column="0">
                       <widget class="QListWidget" name="lW_menu">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>13</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
                        <property name="frameShape">
                         <enum>QFrame::NoFrame</enum>
                        </property>
@@ -2071,7 +2030,7 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                      </widget>
                     </item>
                     <item row="2" column="0">
-                     <widget class="QTextBrowser" name="tE_recette">
+                     <widget class="QTextBrowser" name="tE_recipe">
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
                       </property>
@@ -2311,8 +2270,40 @@ p, li { white-space: pre-wrap; }
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_31">
+                 <item row="0" column="0">
+                  <spacer name="horizontalSpacer_14">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="2">
+                  <spacer name="horizontalSpacer_15">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
                  <item row="0" column="1">
                   <widget class="QFrame" name="frame_new_recipe">
+                   <property name="minimumSize">
+                    <size>
+                     <width>800</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
                    </property>
@@ -2329,6 +2320,18 @@ p, li { white-space: pre-wrap; }
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_35">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
                        <item row="1" column="0">
                         <widget class="QTextBrowser" name="tB_preparation">
                          <property name="toolTip">
@@ -2472,234 +2475,6 @@ p, li { white-space: pre-wrap; }
                       </layout>
                      </widget>
                     </item>
-                    <item row="6" column="0">
-                     <widget class="QFrame" name="frame_7">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QGridLayout" name="gridLayout_34">
-                       <item row="2" column="0" colspan="3" alignment="Qt::AlignTop">
-                        <widget class="QFrame" name="frame_ingredients">
-                         <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QGridLayout" name="gridLayout_36">
-                          <item row="1" column="0" alignment="Qt::AlignTop">
-                           <widget class="QFrame" name="frame_add_ingredient">
-                            <property name="frameShape">
-                             <enum>QFrame::StyledPanel</enum>
-                            </property>
-                            <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
-                            </property>
-                            <layout class="QGridLayout" name="gridLayout_37">
-                             <item row="0" column="4">
-                              <widget class="QLabel" name="label_8">
-                               <property name="text">
-                                <string>:</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item row="0" column="1">
-                              <widget class="QPushButton" name="pB_option">
-                               <property name="maximumSize">
-                                <size>
-                                 <width>30</width>
-                                 <height>30</height>
-                                </size>
-                               </property>
-                               <property name="toolTip">
-                                <string>Optionnel</string>
-                               </property>
-                               <property name="text">
-                                <string>[</string>
-                               </property>
-                               <property name="checkable">
-                                <bool>true</bool>
-                               </property>
-                              </widget>
-                             </item>
-                             <item row="0" column="5">
-                              <widget class="QLineEdit" name="lE_qty">
-                               <property name="toolTip">
-                                <string>Quantité</string>
-                               </property>
-                               <property name="alignment">
-                                <set>Qt::AlignCenter</set>
-                               </property>
-                              </widget>
-                             </item>
-                             <item row="0" column="8" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-                              <widget class="QPushButton" name="pB_add">
-                               <property name="maximumSize">
-                                <size>
-                                 <width>30</width>
-                                 <height>30</height>
-                                </size>
-                               </property>
-                               <property name="toolTip">
-                                <string>Ajouter cet ingrédient</string>
-                               </property>
-                               <property name="text">
-                                <string>+</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item row="0" column="2">
-                              <widget class="QComboBox" name="cB_ingredient">
-                               <property name="toolTip">
-                                <string>Choix d'ingrédient</string>
-                               </property>
-                               <property name="editable">
-                                <bool>true</bool>
-                               </property>
-                              </widget>
-                             </item>
-                             <item row="0" column="0">
-                              <widget class="QLabel" name="label">
-                               <property name="text">
-                                <string>-</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item row="0" column="6">
-                              <widget class="QComboBox" name="cB_unit">
-                               <property name="toolTip">
-                                <string>Choix d'unité</string>
-                               </property>
-                               <property name="editable">
-                                <bool>true</bool>
-                               </property>
-                              </widget>
-                             </item>
-                             <item row="0" column="3">
-                              <widget class="QPushButton" name="pB_option_2">
-                               <property name="maximumSize">
-                                <size>
-                                 <width>30</width>
-                                 <height>30</height>
-                                </size>
-                               </property>
-                               <property name="toolTip">
-                                <string>Optionnel</string>
-                               </property>
-                               <property name="text">
-                                <string>]</string>
-                               </property>
-                               <property name="checkable">
-                                <bool>true</bool>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                          <item row="0" column="0">
-                           <widget class="QTableWidget" name="tW_ingredients">
-                            <property name="frameShape">
-                             <enum>QFrame::NoFrame</enum>
-                            </property>
-                            <property name="editTriggers">
-                             <set>QAbstractItemView::NoEditTriggers</set>
-                            </property>
-                            <property name="selectionMode">
-                             <enum>QAbstractItemView::NoSelection</enum>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>18</width>
-                              <height>18</height>
-                             </size>
-                            </property>
-                            <property name="showGrid">
-                             <bool>false</bool>
-                            </property>
-                            <attribute name="horizontalHeaderVisible">
-                             <bool>false</bool>
-                            </attribute>
-                            <attribute name="verticalHeaderVisible">
-                             <bool>false</bool>
-                            </attribute>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item row="1" column="0" colspan="3" alignment="Qt::AlignBottom">
-                        <widget class="QLabel" name="label_2">
-                         <property name="font">
-                          <font>
-                           <family>Poiret One</family>
-                           <pointsize>16</pointsize>
-                           <weight>75</weight>
-                           <italic>false</italic>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="text">
-                          <string>Ingrédients :</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="2" alignment="Qt::AlignLeft">
-                        <widget class="QPushButton" name="pB_photo">
-                         <property name="toolTip">
-                          <string>Choisir une image</string>
-                         </property>
-                         <property name="text">
-                          <string/>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>50</width>
-                           <height>50</height>
-                          </size>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="0" colspan="2" alignment="Qt::AlignHCenter">
-                        <widget class="QLabel" name="label_image_2">
-                         <property name="text">
-                          <string>Image</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="3" column="0" alignment="Qt::AlignRight">
-                        <widget class="QLabel" name="label_10">
-                         <property name="text">
-                          <string>Temps de préparation :</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="3" column="1">
-                        <widget class="QSpinBox" name="sB_time">
-                         <property name="alignment">
-                          <set>Qt::AlignCenter</set>
-                         </property>
-                         <property name="maximum">
-                          <number>1000</number>
-                         </property>
-                         <property name="singleStep">
-                          <number>5</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="3" column="2" alignment="Qt::AlignLeft">
-                        <widget class="QLabel" name="label_11">
-                         <property name="text">
-                          <string>minutes</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
                     <item row="9" column="0" colspan="3">
                      <widget class="QFrame" name="frame_8">
                       <property name="frameShape">
@@ -2798,7 +2573,13 @@ p, li { white-space: pre-wrap; }
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_49">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
                        <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
                         <number>0</number>
                        </property>
                        <property name="bottomMargin">
@@ -2959,34 +2740,264 @@ p, li { white-space: pre-wrap; }
                       </layout>
                      </widget>
                     </item>
+                    <item row="6" column="0">
+                     <widget class="QFrame" name="frame_7">
+                      <property name="frameShape">
+                       <enum>QFrame::NoFrame</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_3">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QWidget" name="widget" native="true">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>270</height>
+                          </size>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::RightToLeft</enum>
+                         </property>
+                         <layout class="QGridLayout" name="gridLayout_7">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="img_dish">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="pixmap">
+                             <pixmap>../images/placeholder_dish_icon.jpg</pixmap>
+                            </property>
+                            <property name="scaledContents">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="0">
+                           <widget class="QWidget" name="widget_dish_button" native="true">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QFrame #widget_dish_button{
+    background-color:transparent;
+}</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_5">
+                             <item>
+                              <widget class="QPushButton" name="pB_photo">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="toolTip">
+                                <string>Choisir une image</string>
+                               </property>
+                               <property name="layoutDirection">
+                                <enum>Qt::RightToLeft</enum>
+                               </property>
+                               <property name="text">
+                                <string/>
+                               </property>
+                               <property name="iconSize">
+                                <size>
+                                 <width>50</width>
+                                 <height>50</height>
+                                </size>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="verticalSpacer_2">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>40</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QFrame" name="frame_ingredients">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::NoFrame</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QGridLayout" name="gridLayout_36">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item row="2" column="0">
+                           <widget class="QListWidget" name="lw_ingredients">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="label_2">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Poiret One</family>
+                              <pointsize>16</pointsize>
+                              <weight>75</weight>
+                              <italic>false</italic>
+                              <bold>true</bold>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Ingrédients :</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QWidget" name="widget_2" native="true">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <layout class="QHBoxLayout" name="horizontalLayout_5">
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QLabel" name="label_10">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="text">
+                             <string>Temps de préparation :</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QSpinBox" name="sB_time">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>100</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                            <property name="maximum">
+                             <number>1000</number>
+                            </property>
+                            <property name="singleStep">
+                             <number>5</number>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="label_11">
+                            <property name="text">
+                             <string>minutes</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <spacer name="horizontalSpacer_14">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="2">
-                  <spacer name="horizontalSpacer_15">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -3362,7 +3373,7 @@ p, li { white-space: pre-wrap; }
          </property>
          <layout class="QGridLayout" name="gridLayout_40">
           <item row="0" column="1">
-           <widget class="QFrame" name="frame_12">
+           <widget class="QFrame" name="frame_settings_email">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -3381,9 +3392,21 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="0" column="0" rowspan="2">
-              <widget class="QLabel" name="label_email">
+              <widget class="QLabel" name="img_settings_email">
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>images/icon_send.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -3391,7 +3414,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QFrame" name="frame_13">
+           <widget class="QFrame" name="frame_settings_days">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -3407,7 +3430,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QSpinBox" name="sB_days">
+              <widget class="QSpinBox" name="sB_settings_days">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -3432,9 +3455,21 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="0" column="0" rowspan="2">
-              <widget class="QLabel" name="label_days">
+              <widget class="QLabel" name="img_settings_days">
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>images/icon_date_3colors_t_LD.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -3442,7 +3477,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QFrame" name="frame_14">
+           <widget class="QFrame" name="frame_settings_storage">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -3472,9 +3507,21 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="0" column="0" rowspan="2">
-              <widget class="QLabel" name="label_storage">
+              <widget class="QLabel" name="img_settings_storage">
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>images/icon_print.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -3644,7 +3691,13 @@ p, li { white-space: pre-wrap; }
           <string>Préférences</string>
          </property>
          <property name="text">
-          <string>User</string>
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap>images/icon_user_color.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -3657,6 +3710,70 @@ p, li { white-space: pre-wrap; }
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>sB_time</tabstop>
+  <tabstop>cB_tagdouble</tabstop>
+  <tabstop>cB_tagkids</tabstop>
+  <tabstop>cB_tagvegan</tabstop>
+  <tabstop>cB_tagsummer</tabstop>
+  <tabstop>cB_tagwinter</tabstop>
+  <tabstop>cB_tagdessert</tabstop>
+  <tabstop>cB_taglunch</tabstop>
+  <tabstop>cB_tagdinner</tabstop>
+  <tabstop>cB_tagtips</tabstop>
+  <tabstop>tB_preparation</tabstop>
+  <tabstop>pB_cancel_2</tabstop>
+  <tabstop>pB_ok_2</tabstop>
+  <tabstop>cB_search_tag_vegan</tabstop>
+  <tabstop>cB_search_tag_summer</tabstop>
+  <tabstop>cB_search_tag_winter</tabstop>
+  <tabstop>cB_search_tag_dessert</tabstop>
+  <tabstop>cB_search_tag_lunch</tabstop>
+  <tabstop>cB_search_tag_dinner</tabstop>
+  <tabstop>cB_search_tag_tips</tabstop>
+  <tabstop>cB_search_recipe_name</tabstop>
+  <tabstop>cB_search_ingredients</tabstop>
+  <tabstop>cB_search_preparation</tabstop>
+  <tabstop>lW_recettes</tabstop>
+  <tabstop>tE_recipe</tabstop>
+  <tabstop>pB_send_2</tabstop>
+  <tabstop>pB_back</tabstop>
+  <tabstop>pB_print_2</tabstop>
+  <tabstop>pB_delete</tabstop>
+  <tabstop>pB_modif_2</tabstop>
+  <tabstop>pB_new_recipe</tabstop>
+  <tabstop>tE_ingredients</tabstop>
+  <tabstop>cB_recherche</tabstop>
+  <tabstop>pB_save</tabstop>
+  <tabstop>pB_send</tabstop>
+  <tabstop>sB_days</tabstop>
+  <tabstop>lW_menu</tabstop>
+  <tabstop>lW_courses</tabstop>
+  <tabstop>pB_modif</tabstop>
+  <tabstop>pB_print</tabstop>
+  <tabstop>pB_copy</tabstop>
+  <tabstop>lE_with</tabstop>
+  <tabstop>cB_search_tag_double</tabstop>
+  <tabstop>cB_search_tag_kids</tabstop>
+  <tabstop>lE_titre</tabstop>
+  <tabstop>cB_web</tabstop>
+  <tabstop>lw_ingredients</tabstop>
+  <tabstop>dateEdit_2</tabstop>
+  <tabstop>tW_menu</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>cB_restes_2</tabstop>
+  <tabstop>pB_new_menu_2</tabstop>
+  <tabstop>sB_desserts_2</tabstop>
+  <tabstop>tW_historique</tabstop>
+  <tabstop>pB_ok</tabstop>
+  <tabstop>pB_cancel</tabstop>
+  <tabstop>lE_email</tabstop>
+  <tabstop>sB_settings_days</tabstop>
+  <tabstop>toolButton</tabstop>
+  <tabstop>lE_storage</tabstop>
+  <tabstop>pB_ok_3</tabstop>
+  <tabstop>pB_cancel_3</tabstop>
+ </tabstops>
  <resources>
   <include location="resource2.qrc"/>
  </resources>
@@ -3898,38 +4015,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>1461</x>
      <y>645</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_option</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>pB_option_2</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1198</x>
-     <y>512</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1328</x>
-     <y>512</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_option_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>pB_option</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1328</x>
-     <y>512</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1198</x>
-     <y>512</y>
     </hint>
    </hints>
   </connection>
