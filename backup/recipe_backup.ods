@@ -1,7 +1,7 @@
 UID;Nom;Ingredients (nom,qty,unit/...);Temps (mn);Tags;Image;Preparation
 27fca115-ac6e-4229-888c-f8e9a47b7bf2;Amandine aux fruits rouges;;;dessert/ete;amandine;C'est tres bon une amandine aux fruits rouges
 6ac39d4f-4c9d-4aeb-8741-b18e91d274a9;Apéro ++;;;soir/kids;apero;Tout mettre sur la table et partager
-bbaa9607-a119-4d17-af71-960933ea463e;Aubergines roulées;Aubergines,1.0,/fromage,1.0,/oeufs,1.0,g/tofu,500.0,g;;double/vegan;aubergines;test
+3664b32e-9e82-4235-a730-a48b9a6dc3b3;Aubergines roulées;Aubergines,1.0,/fromage,1.0,/oeufs,1.0,g/(tofu),500.0,g;;double/vegan;aubergines;test
 5de6c597-09d5-4ff7-b677-0ae8b3d221b4;Banofee;;;dessert;banofee;
 f849fb18-0b31-4f00-9bbb-ea077ddaeaaa;BBQ;;;midi/ete;;
 c232f004-5acc-4551-932d-255528eec999;Bechamel;;;tips;;
