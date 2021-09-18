@@ -14,11 +14,12 @@ class IngredientItem(UIDWidget):
     on_btn_confirm_changes_clicked = Signal(str)
     on_btn_rm_item_clicked = Signal(str)
 
-    def __init__(self, ingredient:Ingredient, lw_ingredients=None, parent=None):
+    # def __init__(self, ingredient:Ingredient, lw_ingredients=None, parent=None):
+    def __init__(self, ingredient:Ingredient, parent=None):
         super(IngredientItem, self).__init__(parent)
 
         self.parent_widget = self.parentWidget()
-        self.lw_ingredients = lw_ingredients
+        # self.lw_ingredients = lw_ingredients
         self.saveComponents()
         self.selectWidgetMode()
 

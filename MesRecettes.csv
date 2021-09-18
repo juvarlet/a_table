@@ -1,4 +1,4 @@
-uid;Nom;Ingredients (nom,qty,unit/...);Temps (mn);Tags;Image;Preparation
+UID;Nom;Ingredients (nom,qty,unit/...);Temps (mn);Tags;Image;Preparation
 abd8dd50-d7e4-4138-989d-3d1b0d8c0063;Amandine aux fruits rouges;1 pâte brisée pré-étalée,1,/110 g de poudre d'amandes,1,/1 œuf,1,/80 g de sucre glace,1,/70 g de beurre à température ambiante,1,/10 cl de crème fraîche,1,/10 g de Maïzena,1,/1 cuillère à soupe de sucre roux,1,/200 g de fruits rouges (ici des fruits rouges surgelés),1,;;dessert/kids;amandine;"Beurrez et farinez votre moule à tarte, disposez-y la pâte brisée et foncez-le tout. 
 Réservez 30 minutes au réfrigérateur.
 Le fait de laisser 30 minutes la pâte au frais permet d'éviter qu'elle ne se rétracte à la cuisson.
@@ -309,7 +309,6 @@ Mélanger avant de déguster. Vous pouvez également placer la salade de lentill
 "
 8929520e-9d57-4f5f-adbb-482aeab67a13;Nouilles soba shiitake tofu;;;vegan;;
 52ed8d72-16b3-4e42-8832-0b2d5e04b75d;Gateau au chocolat;;;dessert;;
-
 a85eab3c-60bf-4c5c-abad-8a052988c4ab;Moussaka vegetarienne;Aubergines,2,/tomate,2,/oignon,2,/tofu,250,g/oeufs,2,/lait,200,mL/fromage,50,g/origan,,/estragon,,/cannelle,,;;double/kids/ete/vegan;;"1. Couper les aubergines en rondelles et faites-les dorer a la poele dans de l'huile d'olive
 
 2. Dans une cocotte, faites revenir les tomates, les oignons haches et le tofu emiette pendant 10 minutes.
@@ -327,3 +326,26 @@ Disposer les rondelles d’ananas dans le moule.
 
 Dans un saladier, melanger tous les ingredients restants, puis verser dans le moule.Cuire a 180 degres pendant 40/50 min."
 abb19932-729d-446c-b60e-9a763f395832;Cake de Mickey;yaourt nature,1,()/oeufs,2,()/huile,0.5,pot de yaourt/sucre,2,pots de yaourt/farine,3,pots de yaourt/levure,1,c. a c.;;dessert;;Prechauffer le four a 190 degre.Dans un bol, verser le yaourt nature, les deux oeufs et l’huile.Ajouter la sucre et melanger le tout.Ajouter la farine et la levureRemuer jusqu’a obtenir une belle pate. Huiler le moule et verser la pate, puis mettre au four.Cuire 35 a 40 min. Variantes : remplacer un pot de farine par - un pot de noix de coco- chocolat- poudre d’amandes.
+9ea54f26-b4d3-4cc5-9ed8-da9ba59d4600;Poulpe;;;;;"Nettoyer
+Vider : Il faut tout d'abord retourner le manteau, partie au dessus des yeux, pour retirer les intestins. Enlever tout ce qui n'est pas blanc.
+Couper : A la limite entre les tentacules et les yeux et juste au dessus des yeux.
+Vous pouvez récupérer la poche qui abrite les intestins coupée en lanière elle ressemble à des anneaux de calamars (ils sont cousins!)
+Si vous ne comptez pas consommer tout d'un coup, coupez les tentacules par paire, vous congèlerez chaque paire pour les sortir à la demande.
+Option - frotter
+Certains frottent le poulpe au gros sel (plutôt sel de mine, moins cher que du sel de mer) pour nettoyer et enlever les impuretés. Cela attendrirait également la chair. Cette étape est facultative, sauf si vous êtes concernés par la présentation.
+Attendrir
+Il semble exister autant de techniques que de cuisiniers : bouche de liège, trois bains de gros bouillon puis petit bouillon, masser....
+On vous donne la plus simple : congeler.
+Cela permet de casser les fibres, comptez 48 heures au moins.
+Pour la décongélation, attention à bien laisser le processus se faire au réfrigérateur, pas de décongélation à l'eau chaude.
+Pensez à transférer le poulpe du frigo au congélateur la veille pour le lendemain idéalement, le matin pour le soir passera.
+Cuire
+Une fois décongelé, il faut cuire le poulpe au court-bouillon.
+Le secret c'est de rester sur une eau frémissante, surtout pas de gros bouillon.
+Votre eau sera idéalement assaisonnée de fanes de légumes, sel, poivre, piment, et tout ce qui vous passe par la main, ayez la main lourde !
+Comptez au moins une heure, une heure trente ne sera pas de trop. En gros oubliez-le et coupez un petit morceau pour vérifier après vous en être souvenu.
+Votre poulpe est prêt à être travaillé, deux options alors :
+en salade, froid ou tiède
+snacké à la poêle : 5 minutes de chaque côté à l'huile d'olive."
+acb9fd53-9a9f-496e-a03e-38b1991574c3;Porridge avoine potimarron;;;vegan;;
+ec60d477-3bf5-4d6f-8c8d-1d437410fd96;Poêlée chou rouge chataignes;;;vegan;;

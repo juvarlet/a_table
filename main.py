@@ -252,7 +252,7 @@ class MainGUI(QWidget):
         #self.tW_ingredients: QTableWidget
         #self.tW_ingredients = self.pW.tW_ingredients
 
-        self.lw_ingredients:QListWidget
+        self.lw_ingredients: QListWidget
         self.lw_ingredients = self.pW.lw_ingredients
 
 
@@ -380,7 +380,7 @@ class MainGUI(QWidget):
         self.img_settings_days = self.pW.img_settings_days
         self.img_settings_storage: QLabel
         self.img_settings_storage = self.pW.img_settings_storage
-	self.label_homepage: QLabel
+        self.label_homepage: QLabel
         self.label_homepage = self.pW.label_homepage
 
         self.init_colors = {'RED' :         ('#d72631', [215,38,49]),
@@ -493,6 +493,8 @@ class MainGUI(QWidget):
         self.frame_settings.hide()
         self.frame_search.hide()
         self.frame_edit_recipe.hide()
+        
+        self.lw_ingredients.setMouseTracking(True)
         
         #self.tW_ingredients.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         #self.tW_ingredients.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -617,6 +619,7 @@ class MainGUI(QWidget):
         self.tW_menu.cellChanged.connect(self.on_drag_drop_event)
         self.sB_days.valueChanged.connect(self.on_nb_days_changed)
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
+        self.lw_ingredients.itemEntered.connect(self.dummy_function)
         self.lE_title.textChanged.connect(self.on_title_changed)
         # self.sB_desserts.valueChanged.connect(self.on_dessert_selection)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
@@ -642,8 +645,8 @@ class MainGUI(QWidget):
         
         self.wV.urlChanged.connect(self.update_urlbar)
         
-    def dummy_function(self, row, column):
-        print('dummy function triggered %s %s' % (row, column))
+    def dummy_function(self, item):
+        print('dummy function triggered %s' % item)
 
     def is_filter_in_recipe_name(self, filter, recipe):
         if self.cB_search_recipe_name.isChecked():
@@ -1554,18 +1557,24 @@ class MainGUI(QWidget):
     def add_new_ingredient_to_list(self, ingredient:Ingredient):
         #TODO : handle the case were the ingredient is already in the list
         ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
-        ing_item = IngredientItem(ingredient, self.lw_ingredients, parent = QUiLoader().load(ui_file))
+        # ing_item = IngredientItem(ingredient, self.lw_ingredients, parent = QUiLoader().load(ui_file))
+        ing_item = IngredientItem(ingredient, parent = QUiLoader().load(ui_file))
         ing_item.on_btn_confirm_changes_clicked.connect(self.on_btn_confirm_changes_clicked)
         ing_item.on_btn_rm_item_clicked.connect(self.rm_ing_item_from_list)
         if ingredient.name == "" and ingredient.qty_unit == "" and ingredient.qty == -1:
             ing_item.selectWidgetMode(IngredientItem.WIDGET_EDIT_ING_MODE)
 
         list_widget_item = QListWidgetItem()
-        list_widget_item.setSizeHint(QSize(0,30))
+        # list_widget_item.setSizeHint(QSize(0,30))
+        
+        # ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
+       
+        # test_widget = QUiLoader().load(ui_file)
 
         self.lw_ingredients.addItem(list_widget_item)
         self.lw_ingredients.setItemWidget(list_widget_item,ing_item.parent_widget)
-
+        # self.lw_ingredients.setItemWidget(list_widget_item,test_widget)
+        
     def on_confirm_recipe(self):
         #check if ok to save
         #title not empty
