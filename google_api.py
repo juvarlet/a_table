@@ -361,8 +361,12 @@ class MyCalendar(QThread):#QThread
                 description_lunch = ''
                 for recipe_lunch in recipe_lunch_stack:
                     description_lunch += '<br/><b>%s</b><br/>' % recipe_lunch.name
-                    description_lunch += '<br/>'.join(recipe_lunch.ingredients_string_list())
-                    description_lunch += '<br/>%s<br/>' % recipe_lunch.preparation
+                    if len(recipe_lunch.ingredients_string_list()) > 0:
+                        description_lunch += '<br/><i>Ingrédients</i><br/>'
+                        description_lunch += '<br/>'.join(recipe_lunch.ingredients_string_list())
+                    if recipe_lunch.preparation != '':
+                        description_lunch += '<br/><i>Préparation</i><br/>'
+                        description_lunch += '<br/>%s<br/>' % recipe_lunch.preparation
                 
                 title_dinner = ' | '.join(recipe_dinner.name 
                                           for recipe_dinner in recipe_dinner_stack)
@@ -370,8 +374,12 @@ class MyCalendar(QThread):#QThread
                 description_dinner = ''
                 for recipe_dinner in recipe_dinner_stack:
                     description_dinner += '<br/><b>%s</b><br/>' % recipe_dinner.name
-                    description_dinner += '<br/>'.join(recipe_dinner.ingredients_string_list())
-                    description_dinner += '<br/>%s<br/>' % recipe_dinner.preparation
+                    if len(recipe_dinner.ingredients_string_list()) > 0:
+                        description_dinner += '<br/><i>Ingrédients</i><br/>'
+                        description_dinner += '<br/>'.join(recipe_dinner.ingredients_string_list())
+                    if recipe_dinner.preparation != '':
+                        description_dinner += '<br/><i>Préparation</i><br/>'
+                        description_dinner += '<br/>%s<br/>' % recipe_dinner.preparation
                 
                 
                 event_lunch  = build_event(timeZone, title_lunch,  description_lunch,  start_lunch, debug=debug)
@@ -480,8 +488,20 @@ class MyMailbox(QThread):
 
         for col in my_menu.full_menu():
             day_str, lunch_recipe, dinner_recipe = col
-            lunch_str = lunch_recipe.name
-            dinner_str = dinner_recipe.name
+            
+            if type(lunch_recipe) == Recipe:
+                recipe_lunch_stack = [lunch_recipe]
+            elif type(lunch_recipe) == list:
+                recipe_lunch_stack = lunch_recipe
+            
+            if type(dinner_recipe) == Recipe:
+                recipe_dinner_stack = [dinner_recipe]
+            elif type(dinner_recipe) == list:
+                recipe_dinner_stack = dinner_recipe
+            
+            
+            lunch_str = ' | '.join(lunch_recipe.name for lunch_recipe in recipe_lunch_stack)
+            dinner_str = ' | '.join(dinner_recipe.name for dinner_recipe in recipe_dinner_stack)
 
             TABLE_DAYS += table_days.replace('[DAY]', day_str)
             TABLE_MENUS_LUNCH += table_menus.replace('[MENU]', lunch_str)
