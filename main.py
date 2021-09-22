@@ -1558,21 +1558,22 @@ class MainGUI(QWidget):
         #TODO : handle the case were the ingredient is already in the list
         ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
         # ing_item = IngredientItem(ingredient, self.lw_ingredients, parent = QUiLoader().load(ui_file))
-        ing_item = IngredientItem(ingredient, parent = QUiLoader().load(ui_file))
+        ing_item = IngredientItem(ingredient, ui = QUiLoader().load(ui_file))
         ing_item.on_btn_confirm_changes_clicked.connect(self.on_btn_confirm_changes_clicked)
         ing_item.on_btn_rm_item_clicked.connect(self.rm_ing_item_from_list)
         if ingredient.name == "" and ingredient.qty_unit == "" and ingredient.qty == -1:
             ing_item.selectWidgetMode(IngredientItem.WIDGET_EDIT_ING_MODE)
 
         list_widget_item = QListWidgetItem()
-        # list_widget_item.setSizeHint(QSize(0,30))
+        list_widget_item.setSizeHint(QSize(0,30))
         
         # ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
        
         # test_widget = QUiLoader().load(ui_file)
 
         self.lw_ingredients.addItem(list_widget_item)
-        self.lw_ingredients.setItemWidget(list_widget_item,ing_item.parent_widget)
+        # self.lw_ingredients.setItemWidget(list_widget_item,ing_item.parent_widget)
+        self.lw_ingredients.setItemWidget(list_widget_item,ing_item)
         # self.lw_ingredients.setItemWidget(list_widget_item,test_widget)
         
     def on_confirm_recipe(self):
