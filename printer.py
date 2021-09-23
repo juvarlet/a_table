@@ -33,13 +33,13 @@ class Printer:
         
         styles=getSampleStyleSheet()
         styles.add(ParagraphStyle(name='myTitle', alignment=TA_CENTER, 
-                                    fontName='Poiret One', fontSize=18, textColor='#077b8a', 
+                                    fontName='Poiret One', fontSize=18, textColor='#36a9d3', 
                                     leading=16, spaceBefore=6, spaceAfter=6))
-        ptext = '<font color="#5c3c92">Menus</font>'
+        ptext = '<font color="#1a5d75">Menus</font>'
         Story.append(Paragraph(ptext, styles['myTitle']))
         ptext = 'du %s au %s' % ('lundi', 'dimanche')
         Story.append(Paragraph(ptext, styles['myTitle']))
-        image = self.dirname + '/UI/images/icon_menu_3colors_LD_t.png'
+        image = self.dirname + '/UI/images/icon_menu_3colors_LD.png'
         im = Image(image, 1*cm, 1*cm)
         Story.append(im)
         Story.append(Spacer(1, 12))
@@ -48,11 +48,11 @@ class Printer:
                 ['Midi', '', '', '', '', '', '', ''],
                 ['Soir', '', '', '', '', '', '', '']]
         t = Table(data, style =[('ALIGN', (0,0), (-1,-1), 'CENTER'),
-                                ('BACKGROUND', (1,0), (-1,0), '#a2d5c6'),
-                                ('BACKGROUND', (0,1), (0,-1), '#a2d5c6'),
-                                ('BOX', (1,0), (-1,0), 1, '#5c3c92'),
-                                ('BOX', (0,1), (0,-1), 1, '#5c3c92'),
-                                ('BOX', (1,1), (-1,-1), 1, '#077b8a')])
+                                ('BACKGROUND', (1,0), (-1,0), '#ffcb77'),
+                                ('BACKGROUND', (0,1), (0,-1), '#ffcb77'),
+                                ('BOX', (1,0), (-1,0), 1, '#1a5d75'),
+                                ('BOX', (0,1), (0,-1), 1, '#1a5d75'),
+                                ('BOX', (1,1), (-1,-1), 1, '#36a9d3')])
         Story.append(t)
 
         self.doc.build(Story, onFirstPage=self.AllPageSetup, onLaterPages=self.AllPageSetup)
@@ -164,7 +164,7 @@ class Printer:
             
         #Footer
         self.add_icon(icon_table)
-        self.write('<font color="#5c3c92">Bon Appétit !</font>', 'Normal_Center')
+        self.write('<font color="#1a5d75">Bon Appétit !</font>', 'Normal_Center')
         self.doc.build(self.Story, onFirstPage=self.AllPageSetup, onLaterPages=self.AllPageSetup)
         
     def print_recipe(self, recipe, images =[]):
@@ -205,28 +205,28 @@ class Printer:
     def define_styles(self):
         self.styles=getSampleStyleSheet()
         self.styles.add(ParagraphStyle(name='Title_Center', alignment=TA_CENTER, 
-                                    fontName='Poiret One', fontSize=18, textColor='#5c3c92', 
+                                    fontName='Poiret One', fontSize=18, textColor='#1a5d75', 
                                     leading=16, spaceBefore=6, spaceAfter=6))
         self.styles.add(ParagraphStyle(name='Subtitle_Center', alignment=TA_CENTER, 
-                                    fontName='Poiret One', fontSize=18, textColor='#077b8a', 
+                                    fontName='Poiret One', fontSize=18, textColor='#36a9d3', 
                                     leading=16, spaceBefore=6, spaceAfter=6))
         self.styles.add(ParagraphStyle(name='Title_Left', alignment=TA_LEFT, 
-                                    fontName='Poiret One', fontSize=18, textColor='#5c3c92', 
+                                    fontName='Poiret One', fontSize=18, textColor='#1a5d75', 
                                     leading=16, spaceBefore=6, spaceAfter=6))
-                                    # backColor='#a2d5c6', borderWidth=1, borderRadius=3, borderColor='#077b8a'))
+                                    # backColor='#ffcb77', borderWidth=1, borderRadius=3, borderColor='#36a9d3'))
         self.styles.add(ParagraphStyle(name='Subtitle_Left', alignment=TA_LEFT, 
-                                    fontName='Poiret One', fontSize=16, textColor='#5c3c92', 
+                                    fontName='Poiret One', fontSize=16, textColor='#1a5d75', 
                                     leading=16, spaceBefore=6, spaceAfter=6))
         self.styles.add(ParagraphStyle(name='Normal_Center', alignment=TA_CENTER, 
-                                    fontName='Poiret One', fontSize=13, textColor='#077b8a', 
+                                    fontName='Poiret One', fontSize=13, textColor='#36a9d3', 
                                     leading=16, spaceBefore=6, spaceAfter=6))
         self.styles.add(ParagraphStyle(name='Normal_Left', alignment=TA_LEFT, 
-                                    fontName='Poiret One', fontSize=13, textColor='#077b8a', 
+                                    fontName='Poiret One', fontSize=13, textColor='#36a9d3', 
                                     leading=16, spaceBefore=6, spaceAfter=6))
         self.styles.add(ParagraphStyle(name='Boxed_Left', alignment=TA_LEFT, 
-                                    fontName='Poiret One', fontSize=13, textColor='#077b8a', 
+                                    fontName='Poiret One', fontSize=13, textColor='#36a9d3', 
                                     leading=16, spaceBefore=6, spaceAfter=6,
-                                    backColor='#a2d5c6', borderWidth=1, borderRadius=3, borderColor='#077b8a', borderPadding=4))
+                                    backColor='#ffcb77', borderWidth=1, borderRadius=3, borderColor='#36a9d3', borderPadding=4))
         
     def write(self, text, style = 'Normal_Left'):
         self.Story.append(Paragraph(text, self.styles[style]))
@@ -236,23 +236,23 @@ class Printer:
         for i, row in enumerate(data):
             styled_data.append([])
             if i == 0: #Horizontal Header
-                styled_data[i] = [Paragraph('<font color="#5c3c92">%s</font>' % text, self.styles['Normal_Center']) for text in row]
+                styled_data[i] = [Paragraph('<font color="#1a5d75">%s</font>' % text, self.styles['Normal_Center']) for text in row]
             else:
                 for j, text in enumerate(row):
                     if j == 0: #Vertical Header
-                        styled_data[i] = [Paragraph('<font color="#5c3c92">%s</font>' % text, self.styles['Normal_Center'])]
+                        styled_data[i] = [Paragraph('<font color="#1a5d75">%s</font>' % text, self.styles['Normal_Center'])]
                     else:
                         styled_data[i].append(Paragraph(text, self.styles['Normal_Center']))
         
         #TODO append every 7 days a new table
 
         t = Table(styled_data, style =[('ALIGN', (0,0), (-1,-1), 'CENTER'),
-                                ('BACKGROUND', (1,0), (-1,0), '#a2d5c6'),
-                                ('BACKGROUND', (0,1), (0,-1), '#a2d5c6'),
-                                ('GRID', (1,1), (-1,-1), 0.5, '#a2d5c6'),
-                                ('BOX', (1,0), (-1,0), 1, '#5c3c92'),
-                                ('BOX', (0,1), (0,-1), 1, '#5c3c92'),
-                                ('BOX', (1,1), (-1,-1), 1, '#077b8a')])
+                                ('BACKGROUND', (1,0), (-1,0), '#ffcb77'),
+                                ('BACKGROUND', (0,1), (0,-1), '#ffcb77'),
+                                ('GRID', (1,1), (-1,-1), 0.5, '#ffcb77'),
+                                ('BOX', (1,0), (-1,0), 1, '#1a5d75'),
+                                ('BOX', (0,1), (0,-1), 1, '#1a5d75'),
+                                ('BOX', (1,1), (-1,-1), 1, '#36a9d3')])
         self.Story.append(t)
     
     def write_in_grid(self, data):
@@ -261,7 +261,7 @@ class Printer:
             
             styled_data.append([])
             if i == 0: #Horizontal Header
-                styled_data[i] = [Paragraph('<font color="#5c3c92">%s</font>' % text, self.styles['Title_Left']) for text in row]
+                styled_data[i] = [Paragraph('<font color="#1a5d75">%s</font>' % text, self.styles['Title_Left']) for text in row]
             else:
                 for text in row:
                     
@@ -274,9 +274,9 @@ class Printer:
         rowH[0] = 1*cm
         colW = [7*cm, 1*cm, 11*cm]
 
-        t = Table(styled_data, style =[('BACKGROUND', (0,1), (0,1), '#a2d5c6'),
-                                        ('BACKGROUND', (2,1), (2,-1), '#a2d5c6'),
-                                        # ('BACKGROUND', (1,0), (-1,-1), '#a2d5c6'),
+        t = Table(styled_data, style =[('BACKGROUND', (0,1), (0,1), '#ffcb77'),
+                                        ('BACKGROUND', (2,1), (2,-1), '#ffcb77'),
+                                        # ('BACKGROUND', (1,0), (-1,-1), '#ffcb77'),
                                         ('VALIGN',(0,0),(-1,0),'BOTTOM'),
                                         ('VALIGN',(0,1),(-1, -1),'TOP'),
                                         ('LEFTPADDING', (0,0), (-1,-1), 10),
@@ -293,7 +293,7 @@ class Printer:
             
             styled_data.append([])
             if i == 0: #Horizontal Header
-                styled_data[i] = [Paragraph('<font color="#5c3c92">%s</font>' % text, self.styles['Title_Left']) for text in row]
+                styled_data[i] = [Paragraph('<font color="#1a5d75">%s</font>' % text, self.styles['Title_Left']) for text in row]
             else:
                 for text in row:
                     
@@ -306,9 +306,9 @@ class Printer:
         rowH[0] = 1*cm
         colW = [None]
 
-        t = Table(styled_data, style =[('BACKGROUND', (0,1), (0,1), '#a2d5c6'),
-                                        # ('BACKGROUND', (2,1), (2,-1), '#a2d5c6'),
-                                        # ('BACKGROUND', (1,0), (-1,-1), '#a2d5c6'),
+        t = Table(styled_data, style =[('BACKGROUND', (0,1), (0,1), '#ffcb77'),
+                                        # ('BACKGROUND', (2,1), (2,-1), '#ffcb77'),
+                                        # ('BACKGROUND', (1,0), (-1,-1), '#ffcb77'),
                                         ('VALIGN',(0,0),(-1,0),'BOTTOM'),
                                         ('VALIGN',(0,1),(-1, -1),'TOP'),
                                         ('LEFTPADDING', (0,0), (-1,-1), 10),
@@ -325,7 +325,7 @@ class Printer:
             I.drawWidth = size*cm
         t = Table([data], style =[
             ('ALIGN', (0,0), (-1,-1), 'CENTER'),
-            ('BOX', (0,0), (-1,-1), 2, '#ccc1ae'),
+            ('BOX', (0,0), (-1,-1), 2, '#fdf1d9'),
         ])
         self.Story.append(t)
 
@@ -333,7 +333,7 @@ class Printer:
         t = ListFlowable(
             [ListItem(Paragraph(item, self.styles['Normal_Left']), value='rarrowhead') for item in list],
             bulletType='bullet',
-            bulletColor='#5c3c92',
+            bulletColor='#1a5d75',
             start='rarrowhead'
         )
 
@@ -352,8 +352,8 @@ class Printer:
 
         #header
         canvas.setFont("Poiret One", 12)
-        canvas.setStrokeColor('#ccc1ae')
-        canvas.setFillColor('#5c3c92')
+        canvas.setStrokeColor('#fdf1d9')
+        canvas.setFillColor('#1a5d75')
         canvas.drawImage(self.dirname + '/UI/images/donut.png', x=1*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
         canvas.drawString(2.2*cm, 28*cm, 'À table')
         canvas.line(1.5*cm, 27.5*cm, 19.5*cm, 27.5*cm)
@@ -365,9 +365,9 @@ class Printer:
         canvas.drawImage(self.dirname + '/UI/images/icon_cocktail_3colors.png', x=19*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
         canvas.drawRightString(18.5*cm, 1.3*cm, 'Contact : notification.a.table@gmail.com')
         canvas.line(1.5*cm, 2.1*cm, 19.5*cm, 2.1*cm)
-        canvas.drawImage(self.dirname + '/UI/images/icon_coffee_header.png', x=2*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
-        canvas.drawImage(self.dirname + '/UI/images/icon_cover_3colors.png', x=4*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
-        canvas.drawImage(self.dirname + '/UI/images/icon_fork_header.png', x=6*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.dirname + '/UI/images/score_ete_8.png', x=2*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.dirname + '/UI/images/icon_cover_3colors_new.png', x=4*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.dirname + '/UI/images/score_vegan_8.png', x=6*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
         
 
         

@@ -9,17 +9,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2457</width>
-    <height>1015</height>
+    <width>2302</width>
+    <height>956</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>À Table !</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/**/
-    
-
+   <string notr="true">
+/**/
     QWidget{
         background-color:#fdf1d9;
         font-family:Poiret One;
@@ -619,8 +618,7 @@
         background: #36a9d3;
         border: 1px solid #36a9d3;
     }
-    
-
+/**/
 
 </string>
   </property>
@@ -665,7 +663,7 @@
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="iconSize">
           <size>
@@ -703,8 +701,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>2015</width>
-                <height>823</height>
+                <width>1942</width>
+                <height>766</height>
                </rect>
               </property>
               <attribute name="label">
@@ -807,54 +805,25 @@
                      <enum>QFrame::Raised</enum>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_13">
-                     <item row="0" column="10">
-                      <spacer name="horizontalSpacer_3">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item row="0" column="0">
-                      <widget class="QPushButton" name="pB_new_menu_2">
+                     <item row="0" column="6">
+                      <widget class="QLabel" name="label_dessert">
                        <property name="font">
                         <font>
                          <family>Poiret One</family>
-                         <pointsize>-1</pointsize>
+                         <pointsize>14</pointsize>
                          <weight>75</weight>
                          <italic>false</italic>
                          <bold>true</bold>
                         </font>
                        </property>
                        <property name="toolTip">
-                        <string>Nouvelle carte</string>
+                        <string>Desserts</string>
                        </property>
                        <property name="text">
                         <string/>
                        </property>
-                       <property name="iconSize">
-                        <size>
-                         <width>50</width>
-                         <height>50</height>
-                        </size>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="5">
-                      <widget class="QCheckBox" name="cB_restes_2">
-                       <property name="toolTip">
-                        <string>Le dernier repas, c'est les restes!</string>
-                       </property>
-                       <property name="text">
-                        <string>Restes</string>
-                       </property>
-                       <property name="checked">
-                        <bool>true</bool>
+                       <property name="pixmap">
+                        <pixmap>images/icon_cupcake_t.png</pixmap>
                        </property>
                       </widget>
                      </item>
@@ -865,6 +834,15 @@
                          <width>170</width>
                          <height>50</height>
                         </size>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Poiret One</family>
+                         <pointsize>-1</pointsize>
+                         <weight>75</weight>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
                        </property>
                        <property name="styleSheet">
                         <string notr="true"/>
@@ -886,24 +864,25 @@
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="7">
-                      <widget class="QSpinBox" name="sB_desserts_2">
+                     <item row="0" column="4">
+                      <widget class="QSpinBox" name="sB_days">
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
                          <height>50</height>
                         </size>
                        </property>
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
                        <property name="buttonSymbols">
                         <enum>QAbstractSpinBox::PlusMinus</enum>
+                       </property>
+                       <property name="keyboardTracking">
+                        <bool>false</bool>
+                       </property>
+                       <property name="suffix">
+                        <string> jours</string>
+                       </property>
+                       <property name="value">
+                        <number>7</number>
                        </property>
                       </widget>
                      </item>
@@ -923,7 +902,23 @@
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="11">
+                     <item row="0" column="5">
+                      <widget class="QCheckBox" name="cB_restes_2">
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>92</width>
+                         <height>50</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>Le dernier repas, c'est les restes!</string>
+                       </property>
+                       <property name="text">
+                        <string>Restes</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="10">
                       <widget class="QPushButton" name="pB_modif">
                        <property name="font">
                         <font>
@@ -951,6 +946,31 @@
                        </property>
                       </widget>
                      </item>
+                     <item row="0" column="0">
+                      <widget class="QPushButton" name="pB_new_menu_2">
+                       <property name="font">
+                        <font>
+                         <family>Poiret One</family>
+                         <pointsize>-1</pointsize>
+                         <weight>75</weight>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>Nouvelle carte</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>50</width>
+                         <height>50</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
                      <item row="0" column="1">
                       <widget class="QLabel" name="label_date">
                        <property name="text">
@@ -964,30 +984,29 @@
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="4">
-                      <widget class="QSpinBox" name="sB_days">
+                     <item row="0" column="7">
+                      <widget class="QSpinBox" name="sB_desserts_2">
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
                          <height>50</height>
                         </size>
                        </property>
+                       <property name="font">
+                        <font>
+                         <family>Poiret One</family>
+                         <weight>75</weight>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
                        <property name="buttonSymbols">
                         <enum>QAbstractSpinBox::PlusMinus</enum>
                        </property>
-                       <property name="keyboardTracking">
-                        <bool>false</bool>
-                       </property>
-                       <property name="suffix">
-                        <string> jours</string>
-                       </property>
-                       <property name="value">
-                        <number>7</number>
-                       </property>
                       </widget>
                      </item>
-                     <item row="0" column="6">
-                      <widget class="QLabel" name="label_dessert">
+                     <item row="0" column="5">
+                      <widget class="QCheckBox" name="cB_restes_2">
                        <property name="font">
                         <font>
                          <family>Poiret One</family>
@@ -998,15 +1017,28 @@
                         </font>
                        </property>
                        <property name="toolTip">
-                        <string>Desserts</string>
+                        <string>Le dernier repas, c'est les restes!</string>
                        </property>
                        <property name="text">
                         <string/>
                        </property>
-                       <property name="pixmap">
-                        <pixmap>images/icon_cupcake_t.png</pixmap>
+                       <property name="checked">
+                        <bool>true</bool>
                        </property>
                       </widget>
+                     </item>
+                     <item row="0" column="11">
+                      <spacer name="horizontalSpacer_3">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
                      </item>
                     </layout>
                    </widget>
@@ -1020,7 +1052,20 @@
                      <enum>QFrame::Raised</enum>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_14">
-                     <item row="0" column="3">
+                     <item row="0" column="0">
+                      <spacer name="horizontalSpacer_2">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item row="0" column="4">
                       <widget class="QPushButton" name="pB_save">
                        <property name="font">
                         <font>
@@ -1120,18 +1165,21 @@
                        </property>
                       </spacer>
                      </item>
-                     <item row="0" column="0">
-                      <spacer name="horizontalSpacer_2">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
+                     <item row="0" column="3">
+                      <widget class="QPushButton" name="pB_calendar">
+                       <property name="toolTip">
+                        <string>Copier dans l'Agenda</string>
                        </property>
-                       <property name="sizeHint" stdset="0">
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="iconSize">
                         <size>
-                         <width>40</width>
-                         <height>20</height>
+                         <width>50</width>
+                         <height>50</height>
                         </size>
                        </property>
-                      </spacer>
+                      </widget>
                      </item>
                     </layout>
                    </widget>
@@ -1146,8 +1194,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>522</width>
-                <height>176</height>
+                <width>1942</width>
+                <height>766</height>
                </rect>
               </property>
               <attribute name="label">
@@ -2868,6 +2916,9 @@ p, li { white-space: pre-wrap; }
                               <verstretch>0</verstretch>
                              </sizepolicy>
                             </property>
+                            <property name="frameShape">
+                             <enum>QFrame::NoFrame</enum>
+                            </property>
                            </widget>
                           </item>
                           <item row="1" column="0">
@@ -3519,6 +3570,35 @@ p, li { white-space: pre-wrap; }
             </property>
            </spacer>
           </item>
+          <item row="3" column="1">
+           <widget class="QFrame" name="frame_18">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Page Internet favorite :</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lE_homepage"/>
+             </item>
+             <item row="0" column="0" rowspan="2">
+              <widget class="QLabel" name="label_homepage">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -3725,8 +3805,8 @@ p, li { white-space: pre-wrap; }
      <y>157</y>
     </hint>
     <hint type="destinationlabel">
-     <x>143</x>
-     <y>284</y>
+     <x>185</x>
+     <y>279</y>
     </hint>
    </hints>
   </connection>
@@ -3737,8 +3817,8 @@ p, li { white-space: pre-wrap; }
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1029</x>
-     <y>727</y>
+     <x>1037</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
      <x>1746</x>
@@ -3753,8 +3833,8 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1029</x>
-     <y>727</y>
+     <x>1037</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -3769,12 +3849,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1029</x>
-     <y>727</y>
+     <x>1037</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1090</x>
-     <y>727</y>
+     <x>1098</x>
+     <y>898</y>
     </hint>
    </hints>
   </connection>
@@ -3785,8 +3865,8 @@ p, li { white-space: pre-wrap; }
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1090</x>
-     <y>727</y>
+     <x>1098</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
      <x>1746</x>
@@ -3801,8 +3881,8 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1090</x>
-     <y>727</y>
+     <x>1098</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -3817,12 +3897,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1090</x>
-     <y>727</y>
+     <x>1098</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1029</x>
-     <y>727</y>
+     <x>1037</x>
+     <y>898</y>
     </hint>
    </hints>
   </connection>
@@ -3833,12 +3913,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1697</x>
-     <y>645</y>
+     <x>1802</x>
+     <y>816</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1520</x>
-     <y>645</y>
+     <x>1625</x>
+     <y>816</y>
     </hint>
    </hints>
   </connection>
@@ -3849,12 +3929,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1697</x>
-     <y>645</y>
+     <x>1802</x>
+     <y>816</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1638</x>
-     <y>645</y>
+     <x>1743</x>
+     <y>816</y>
     </hint>
    </hints>
   </connection>
@@ -3865,12 +3945,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1697</x>
-     <y>645</y>
+     <x>1802</x>
+     <y>816</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1215</x>
-     <y>645</y>
+     <x>1320</x>
+     <y>816</y>
     </hint>
    </hints>
   </connection>
@@ -3881,12 +3961,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1697</x>
-     <y>645</y>
+     <x>1802</x>
+     <y>816</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1274</x>
-     <y>645</y>
+     <x>1379</x>
+     <y>816</y>
     </hint>
    </hints>
   </connection>
@@ -3897,12 +3977,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1697</x>
-     <y>645</y>
+     <x>1802</x>
+     <y>816</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1579</x>
-     <y>645</y>
+     <x>1684</x>
+     <y>816</y>
     </hint>
    </hints>
   </connection>
@@ -3913,12 +3993,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1697</x>
-     <y>645</y>
+     <x>1802</x>
+     <y>816</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1402</x>
-     <y>645</y>
+     <x>1507</x>
+     <y>816</y>
     </hint>
    </hints>
   </connection>
@@ -3929,12 +4009,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1697</x>
-     <y>645</y>
+     <x>1802</x>
+     <y>816</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1343</x>
-     <y>650</y>
+     <x>1448</x>
+     <y>821</y>
     </hint>
    </hints>
   </connection>
@@ -3945,12 +4025,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1697</x>
-     <y>645</y>
+     <x>1802</x>
+     <y>816</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1461</x>
-     <y>645</y>
+     <x>1566</x>
+     <y>816</y>
     </hint>
    </hints>
   </connection>
@@ -3961,12 +4041,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1090</x>
-     <y>727</y>
+     <x>1098</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
-     <x>968</x>
-     <y>727</y>
+     <x>976</x>
+     <y>898</y>
     </hint>
    </hints>
   </connection>
@@ -3977,12 +4057,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1029</x>
-     <y>727</y>
+     <x>1037</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
-     <x>968</x>
-     <y>727</y>
+     <x>976</x>
+     <y>898</y>
     </hint>
    </hints>
   </connection>
@@ -3993,12 +4073,12 @@ p, li { white-space: pre-wrap; }
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1701</x>
-     <y>181</y>
+     <x>1910</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1718</x>
-     <y>256</y>
+     <x>1930</x>
+     <y>350</y>
     </hint>
    </hints>
   </connection>
@@ -4009,8 +4089,8 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1029</x>
-     <y>727</y>
+     <x>1037</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
      <x>131</x>
@@ -4025,8 +4105,8 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1090</x>
-     <y>727</y>
+     <x>1098</x>
+     <y>898</y>
     </hint>
     <hint type="destinationlabel">
      <x>131</x>

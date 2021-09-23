@@ -283,23 +283,163 @@ Date;Recette
 2021-06-02;Rosties
 2021-06-03;Chicons gratin
 2021-06-03;Soupe de legumes
-2021-06-04;Salade du marché
+2021-06-04;Pates pois carrés
 2021-06-04;Oeufs à la coque
-2021-06-05;Poisson épinards riz
+2021-06-05;Poisson fenouil purée pommes de terre
 2021-06-05;Pates au pesto
 2021-06-06;Chicons gratin
-2021-06-06;Restes
-2021-09-04;Purée saucisse
-2021-09-04;Ratatouille
-2021-09-05;Roules au fromage
-2021-09-05;Poelée courgette champignon
-2021-09-06;Poisson purée
-2021-09-06;Tatin de poivron
-2021-09-07;Salade de riz
-2021-09-07;Grillades de porc
-2021-09-08;Cordon bleu
-2021-09-08;Burritos
-2021-09-09;Resto
-2021-09-09;Gnocchi haricots verts
-2021-09-10;Poisson épinards riz
-2021-09-10;Restes
+2021-06-06;Quiche champignon
+2021-06-07;Salade du marché
+2021-06-07;Muffins chorizo
+2021-06-08;Parmentier lentilles patates douces
+2021-06-08;Chorba
+2021-06-09;Salade du marché
+2021-06-09;Muffins chorizo
+2021-06-10;Salade du marché
+2021-06-10;Muffins chorizo
+2021-06-11;Parmentier lentilles patates douces
+2021-06-11;Oeufs brouillés
+2021-06-12;Ravioli
+2021-06-12;Chorba
+2021-06-13;Salade nouilles soba
+2021-06-13;Galettes
+2021-06-14;Couscous merguez
+2021-06-14;Tarte aux blettes
+2021-06-15;Fondue de poireaux
+2021-06-15;Clafoutis marbré tomates tapenade
+2021-06-16;Couscous merguez
+2021-06-16;Tarte aux blettes
+2021-06-17;Chicons gratin
+2021-06-17;Clafoutis marbré tomates tapenade
+2021-06-18;Salade du marché
+2021-06-18;Resto
+2021-06-19;Poisson fenouil purée pommes de terre
+2021-06-19;Gnocchi haricots verts
+2021-06-20;Poulet brique
+2021-06-20;Quiche aux poireaux
+2021-06-21;Crumble de légumes rotis
+2021-06-21;Gaufres patates douces avocat
+2021-06-22;Salade de riz
+2021-06-22;Wrap crudités
+2021-06-23;Crumble de légumes rotis
+2021-06-23;Salade nouilles soba
+2021-06-24;Salade de riz
+2021-06-24;Sandwich
+2021-06-28;Salade du marché
+2021-06-28;Dahl de lentilles
+2021-06-29;Ravioli
+2021-06-29;Quiche champignon
+2021-06-30;Purée saucisse
+2021-06-30;Dahl de lentilles
+2021-07-01;Salade du marché
+2021-07-01;Restes
+2021-07-02;Purée saucisse
+2021-07-02;Omelette
+2021-07-10;Crumble de légumes rotis
+2021-07-10;Tarte aux blettes
+2021-07-11;Absent
+2021-07-11;Soupe de poisson
+2021-07-12;Croque monsieur
+2021-07-12;Tomates Mozzarella
+2021-07-13;Poisson fenouil purée pommes de terre
+2021-07-13;Tarte tofu carotte
+2021-07-14;Chili con carne
+2021-07-14;Rosties
+2021-07-15;Pizza
+2021-07-15;Salade du marché
+2021-07-16;Chili con carne
+2021-07-16;Omelette
+2021-07-17;Moules frites
+2021-07-17;Restes | Pates jambon champignon
+2021-07-18;Fruits de mer | Risotto épinards champignons
+2021-07-18;Muffins vegan
+2021-07-19;Poulet brique
+2021-07-19;Tarte tofu carotte
+2021-07-20;Resto
+2021-07-20;Salade du marché
+2021-07-21;Aubergines roulées | Risotto épinards champignons
+2021-07-21;Gnocchi haricots verts
+2021-07-22;Ravioli
+2021-07-22;Salade du marché
+2021-07-23;Poisson fenouil purée pommes de terre
+2021-07-23;Resto
+2021-08-08;Quiche classique
+2021-08-08;Salade de riz
+2021-08-09;Poisson fenouil purée pommes de terre
+2021-08-09;Melon garni
+2021-08-10;Crumble de légumes rotis
+2021-08-10;Dahl de lentilles
+2021-08-11;Crumble de légumes rotis
+2021-08-11;Pates au pesto
+2021-08-12;Salade de légumineuses | Purée de patates douces
+2021-08-12;Dahl de lentilles
+2021-08-13;Tomates Mozzarella | Blanc de poulet
+2021-08-13;Oeufs à la coque | Crepes
+2021-08-14;Restes
+2021-08-14;Pizza
+2021-08-15;Escalope de veau
+2021-08-15;Crèpes forestières
+2021-08-16;Restes
+2021-08-16;Gaspacho (Andalousie)
+2021-08-17;Poulet brique
+2021-08-17;Croque monsieur
+2021-08-18;Couscous merguez
+2021-08-18;Tarte tomate
+2021-08-19;Salade du marché
+2021-08-19;Resto
+2021-08-20;Restes
+2021-08-20;Oeufs brouillés
+2021-08-21;Chili sin carne
+2021-08-21;Chicons gratin
+2021-08-22;Poisson purée
+2021-08-22;Pizza
+2021-08-23;Salade nouilles soba
+2021-08-23;Champignons farci
+2021-08-24;Blanc de poulet | Légumes rotis
+2021-08-24;Tarte au Maroilles
+2021-08-25;Quinoa brocoli canneberges
+2021-08-25;Couscous vegan
+2021-08-26;Ravioli
+2021-08-26;Restes
+2021-08-28;Couscous vegan
+2021-08-28;Muffins chorizo
+2021-08-29;Pates gorgonzola poires
+2021-08-29;Champignons farci
+2021-08-30;Couscous vegan
+2021-08-30;Gaspacho (Andalousie)
+2021-08-31;Dahl de lentilles
+2021-08-31;Poêlée de champignons et purée de pois cassés
+2021-09-01;Blanc de poulet | Légumes rotis
+2021-09-01;Coleslaw
+2021-09-02;Dahl de lentilles
+2021-09-02;Surprises du marché
+2021-09-03;Salade du marché
+2021-09-03;Omelette
+2021-09-04;Poisson épinards riz
+2021-09-04;Salade du marché
+2021-09-05;Poulet brique
+2021-09-05;Galettes
+2021-09-06;Chili sin carne
+2021-09-06;Rosties
+2021-09-07;Poulet brique
+2021-09-07;Tarte tomate
+2021-09-08;Chicons gratin
+2021-09-08;Salade de lentilles
+2021-09-09;Crumble de légumes rotis
+2021-09-09;Restes
+2021-09-10;Couscous vegan
+2021-09-10;Oeufs à la coque | Apéro ++
+2021-09-11;Tartare frites
+2021-09-11;Gnocchi haricots verts | Gateau au chocolat
+2021-09-12;Chili sin carne
+2021-09-12;Galettes
+2021-09-13;Salade du marché
+2021-09-13;Muffins vegan
+2021-09-14;Chili sin carne
+2021-09-14;Risotto épinards champignons
+2021-09-15;Flan de courge
+2021-09-15;Muffins vegan
+2021-09-16;Nouilles soba shiitake tofu
+2021-09-16;Risotto épinards champignons
+2021-09-17;Flan de courge
+2021-09-17;Oeufs brouillés | Apéro ++

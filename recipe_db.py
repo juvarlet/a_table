@@ -124,6 +124,17 @@ class RecipeDB:
 
     def contains(self, recipe_name):
         return recipe_name in get_recipe_names(self.recipe_list)
+    
+    def get_recipes_from_date(self, dates):
+        result = list(dates)
+        for date in dates:
+            date_text = date_to_text(date)
+            for e in self.history:
+                h_date_text, lunch_recipe_str, dinner_recipe_str = e
+                if date_text == h_date_text:
+                    
+                    break
+                
 
     
 def get_recipe_sublist(recipe_list, tagsIn = [], tagsOut = []):

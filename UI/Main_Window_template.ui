@@ -26,9 +26,8 @@
    <string>À Table !</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/**/
-    
-
+   <string notr="true">
+/**/
     QWidget{
         background-color:##color5#;
         font-family:Poiret One;
@@ -628,9 +627,7 @@
         background: ##color1_bright#;
         border: 1px solid ##color1_bright#;
     }
-    
-
-
+/**/
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -878,7 +875,7 @@
                         <string>Le dernier repas, c'est les restes!</string>
                        </property>
                        <property name="text">
-                        <string>Restes</string>
+                        <string></string>
                        </property>
                        <property name="checked">
                         <bool>true</bool>
@@ -1048,6 +1045,22 @@
                        </property>
                        <property name="pixmap">
                         <pixmap>images/icon_cupcake_t.png</pixmap>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="8">
+                      <widget class="QPushButton" name="pB_import">
+                       <property name="toolTip">
+                        <string>Importer l'Historique</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>50</width>
+                         <height>50</height>
+                        </size>
                        </property>
                       </widget>
                      </item>
@@ -3491,6 +3504,35 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="3" column="1">
+           <widget class="QFrame" name="frame_18">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Page Internet favorite :</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lE_homepage"/>
+             </item>
+             <item row="0" column="0" rowspan="2">
+              <widget class="QLabel" name="label_homepage">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>

@@ -14,11 +14,14 @@ class IngredientItem(UIDWidget):
     on_btn_confirm_changes_clicked = Signal(str)
     on_btn_rm_item_clicked = Signal(str)
 
-    def __init__(self, ingredient:Ingredient, lw_ingredients=None, parent=None):
+    # def __init__(self, ingredient:Ingredient, lw_ingredients=None, parent=None):
+    def __init__(self, ingredient:Ingredient, ui = None, parent=None):
         super(IngredientItem, self).__init__(parent)
 
-        self.parent_widget = self.parentWidget()
-        self.lw_ingredients = lw_ingredients
+        
+        self.parent_widget = ui
+        self.loadUI(self.parent_widget)
+        # self.lw_ingredients = lw_ingredients
         self.saveComponents()
         self.selectWidgetMode()
 
@@ -38,7 +41,13 @@ class IngredientItem(UIDWidget):
         self.btn_edit_ing.clicked.connect(self.showEditWidget)
         self.btn_cancel_changes.clicked.connect(self.cancelChanges)
         self.btn_confirm_changes.clicked.connect(self.confirmChanges)
-
+    
+    def loadUI(self, widget):
+        vlayout = QVBoxLayout()
+        vlayout.setMargin(0)
+        vlayout.addWidget(widget)
+        self.setLayout(vlayout)
+    
     def saveComponents(self):
         self.widget_show_ing:QWidget
         self.widget_show_ing = self.parent_widget.widget_show_ing
