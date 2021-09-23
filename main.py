@@ -1530,6 +1530,8 @@ class MainGUI(QWidget):
         self.tB_preparation.setText(recipe.preparation.replace('\n', '<br/>'))
 
     def populate_ing_list(self, recipe:Recipe): #OK but can be improved
+        if self.lw_ingredients.count : #vider la liste si elle n'est pas deja vide
+            self.lw_ingredients.clear()
         if recipe.ing_list is None:
             return
         mand_ing_list, opt_ing_list = recipe.get_mandatory_and_optional_ing_lists()
