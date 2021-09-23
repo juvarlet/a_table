@@ -3,6 +3,7 @@ from uid_widget import UIDWidget
 from ingredient import Ingredient
 import string
 from ingredient_item import IngredientItem
+from stacked_recipes import StackedRecipes
 import os
 from os.path import basename
 
@@ -16,6 +17,7 @@ import google_api as gapi
 import printer
 import html_parser as web
 import custom_widgets as cw
+import stacked_recipes as sr
 from datetime import date, timedelta
 from pyperclip import copy
 from shutil import copy2
@@ -794,7 +796,7 @@ class MainGUI(QWidget):
             recipe_lunch, recipe_dinner = recipes_of_day
             # text_lunch, text_dinner = (recipe_lunch.name, recipe_dinner.name)
             # # print((text_lunch, self.recipe_db.background_score(recipe_lunch, self.current_menu.start_day)))
-            qtwi_lunch, qtwi_dinner = (QTableWidgetItem(cw.row_column_to_id(0,i)), QTableWidgetItem(cw.row_column_to_id(1,i)))
+            qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
             # qtwi_lunch.setTextAlignment(Qt.AlignCenter)
             # qtwi_dinner.setTextAlignment(Qt.AlignCenter)
 
@@ -819,23 +821,21 @@ class MainGUI(QWidget):
             elif type(recipe_dinner) == list:
                 recipe_dinner_stack = recipe_dinner
             
-            stacked_lunch = cw.create_stack(recipe_lunch_stack, self.recipe_db, id = idplus)
-            stacked_dinner = cw.create_stack(recipe_dinner_stack, self.recipe_db, id = idminus)
+            stacked_lunch = StackedRecipes(recipe_lunch_stack, self.recipe_db, id = idplus)
+            stacked_dinner = StackedRecipes(recipe_dinner_stack, self.recipe_db, id = idminus)
             
-            stacked_lunch.signal.sig.connect(self.on_enter_recipe_stack)
-            stacked_lunch.signal2.sig2.connect(self.on_lock_for_edition)
-            stacked_lunch.signal3.sig3.connect(self.on_update_current_menu)
-            stacked_dinner.signal.sig.connect(self.on_enter_recipe_stack)
-            stacked_dinner.signal2.sig2.connect(self.on_lock_for_edition)
-            stacked_dinner.signal3.sig3.connect(self.on_update_current_menu)
+            stacked_lunch.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            stacked_lunch.on_lock_for_edition.connect(self.on_lock_for_edition)
+            stacked_lunch.on_update_current_menu.connect(self.on_update_current_menu)
+            stacked_dinner.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            stacked_dinner.on_lock_for_edition.connect(self.on_lock_for_edition)
+            stacked_dinner.on_update_current_menu.connect(self.on_update_current_menu)
             
             self.stacks[idplus] = stacked_lunch
             self.stacks[idminus] = stacked_dinner
             
-            qtwi_lunch = stacked_lunch.parentWidget()
-            qtwi_dinner = stacked_dinner.parentWidget()
-            # qtwi_lunch = cw.style_factory(qtwi_lunch, self.init_colors, self.colors)
-            # qtwi_dinner = cw.style_factory(qtwi_dinner, self.init_colors, self.colors)
+            qtwi_lunch = stacked_lunch
+            qtwi_dinner = stacked_dinner
             
             self.tW_menu.setCellWidget(0, i, qtwi_lunch)
             self.tW_menu.setCellWidget(1, i, qtwi_dinner)
@@ -903,34 +903,34 @@ class MainGUI(QWidget):
             # qtwi.setTextAlignment(Qt.AlignCenter)
             #and insert in from_cell (now empty after drop)
             from_row, from_column = self.from_cell
-            qtwi_to = QTableWidgetItem(cw.row_column_to_id(row,column))
+            qtwi_to = QTableWidgetItem(sr.row_column_to_id(row,column))
             self.tW_menu.setItem(from_row, from_column, qtwi_to)
             # self.tW_menu.setItem(from_row, from_column, qtwi)
 
             # cw.display_image(original_to_cell_recipe, self.dirname, qtwi, icon = True)
             
             #take stack from original to_cell and from_cell
-            original_to_cell_stack = self.stacks[cw.row_column_to_id(row, column)]
-            original_from_cell_stack = self.stacks[cw.row_column_to_id(from_row, from_column)]
+            original_to_cell_stack = self.stacks[sr.row_column_to_id(row, column)]
+            original_from_cell_stack = self.stacks[sr.row_column_to_id(from_row, from_column)]
             
             original_to_cell_stack_list = original_to_cell_stack.recipe_list
             original_from_cell_stack_list = original_from_cell_stack.recipe_list
             
-            new_stacked_to = cw.create_stack(original_from_cell_stack_list, self.recipe_db, id = cw.row_column_to_id(row, column))
-            new_stacked_from = cw.create_stack(original_to_cell_stack_list, self.recipe_db, id = cw.row_column_to_id(from_row, from_column))
+            new_stacked_to = StackedRecipes(original_from_cell_stack_list, self.recipe_db, id = sr.row_column_to_id(row, column))
+            new_stacked_from = StackedRecipes(original_to_cell_stack_list, self.recipe_db, id = sr.row_column_to_id(from_row, from_column))
             
-            new_stacked_to.signal.sig.connect(self.on_enter_recipe_stack)
-            new_stacked_to.signal2.sig2.connect(self.on_lock_for_edition)
-            new_stacked_to.signal3.sig3.connect(self.on_update_current_menu)
-            new_stacked_from.signal.sig.connect(self.on_enter_recipe_stack)
-            new_stacked_from.signal2.sig2.connect(self.on_lock_for_edition)
-            new_stacked_from.signal3.sig3.connect(self.on_update_current_menu)
+            new_stacked_to.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            new_stacked_to.on_lock_for_edition.connect(self.on_lock_for_edition)
+            new_stacked_to.on_update_current_menu.connect(self.on_update_current_menu)
+            new_stacked_from.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            new_stacked_from.on_lock_for_edition.connect(self.on_lock_for_edition)
+            new_stacked_from.on_update_current_menu.connect(self.on_update_current_menu)
             
-            self.stacks[cw.row_column_to_id(row, column)] = new_stacked_to
-            self.stacks[cw.row_column_to_id(from_row, from_column)] = new_stacked_from
+            self.stacks[sr.row_column_to_id(row, column)] = new_stacked_to
+            self.stacks[sr.row_column_to_id(from_row, from_column)] = new_stacked_from
             
-            qtwi_to = new_stacked_to.parentWidget()
-            qtwi_from = new_stacked_from.parentWidget()
+            qtwi_to = new_stacked_to
+            qtwi_from = new_stacked_from
             self.tW_menu.setCellWidget(from_row, from_column, qtwi_from)
             self.tW_menu.setCellWidget(row, column, qtwi_to)
             
@@ -963,7 +963,7 @@ class MainGUI(QWidget):
                 
             #reinit qtwi text (for consistency or possible reuse)
             for i in range(self.tW_menu.columnCount()):
-                qtwi_lunch, qtwi_dinner = (QTableWidgetItem(cw.row_column_to_id(0,i)), QTableWidgetItem(cw.row_column_to_id(1,i)))
+                qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
                 self.tW_menu.setItem(0, i, qtwi_lunch)
                 self.tW_menu.setItem(1, i, qtwi_dinner)
             
@@ -1558,9 +1558,7 @@ class MainGUI(QWidget):
 
     def add_new_ingredient_to_list(self, ingredient:Ingredient):
         #TODO : handle the case were the ingredient is already in the list
-        ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
-        # ing_item = IngredientItem(ingredient, self.lw_ingredients, parent = QUiLoader().load(ui_file))
-        ing_item = IngredientItem(ingredient, ui = QUiLoader().load(ui_file))
+        ing_item = IngredientItem(ingredient)
         ing_item.on_btn_confirm_changes_clicked.connect(self.on_btn_confirm_changes_clicked)
         ing_item.on_btn_rm_item_clicked.connect(self.rm_ing_item_from_list)
         if ingredient.name == "" and ingredient.qty_unit == "" and ingredient.qty == -1:
@@ -1568,15 +1566,8 @@ class MainGUI(QWidget):
 
         list_widget_item = QListWidgetItem()
         list_widget_item.setSizeHint(QSize(0,30))
-        
-        # ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
-       
-        # test_widget = QUiLoader().load(ui_file)
-
         self.lw_ingredients.addItem(list_widget_item)
-        # self.lw_ingredients.setItemWidget(list_widget_item,ing_item.parent_widget)
         self.lw_ingredients.setItemWidget(list_widget_item,ing_item)
-        # self.lw_ingredients.setItemWidget(list_widget_item,test_widget)
         
     def on_confirm_recipe(self):
         #check if ok to save
@@ -1888,19 +1879,19 @@ class MainGUI(QWidget):
             actionLunch = QAction(menuDay)
             actionLunch.setText('Midi')
             actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color_2.png'))
-            lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(0, i)].recipe_list))
+            lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[sr.row_column_to_id(0, i)].recipe_list))
             actionLunch.setToolTip(lunchToolTip)
             
-            mapper.setMapping(actionLunch, cw.row_column_to_id(0, i))
+            mapper.setMapping(actionLunch, sr.row_column_to_id(0, i))
             actionLunch.triggered.connect(mapper.map)
             
             actionDinner = QAction(menuDay)
             actionDinner.setText('Soir')
             actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color_2.png'))
-            dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(1, i)].recipe_list))
+            dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[sr.row_column_to_id(1, i)].recipe_list))
             actionDinner.setToolTip(dinnerToolTip)
             
-            mapper.setMapping(actionDinner, cw.row_column_to_id(1, i))
+            mapper.setMapping(actionDinner, sr.row_column_to_id(1, i))
             actionDinner.triggered.connect(mapper.map)
             
             menuDay.addAction(actionLunch)
