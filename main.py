@@ -2187,7 +2187,7 @@ def start(recipe_db):
     
     sys.exit(app.exec_())
 
-def debug():
+def debug(input = None):
     #Backend code debug
     # input_csv = '/home/jv/Documents/MyScripts/VSCODE/PY/Recipe/MesRecettes.ods'
     # my_recipe_DB = recipe_db.RecipeDB(input_csv)
@@ -2207,14 +2207,18 @@ def debug():
     # print(myMenu.tag_score('vegan'))
     
     # pass
-    s = '250 l'
-    qty = extract_number(s)
-    print(qty)
+    # s = '250 l'
+    # qty = extract_number(s)
+    # print(qty)
     # import re
 
     # myString = "This is my tweet check it out https://example.com/blah"
 
     # print(re.search("(?P<url>https?://[^\s]+)", myString).group("url"))
+    try:
+        print('hello %i' % input )
+    except:
+        debug(1)
 
 def main(): #Entry point
 

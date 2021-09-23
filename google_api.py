@@ -1,6 +1,6 @@
 from __future__ import print_function
 import datetime
-import os.path
+import os
 import sys
 from re import S
 import socket
@@ -317,6 +317,7 @@ class MyCalendar(QThread):#QThread
         self.signal = MySignal()
         self.dirname = os.path.dirname(__file__)
         self.icon_path = self.dirname + '/UI/images/icon_calendar.png'
+        self.occurences = 0
         
     def run(self):
         debug = True
@@ -396,8 +397,17 @@ class MyCalendar(QThread):#QThread
             
             self.signal.sig.emit(message, self.icon_path)
         except:
-            self.signal.sig.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
-            print(sys.exc_info())
+            if self.occurences < 2:
+                print('Request failed, trying to regenerate token with authorization process...')
+                #delete token.json and run again
+                if os.path.exists('token.json'):
+                    os.remove('token.json')
+                #increment occurences
+                self.occurences += 1
+                self.run()
+            else:
+                self.signal.sig.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
+                print(sys.exc_info())
 
 class MyMailbox(QThread):
     
@@ -408,6 +418,7 @@ class MyMailbox(QThread):
         QThread.__init__(self)
         self.sender = 'notification.a.table@gmail.com'
         self.option = option
+        self.occurences = 0
         
         if self.option == 'shopping':
             my_menu, to_email, images, images_dict = list_args
@@ -590,11 +601,18 @@ class MyMailbox(QThread):
             # print('Message %s sent to %s' % (subject, to_email))
             self.signal.sig.emit('Message "%s" envoyé à %s' % (subject, to_email), self.icon_path)
         except:
-            print(sys.exc_info())
-            # self.signal.sig.emit("Votre autorisation pour l'envoi de messages a probablement expiré, vous pouvez demander une mise à jour à " +
-            #                      "<a href='mailto:%s?Subject=Token expiré'>%s</a>" % (self.sender, self.sender), '')
-            self.signal.sig.emit("Erreur lors de l'envoi du message '%s' à %s" % (subject, to_email), "")
-
+            if self.occurences < 2:
+                print('Request failed, trying to regenerate token with authorization process...')
+                #delete token.json and run again
+                if os.path.exists('token.json'):
+                    os.remove('token.json')
+                #increment occurences
+                self.occurences += 1
+                self.run()
+            else:
+                print(sys.exc_info())
+                self.signal.sig.emit("Erreur lors de l'envoi du message '%s' à %s" % (subject, to_email), "")
+            
 
 if __name__ == '__main__':
     # add_event_standalone(title='Hello', description='tout va bien', start= datetime.datetime(2021,9,10,11))
