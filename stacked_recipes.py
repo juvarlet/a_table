@@ -28,10 +28,6 @@ class StackedRecipes(QWidget):
         self.initial_state()
         self.connect_actions()
         self.setObjectName('stack')
-        # self.form_ancestor = cw.getFormAncestor(self)
-        # self.form_ancestor.setObjectName(self.form_ancestor.objectName() + str(id))
-        # # print(self.form_ancestor.objectName())
-        # print(self.form_ancestor.parentWidget())
         
     def loadUI(self):
         vlayout = QVBoxLayout()

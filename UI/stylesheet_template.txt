@@ -717,3 +717,26 @@ QMenu::item {
     icon-size:50px 50px;
 }
 /**/
+##ingredient_item.ui##
+/**/
+QPushButton#btn_ing_is_optional, QPushButton#btn_ing_is_optional_2 {
+    background-color: ##color5#;
+    border-style: outset;
+    border-width: 0px;
+    border-radius: 0px;
+    border-color: ##color5#;
+    font: 18px;
+    /*min-width: 10em;*/
+    padding: 4px;
+    color:##color1_dark#;
+}
+
+QPushButton#btn_ing_is_optional:hover, QPushButton#btn_ing_is_optional_2:hover {
+    color:##color2#;
+}
+
+QPushButton#btn_ing_is_optional:pressed, QPushButton#btn_ing_is_optional_2:pressed, QPushButton#btn_ing_is_optional:checked, QPushButton#btn_ing_is_optional_2:checked {
+    color:##color3_dark#;
+    font: bold 20px;
+}
+/**/

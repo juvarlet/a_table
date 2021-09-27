@@ -4,6 +4,7 @@ from ingredient import Ingredient
 import string
 from ingredient_item import IngredientItem
 from stacked_recipes import StackedRecipes
+from user_settings import UserSettings
 import os
 from os.path import basename
 
@@ -102,7 +103,6 @@ class MainGUI(QWidget):
         self.default_storage = self.dirname + '/Mes_Fiches/'
         self.homepage = QUrl("https://www.google.com/")
         self.user_id_file = self.dirname + '/user.id'
-        self.init_user_settings()
         
         self.recipe_image_path = ''
         self.myThreads = []
@@ -120,8 +120,7 @@ class MainGUI(QWidget):
         self.frame = self.pW.frame
         self.frame_settings: QFrame
         self.frame_settings = self.pW.frame_settings
-        self.label_user: QLabel
-        self.label_user = self.pW.label_user
+        
         #-tab menu
         self.tab_menus: QWidget
         self.tab_menus = self.pW.tab_menus
@@ -129,14 +128,10 @@ class MainGUI(QWidget):
         self.tB = self.pW.toolBox
         self.label_date: QLabel
         self.label_date = self.pW.label_date
-        self.label_dessert: QLabel
-        self.label_dessert = self.pW.label_dessert
         self.cB_restes: QCheckBox
         self.cB_restes = self.pW.cB_restes_2
         self.dateEdit: QDateEdit
         self.dateEdit = self.pW.dateEdit_2
-        self.sB_desserts: QSpinBox
-        self.sB_desserts = self.pW.sB_desserts_2
         self.sB_days: QSpinBox
         self.sB_days = self.pW.sB_days
         self.p_carte: QWidget
@@ -147,8 +142,6 @@ class MainGUI(QWidget):
         self.pB_calendar = self.pW.pB_calendar
         self.pB_new_menu: QPushButton
         self.pB_new_menu = self.pW.pB_new_menu_2
-        self.pB_modif: QPushButton
-        self.pB_modif = self.pW.pB_modif
         self.tW_menu: QTableWidget
         self.tW_menu = self.pW.tW_menu
         self.score_vegan: QLabel
@@ -250,13 +243,8 @@ class MainGUI(QWidget):
         self.img_dish: QLabel
         self.img_dish = self.pW.img_dish
 
-
-        #self.tW_ingredients: QTableWidget
-        #self.tW_ingredients = self.pW.tW_ingredients
-
         self.lw_ingredients: QListWidget
         self.lw_ingredients = self.pW.lw_ingredients
-
 
         self.sB_time: QSpinBox
         self.sB_time = self.pW.sB_time
@@ -360,30 +348,8 @@ class MainGUI(QWidget):
         self.label_deco_16: QLabel
         self.label_deco_16 = self.pW.label_deco_16
         #tab settings
-        self.pB_ok_3: QPushButton
-        self.pB_ok_3 = self.pW.pB_ok_3
-        self.pB_cancel_3: QPushButton
-        self.pB_cancel_3 = self.pW.pB_cancel_3
-        self.lE_email: QLineEdit
-        self.lE_email = self.pW.lE_email
-        self.sB_settings_days: QSpinBox
-        self.sB_settings_days = self.pW.sB_settings_days
-        self.lE_storage: QLineEdit
-        self.lE_storage = self.pW.lE_storage
-        self.tB_storage: QToolBox
-        self.tB_storage = self.pW.toolButton
-        self.lE_homepage: QLineEdit
-        self.lE_homepage = self.pW.lE_homepage
-        self.label_contact: QLabel
-        self.label_contact = self.pW.label_contact
-        self.img_settings_email: QLabel
-        self.img_settings_email = self.pW.img_settings_email
-        self.img_settings_days: QLabel
-        self.img_settings_days = self.pW.img_settings_days
-        self.img_settings_storage: QLabel
-        self.img_settings_storage = self.pW.img_settings_storage
-        self.label_homepage: QLabel
-        self.label_homepage = self.pW.label_homepage
+        self.vL_settings: QVBoxLayout
+        self.vL_settings = self.pW.vL_settings
 
         self.init_colors = {'RED' :         ('#d72631', [215,38,49]),
                     'LIGHT_GREEN' :         ('#a2d5c6', [162,213,198]),
@@ -474,13 +440,6 @@ class MainGUI(QWidget):
         self.tW_menu.setIconSize(QSize(160, 160))
         self.tW_menu.verticalHeader().setDefaultAlignment(Qt.AlignCenter)
         self.tW_menu.viewport().installEventFilter(self)
-
-        self.pB_modif.setEnabled(False)
-        
-        #transition before complete deletion
-        self.pB_modif.hide()
-        self.label_dessert.hide()
-        self.sB_desserts.hide()
         
         self.pB_save.setEnabled(False)
         
@@ -509,6 +468,7 @@ class MainGUI(QWidget):
         self.reset_history()
         
         #User settings
+        self.init_user_settings()
         self.user_settings_ui()
         
         #webBrowser
@@ -519,7 +479,7 @@ class MainGUI(QWidget):
 
         cw.load_pic(self.label_date, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
         # cw.load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
-        cw.load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
+        # cw.load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
         # load_pic(self.label_dessert_2, self.dirname + '/UI/images/tag_dessert_color_LD.png')
         self.tW.setTabIcon(0,QIcon(self.dirname + '/UI/images/icon_chef_3colors.png'))
         self.tW.setTabIcon(1,QIcon(self.dirname + '/UI/images/icon_recipe_3colors.png'))
@@ -569,20 +529,11 @@ class MainGUI(QWidget):
         self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_cancel_2.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
         self.pB_ok_2.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
-        self.pB_cancel_3.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_ok_3.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_modif_2.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_new_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_new_recipe.png'))
         self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
         self.pB_photo.setIcon(QIcon(self.dirname + '/UI/images/icon_photo.png'))
         
-        self.img_settings_email.setPixmap(QPixmap(self.dirname + '/UI/images/icon_send.png').scaled(40,40))
-        self.img_settings_days.setPixmap(QPixmap(self.dirname + '/UI/images/icon_date_3colors_t_LD.png').scaled(40,40))
-        self.img_settings_storage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_print.png').scaled(40,40))
-        self.label_homepage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_web_search_gp.png').scaled(40,40))
-        # load_pic(self.img_settings_days, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
-        # load_pic(self.img_settings_storage, self.dirname + '/UI/images/icon_print.png')
-
     def main(self):
         self.pW.show()
 
@@ -590,7 +541,6 @@ class MainGUI(QWidget):
         self.pB_new_menu.clicked.connect(self.on_new_menu)
         self.tW_menu.cellDoubleClicked.connect(self.on_card_recipe_selection)
         self.tW_history.cellDoubleClicked.connect(self.on_history_recipe_selection)
-        # self.pB_modif.clicked.connect(self.on_card_modif)
         self.pB_save.clicked.connect(self.on_save_menu)
         self.pB_calendar.clicked.connect(self.on_calendar)
         self.pB_ok.clicked.connect(self.on_confirm_history_update)
@@ -609,9 +559,6 @@ class MainGUI(QWidget):
         self.pB_cancel_2.clicked.connect(self.on_cancel_recipe)
         self.pB_photo.clicked.connect(self.on_add_photo)
         self.pB_user.clicked.connect(self.on_user_settings)
-        self.tB_storage.clicked.connect(lambda : self.openDir(self.lE_storage, u'de sauvegarde des fiches', dirpath = self.default_storage))
-        self.pB_ok_3.clicked.connect(self.on_save_settings)
-        self.pB_cancel_3.clicked.connect(self.on_quit_settings)
         self.lW_recipe.customContextMenuRequested.connect(self.on_recipe_right_click)
         self.tW_history.customContextMenuRequested.connect(self.on_history_right_click)
         self.cB_web.stateChanged.connect(self.on_show_web)
@@ -623,7 +570,6 @@ class MainGUI(QWidget):
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
         self.lw_ingredients.itemEntered.connect(self.dummy_function)
         self.lE_title.textChanged.connect(self.on_title_changed)
-        # self.sB_desserts.valueChanged.connect(self.on_dessert_selection)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
         self.lE_with.textChanged.connect(self.dynamic_filter)
@@ -857,7 +803,6 @@ class MainGUI(QWidget):
             self.pB_new_menu.setEnabled(False)
             self.dateEdit.setEnabled(False)
             self.sB_days.setEnabled(False)
-            self.sB_desserts.setEnabled(False)
             self.cB_restes.setEnabled(False)
             self.pB_save.setEnabled(False)
         elif (not lock) and id == self.lockKeyId:
@@ -866,7 +811,6 @@ class MainGUI(QWidget):
             self.pB_new_menu.setEnabled(True)
             self.dateEdit.setEnabled(True)
             self.sB_days.setEnabled(True)
-            self.sB_desserts.setEnabled(True)
             self.cB_restes.setEnabled(True)
             self.pB_save.setEnabled(True)
             self.populate_shopping_list()
@@ -1353,7 +1297,10 @@ class MainGUI(QWidget):
                 self.default_email = text
 
                 with open(self.user_id_file, 'w') as f:
-                    f.write(self.default_email)
+                    f.write(';'.join([self.default_email, 
+                                    str(self.default_nb_days), 
+                                    self.default_storage,
+                                    self.homepage.toString()]))
 
         images = [self.dirname + '/UI/images/icon_menu_3colors_LD.png']
         images.append(self.dirname + '/UI/images/icon_shopping_cart_LD.png')
@@ -1398,8 +1345,11 @@ class MainGUI(QWidget):
             if ok:
                 self.default_email = text
 
-                with open(user_id_file, 'w') as f:
-                    f.write(self.default_email)
+                with open(self.user_id_file, 'w') as f:
+                    f.write(';'.join([self.default_email, 
+                                    str(self.default_nb_days), 
+                                    self.default_storage,
+                                    self.homepage.toString()]))
 
         recipe_name = self.lW_recipe.currentItem().text()
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
@@ -1795,44 +1745,25 @@ class MainGUI(QWidget):
                     self.default_email, nb_days, self.default_storage, homepage = data
                     self.default_nb_days = int(nb_days)
                     self.homepage = QUrl(homepage)
-                    
+        
+        
+        user_settings = UserSettings()
+        user_settings.on_save.connect(self.on_save_settings)
+        user_settings.on_quit.connect(self.on_quit_settings)
+        user_settings.on_error.connect(self.display_error)
+        self.vL_settings.addWidget(user_settings)
+        
     def on_user_settings(self):
         self.frame_settings.show()
         self.frame.hide()
-        
-        # if os.path.isfile(self.user_id_file):
-        #     with open(self.user_id_file, 'r') as f:
-        #         #for legacy compatibility
-        #         data = f.readline().strip().split(';')
-        #         if len(data) == 1:
-        #             self.default_email = data[0]
-        #         else:
-        #             self.default_email, nb_days, self.default_storage = data
-        #             self.default_nb_days = int(nb_days)
-        self.lE_email.setText(self.default_email)
-        self.sB_settings_days.setValue(self.default_nb_days)
-        self.lE_storage.setText(self.default_storage)
-        self.lE_homepage.setText(self.homepage.toString())
     
-    def on_save_settings(self):
-        self.default_email = self.lE_email.text()
-        self.default_nb_days = self.sB_settings_days.value()
-        storage = self.lE_storage.text()
-        if os.path.isdir(storage):
-            self.default_storage = storage
-        else:
-            self.default_storage = self.dirname + '/Mes_Fiches/'
-            self.display_error("Le chemin pour l'enregistrement des fiches n'est pas valide," +
-                               " l'emplacement par défaut a été sélectionné (%s)" % self.default_storage)
+    def on_save_settings(self, input):
+        email, nb_days, storage, homepage = input
+        self.default_email = email
+        self.default_nb_days = int(nb_days)
+        self.default_storage = storage
+        self.homepage = QUrl(homepage)
         
-        self.homepage = QUrl(self.lE_homepage.text())
-        
-        with open(self.user_id_file, 'w') as f:
-            f.write(';'.join([self.default_email, 
-                              str(self.default_nb_days), 
-                              self.default_storage,
-                              self.homepage.toString()]))
-            
         self.frame_settings.hide()
         self.frame.show()
         
@@ -1946,10 +1877,6 @@ class MainGUI(QWidget):
                                 }
                                    ''' % (self.colors['#color5#'], self.colors['#color5#']))
         self.tW.setCornerWidget(self.pB_user)
-        
-        self.label_contact.setOpenExternalLinks(True)
-        self.label_contact.setTextFormat(Qt.RichText)
-        self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
         
     def web_browser_ui(self):
         os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--enable-logging --log-level=3"
