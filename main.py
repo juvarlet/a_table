@@ -5,6 +5,8 @@ import string
 from ingredient_item import IngredientItem
 from stacked_recipes import StackedRecipes
 from user_settings import UserSettings
+from history import History
+from stylesheet_update import COLORS
 import os
 from os.path import basename
 
@@ -28,7 +30,7 @@ import uuid
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase, QFont
+from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase, QFont, QWindow
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
@@ -300,53 +302,7 @@ class MainGUI(QWidget):
         self.frame_wB = self.pW.frame_wB
         self.cB_web: QCheckBox
         self.cB_web = self.pW.cB_web
-        #-tab historique
-        self.tab_history: QWidget
-        self.tab_history = self.pW.tab_historique
-        self.tW_history: QTableWidget
-        self.tW_history = self.pW.tW_historique
-        self.frame_confirm: QFrame
-        self.frame_confirm = self.pW.frame_confirm
-        self.pB_ok: QPushButton
-        self.pB_ok = self.pW.pB_ok
-        self.pB_cancel: QPushButton
-        self.pB_cancel = self.pW.pB_cancel
-        self.label_confirm: QLabel
-        self.label_confirm = self.pW.label_confirm
-        self.label_warning: QLabel
-        self.label_warning = self.pW.label_warning
-        self.label_deco_1: QLabel
-        self.label_deco_1 = self.pW.label_deco_1
-        self.label_deco_2: QLabel
-        self.label_deco_2 = self.pW.label_deco_2
-        self.label_deco_3: QLabel
-        self.label_deco_3 = self.pW.label_deco_3
-        self.label_deco_4: QLabel
-        self.label_deco_4 = self.pW.label_deco_4
-        self.label_deco_5: QLabel
-        self.label_deco_5 = self.pW.label_deco_5
-        self.label_deco_6: QLabel
-        self.label_deco_6 = self.pW.label_deco_6
-        self.label_deco_7: QLabel
-        self.label_deco_7 = self.pW.label_deco_7
-        self.label_deco_8: QLabel
-        self.label_deco_8 = self.pW.label_deco_8
-        self.label_deco_9: QLabel
-        self.label_deco_9 = self.pW.label_deco_9
-        self.label_deco_10: QLabel
-        self.label_deco_10 = self.pW.label_deco_10
-        self.label_deco_11: QLabel
-        self.label_deco_11 = self.pW.label_deco_11
-        self.label_deco_12: QLabel
-        self.label_deco_12 = self.pW.label_deco_12
-        self.label_deco_13: QLabel
-        self.label_deco_13 = self.pW.label_deco_13
-        self.label_deco_14: QLabel
-        self.label_deco_14 = self.pW.label_deco_14
-        self.label_deco_15: QLabel
-        self.label_deco_15 = self.pW.label_deco_15
-        self.label_deco_16: QLabel
-        self.label_deco_16 = self.pW.label_deco_16
+
         #tab settings
         self.vL_settings: QVBoxLayout
         self.vL_settings = self.pW.vL_settings
@@ -378,23 +334,7 @@ class MainGUI(QWidget):
                     '#color5_dark#'     : '#b8a98e'
         }
         
-        self.colors = {
-                    '#color1_bright#'   : '#36a9d3',
-                    '#color1#'          : '#2584a7',
-                    '#color1_dark#'     : '#1a5d75',
-                    '#color2_bright#'   : '#fe9a9d',
-                    '#color2#'          : '#fe6d73',
-                    '#color2_dark#'     : '#fe484e',
-                    '#color3_bright#'   : '#ffe0ad',
-                    '#color3#'          : '#ffcb77',
-                    '#color3_dark#'     : '#ffc05c',
-                    '#color4_bright#'   : '#24e5d2',
-                    '#color4#'          : '#17c3b2',
-                    '#color4_dark#'     : '#13a496',
-                    '#color5_bright#'   : '#fef9ef',
-                    '#color5#'          : '#fdf1d9',
-                    '#color5_dark#'     : '#fae2b2'
-                    }
+        self.colors = COLORS
         
         # cw.style_factory(self.pW, init_colors = self.init_colors, colors = self.colors)
         
@@ -460,16 +400,9 @@ class MainGUI(QWidget):
         #self.tW_ingredients.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         #self.tW_ingredients.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         
-        self.tW_history.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tW_history.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tW_history.setColumnCount(2)
-        self.tW_history.setContextMenuPolicy(Qt.CustomContextMenu)
-        
-        self.reset_history()
-        
         #User settings
         self.init_user_settings()
-        self.user_settings_ui()
+        self.user_settings_pB()
         
         #webBrowser
         self.web_browser_ui()
@@ -516,17 +449,6 @@ class MainGUI(QWidget):
         self.pB_send.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
         self.pB_copy.setIcon(QIcon(self.dirname + '/UI/images/icon_copy.png'))
 
-        labels = [self.label_deco_1,self.label_deco_2,self.label_deco_3,self.label_deco_4,
-                  self.label_deco_5,self.label_deco_6,self.label_deco_7,self.label_deco_8,
-                  self.label_deco_9,self.label_deco_10,self.label_deco_11,self.label_deco_12,
-                  self.label_deco_13,self.label_deco_14,self.label_deco_15,self.label_deco_16]
-        
-        for i, label in enumerate(labels):
-            cw.load_pic(label, self.dirname + '/UI/images/icon_deco_%s.png' % (i+1))
-        
-        cw.load_pic(self.label_warning, self.dirname + '/UI/images/icon_fork_X_3colors_t_LD.png')
-        self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_cancel_2.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
         self.pB_ok_2.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_modif_2.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
@@ -540,11 +462,8 @@ class MainGUI(QWidget):
     def connect_actions(self):
         self.pB_new_menu.clicked.connect(self.on_new_menu)
         self.tW_menu.cellDoubleClicked.connect(self.on_card_recipe_selection)
-        self.tW_history.cellDoubleClicked.connect(self.on_history_recipe_selection)
         self.pB_save.clicked.connect(self.on_save_menu)
         self.pB_calendar.clicked.connect(self.on_calendar)
-        self.pB_ok.clicked.connect(self.on_confirm_history_update)
-        self.pB_cancel.clicked.connect(self.on_cancel_history_update)
         self.tE_ingredients.anchorClicked.connect(self.on_recipe_link)
         self.pB_back.clicked.connect(self.on_previous_recipe)
         self.pB_copy.clicked.connect(self.on_copy_shopping_list)
@@ -560,7 +479,6 @@ class MainGUI(QWidget):
         self.pB_photo.clicked.connect(self.on_add_photo)
         self.pB_user.clicked.connect(self.on_user_settings)
         self.lW_recipe.customContextMenuRequested.connect(self.on_recipe_right_click)
-        self.tW_history.customContextMenuRequested.connect(self.on_history_right_click)
         self.cB_web.stateChanged.connect(self.on_show_web)
         
     def update_modif(self):
@@ -987,42 +905,8 @@ class MainGUI(QWidget):
         self.lW_recipe.setCurrentItem(lwi)
         lwi.setSelected(True)
 
-    
-    def on_history_recipe_selection(self, row, column):
-        if self.tab_recipe.isEnabled():#no effect when waiting for user confirmation in history tab
-            recipes = self.tW_history.item(row, column).text().split(' | ')
-            if len(recipes) == 1:
-                recipe_name = recipes[0]
-                self.switch_to_recipe(recipe_name)
-            else:
-                #display context menu with choices
-                self.recipeMultiSelection = recipes
-                pyautogui.click(button='right')
-    
-    def on_history_right_click(self, pos):
-        if self.recipeMultiSelection != []:
-            globalPos = self.tW_history.mapToGlobal(pos)
-            
-            right_click_menu = QMenu(self)
-            right_click_menu.setToolTipsVisible(True)
-            right_click_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
-                                        (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
-            
-            mapper = QSignalMapper(self)
-            
-            for recipe_name in self.recipeMultiSelection:
-                action = QAction(right_click_menu)
-                action.setText(recipe_name)
-                mapper.setMapping(action, recipe_name)
-                action.triggered.connect(mapper.map)
-                right_click_menu.addAction(action)
-            
-            self.recipeMultiSelection = []
-            
-            mapper.mappedString.connect(self.switch_to_recipe)
-            right_click_menu.exec_(globalPos)
-            
     def switch_to_recipe(self, recipe_name):
+        self.on_quit_settings()
         self.tW.setCurrentWidget(self.tab_recipe)
         self.reset_recipes_list()
         self.reset_filters()
@@ -1124,15 +1008,8 @@ class MainGUI(QWidget):
         self.compute_score()
         
     def on_save_menu(self):
-        #self.recipe_db.history = [['date(yyyy-mm-dd)','lunch','dinner'],...]
-        #self.current_menu.start_day = datetime.date , datetime.strptime('2021-10-19', '%Y-%m-%d').date()
-        #last_entry_date = datetime.strptime(self.recipe_db.history[-1][0], '%Y-%m-%d').date()
-        # last_entry_date = datetime.strptime(self.tW_history.verticalHeaderItem(self.tW_history.rowCount()-1).text(), '%Y-%m-%d').date()
-        # first_menu_date = self.current_menu.start_day
-
         new_history = []
-        #get current header labels
-        verticalHeader_labels = [self.tW_history.verticalHeaderItem(r).text() for r in range(self.tW_history.rowCount())]
+        
         for i in range(self.current_menu.number_of_days):
             date = self.current_menu.start_day + timedelta(days = i)
             # lunch_recipe_name = self.tW_menu.item(0, i).text()
@@ -1150,96 +1027,15 @@ class MainGUI(QWidget):
 
         self.new_history = self.recipe_db.consider_history_update(new_history)
 
-        for history in self.new_history:
-            date_text, lunch_recipe_name, dinner_recipe_name, index = history
-            
-            if index != -1:
-                if date_text in verticalHeader_labels:
-                    qtwi_lunch = self.tW_history.item(index, 0)
-                    qtwi_dinner = self.tW_history.item(index, 1)
-                    qtwi_lunch.setText(qtwi_lunch.text() + ' -> %s' % lunch_recipe_name)
-                    qtwi_dinner.setText(qtwi_dinner.text() + ' -> %s' % dinner_recipe_name)
-                else:
-                    verticalHeader_labels.insert(index, date_text)
-                    self.tW_history.insertRow(index)
-                    qtwi_lunch = QTableWidgetItem(lunch_recipe_name)
-                    qtwi_dinner = QTableWidgetItem(dinner_recipe_name)
-                    self.tW_history.setItem(index, 0, qtwi_lunch)
-                    self.tW_history.setItem(index, 1, qtwi_dinner)
-
-                
-            else:
-                self.tW_history.insertRow(self.tW_history.rowCount())
-                qtwi_lunch = QTableWidgetItem(lunch_recipe_name)
-                qtwi_dinner = QTableWidgetItem(dinner_recipe_name)
-                self.tW_history.setItem(self.tW_history.rowCount()-1, 0, qtwi_lunch)
-                self.tW_history.setItem(self.tW_history.rowCount()-1, 1, qtwi_dinner)
-                verticalHeader_labels.append(date_text)
-
-
-            qtwi_lunch.setTextColor(QColor(self.colors['#color2#']))
-            qtwi_dinner.setTextColor(QColor(self.colors['#color2#']))
-        
-        self.tW_history.setVerticalHeaderLabels(verticalHeader_labels)
-        #show warning and disable other actions
-        self.frame_confirm.show()
-        self.tW.setTabEnabled(0, False)
-        self.tW.setTabEnabled(1, False)
-        
-        #display history tab with modifications higlighted
-        self.tW.setCurrentIndex(2)
-        self.tW_history.scrollToItem(self.tW_history.item(self.tW_history.rowCount()-1, 0), QAbstractItemView.PositionAtTop)
-
-    def reset_history(self):
-        self.tW_history.clear()
-        self.tW_history.setHorizontalHeaderLabels(['Midi', 'Soir'])
-        self.tW_history.setRowCount(len(self.recipe_db.history))
-        self.tW_history.setVerticalHeaderLabels([h[0] for h in self.recipe_db.history])
-        # self.tW_history.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        # self.tW_history.resizeColumnsToContents()
-        for i, day in enumerate(self.recipe_db.history):
-            date, lunch, dinner = day
-            self.tW_history.setItem(i, 0, QTableWidgetItem(lunch))
-            self.tW_history.setItem(i, 1, QTableWidgetItem(dinner))
-
-        self.frame_confirm.hide()
-        
-        self.tW_history.scrollToBottom()
+        self.history_popup.on_save_menu(self.new_history)
+        self.on_display_history(self.new_history)
     
     def on_confirm_history_update(self):
-        #update rows where recipe has been replaced
-        for i in range(self.tW_history.rowCount()):
-            qtwi_lunch = self.tW_history.item(i, 0)
-            qtwi_dinner = self.tW_history.item(i, 1)
-            r,g,b = tuple(int(self.colors['#color2#'].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
-            if qtwi_lunch.textColor().getRgb() == (r,g,b,255):
-                # print(i,qtwi_lunch.textColor().getRgb())
-                #take new entry
-                lunch_recipe_name = qtwi_lunch.text().split(' -> ')[-1]
-                dinner_recipe_name = qtwi_dinner.text().split(' -> ')[-1]
-                qtwi_lunch.setText(lunch_recipe_name)
-                qtwi_dinner.setText(dinner_recipe_name)
-                #reset color
-                qtwi_lunch.setTextColor(QColor(self.colors['#color1_dark#']))
-                qtwi_dinner.setTextColor(QColor(self.colors['#color1_dark#']))
-        
         #backup file
-        copy2(self.recipe_db.history_file, self.dirname + '/backup/history_backup.ods')
+        copy2(self.recipe_db.history_file, self.dirname + '/backup/history_backup.csv')
         #update recipe_db variables and file
         self.recipe_db.update_history(self.new_history)
-        
-        #re-enable tabs
-        self.frame_confirm.hide()
-        self.tW.setTabEnabled(0, True)
-        self.tW.setTabEnabled(1, True)
-        
-    
-    def on_cancel_history_update(self):
-        # print('cancel')
-        self.frame_confirm.hide()
-        self.tW.setTabEnabled(0, True)
-        self.tW.setTabEnabled(1, True)
-        self.reset_history()
+        self.history_popup.history = self.recipe_db.history
 
     def on_calendar(self):
         # my_calendar_worker = cal.MyCalendar(self.current_menu)
@@ -1747,16 +1543,23 @@ class MainGUI(QWidget):
                     self.homepage = QUrl(homepage)
         
         
-        user_settings = UserSettings()
-        user_settings.on_save.connect(self.on_save_settings)
-        user_settings.on_quit.connect(self.on_quit_settings)
-        user_settings.on_error.connect(self.display_error)
-        self.vL_settings.addWidget(user_settings)
+        self.user_settings = UserSettings()
+        self.user_settings.on_save.connect(self.on_save_settings)
+        self.user_settings.on_quit.connect(self.on_quit_settings)
+        self.user_settings.on_error.connect(self.display_error)
+        self.user_settings.on_history.connect(self.on_display_history)
+        self.vL_settings.addWidget(self.user_settings)
+        
+        self.history_popup = History(history = self.recipe_db.history, new_history = [])
+        self.history_popup.on_switch_to_recipe.connect(self.switch_to_recipe)
+        self.history_popup.on_confirm.connect(self.on_confirm_history_update)
         
     def on_user_settings(self):
         self.frame_settings.show()
         self.frame.hide()
-    
+        #test if values are different than user file and highlight accordingly
+        self.user_settings.highlight_diff()
+        
     def on_save_settings(self, input):
         email, nb_days, storage, homepage = input
         self.default_email = email
@@ -1770,6 +1573,10 @@ class MainGUI(QWidget):
     def on_quit_settings(self):
         self.frame_settings.hide()
         self.frame.show()
+    
+    def on_display_history(self, new_history = []):
+        self.history_popup.selectWidgetMode(new_history)
+        self.history_popup.show()
         
     def on_recipe_right_click(self, pos):
         # print('right clicked')
@@ -1855,7 +1662,7 @@ class MainGUI(QWidget):
         path = QFileDialog.getExistingDirectory(self, u"Choix de l'emplacement " + titre, directory = dirpath)
         field.setText(str(path).replace('\\', '/'))
         
-    def user_settings_ui(self):
+    def user_settings_pB(self):
         self.pB_user = QPushButton('', self.pW)
         self.pB_user.setIconSize(QSize(60,60))
         self.pB_user.setToolTip('Préférences')

@@ -1,13 +1,14 @@
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QDoubleValidator, QEnterEvent, QFont, QMouseEvent, QPainterPath, QPixmap, QIcon, QColor, QPainter
+from PySide2.QtGui import QBrush, QDoubleValidator, QEnterEvent, QFont, QMouseEvent, QPainterPath, QPalette, QPixmap, QIcon, QColor, QPainter
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
 import os
 import menu
 import recipe_db
+from stylesheet_update import COLORS
 
 class TableWidgetCustom(QTableWidget): #Custom TableWidget to adjust item position
     def __init__(self, parent=None):
@@ -134,4 +135,13 @@ def style_factory(widget : QWidget, init_colors, colors):
     widget.setStyleSheet(stylesheet)
     return widget
     # return colors
+
+def changeFont(lineEdit, change=True):
+    stylesheet_init = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color1_dark#']
+    stylesheet_change = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color3_bright#']
+    if change:
+        lineEdit.setStyleSheet(stylesheet_change)
+    else:
+        lineEdit.setStyleSheet(stylesheet_init)
+        
         

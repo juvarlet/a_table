@@ -1,9 +1,6 @@
 import os
 
-def main():
-    dirname = os.path.dirname(__file__)
-    uiFiles = ['Main_Window', 'stacked_recipes']
-    color_hex = {
+COLORS = {
                     '#color1_bright#'   : '#36a9d3',
                     '#color1#'          : '#2584a7',
                     '#color1_dark#'     : '#1a5d75',
@@ -19,7 +16,13 @@ def main():
                     '#color5_bright#'   : '#fef9ef',
                     '#color5#'          : '#fdf1d9',
                     '#color5_dark#'     : '#fae2b2'
-            }
+                    }
+
+
+def main():
+    dirname = os.path.dirname(__file__)
+    uiFiles = ['Main_Window', 'stacked_recipes']
+    color_hex = COLORS
     
     for uiFile in uiFiles:
         filename_read = dirname + '/UI/%s_template.ui' % uiFile
@@ -38,23 +41,7 @@ def main():
 def update_colors():
     dirname = os.path.dirname(__file__)
     template = dirname + '/UI/stylesheet_template.txt'
-    color_hex = {
-                    '#color1_bright#'   : '#36a9d3',
-                    '#color1#'          : '#2584a7',
-                    '#color1_dark#'     : '#1a5d75',
-                    '#color2_bright#'   : '#fe9a9d',
-                    '#color2#'          : '#fe6d73',
-                    '#color2_dark#'     : '#fe484e',
-                    '#color3_bright#'   : '#ffe0ad',
-                    '#color3#'          : '#ffcb77',
-                    '#color3_dark#'     : '#ffc05c',
-                    '#color4_bright#'   : '#24e5d2',
-                    '#color4#'          : '#17c3b2',
-                    '#color4_dark#'     : '#13a496',
-                    '#color5_bright#'   : '#fef9ef',
-                    '#color5#'          : '#fdf1d9',
-                    '#color5_dark#'     : '#fae2b2'
-            }
+    color_hex = COLORS
     files_ss = read_template(template)
     for file, template_str in files_ss.items():
         for color in color_hex:

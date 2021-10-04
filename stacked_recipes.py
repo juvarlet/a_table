@@ -9,6 +9,7 @@ import os
 import custom_widgets as cw
 import menu
 import recipe_db
+from stylesheet_update import COLORS
 
 UI_FILE = os.path.dirname(__file__) + '/UI/stacked_recipes.ui'
 
@@ -25,6 +26,7 @@ class StackedRecipes(QWidget):
         self.recipe_list = recipe_list
         self.recipe_db = recipe_db
         self.id = id
+        self.saveComponents()
         self.initial_state()
         self.connect_actions()
         self.setObjectName('stack')
@@ -37,7 +39,7 @@ class StackedRecipes(QWidget):
         self.setLayout(vlayout)
         self.pW = widget
         
-    def initial_state(self):
+    def saveComponents(self):
         self.dirname = os.path.dirname(__file__)
         self.pB_add: QPushButton
         self.pB_add = self.pW.pB_add
@@ -59,24 +61,9 @@ class StackedRecipes(QWidget):
         self.hL = self.pW.hL
         self.comboBox: QComboBox
         self.comboBox = self.pW.comboBox
-        
-        self.colors = {
-                    '#color1_bright#'   : '#36a9d3',
-                    '#color1#'          : '#2584a7',
-                    '#color1_dark#'     : '#1a5d75',
-                    '#color2_bright#'   : '#fe9a9d',
-                    '#color2#'          : '#fe6d73',
-                    '#color2_dark#'     : '#fe484e',
-                    '#color3_bright#'   : '#ffe0ad',
-                    '#color3#'          : '#ffcb77',
-                    '#color3_dark#'     : '#ffc05c',
-                    '#color4_bright#'   : '#24e5d2',
-                    '#color4#'          : '#17c3b2',
-                    '#color4_dark#'     : '#13a496',
-                    '#color5_bright#'   : '#fef9ef',
-                    '#color5#'          : '#fdf1d9',
-                    '#color5_dark#'     : '#fae2b2'
-                    }
+    
+    def initial_state(self):
+        self.colors = COLORS
         
         self.frame_buttons.setVisible(False)
         self.comboBox.setVisible(False)
