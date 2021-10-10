@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>2016</width>
-    <height>956</height>
+    <height>982</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -86,12 +86,12 @@
         it reads QTabBar _not_ QTabWidget */
     QTabBar::tab {
         background-color:#36a9d3;
-        border: 2px solid #1a5d75;
-        border-bottom-color: #1a5d75; /* same as the pane color */
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        /*border: 0px solid #1a5d75;
+        /*border-bottom-color: #1a5d75; /* same as the pane color */
+        /*border-top-left-radius: 0px;
+        border-top-right-radius: 0px;*/
         min-width: 8ex;
-        padding: 5px;
+        padding: 20px;
         color:#1a5d75;
     }
     
@@ -102,7 +102,7 @@
     
     QTabBar::tab:selected {
         border-color: #1a5d75;
-        border-bottom-color: #1a5d75; /* same as pane color */
+        /*border-bottom-color: #1a5d75; /* same as pane color */
     }
     
     QToolBox {
@@ -674,11 +674,8 @@
          <property name="tabPosition">
           <enum>QTabWidget::North</enum>
          </property>
-         <property name="tabShape">
-          <enum>QTabWidget::Rounded</enum>
-         </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="iconSize">
           <size>
@@ -1138,8 +1135,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>407</width>
-                <height>177</height>
+                <width>1942</width>
+                <height>766</height>
                </rect>
               </property>
               <attribute name="label">
@@ -2227,6 +2224,19 @@ p, li { white-space: pre-wrap; }
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_31">
+                 <item row="0" column="3">
+                  <spacer name="horizontalSpacer_15">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
                  <item row="0" column="0">
                   <spacer name="horizontalSpacer_14">
                    <property name="orientation">
@@ -2241,19 +2251,6 @@ p, li { white-space: pre-wrap; }
                   </spacer>
                  </item>
                  <item row="0" column="2">
-                  <spacer name="horizontalSpacer_15">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="1">
                   <widget class="QFrame" name="frame_new_recipe">
                    <property name="minimumSize">
                     <size>
@@ -2959,6 +2956,9 @@ p, li { white-space: pre-wrap; }
                    </layout>
                   </widget>
                  </item>
+                 <item row="0" column="1">
+                  <layout class="QVBoxLayout" name="vL_edit_recipe"/>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -3039,8 +3039,8 @@ p, li { white-space: pre-wrap; }
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>186</x>
-     <y>157</y>
+     <x>228</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>185</x>

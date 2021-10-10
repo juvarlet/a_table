@@ -67,12 +67,12 @@
         it reads QTabBar _not_ QTabWidget */
     QTabBar::tab {
         background-color:##color1_bright#;
-        border: 2px solid ##color1_dark#;
-        border-bottom-color: ##color1_dark#; /* same as the pane color */
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        /*border: 2px solid ##color1_dark#;
+        /*border-bottom-color: ##color1_dark#; /* same as the pane color */
+        /*border-top-left-radius: 5px;
+        border-top-right-radius: 5px;*/
         min-width: 8ex;
-        padding: 5px;
+        padding: 20px;
         color:##color1_dark#;
     }
     
@@ -83,7 +83,7 @@
     
     QTabBar::tab:selected {
         border-color: ##color1_dark#;
-        border-bottom-color: ##color1_dark#; /* same as pane color */
+        /*border-bottom-color: ##color1_dark#; /* same as pane color */
     }
     
     QToolBox {

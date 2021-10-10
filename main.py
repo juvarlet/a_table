@@ -6,6 +6,7 @@ from ingredient_item import IngredientItem
 from stacked_recipes import StackedRecipes
 from user_settings import UserSettings
 from history import History
+from edit_recipe import EditRecipe
 from stylesheet_update import COLORS
 import os
 from os.path import basename
@@ -244,10 +245,8 @@ class MainGUI(QWidget):
         self.lE_title = self.pW.lE_titre
         self.img_dish: QLabel
         self.img_dish = self.pW.img_dish
-
         self.lw_ingredients: QListWidget
         self.lw_ingredients = self.pW.lw_ingredients
-
         self.sB_time: QSpinBox
         self.sB_time = self.pW.sB_time
         self.tB_preparation: QTextBrowser
@@ -302,7 +301,11 @@ class MainGUI(QWidget):
         self.frame_wB = self.pW.frame_wB
         self.cB_web: QCheckBox
         self.cB_web = self.pW.cB_web
+        self.wV = QWebEngineView()
 
+        self.vL_edit_recipe: QVBoxLayout
+        self.vL_edit_recipe = self.pW.vL_edit_recipe
+        
         #tab settings
         self.vL_settings: QVBoxLayout
         self.vL_settings = self.pW.vL_settings
@@ -393,6 +396,9 @@ class MainGUI(QWidget):
 
         self.frame_settings.hide()
         self.frame_search.hide()
+        
+        #init edit_recipe
+        self.init_edit_recipe()
         self.frame_edit_recipe.hide()
         
         self.lw_ingredients.setMouseTracking(True)
@@ -1223,6 +1229,13 @@ class MainGUI(QWidget):
         if self.frame_search.isVisible():
             self.cB_search.click()
 
+    def init_edit_recipe(self):
+        self.edit_recipe = EditRecipe()
+        self.edit_recipe.on_ok.connect(self.on_confirm_recipe)
+        self.edit_recipe.on_cancel.connect(self.on_cancel_recipe)
+        self.edit_recipe.on_error.connect(self.display_error)
+        self.vL_edit_recipe.addWidget(self.edit_recipe)
+
     def clear_edit_recipe_window(self):
         self.img_dish.setPixmap(QPixmap())
 
@@ -1250,31 +1263,33 @@ class MainGUI(QWidget):
     def on_new_recipe(self):
         self.disable_other_tabs()
         #reset all fields
-        self.label_newedit.setText('Nouvelle Recette')
-        self.lE_title.setText('Nouveau Titre')
+        # self.label_newedit.setText('Nouvelle Recette')
+        # self.lE_title.setText('Nouveau Titre')
         
-        self.add_new_ingredient_to_list(Ingredient()) #Add empty ing for input
-        
+        # self.add_new_ingredient_to_list(Ingredient()) #Add empty ing for input
+        self.edit_recipe.new_mode()
+         
     def on_edit_recipe(self):
         self.disable_other_tabs()
         #populate all fields
-        self.label_newedit.setText('Modifier la recette')
-        recipe:Recipe
+        # self.label_newedit.setText('Modifier la recette')
+        # recipe:Recipe
         recipe = self.recipe_db.get_recipe_object(self.lW_recipe.currentItem().text())
-        self.lE_title.setText(recipe.name)
-        cw.display_image(recipe, self.dirname, self.img_dish, icon=False)
-        self.populate_ing_list(recipe)
-        if recipe.time is not None:
-            self.sB_time.setValue(int(recipe.time))
-        else:
-            self.sB_time.setValue(0)
-        tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
-                self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
-        tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
-        for tag, tag_name in zip(tags, tag_names):
-            tag.setChecked(recipe.isTagged(tag_name))
-        self.tB_preparation.setText(recipe.preparation.replace('\n', '<br/>'))
-
+        # self.lE_title.setText(recipe.name)
+        # cw.display_image(recipe, self.dirname, self.img_dish, icon=False)
+        # self.populate_ing_list(recipe)
+        # if recipe.time is not None:
+        #     self.sB_time.setValue(int(recipe.time))
+        # else:
+        #     self.sB_time.setValue(0)
+        # tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
+        #         self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
+        # tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
+        # for tag, tag_name in zip(tags, tag_names):
+        #     tag.setChecked(recipe.isTagged(tag_name))
+        # self.tB_preparation.setText(recipe.preparation.replace('\n', '<br/>'))
+        self.edit_recipe.edit_mode(recipe)
+        
     def populate_ing_list(self, recipe:Recipe): #OK but can be improved
         if self.lw_ingredients.count : #vider la liste si elle n'est pas deja vide
             self.lw_ingredients.clear()
@@ -1315,79 +1330,16 @@ class MainGUI(QWidget):
         self.lw_ingredients.addItem(list_widget_item)
         self.lw_ingredients.setItemWidget(list_widget_item,ing_item)
         
-    def on_confirm_recipe(self):
-        #check if ok to save
-        #title not empty
-        title = self.lE_title.text()
-        #allow auto switch in case of warning message
-        auto_switch = ''
+    def on_confirm_recipe(self, input):
+        title, image_cell, ing_dict, preparation_cell, time, tag_checked_list, mode, auto_switch = input
         
-        #if not ok to save -> warning message
-        if self.label_newedit.text() == 'Nouvelle Recette' and self.recipe_db.contains(title):#recipe already exists
-            self.display_error('Cette recette existe déjà, vous pouvez la modifier')
-            
-            #enable swicth to edit mode
-            auto_switch = 'edit'
-        else:
-            #case with/without picture to be saved (filename = new_title.jpg and new_title_icon.jpg)
-            if self.recipe_image_path != '':
-                image_cell = title.lower().replace(' ', '_') #to be written in cell
-                filepath = self.dirname + '/images/%s.jpg' % image_cell #to be saved
-                filpath_icon = self.dirname + '/images/%s_icon.jpg' % image_cell #to be saved
-                #try to save it to file:
-                qpix = QPixmap(self.recipe_image_path)
-                if qpix.width() > qpix.height():
-                    # qpix_scaled = qpix.scaled(400, 300)
-                    qpix_scaled = qpix.scaled(1333, int(1333/qpix.width()*qpix.height()))
-                    qpix_scaled_icon = qpix.scaled(400, int(400/qpix.width()*qpix.height()))
-                else:
-                    # qpix_scaled = qpix.scaled(300, 400)
-                    qpix_scaled = qpix.scaled(int(1333/qpix.height()*qpix.width()), 1333)
-                    qpix_scaled_icon = qpix.scaled(int(400/qpix.height()*qpix.width()), 400)
-                    
-                image_file = QFile(filepath)
-                image_file.open(QIODevice.WriteOnly)
-                qpix_scaled.save(filepath, 'JPG')
-                
-                image_file_icon = QFile(filpath_icon)
-                image_file_icon.open(QIODevice.WriteOnly)
-                qpix_scaled_icon.save(filpath_icon, 'JPG')
-                
-                #reset internal variable
-                self.recipe_image_path = ''
-            else:
-                image_cell = ''
-                
+        if auto_switch != 'edit':
             image = ''
             if self.recipe_db.contains(title):
                 image = self.recipe_db.get_recipe_object(title).image
             if image_cell != '':
                 image = '/images/' + image_cell
-            #case with ingredients not empty -> combine ingredients to string
-            now_optionals = False
-            ing_dict = {}
-
-            for ing_index in range(self.lw_ingredients.count()-1): # "-1 in order to ignore the last 'input' line"
-                ing_item:IngredientItem
-                ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index)).findChild(IngredientItem)
-                ing_dict[ing_item.lbl_ing_name.text()] = [float(ing_item.lbl_ing_qty.text()), ing_item.lbl_ing_qty_unit.text()]
-
-            #combine tags to string
-            tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
-                    self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
-            tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
-            tag_checked_list = [tag_name for tag, tag_name in zip(tags, tag_names) if tag.isChecked()]
-            tag_cell = '/'.join(tag_checked_list)
-            #case with preparation not empty -> combine preparation to string
-            preparation_cell = web.with_clickable_links(self.tB_preparation.toPlainText())
-            #case with preparation time not 0
-            time_cell = ''
-            if self.sB_time.text() != '0':
-                time_cell = self.sB_time.text()
             
-            time = None
-            if time_cell != '':
-                time = time_cell
 
             #add recipe to database
             recipe = Recipe(uuid.uuid4(), title, ing_dict, preparation_cell, time, tag_checked_list, image)
@@ -1405,7 +1357,7 @@ class MainGUI(QWidget):
             # self.lW_recipe.addItems(recipe_list)
             
             #backup file
-            copy2(self.recipe_db.recipe_file, self.dirname + '/backup/recipe_backup.ods')
+            copy2(self.recipe_db.recipe_file, self.dirname + '/backup/recipe_backup.csv')
             #update recipe sheet (fully rewrite)
             self.recipe_db.update_recipe_file()
             
@@ -1688,7 +1640,7 @@ class MainGUI(QWidget):
     def web_browser_ui(self):
         os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--enable-logging --log-level=3"
         self.frame_wB.hide()
-        self.wV = QWebEngineView()
+        
         page = cw.WebEnginePage(self.wV)
         self.wV.setPage(page)
         
