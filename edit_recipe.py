@@ -14,6 +14,7 @@ from ingredient_item import IngredientItem
 from recipe import Recipe
 import pyautogui
 from stylesheet_update import COLORS
+from web_browser import WebBrowser
 
 UI_FILE = os.path.dirname(__file__) + '/UI/edit_recipe.ui'
 
@@ -22,14 +23,18 @@ class EditRecipe(QWidget):
     on_ok = Signal(list)
     on_cancel = Signal()
     on_error = Signal(str)
+    on_message = Signal(str, str)
     
-    def __init__(self, parent=None):
+    def __init__(self, user_settings, recipe_db, parent=None):
         super(EditRecipe, self).__init__(parent)
 
         self.colors = COLORS
         self.dirname = os.path.dirname(__file__)
         self.recipe_image_path = ''
         self.mode = 0 #0:new ; 1:edit
+        self.user_settings = user_settings
+        self.recipe_db = recipe_db
+        
         self.loadUI()
         self.saveComponents()
         
@@ -84,15 +89,12 @@ class EditRecipe(QWidget):
         self.pB_ok_2 = self.pW.pB_ok_2
         self.pB_cancel_2: QPushButton
         self.pB_cancel_2 = self.pW.pB_cancel_2
-        self.gL_web: QGridLayout
-        self.gL_web = self.pW.gL_web
-        self.hL_tools: QHBoxLayout
-        self.hL_tools = self.pW.hL_tools
         self.frame_wB: QFrame
         self.frame_wB = self.pW.frame_wB
         self.cB_web: QCheckBox
         self.cB_web = self.pW.cB_web
-        self.wV = QWebEngineView()
+        self.vL_web_browser: QVBoxLayout
+        self.vL_web_browser = self.pW.vL_web_browser
         
     def initial_state(self):
         self.pB_cancel_2.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
@@ -101,15 +103,22 @@ class EditRecipe(QWidget):
         
         self.lw_ingredients.setMouseTracking(True)
         
+        self.frame_wB.hide()
+        self.init_web_browser()
+        
     def connect_actions(self):
-        print('to be connected')
-        # self.pB_ok_2.clicked.connect(self.on_confirm_recipe)
-        # self.pB_cancel_2.clicked.connect(self.on_cancel_recipe)
-        # self.pB_photo.clicked.connect(self.on_add_photo)
-        # self.cB_web.stateChanged.connect(self.on_show_web)
+        self.pB_ok_2.clicked.connect(self.on_confirm_recipe)
+        self.pB_cancel_2.clicked.connect(self.on_cancel_recipe)
+        self.pB_photo.clicked.connect(self.on_add_photo)
+        self.cB_web.stateChanged.connect(self.on_show_web)
     
     def update_modif(self):
         self.lE_title.textChanged.connect(self.on_title_changed)
+        self.selectable_tags = [self.cB_tagdinner, self.cB_tagdessert, self.cB_tagdouble, self.cB_tagkids,
+                                self.cB_taglunch, self.cB_tagwinter, self.cB_tagsummer, self.cB_tagvegan, self.cB_tagtips]
+        for tag in self.selectable_tags:
+            tag.toggled.connect(lambda _, cB=tag: self.on_tag_selected(cB))
+        
         # self.wV.urlChanged.connect(self.update_urlbar)
 
     def on_title_changed(self):
@@ -117,6 +126,24 @@ class EditRecipe(QWidget):
         self.pB_ok_2.setEnabled(title_ok)
         self.pB_ok_2.setToolTip(['Il manque un titre pour la recette', 'Enregistrer'][title_ok])
 
+    def on_tag_selected(self, cB):
+        tags = {'cB_tagdinner': [1, 0, 1, 1, 0, 1, 1, 1, 0],
+                'cB_tagdessert': [0, 1, 0, 1, 0, 1, 1, 1, 0],
+                'cB_tagdouble': [1, 0, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagkids': [1, 1, 1, 1, 1, 1, 1, 1, 0],
+                'cB_taglunch': [0, 0, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagwinter': [1, 1, 1, 1, 1, 1, 0, 1, 0],
+                'cB_tagsummer': [1, 1, 1, 1, 1, 0, 1, 1, 0],
+                'cB_tagvegan': [1, 1, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagtips': [0, 0 ,0, 0, 0, 0, 0, 0, 1]
+        }
+        
+        if cB.isChecked():
+            bool_matrix = tags[cB.objectName()]
+            for other_cB, checkable in zip(self.selectable_tags, bool_matrix):
+                if other_cB.isChecked() and not checkable:
+                    other_cB.setChecked(checkable)
+                    
     def reset_fields(self):
         # self.img_dish.setPixmap(QPixmap())
         cw.load_pic(self.img_dish, self.dirname + '/images/placeholder_dish_icon.jpg')
@@ -278,6 +305,56 @@ class EditRecipe(QWidget):
                          tag_checked_list,
                          self.mode,
                          auto_switch])
+    
+    def on_cancel_recipe(self):
+        self.reset_fields()
+        self.on_cancel.emit()
+    
+    def on_add_photo(self):
+        self.recipe_image_path, filter = QFileDialog.getOpenFileName(self, 'Choisir une image', self.dirname, 'Images (*.png *.jpg)')
+        # print(image_path=='')
+        cw.display_new_image(self.recipe_image_path, self.img_dish)
+    
+    def init_web_browser(self):
+        self.wB = WebBrowser(self.user_settings)
+        self.wB.title.connect(self.setTitle)
+        self.wB.recipe.connect(self.populate_ing_list)
+        self.wB.preparation.connect(self.setPreparation)
+        self.wB.message.connect(self.sendMessage)
+        self.wB.reset.connect(self.resetObject)
+        self.vL_web_browser.addWidget(self.wB)
+    
+    def on_show_web(self):
+        if self.cB_web.isChecked():
+            if self.lE_title.text() != 'Nouveau Titre':
+                new_search = QUrl("https://www.google.com/search?q=%s" %
+                                  self.lE_title.text().replace(' ', '+'))
+                self.wB.wV.setUrl(new_search)
+        else:
+            self.wB.wV.setUrl(self.user_settings.homepage)
+    
+    def setTitle(self, text):
+        self.lE_title.setText(text)
+    
+    def setPreparation(self, text, reset):
+        if reset:
+            self.tB_preparation.setText(text)
+        else:
+            self.tB_preparation.append(text)
+    
+    def sendMessage(self, info, error):
+        if error:
+            message = info[0]
+            self.on_error.emit(message)
+        else:
+            message, icon_path = info
+            self.on_message.emit(message, icon_path)
+    
+    def resetObject(self, object):
+        if object == 'ingredients':
+            self.lw_ingredients.clear()
+        elif object == 'preparation':
+            self.tB_preparation.clear()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
