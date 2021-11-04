@@ -3,13 +3,14 @@ from uid_widget import UIDWidget
 from ingredient import Ingredient
 import string
 from ingredient_item import IngredientItem
-from stacked_recipes import StackedRecipes
+from stacked_recipes import StackedRecipes#, RecipeCard
 from user_settings import UserSettings
 from history import History
 from edit_recipe import EditRecipe
 from stylesheet_update import COLORS
 import os
 from os.path import basename
+import time
 
 from PySide2 import QtCore
 from PySide2 import QtGui
@@ -65,6 +66,8 @@ tips
 class MainGUI(QWidget):
     def __init__(self, parent=None, recipe_db = None):
         super(MainGUI, self).__init__(parent)
+        
+        self.save_components()
         self.initial_state(recipe_db)
         self.connect_actions()
         self.update_modif()
@@ -87,36 +90,9 @@ class MainGUI(QWidget):
         self.tW_menu.horizontalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
         self.dateEdit.setFont(QFont('Aller', 11, QtGui.QFont.Bold))
         self.cB_restes.setFont(QFont('Aller', 14, QtGui.QFont.Bold))
-        
-    def initial_state(self, my_recipe_db):
-        #variables
+    
+    def save_components(self):
         self.pW = self.parentWidget()
-        self.recipe_db: recipe_db.RecipeDB
-        self.recipe_db = my_recipe_db
-        self.current_menu = menu.Menu()
-        self.dessert_list = []
-        self.dirname = os.path.dirname(__file__)
-        self.just_dropped = False
-        self.cell_signal_count = 0
-        self.from_cell = ()
-        self.to_cell = ()
-        self.html_source_file_shopping = self.dirname + '/shopping_core.html'
-        
-        self.default_email = ''
-        self.default_nb_days = 7
-        self.default_storage = self.dirname + '/Mes_Fiches/'
-        self.homepage = QUrl("https://www.google.com/")
-        self.user_id_file = self.dirname + '/user.id'
-        
-        self.recipe_image_path = ''
-        self.myThreads = []
-        self.delete_flag = False
-        self.contact = 'notification.a.table@gmail.com'
-        self.stacks = {}
-        self.lockKeyId = 'xx'
-        self.lockedForEdition = False
-        self.recipeMultiSelection = []
-        
         #-- ui widgets --
         self.tW: QTabWidget
         self.tW = self.pW.tabWidget
@@ -124,7 +100,6 @@ class MainGUI(QWidget):
         self.frame = self.pW.frame
         self.frame_settings: QFrame
         self.frame_settings = self.pW.frame_settings
-        
         #-tab menu
         self.tab_menus: QWidget
         self.tab_menus = self.pW.tab_menus
@@ -256,13 +231,41 @@ class MainGUI(QWidget):
         self.tag_lunchdinner = self.pW.label_lunchdinner
         self.tag_tips: QLabel
         self.tag_tips = self.pW.label_tips
-
         self.vL_edit_recipe: QVBoxLayout
         self.vL_edit_recipe = self.pW.vL_edit_recipe
-        
         #tab settings
         self.vL_settings: QVBoxLayout
         self.vL_settings = self.pW.vL_settings
+        
+    def initial_state(self, my_recipe_db):
+        #variables
+        self.recipe_db: recipe_db.RecipeDB
+        self.recipe_db = my_recipe_db
+        self.current_menu = menu.Menu()
+        self.dessert_list = []
+        self.dirname = os.path.dirname(__file__)
+        self.just_dropped = False
+        self.cell_signal_count = 0
+        self.from_cell = ()
+        self.to_cell = ()
+        self.html_source_file_shopping = self.dirname + '/shopping_core.html'
+        
+        self.default_email = ''
+        self.default_nb_days = 7
+        self.default_storage = self.dirname + '/Mes_Fiches/'
+        self.homepage = QUrl("https://www.google.com/")
+        self.user_id_file = self.dirname + '/user.id'
+        
+        self.recipe_image_path = ''
+        self.myThreads = []
+        self.delete_flag = False
+        self.contact = 'notification.a.table@gmail.com'
+        self.stacks = {}
+        self.lockKeyId = 'xx'
+        self.lockedForEdition = False
+        self.recipeMultiSelection = []
+        
+        
 
         self.init_colors = {'RED' :         ('#d72631', [215,38,49]),
                     'LIGHT_GREEN' :         ('#a2d5c6', [162,213,198]),
@@ -375,7 +378,8 @@ class MainGUI(QWidget):
         self.tB.setItemIcon(0, QIcon(self.dirname + '/UI/images/icon_menu_3colors.png'))
         self.tB.setItemIcon(1, QIcon(self.dirname + '/UI/images/icon_shopping_cart.png'))
         self.pB_user.setIcon(QIcon(self.dirname + '/UI/images/icon_user_t.png'))
-        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
+        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
+        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
         # self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
         self.pB_calendar.setIcon(QIcon(self.dirname + '/UI/images/icon_calendar.png'))
@@ -557,13 +561,21 @@ class MainGUI(QWidget):
         self.info_dialog.exec_()
     
     def on_new_menu(self):
+        # start = time.process_time()
+        
         self.new_menu()
+        
+        # print('step 1 : %f' % (time.process_time() - start))
+        # start = time.process_time()
+        
         self.populate_tW_menu(self.current_menu)
-        # self.on_dessert_selection(self.sB_desserts.value()) #includes dessert, menu_list, shopping list #DEPRECATED
+        
         self.populate_shopping_list()
+        
         self.populate_menu_list()
+        
         self.compute_score()
-        # self.pB_modif.setEnabled(True)
+        
         self.pB_save.setEnabled(True)
     
     def new_menu(self):
@@ -595,20 +607,18 @@ class MainGUI(QWidget):
         #update tW_menu with menus
         recipe_list_lunch = [m[1] for m in table_menu]
         recipe_list_dinner = [m[2] for m in table_menu]
-        for i, recipes_of_day in enumerate(zip(recipe_list_lunch, recipe_list_dinner)):
+        
+        recipe_list = zip(recipe_list_lunch, recipe_list_dinner)
+        length = len(recipe_list_lunch)
+        for i, recipes_of_day in enumerate(recipe_list):
             recipe_lunch, recipe_dinner = recipes_of_day
-            # text_lunch, text_dinner = (recipe_lunch.name, recipe_dinner.name)
-            # # print((text_lunch, self.recipe_db.background_score(recipe_lunch, self.current_menu.start_day)))
-            qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
-            # qtwi_lunch.setTextAlignment(Qt.AlignCenter)
-            # qtwi_dinner.setTextAlignment(Qt.AlignCenter)
+            # qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
+            # qtwi_lunch = QTableWidgetItem(sr.row_column_to_id(0,i))
+            # qtwi_dinner = QTableWidgetItem(sr.row_column_to_id(1,i))
 
-            self.tW_menu.setItem(0, i, qtwi_lunch)
-            self.tW_menu.setItem(1, i, qtwi_dinner)
+            # self.tW_menu.setItem(0, i, qtwi_lunch)
+            # self.tW_menu.setItem(1, i, qtwi_dinner)
 
-            # cw.display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
-            # cw.display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
-    
         #ability to add several recipes to a given slot
             idplus = '0' + str(i+1)
             idplus = idplus[-2:]
@@ -624,27 +634,61 @@ class MainGUI(QWidget):
             elif type(recipe_dinner) == list:
                 recipe_dinner_stack = recipe_dinner
             
-            stacked_lunch = StackedRecipes(recipe_lunch_stack, self.recipe_db, id = idplus)
-            stacked_dinner = StackedRecipes(recipe_dinner_stack, self.recipe_db, id = idminus)
+            # stacked_lunch = StackedRecipes(recipe_lunch_stack, self.recipe_db, id = idplus)
+            # stacked_dinner = StackedRecipes(recipe_dinner_stack, self.recipe_db, id = idminus)
             
-            stacked_lunch.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
-            stacked_lunch.on_lock_for_edition.connect(self.on_lock_for_edition)
-            stacked_lunch.on_update_current_menu.connect(self.on_update_current_menu)
-            stacked_dinner.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
-            stacked_dinner.on_lock_for_edition.connect(self.on_lock_for_edition)
-            stacked_dinner.on_update_current_menu.connect(self.on_update_current_menu)
+            # stacked_lunch.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            # stacked_lunch.on_lock_for_edition.connect(self.on_lock_for_edition)
+            # stacked_lunch.on_update_current_menu.connect(self.on_update_current_menu)
+            # stacked_dinner.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            # stacked_dinner.on_lock_for_edition.connect(self.on_lock_for_edition)
+            # stacked_dinner.on_update_current_menu.connect(self.on_update_current_menu)
             
-            self.stacks[idplus] = stacked_lunch
-            self.stacks[idminus] = stacked_dinner
+            # self.stacks[idplus] = stacked_lunch
+            # self.stacks[idminus] = stacked_dinner
             
-            qtwi_lunch = stacked_lunch
-            qtwi_dinner = stacked_dinner
+            # qtwi_lunch = stacked_lunch
+            # qtwi_dinner = stacked_dinner
             
-            self.tW_menu.setCellWidget(0, i, qtwi_lunch)
-            self.tW_menu.setCellWidget(1, i, qtwi_dinner)
+            # self.tW_menu.setCellWidget(0, i, qtwi_lunch)
+            # self.tW_menu.setCellWidget(1, i, qtwi_dinner)
+            
+            # QCoreApplication.processEvents()
+            
+            #separate lunch and dinner processes:
+            #--lunch
+            self.on_new_stack(recipe_lunch_stack, idplus, i, length)
+            #--dinner
+            self.on_new_stack(recipe_dinner_stack, idminus, i, length)
+            
+        self.progress_update(5, 5)    
+            
+ 
 
-            # print(self.tW_menu.item(0,i).text())
     
+    def on_new_stack(self, recipe_stack, id, k, length):
+        qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
+        stack = StackedRecipes(recipe_stack, self.recipe_db, id)
+        stack.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+        stack.on_lock_for_edition.connect(self.on_lock_for_edition)
+        stack.on_update_current_menu.connect(self.on_update_current_menu)
+        self.stacks[id] = stack
+        if id[0] == '+':
+            self.tW_menu.setItem(0, k, qtwi)
+            self.tW_menu.setCellWidget(0, k, stack)
+        elif id[0] == '-':
+            self.tW_menu.setItem(1, k, qtwi)
+            self.tW_menu.setCellWidget(1, k, stack)
+        
+        self.progress_update(k, length)
+        
+        QCoreApplication.processEvents()
+    
+    def progress_update(self, k, length):
+        progress = int(k/length * 5)
+        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_%i.png' % progress))
+        
+        
     def on_enter_recipe_stack(self, id):
         if not self.lockedForEdition:#ongoing edition of recipe, locking others
             for key in self.stacks:
@@ -767,7 +811,6 @@ class MainGUI(QWidget):
                 qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
                 self.tW_menu.setItem(0, i, qtwi_lunch)
                 self.tW_menu.setItem(1, i, qtwi_dinner)
-            
 
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent) -> bool:
 

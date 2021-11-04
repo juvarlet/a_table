@@ -10,6 +10,7 @@ import custom_widgets as cw
 import menu
 import recipe_db
 from stylesheet_update import COLORS
+import time
 
 UI_FILE = os.path.dirname(__file__) + '/UI/stacked_recipes.ui'
 
@@ -64,7 +65,6 @@ class StackedRecipes(QWidget):
     
     def initial_state(self):
         self.colors = COLORS
-        
         self.frame_buttons.setVisible(False)
         self.comboBox.setVisible(False)
         self.current_index = len(self.recipe_list) - 1
@@ -77,7 +77,7 @@ class StackedRecipes(QWidget):
             if child.isWidgetType():
                 # print('installed')
                 child.installEventFilter(self)
-        
+                
         self.update_recipes()        
         self.show_hide_buttons()
         self.update_index()
@@ -88,7 +88,7 @@ class StackedRecipes(QWidget):
         self.pB_edit.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
         
         self.add_button_menu()
-    
+        
     def add_button_menu(self):
         self.pB_add_menu = QMenu(self)
         self.pB_add_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
@@ -269,7 +269,23 @@ class StackedRecipes(QWidget):
     def get_current_recipe(self):
         return self.recipe_list[self.current_index]
 
-
+# class RecipeCard(QThread):#QThread
+    
+#     on_new_stack = Signal(StackedRecipes, str, int)
+    
+#     def __init__(self, recipe_list, recipe_db, id, k):
+#         QThread.__init__(self)
+#         self.recipe_list = recipe_list
+#         self.recipe_db = recipe_db
+#         self.id = id
+#         self.k = k
+    
+#     def run(self):
+#         new_stack = StackedRecipes(self.recipe_list, self.recipe_db, self.id)
+#         self.on_new_stack.emit(new_stack, self.id, self.k)
+        
+        
+        
 def id_to_row_column(id):
     if id[0] == '+':
         row = 0
