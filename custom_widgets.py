@@ -9,6 +9,7 @@ import os
 import menu
 import recipe_db
 from stylesheet_update import COLORS
+import time
 
 class TableWidgetCustom(QTableWidget): #Custom TableWidget to adjust item position
     def __init__(self, parent=None):
@@ -144,4 +145,30 @@ def changeFont(lineEdit, change=True):
     else:
         lineEdit.setStyleSheet(stylesheet_init)
         
-        
+def animate_button(pB, custom = False, options = {}):
+    animation = QPropertyAnimation(pB, b"iconSize")
+    if custom:
+        duration = options['duration']
+        animation.setDuration(duration)
+        for k, size in options['keys'].items():
+            animation.setKeyValueAt(k, QSize(size, size))
+    else:
+        animation.setDuration(160)
+        animation.setKeyValueAt(0, QSize(27,27))
+        animation.setKeyValueAt(0.5, QSize(20,20))
+        animation.setKeyValueAt(1, QSize(27,27))
+    animation.setEasingCurve(QEasingCurve.Linear)
+
+    return animation
+    # self.animation.start()
+
+def decoratortimer(decimal):
+    def decoratorfunction(f):
+        def wrap(*args, **kwargs):
+            time1 = time.monotonic()
+            result = f(*args, **kwargs)
+            time2 = time.monotonic()
+            print('{:s} function took {:.{}f} ms'.format(f.__name__, ((time2-time1)*1000.0), decimal ))
+            return result
+        return wrap
+    return decoratorfunction

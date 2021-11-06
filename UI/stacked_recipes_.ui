@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>397</width>
-    <height>300</height>
+    <height>289</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -124,12 +124,17 @@ QComboBox QAbstractItemView{
 	/*selection-color: #2584a7;*/
 }
 
-QFrame #frame_buttons{
+QFrame #frame_buttons, QFrame #frame, QFrame #frame_4, QFrame #frame_buttons_2{
     background-color:transparent;
+	border-color:transparent;
 }
 
 QMenu::item {
     icon-size:50px 50px;
+}
+QStackedWidget {
+	border: 3px solid #ffc05c;
+	border-radius: 10px;
 }
 /**/
 </string>
@@ -152,6 +157,9 @@ QMenu::item {
    </property>
    <item row="0" column="0">
     <widget class="QStackedWidget" name="stackedWidget">
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -191,13 +199,13 @@ QMenu::item {
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="spacing">
            <number>0</number>
@@ -216,6 +224,66 @@ QMenu::item {
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QFrame" name="frame_3">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="hL">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+              </layout>
+             </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </widget>
           </item>
           <item row="0" column="0" rowspan="2">
@@ -237,16 +305,16 @@ QMenu::item {
               <enum>QLayout::SetMinimumSize</enum>
              </property>
              <property name="leftMargin">
-              <number>1</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
-              <number>2</number>
+              <number>3</number>
              </property>
              <property name="rightMargin">
-              <number>2</number>
+              <number>3</number>
              </property>
              <property name="bottomMargin">
-              <number>1</number>
+              <number>0</number>
              </property>
              <property name="horizontalSpacing">
               <number>0</number>
@@ -254,31 +322,18 @@ QMenu::item {
              <property name="verticalSpacing">
               <number>2</number>
              </property>
-             <item row="1" column="1">
-              <widget class="QPushButton" name="pB_add">
-               <property name="maximumSize">
+             <item row="4" column="0">
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>35</width>
-                 <height>35</height>
+                 <width>40</width>
+                 <height>20</height>
                 </size>
                </property>
-               <property name="toolTip">
-                <string>Ajouter une recette</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>icon_add_recipe.png</normaloff>icon_add_recipe.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>27</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
+              </spacer>
              </item>
              <item row="3" column="1">
               <widget class="QPushButton" name="pB_delete">
@@ -296,7 +351,7 @@ QMenu::item {
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>icon_bin.png</normaloff>icon_bin.png</iconset>
+                 <normaloff>images/icon_bin.png</normaloff>images/icon_bin.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -305,32 +360,6 @@ QMenu::item {
                 </size>
                </property>
               </widget>
-             </item>
-             <item row="4" column="1">
-              <spacer name="verticalSpacer">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="4" column="0">
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
              <item row="2" column="1">
               <widget class="QPushButton" name="pB_edit">
@@ -348,7 +377,7 @@ QMenu::item {
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>icon_edit_2.png</normaloff>icon_edit_2.png</iconset>
+                 <normaloff>images/icon_edit_2.png</normaloff>images/icon_edit_2.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -361,64 +390,43 @@ QMenu::item {
                </property>
               </widget>
              </item>
-             <item row="5" column="0" colspan="2">
-              <widget class="QFrame" name="frame_3">
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+             <item row="4" column="1">
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
                </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
                </property>
-               <layout class="QGridLayout" name="gridLayout_4">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item row="0" column="0">
-                 <spacer name="horizontalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="0" column="1">
-                 <layout class="QHBoxLayout" name="hL">
-                  <property name="spacing">
-                   <number>0</number>
-                  </property>
-                 </layout>
-                </item>
-                <item row="0" column="2">
-                 <spacer name="horizontalSpacer_3">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
+              </spacer>
+             </item>
+             <item row="1" column="1">
+              <widget class="QPushButton" name="pB_add">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Ajouter une recette</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_add_recipe.png</normaloff>images/icon_add_recipe.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
               </widget>
              </item>
             </layout>
@@ -434,13 +442,13 @@ QMenu::item {
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
              <property name="leftMargin">
-              <number>5</number>
+              <number>35</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>5</number>
+              <number>35</number>
              </property>
              <property name="bottomMargin">
               <number>1</number>
@@ -448,33 +456,7 @@ QMenu::item {
              <property name="spacing">
               <number>0</number>
              </property>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="pB_next">
-               <property name="maximumSize">
-                <size>
-                 <width>35</width>
-                 <height>35</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Recette suivante</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>icon_right_arrow.png</normaloff>icon_right_arrow.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>27</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
+             <item row="0" column="0">
               <widget class="QLabel" name="label_title">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -493,6 +475,39 @@ QMenu::item {
                </property>
               </widget>
              </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QFrame" name="frame">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_16">
+             <property name="leftMargin">
+              <number>3</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>3</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <item row="0" column="0">
               <widget class="QPushButton" name="pB_list">
                <property name="maximumSize">
@@ -509,7 +524,7 @@ QMenu::item {
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>icon_list.png</normaloff>icon_list.png</iconset>
+                 <normaloff>images/icon_list_view.png</normaloff>images/icon_list_view.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -518,6 +533,45 @@ QMenu::item {
                 </size>
                </property>
               </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="pB_next">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Recette suivante</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_right_arrow.png</normaloff>images/icon_right_arrow.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
@@ -563,49 +617,49 @@ QMenu::item {
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="2" column="0" colspan="2">
+          <item row="2" column="1" colspan="2">
            <widget class="QFrame" name="frame_4">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>40</height>
-             </size>
-            </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_8">
+            <property name="lineWidth">
+             <number>0</number>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_15">
              <property name="leftMargin">
-              <number>5</number>
-             </property>
-             <property name="topMargin">
               <number>0</number>
              </property>
+             <property name="topMargin">
+              <number>1</number>
+             </property>
              <property name="rightMargin">
-              <number>5</number>
+              <number>1</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <property name="spacing">
+             <property name="horizontalSpacing">
               <number>0</number>
              </property>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="pB_stack">
+             <property name="verticalSpacing">
+              <number>2</number>
+             </property>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="pB_add_2">
                <property name="maximumSize">
                 <size>
                  <width>35</width>
@@ -613,14 +667,14 @@ QMenu::item {
                 </size>
                </property>
                <property name="toolTip">
-                <string>Changer de vue - Défilement</string>
+                <string>Ajouter une recette</string>
                </property>
                <property name="text">
                 <string/>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>icon_stack.png</normaloff>icon_stack.png</iconset>
+                 <normaloff>images/icon_add_recipe.png</normaloff>images/icon_add_recipe.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -630,134 +684,91 @@ QMenu::item {
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <spacer name="horizontalSpacer_4">
+             <item row="2" column="1">
+              <widget class="QPushButton" name="pB_delete_2">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Supprimer cette recette</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_bin.png</normaloff>images/icon_bin.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QPushButton" name="pB_edit_2">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Changer de recette</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_edit_2.png</normaloff>images/icon_edit_2.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <spacer name="verticalSpacer_2">
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
-                 <height>20</height>
+                 <width>20</width>
+                 <height>40</height>
                 </size>
                </property>
               </spacer>
              </item>
-             <item row="0" column="2">
-              <widget class="QFrame" name="frame_buttons_2">
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_15">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <property name="horizontalSpacing">
-                 <number>2</number>
-                </property>
-                <property name="verticalSpacing">
-                 <number>0</number>
-                </property>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="pB_edit_2">
-                  <property name="maximumSize">
-                   <size>
-                    <width>35</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Changer de recette</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>icon_edit_2.png</normaloff>icon_edit_2.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>27</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pB_delete_2">
-                  <property name="maximumSize">
-                   <size>
-                    <width>35</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Supprimer cette recette</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>icon_bin.png</normaloff>icon_bin.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>27</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="pB_add_2">
-                  <property name="maximumSize">
-                   <size>
-                    <width>35</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Ajouter une recette</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>icon_add_recipe.png</normaloff>icon_add_recipe.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>27</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
-          <item row="0" column="0" rowspan="2" colspan="2">
+          <item row="2" column="0">
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0" rowspan="2" colspan="3">
            <widget class="QFrame" name="frame_list">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -793,7 +804,7 @@ QMenu::item {
              <property name="verticalSpacing">
               <number>2</number>
              </property>
-             <item row="5" column="0">
+             <item row="6" column="0">
               <widget class="QListWidget" name="list_stack">
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
@@ -806,7 +817,83 @@ QMenu::item {
             </layout>
            </widget>
           </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="QFrame" name="frame_buttons_2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <property name="leftMargin">
+              <number>3</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>3</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="pB_stack">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Changer de vue - Défilement</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_stack.png</normaloff>images/icon_stack.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
+         <zorder>frame_list</zorder>
+         <zorder>frame_buttons_2</zorder>
+         <zorder>frame_4</zorder>
+         <zorder>horizontalSpacer_7</zorder>
         </widget>
        </item>
       </layout>
@@ -874,13 +961,13 @@ QMenu::item {
             </property>
             <layout class="QGridLayout" name="gridLayout_12">
              <property name="leftMargin">
-              <number>5</number>
+              <number>3</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>5</number>
+              <number>3</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -917,7 +1004,7 @@ QMenu::item {
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>icon_check.png</normaloff>icon_check.png</iconset>
+                 <normaloff>images/icon_ok.png</normaloff>images/icon_ok.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -943,7 +1030,7 @@ QMenu::item {
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>icon_cancel.png</normaloff>icon_cancel.png</iconset>
+                 <normaloff>images/icon_cancel.png</normaloff>images/icon_cancel.png</iconset>
                </property>
                <property name="iconSize">
                 <size>

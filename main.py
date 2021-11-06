@@ -3,7 +3,7 @@ from uid_widget import UIDWidget
 from ingredient import Ingredient
 import string
 from ingredient_item import IngredientItem
-from stacked_recipes import StackedRecipes#, RecipeCard
+from stacked_recipes import StackedRecipes, RecipeCard
 from user_settings import UserSettings
 from history import History
 from edit_recipe import EditRecipe
@@ -32,7 +32,7 @@ import uuid
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase, QFont, QWindow
+from PySide2.QtGui import QBrush, QDoubleValidator, QMovie, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase, QFont, QWindow
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
@@ -563,6 +563,12 @@ class MainGUI(QWidget):
     def on_new_menu(self):
         # start = time.process_time()
         
+        self.movie = QMovie(self)
+        gif = self.dirname + '/UI/images/icon_cover.gif'
+        self.movie.setFileName(gif)
+        self.movie.frameChanged.connect(lambda: self.pB_new_menu.setIcon(self.movie.currentPixmap()))
+        self.movie.start()
+        
         self.new_menu()
         
         # print('step 1 : %f' % (time.process_time() - start))
@@ -577,6 +583,10 @@ class MainGUI(QWidget):
         self.compute_score()
         
         self.pB_save.setEnabled(True)
+        
+        self.movie.stop()
+        QCoreApplication.processEvents()
+        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
     
     def new_menu(self):
         current_QDate = self.dateEdit.date()
@@ -661,10 +671,22 @@ class MainGUI(QWidget):
             #--dinner
             self.on_new_stack(recipe_dinner_stack, idminus, i, length)
             
-        self.progress_update(5, 5)    
-            
+        # self.progress_update(5, 5)    
+    #     recipe_card_worker = RecipeCard(list(self.stacks.values()))
+    #     recipe_card_worker.on_init.connect(self.recipe_card_init)
+    #     recipe_card_worker.on_connect.connect(self.recipe_card_connect)
+    #     recipe_card_worker.on_stop.connect(self.stop_movie)
+    #     self.myThreads.append(recipe_card_worker)
+    #     recipe_card_worker.start()
  
-
+    # def recipe_card_init(self, stacked_recipe):
+    #     stacked_recipe.initial_state()
+    # def recipe_card_connect(self, stacked_recipe):
+    #     stacked_recipe.connect_actions()
+    # def stop_movie(self):
+    #     self.movie.stop()
+    #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+    
     
     def on_new_stack(self, recipe_stack, id, k, length):
         qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
@@ -676,26 +698,32 @@ class MainGUI(QWidget):
         if id[0] == '+':
             self.tW_menu.setItem(0, k, qtwi)
             self.tW_menu.setCellWidget(0, k, stack)
+            x = (k * 2) % (length+1)
         elif id[0] == '-':
             self.tW_menu.setItem(1, k, qtwi)
             self.tW_menu.setCellWidget(1, k, stack)
+            x = (k * 2 + 1) % (length+1)
         
-        self.progress_update(k, length)
+        # self.progress_update(x, length)
         
         QCoreApplication.processEvents()
-    
-    def progress_update(self, k, length):
-        progress = int(k/length * 5)
-        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_%i.png' % progress))
+        
+            
+    # def progress_update(self, k, length):
+    #     progress = round(k/length * 5) 
+    #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_%i.png' % progress))
         
         
     def on_enter_recipe_stack(self, id):
         if not self.lockedForEdition:#ongoing edition of recipe, locking others
             for key in self.stacks:
                 if key != id:
-                    self.stacks[key].frame_buttons.setVisible(False)
+                    # self.stacks[key].frame_buttons.setVisible(False)
+                    self.stacks[key].on_enter_exit_stack(False)
             if id in self.stacks:
-                self.stacks[id].frame_buttons.setVisible(True)
+                # self.stacks[id].frame_buttons.setVisible(True)
+                self.stacks[id].on_enter_exit_stack(True)
+                self.stacks[id].finish_init()
             
     def on_lock_for_edition(self, id, lock):
         if lock:
@@ -1237,7 +1265,7 @@ class MainGUI(QWidget):
 
             #add recipe to database
             recipe = Recipe(uuid.uuid4(), title, ing_dict, preparation_cell, time, tag_checked_list, image)
-            if self.label_newedit.text() == 'Modifier la recette':  #update existing recipe
+            if self.edit_recipe.label_newedit.text() == 'Modifier la recette':  #update existing recipe
                 initial_recipe_name = self.lW_recipe.currentItem().text()
                 index_of_recipe = recipe_db.get_recipe_names(self.recipe_db.recipe_list).index(initial_recipe_name)
                 self.recipe_db.recipe_list[index_of_recipe] = recipe
