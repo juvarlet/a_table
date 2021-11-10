@@ -7,6 +7,8 @@ from PySide2.QtWidgets import*
 from PySide2.QtCore import*
 from uid_widget import UIDWidget
 
+UI_FILE = os.path.dirname(__file__) + '/UI/ingredient_item.ui'
+
 class IngredientItem(UIDWidget):
     WIDGET_EDIT_ING_MODE = "0000"
     WIDGET_SH0W_ING_MODE = "0001"
@@ -15,12 +17,10 @@ class IngredientItem(UIDWidget):
     on_btn_rm_item_clicked = Signal(str)
 
     # def __init__(self, ingredient:Ingredient, lw_ingredients=None, parent=None):
-    def __init__(self, ingredient:Ingredient, ui = None, parent=None):
+    def __init__(self, ingredient:Ingredient, parent=None):
         super(IngredientItem, self).__init__(parent)
 
-        
-        self.parent_widget = ui
-        self.loadUI(self.parent_widget)
+        self.loadUI()
         # self.lw_ingredients = lw_ingredients
         self.saveComponents()
         self.selectWidgetMode()
@@ -42,11 +42,13 @@ class IngredientItem(UIDWidget):
         self.btn_cancel_changes.clicked.connect(self.cancelChanges)
         self.btn_confirm_changes.clicked.connect(self.confirmChanges)
     
-    def loadUI(self, widget):
+    def loadUI(self):
         vlayout = QVBoxLayout()
         vlayout.setMargin(0)
+        widget = QUiLoader().load(UI_FILE)
         vlayout.addWidget(widget)
         self.setLayout(vlayout)
+        self.parent_widget = widget
     
     def saveComponents(self):
         self.widget_show_ing:QWidget

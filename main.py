@@ -3,8 +3,14 @@ from uid_widget import UIDWidget
 from ingredient import Ingredient
 import string
 from ingredient_item import IngredientItem
+from stacked_recipes import StackedRecipes, RecipeCard
+from user_settings import UserSettings
+from history import History
+from edit_recipe import EditRecipe
+from stylesheet_update import COLORS
 import os
 from os.path import basename
+import time
 
 from PySide2 import QtCore
 from PySide2 import QtGui
@@ -16,6 +22,7 @@ import google_api as gapi
 import printer
 import html_parser as web
 import custom_widgets as cw
+import stacked_recipes as sr
 from datetime import date, timedelta
 from pyperclip import copy
 from shutil import copy2
@@ -25,10 +32,11 @@ import uuid
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QDoubleValidator, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase, QFont
+from PySide2.QtGui import QBrush, QDoubleValidator, QMovie, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase, QFont, QWindow
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
+# from PySide2 import QtQuickWidgets
 # QDate
 
 #COLOR THEME HISTORY
@@ -58,6 +66,8 @@ tips
 class MainGUI(QWidget):
     def __init__(self, parent=None, recipe_db = None):
         super(MainGUI, self).__init__(parent)
+        
+        self.save_components()
         self.initial_state(recipe_db)
         self.connect_actions()
         self.update_modif()
@@ -80,37 +90,9 @@ class MainGUI(QWidget):
         self.tW_menu.horizontalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
         self.dateEdit.setFont(QFont('Aller', 11, QtGui.QFont.Bold))
         self.cB_restes.setFont(QFont('Aller', 14, QtGui.QFont.Bold))
-        
-    def initial_state(self, my_recipe_db):
-        #variables
+    
+    def save_components(self):
         self.pW = self.parentWidget()
-        self.recipe_db: recipe_db.RecipeDB
-        self.recipe_db = my_recipe_db
-        self.current_menu = menu.Menu()
-        self.dessert_list = []
-        self.dirname = os.path.dirname(__file__)
-        self.just_dropped = False
-        self.cell_signal_count = 0
-        self.from_cell = ()
-        self.to_cell = ()
-        self.html_source_file_shopping = self.dirname + '/shopping_core.html'
-        
-        self.default_email = ''
-        self.default_nb_days = 7
-        self.default_storage = self.dirname + '/Mes_Fiches/'
-        self.homepage = QUrl("https://www.google.com/")
-        self.user_id_file = self.dirname + '/user.id'
-        self.init_user_settings()
-        
-        self.recipe_image_path = ''
-        self.myThreads = []
-        self.delete_flag = False
-        self.contact = 'notification.a.table@gmail.com'
-        self.stacks = {}
-        self.lockKeyId = 'xx'
-        self.lockedForEdition = False
-        self.recipeMultiSelection = []
-        
         #-- ui widgets --
         self.tW: QTabWidget
         self.tW = self.pW.tabWidget
@@ -118,8 +100,6 @@ class MainGUI(QWidget):
         self.frame = self.pW.frame
         self.frame_settings: QFrame
         self.frame_settings = self.pW.frame_settings
-        self.label_user: QLabel
-        self.label_user = self.pW.label_user
         #-tab menu
         self.tab_menus: QWidget
         self.tab_menus = self.pW.tab_menus
@@ -127,14 +107,10 @@ class MainGUI(QWidget):
         self.tB = self.pW.toolBox
         self.label_date: QLabel
         self.label_date = self.pW.label_date
-        self.label_dessert: QLabel
-        self.label_dessert = self.pW.label_dessert
         self.cB_restes: QCheckBox
         self.cB_restes = self.pW.cB_restes_2
         self.dateEdit: QDateEdit
         self.dateEdit = self.pW.dateEdit_2
-        self.sB_desserts: QSpinBox
-        self.sB_desserts = self.pW.sB_desserts_2
         self.sB_days: QSpinBox
         self.sB_days = self.pW.sB_days
         self.p_carte: QWidget
@@ -145,8 +121,6 @@ class MainGUI(QWidget):
         self.pB_calendar = self.pW.pB_calendar
         self.pB_new_menu: QPushButton
         self.pB_new_menu = self.pW.pB_new_menu_2
-        self.pB_modif: QPushButton
-        self.pB_modif = self.pW.pB_modif
         self.tW_menu: QTableWidget
         self.tW_menu = self.pW.tW_menu
         self.score_vegan: QLabel
@@ -201,10 +175,6 @@ class MainGUI(QWidget):
         self.pB_new_recipe = self.pW.pB_new_recipe
         self.pB_delete: QPushButton
         self.pB_delete = self.pW.pB_delete
-        self.label_newedit: QLabel
-        self.label_newedit = self.pW.label_newedit
-        self.pB_photo: QPushButton
-        self.pB_photo = self.pW.pB_photo
         self.tE_ingredients: QTextEdit
         self.tE_ingredients = self.pW.tE_ingredients
         self.tE_recipe: QTextBrowser
@@ -239,45 +209,8 @@ class MainGUI(QWidget):
         self.cB_search_tag_tips = self.pW.cB_search_tag_tips
         self.frame_search: QFrame
         self.frame_search = self.pW.frame_recherche
-        self.frame_new_recipe: QFrame
-        self.frame_new_recipe = self.pW.frame_new_recipe
         self.frame_edit_recipe: QFrame
         self.frame_edit_recipe = self.pW.frame_edit_recipe
-        self.lE_title: QLineEdit
-        self.lE_title = self.pW.lE_titre
-        self.img_dish: QLabel
-        self.img_dish = self.pW.img_dish
-
-
-        #self.tW_ingredients: QTableWidget
-        #self.tW_ingredients = self.pW.tW_ingredients
-
-        self.lw_ingredients: QListWidget
-        self.lw_ingredients = self.pW.lw_ingredients
-
-
-        self.sB_time: QSpinBox
-        self.sB_time = self.pW.sB_time
-        self.tB_preparation: QTextBrowser
-        self.tB_preparation = self.pW.tB_preparation
-        self.cB_tagdouble: QCheckBox
-        self.cB_tagdouble = self.pW.cB_tagdouble
-        self.cB_tagdessert: QCheckBox
-        self.cB_tagdessert = self.pW.cB_tagdessert
-        self.cB_tagdinner: QCheckBox
-        self.cB_tagdinner = self.pW.cB_tagdinner
-        self.cB_tagkids: QCheckBox
-        self.cB_tagkids = self.pW.cB_tagkids
-        self.cB_taglunch: QCheckBox
-        self.cB_taglunch = self.pW.cB_taglunch
-        self.cB_tagsummer: QCheckBox
-        self.cB_tagsummer = self.pW.cB_tagsummer
-        self.cB_tagtips: QCheckBox
-        self.cB_tagtips = self.pW.cB_tagtips
-        self.cB_tagvegan: QCheckBox
-        self.cB_tagvegan = self.pW.cB_tagvegan
-        self.cB_tagwinter: QCheckBox
-        self.cB_tagwinter = self.pW.cB_tagwinter
         self.lE_with: QLineEdit
         self.lE_with = self.pW.lE_with
         self.frame_tags: QFrame
@@ -298,90 +231,41 @@ class MainGUI(QWidget):
         self.tag_lunchdinner = self.pW.label_lunchdinner
         self.tag_tips: QLabel
         self.tag_tips = self.pW.label_tips
-        self.pB_ok_2: QPushButton
-        self.pB_ok_2 = self.pW.pB_ok_2
-        self.pB_cancel_2: QPushButton
-        self.pB_cancel_2 = self.pW.pB_cancel_2
-        self.gL_web: QGridLayout
-        self.gL_web = self.pW.gL_web
-        self.hL_tools: QHBoxLayout
-        self.hL_tools = self.pW.hL_tools
-        self.frame_wB: QFrame
-        self.frame_wB = self.pW.frame_wB
-        self.cB_web: QCheckBox
-        self.cB_web = self.pW.cB_web
-        #-tab historique
-        self.tab_history: QWidget
-        self.tab_history = self.pW.tab_historique
-        self.tW_history: QTableWidget
-        self.tW_history = self.pW.tW_historique
-        self.frame_confirm: QFrame
-        self.frame_confirm = self.pW.frame_confirm
-        self.pB_ok: QPushButton
-        self.pB_ok = self.pW.pB_ok
-        self.pB_cancel: QPushButton
-        self.pB_cancel = self.pW.pB_cancel
-        self.label_confirm: QLabel
-        self.label_confirm = self.pW.label_confirm
-        self.label_warning: QLabel
-        self.label_warning = self.pW.label_warning
-        self.label_deco_1: QLabel
-        self.label_deco_1 = self.pW.label_deco_1
-        self.label_deco_2: QLabel
-        self.label_deco_2 = self.pW.label_deco_2
-        self.label_deco_3: QLabel
-        self.label_deco_3 = self.pW.label_deco_3
-        self.label_deco_4: QLabel
-        self.label_deco_4 = self.pW.label_deco_4
-        self.label_deco_5: QLabel
-        self.label_deco_5 = self.pW.label_deco_5
-        self.label_deco_6: QLabel
-        self.label_deco_6 = self.pW.label_deco_6
-        self.label_deco_7: QLabel
-        self.label_deco_7 = self.pW.label_deco_7
-        self.label_deco_8: QLabel
-        self.label_deco_8 = self.pW.label_deco_8
-        self.label_deco_9: QLabel
-        self.label_deco_9 = self.pW.label_deco_9
-        self.label_deco_10: QLabel
-        self.label_deco_10 = self.pW.label_deco_10
-        self.label_deco_11: QLabel
-        self.label_deco_11 = self.pW.label_deco_11
-        self.label_deco_12: QLabel
-        self.label_deco_12 = self.pW.label_deco_12
-        self.label_deco_13: QLabel
-        self.label_deco_13 = self.pW.label_deco_13
-        self.label_deco_14: QLabel
-        self.label_deco_14 = self.pW.label_deco_14
-        self.label_deco_15: QLabel
-        self.label_deco_15 = self.pW.label_deco_15
-        self.label_deco_16: QLabel
-        self.label_deco_16 = self.pW.label_deco_16
+        self.vL_edit_recipe: QVBoxLayout
+        self.vL_edit_recipe = self.pW.vL_edit_recipe
         #tab settings
-        self.pB_ok_3: QPushButton
-        self.pB_ok_3 = self.pW.pB_ok_3
-        self.pB_cancel_3: QPushButton
-        self.pB_cancel_3 = self.pW.pB_cancel_3
-        self.lE_email: QLineEdit
-        self.lE_email = self.pW.lE_email
-        self.sB_settings_days: QSpinBox
-        self.sB_settings_days = self.pW.sB_settings_days
-        self.lE_storage: QLineEdit
-        self.lE_storage = self.pW.lE_storage
-        self.tB_storage: QToolBox
-        self.tB_storage = self.pW.toolButton
-        self.lE_homepage: QLineEdit
-        self.lE_homepage = self.pW.lE_homepage
-        self.label_contact: QLabel
-        self.label_contact = self.pW.label_contact
-        self.img_settings_email: QLabel
-        self.img_settings_email = self.pW.img_settings_email
-        self.img_settings_days: QLabel
-        self.img_settings_days = self.pW.img_settings_days
-        self.img_settings_storage: QLabel
-        self.img_settings_storage = self.pW.img_settings_storage
-        self.label_homepage: QLabel
-        self.label_homepage = self.pW.label_homepage
+        self.vL_settings: QVBoxLayout
+        self.vL_settings = self.pW.vL_settings
+        
+    def initial_state(self, my_recipe_db):
+        #variables
+        self.recipe_db: recipe_db.RecipeDB
+        self.recipe_db = my_recipe_db
+        self.current_menu = menu.Menu()
+        self.dessert_list = []
+        self.dirname = os.path.dirname(__file__)
+        self.just_dropped = False
+        self.cell_signal_count = 0
+        self.from_cell = ()
+        self.to_cell = ()
+        self.html_source_file_shopping = self.dirname + '/shopping_core.html'
+        
+        self.default_email = ''
+        self.default_nb_days = 7
+        self.default_storage = self.dirname + '/Mes_Fiches/'
+        self.homepage = QUrl("https://www.google.com/")
+        self.user_id_file = self.dirname + '/user.id'
+        
+        self.recipe_image_path = ''
+        self.myThreads = []
+        self.delete_flag = False
+        self.contact = 'notification.a.table@gmail.com'
+        self.stacks = {}
+        self.lockKeyId = 'xx'
+        self.lockedForEdition = False
+        self.recipeMultiSelection = []
+        
+        
 
         self.init_colors = {'RED' :         ('#d72631', [215,38,49]),
                     'LIGHT_GREEN' :         ('#a2d5c6', [162,213,198]),
@@ -410,23 +294,7 @@ class MainGUI(QWidget):
                     '#color5_dark#'     : '#b8a98e'
         }
         
-        self.colors = {
-                    '#color1_bright#'   : '#36a9d3',
-                    '#color1#'          : '#2584a7',
-                    '#color1_dark#'     : '#1a5d75',
-                    '#color2_bright#'   : '#fe9a9d',
-                    '#color2#'          : '#fe6d73',
-                    '#color2_dark#'     : '#fe484e',
-                    '#color3_bright#'   : '#ffe0ad',
-                    '#color3#'          : '#ffcb77',
-                    '#color3_dark#'     : '#ffc05c',
-                    '#color4_bright#'   : '#24e5d2',
-                    '#color4#'          : '#17c3b2',
-                    '#color4_dark#'     : '#13a496',
-                    '#color5_bright#'   : '#fef9ef',
-                    '#color5#'          : '#fdf1d9',
-                    '#color5_dark#'     : '#fae2b2'
-                    }
+        self.colors = COLORS
         
         # cw.style_factory(self.pW, init_colors = self.init_colors, colors = self.colors)
         
@@ -472,13 +340,6 @@ class MainGUI(QWidget):
         self.tW_menu.setIconSize(QSize(160, 160))
         self.tW_menu.verticalHeader().setDefaultAlignment(Qt.AlignCenter)
         self.tW_menu.viewport().installEventFilter(self)
-
-        self.pB_modif.setEnabled(False)
-        
-        #transition before complete deletion
-        self.pB_modif.hide()
-        self.label_dessert.hide()
-        self.sB_desserts.hide()
         
         self.pB_save.setEnabled(False)
         
@@ -492,32 +353,24 @@ class MainGUI(QWidget):
 
         self.frame_settings.hide()
         self.frame_search.hide()
-        self.frame_edit_recipe.hide()
         
-        self.lw_ingredients.setMouseTracking(True)
+        #User settings
+        self.init_user_settings()
+        self.user_settings_pB()
+        
+        #init edit_recipe
+        self.init_edit_recipe()
+        self.frame_edit_recipe.hide()
         
         #self.tW_ingredients.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         #self.tW_ingredients.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        
-        self.tW_history.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tW_history.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tW_history.setColumnCount(2)
-        self.tW_history.setContextMenuPolicy(Qt.CustomContextMenu)
-        
-        self.reset_history()
-        
-        #User settings
-        self.user_settings_ui()
-        
-        #webBrowser
-        self.web_browser_ui()
          
         #images
         self.window().setWindowIcon(QIcon(self.dirname + '/UI/images/donut.png'))
 
         cw.load_pic(self.label_date, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
         # cw.load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
-        cw.load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
+        # cw.load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
         # load_pic(self.label_dessert_2, self.dirname + '/UI/images/tag_dessert_color_LD.png')
         self.tW.setTabIcon(0,QIcon(self.dirname + '/UI/images/icon_chef_3colors.png'))
         self.tW.setTabIcon(1,QIcon(self.dirname + '/UI/images/icon_recipe_3colors.png'))
@@ -525,7 +378,8 @@ class MainGUI(QWidget):
         self.tB.setItemIcon(0, QIcon(self.dirname + '/UI/images/icon_menu_3colors.png'))
         self.tB.setItemIcon(1, QIcon(self.dirname + '/UI/images/icon_shopping_cart.png'))
         self.pB_user.setIcon(QIcon(self.dirname + '/UI/images/icon_user_t.png'))
-        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
+        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
+        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
         # self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
         self.pB_calendar.setIcon(QIcon(self.dirname + '/UI/images/icon_calendar.png'))
@@ -554,45 +408,18 @@ class MainGUI(QWidget):
         self.pB_send.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
         self.pB_copy.setIcon(QIcon(self.dirname + '/UI/images/icon_copy.png'))
 
-        labels = [self.label_deco_1,self.label_deco_2,self.label_deco_3,self.label_deco_4,
-                  self.label_deco_5,self.label_deco_6,self.label_deco_7,self.label_deco_8,
-                  self.label_deco_9,self.label_deco_10,self.label_deco_11,self.label_deco_12,
-                  self.label_deco_13,self.label_deco_14,self.label_deco_15,self.label_deco_16]
-        
-        for i, label in enumerate(labels):
-            cw.load_pic(label, self.dirname + '/UI/images/icon_deco_%s.png' % (i+1))
-        
-        cw.load_pic(self.label_warning, self.dirname + '/UI/images/icon_fork_X_3colors_t_LD.png')
-        self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
-        self.pB_cancel_2.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_ok_2.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
-        self.pB_cancel_3.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_ok_3.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
         self.pB_modif_2.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
         self.pB_new_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_new_recipe.png'))
         self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
-        self.pB_photo.setIcon(QIcon(self.dirname + '/UI/images/icon_photo.png'))
         
-        self.img_settings_email.setPixmap(QPixmap(self.dirname + '/UI/images/icon_send.png').scaled(40,40))
-        self.img_settings_days.setPixmap(QPixmap(self.dirname + '/UI/images/icon_date_3colors_t_LD.png').scaled(40,40))
-        self.img_settings_storage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_print.png').scaled(40,40))
-        self.label_homepage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_web_search_gp.png').scaled(40,40))
-        # load_pic(self.img_settings_days, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
-        # load_pic(self.img_settings_storage, self.dirname + '/UI/images/icon_print.png')
-
     def main(self):
         self.pW.show()
 
     def connect_actions(self):
         self.pB_new_menu.clicked.connect(self.on_new_menu)
         self.tW_menu.cellDoubleClicked.connect(self.on_card_recipe_selection)
-        self.tW_history.cellDoubleClicked.connect(self.on_history_recipe_selection)
-        # self.pB_modif.clicked.connect(self.on_card_modif)
         self.pB_save.clicked.connect(self.on_save_menu)
         self.pB_calendar.clicked.connect(self.on_calendar)
-        self.pB_ok.clicked.connect(self.on_confirm_history_update)
-        self.pB_cancel.clicked.connect(self.on_cancel_history_update)
         self.tE_ingredients.anchorClicked.connect(self.on_recipe_link)
         self.pB_back.clicked.connect(self.on_previous_recipe)
         self.pB_copy.clicked.connect(self.on_copy_shopping_list)
@@ -603,25 +430,14 @@ class MainGUI(QWidget):
         self.pB_new_recipe.clicked.connect(self.on_new_recipe)
         self.pB_modif_2.clicked.connect(self.on_edit_recipe)
         self.pB_delete.clicked.connect(self.on_delete_recipe)
-        self.pB_ok_2.clicked.connect(self.on_confirm_recipe)
-        self.pB_cancel_2.clicked.connect(self.on_cancel_recipe)
-        self.pB_photo.clicked.connect(self.on_add_photo)
         self.pB_user.clicked.connect(self.on_user_settings)
-        self.tB_storage.clicked.connect(lambda : self.openDir(self.lE_storage, u'de sauvegarde des fiches', dirpath = self.default_storage))
-        self.pB_ok_3.clicked.connect(self.on_save_settings)
-        self.pB_cancel_3.clicked.connect(self.on_quit_settings)
         self.lW_recipe.customContextMenuRequested.connect(self.on_recipe_right_click)
-        self.tW_history.customContextMenuRequested.connect(self.on_history_right_click)
-        self.cB_web.stateChanged.connect(self.on_show_web)
         
     def update_modif(self):
         self.dateEdit.dateChanged.connect(self.dummy_function)
         self.tW_menu.cellChanged.connect(self.on_drag_drop_event)
         self.sB_days.valueChanged.connect(self.on_nb_days_changed)
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
-        self.lw_ingredients.itemEntered.connect(self.dummy_function)
-        self.lE_title.textChanged.connect(self.on_title_changed)
-        # self.sB_desserts.valueChanged.connect(self.on_dessert_selection)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
         self.lE_with.textChanged.connect(self.dynamic_filter)
@@ -638,32 +454,25 @@ class MainGUI(QWidget):
         self.cB_search_tag_vegan.stateChanged.connect(self.dynamic_filter)
         self.cB_search_tag_winter.stateChanged.connect(self.dynamic_filter)
         
-        self.selectable_tags = [self.cB_tagdinner, self.cB_tagdessert, self.cB_tagdouble, self.cB_tagkids,
-                                self.cB_taglunch, self.cB_tagwinter, self.cB_tagsummer, self.cB_tagvegan, self.cB_tagtips]
-        for tag in self.selectable_tags:
-            tag.toggled.connect(lambda _, cB=tag: self.on_tag_selected(cB))
-        
-        self.wV.urlChanged.connect(self.update_urlbar)
-        
     def dummy_function(self, item):
         print('dummy function triggered %s' % item)
 
-    def is_filter_in_recipe_name(self, filter, recipe):
-        if self.cB_search_recipe_name.isChecked():
-            return filter in recipe.name.lower()
-        return False
+    # def is_filter_in_recipe_name(self, filter, recipe):
+    #     if self.cB_search_recipe_name.isChecked():
+    #         return filter in recipe.name.lower()
+    #     return False
 
-    def is_filter_in_ing_list(self,filter,recipe):
-        if self.cB_search_ingredients.isChecked() and recipe.ingredients_list_qty is not None: 
-            for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
-                if filter in ingredient:
-                    return True
-        return False
+    # def is_filter_in_ing_list(self,filter,recipe):
+    #     if self.cB_search_ingredients.isChecked() and recipe.ingredients_list_qty is not None: 
+    #         for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
+    #             if filter in ingredient:
+    #                 return True
+    #     return False
 
-    def is_filter_in_preparation(self, filter, recipe):
-        if self.cB_search_preparation.isChecked() and recipe.preparation is not None:
-            return filter in recipe.preparation.lower()
-        return False
+    # def is_filter_in_preparation(self, filter, recipe):
+    #     if self.cB_search_preparation.isChecked() and recipe.preparation is not None:
+    #         return filter in recipe.preparation.lower()
+    #     return False
 
     def is_filter_in_tags(self, recipe):
         output = True
@@ -715,27 +524,29 @@ class MainGUI(QWidget):
         return output
 
     def dynamic_filter(self):
-        with_filters = self.lE_with.text().split(',')
-        recipeCount = 0
+        # with_filters = self.lE_with.text().split(',')
+        # recipeCount = 0
 
-        for recipeIndex in range(self.lW_recipe.count()):
-            recipeListItem = self.lW_recipe.item(recipeIndex)
-            recipe = self.recipe_db.get_recipe_object(recipeListItem.text())
-            show_recipe_flag = True
+        # for recipeIndex in range(self.lW_recipe.count()):
+        #     recipeListItem = self.lW_recipe.item(recipeIndex)
+        #     recipe = self.recipe_db.get_recipe_object(recipeListItem.text())
+        #     show_recipe_flag = True
             
-            for filter in with_filters:
-                filter = filter.strip()
-                isCriteriaMet = self.is_filter_in_recipe_name(filter, recipe)
-                isCriteriaMet = isCriteriaMet or self.is_filter_in_ing_list(filter, recipe)
-                isCriteriaMet = isCriteriaMet or self.is_filter_in_preparation(filter, recipe)
+        #     for filter in with_filters:
+        #         filter = filter.strip()
+        #         isCriteriaMet = self.is_filter_in_recipe_name(filter, recipe)
+        #         isCriteriaMet = isCriteriaMet or self.is_filter_in_ing_list(filter, recipe)
+        #         isCriteriaMet = isCriteriaMet or self.is_filter_in_preparation(filter, recipe)
                 
-                show_recipe_flag = show_recipe_flag and isCriteriaMet
+        #         show_recipe_flag = show_recipe_flag and isCriteriaMet
 
-            show_recipe_flag = show_recipe_flag and self.is_filter_in_tags(recipe)
+        #     show_recipe_flag = show_recipe_flag and self.is_filter_in_tags(recipe)
 
-            self.lW_recipe.setItemHidden(recipeListItem, not show_recipe_flag)
-            if show_recipe_flag:
-                recipeCount += 1
+        #     self.lW_recipe.setItemHidden(recipeListItem, not show_recipe_flag)
+        #     if show_recipe_flag:
+        #         recipeCount += 1
+        
+        cw.dynamic_filter(self.lE_with.text(), self.lW_recipe, self.recipe_db, tagFunc = self.is_filter_in_tags)
 
     def print_thread_function(self, data, icon_path = None):
         self.info_dialog.close()
@@ -752,14 +563,25 @@ class MainGUI(QWidget):
         self.info_dialog.exec_()
     
     def on_new_menu(self):
+        # start = time.process_time()
+        
+        # movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        
         self.new_menu()
+        
+        # print('step 1 : %f' % (time.process_time() - start))
+        # start = time.process_time()
+        
         self.populate_tW_menu(self.current_menu)
-        # self.on_dessert_selection(self.sB_desserts.value()) #includes dessert, menu_list, shopping list #DEPRECATED
         self.populate_shopping_list()
         self.populate_menu_list()
         self.compute_score()
-        # self.pB_modif.setEnabled(True)
+        
         self.pB_save.setEnabled(True)
+        
+        # movie.stop()
+        # QCoreApplication.processEvents()
+        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
     
     def new_menu(self):
         current_QDate = self.dateEdit.date()
@@ -777,6 +599,8 @@ class MainGUI(QWidget):
         self.current_menu.use_double()
 
     def populate_tW_menu(self, menu):
+        movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        
         #reset tW_Menu
         self.tW_menu.setColumnCount(0)
         #update tW_menu with days
@@ -790,20 +614,18 @@ class MainGUI(QWidget):
         #update tW_menu with menus
         recipe_list_lunch = [m[1] for m in table_menu]
         recipe_list_dinner = [m[2] for m in table_menu]
-        for i, recipes_of_day in enumerate(zip(recipe_list_lunch, recipe_list_dinner)):
+        
+        recipe_list = zip(recipe_list_lunch, recipe_list_dinner)
+        length = len(recipe_list_lunch)
+        for i, recipes_of_day in enumerate(recipe_list):
             recipe_lunch, recipe_dinner = recipes_of_day
-            # text_lunch, text_dinner = (recipe_lunch.name, recipe_dinner.name)
-            # # print((text_lunch, self.recipe_db.background_score(recipe_lunch, self.current_menu.start_day)))
-            qtwi_lunch, qtwi_dinner = (QTableWidgetItem(cw.row_column_to_id(0,i)), QTableWidgetItem(cw.row_column_to_id(1,i)))
-            # qtwi_lunch.setTextAlignment(Qt.AlignCenter)
-            # qtwi_dinner.setTextAlignment(Qt.AlignCenter)
+            # qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
+            # qtwi_lunch = QTableWidgetItem(sr.row_column_to_id(0,i))
+            # qtwi_dinner = QTableWidgetItem(sr.row_column_to_id(1,i))
 
-            self.tW_menu.setItem(0, i, qtwi_lunch)
-            self.tW_menu.setItem(1, i, qtwi_dinner)
+            # self.tW_menu.setItem(0, i, qtwi_lunch)
+            # self.tW_menu.setItem(1, i, qtwi_dinner)
 
-            # cw.display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
-            # cw.display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
-    
         #ability to add several recipes to a given slot
             idplus = '0' + str(i+1)
             idplus = idplus[-2:]
@@ -819,36 +641,91 @@ class MainGUI(QWidget):
             elif type(recipe_dinner) == list:
                 recipe_dinner_stack = recipe_dinner
             
-            stacked_lunch = cw.create_stack(recipe_lunch_stack, self.recipe_db, id = idplus)
-            stacked_dinner = cw.create_stack(recipe_dinner_stack, self.recipe_db, id = idminus)
+            # stacked_lunch = StackedRecipes(recipe_lunch_stack, self.recipe_db, id = idplus)
+            # stacked_dinner = StackedRecipes(recipe_dinner_stack, self.recipe_db, id = idminus)
             
-            stacked_lunch.signal.sig.connect(self.on_enter_recipe_stack)
-            stacked_lunch.signal2.sig2.connect(self.on_lock_for_edition)
-            stacked_lunch.signal3.sig3.connect(self.on_update_current_menu)
-            stacked_dinner.signal.sig.connect(self.on_enter_recipe_stack)
-            stacked_dinner.signal2.sig2.connect(self.on_lock_for_edition)
-            stacked_dinner.signal3.sig3.connect(self.on_update_current_menu)
+            # stacked_lunch.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            # stacked_lunch.on_lock_for_edition.connect(self.on_lock_for_edition)
+            # stacked_lunch.on_update_current_menu.connect(self.on_update_current_menu)
+            # stacked_dinner.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            # stacked_dinner.on_lock_for_edition.connect(self.on_lock_for_edition)
+            # stacked_dinner.on_update_current_menu.connect(self.on_update_current_menu)
             
-            self.stacks[idplus] = stacked_lunch
-            self.stacks[idminus] = stacked_dinner
+            # self.stacks[idplus] = stacked_lunch
+            # self.stacks[idminus] = stacked_dinner
             
-            qtwi_lunch = stacked_lunch.parentWidget()
-            qtwi_dinner = stacked_dinner.parentWidget()
-            # qtwi_lunch = cw.style_factory(qtwi_lunch, self.init_colors, self.colors)
-            # qtwi_dinner = cw.style_factory(qtwi_dinner, self.init_colors, self.colors)
+            # qtwi_lunch = stacked_lunch
+            # qtwi_dinner = stacked_dinner
             
-            self.tW_menu.setCellWidget(0, i, qtwi_lunch)
-            self.tW_menu.setCellWidget(1, i, qtwi_dinner)
-
-            # print(self.tW_menu.item(0,i).text())
+            # self.tW_menu.setCellWidget(0, i, qtwi_lunch)
+            # self.tW_menu.setCellWidget(1, i, qtwi_dinner)
+            
+            # QCoreApplication.processEvents()
+            
+            #separate lunch and dinner processes:
+            #--lunch
+            self.on_new_stack(recipe_lunch_stack, idplus, i, length)
+            #--dinner
+            self.on_new_stack(recipe_dinner_stack, idminus, i, length)
+        
+        # for id, stack in self.stacks.items():
+        #     stack.update_recipes()
+        # self.progress_update(5, 5)    
+    #     recipe_card_worker = RecipeCard(list(self.stacks.values()))
+    #     recipe_card_worker.on_init.connect(self.recipe_card_init)
+    #     recipe_card_worker.on_connect.connect(self.recipe_card_connect)
+    #     recipe_card_worker.on_stop.connect(self.stop_movie)
+    #     self.myThreads.append(recipe_card_worker)
+    #     recipe_card_worker.start()
+ 
+    # def recipe_card_init(self, stacked_recipe):
+    #     stacked_recipe.initial_state()
+    # def recipe_card_connect(self, stacked_recipe):
+    #     stacked_recipe.connect_actions()
+    # def stop_movie(self):
+    #     self.movie.stop()
+    #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+        movie.stop()
+        QCoreApplication.processEvents()
+        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
     
+    
+    def on_new_stack(self, recipe_stack, id, k, length):
+        qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
+        stack = StackedRecipes(recipe_stack, self.recipe_db, id)
+        stack.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+        stack.on_lock_for_edition.connect(self.on_lock_for_edition)
+        stack.on_update_current_menu.connect(self.on_update_current_menu)
+        self.stacks[id] = stack
+        if id[0] == '+':
+            self.tW_menu.setItem(0, k, qtwi)
+            self.tW_menu.setCellWidget(0, k, stack)
+            x = (k * 2) % (length+1)
+        elif id[0] == '-':
+            self.tW_menu.setItem(1, k, qtwi)
+            self.tW_menu.setCellWidget(1, k, stack)
+            x = (k * 2 + 1) % (length+1)
+        
+        # self.progress_update(x, length)
+        
+        QCoreApplication.processEvents()
+        
+            
+    # def progress_update(self, k, length):
+    #     progress = round(k/length * 5) 
+    #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_%i.png' % progress))
+        
+        
     def on_enter_recipe_stack(self, id):
         if not self.lockedForEdition:#ongoing edition of recipe, locking others
             for key in self.stacks:
                 if key != id:
-                    self.stacks[key].frame_buttons.setVisible(False)
+                    # self.stacks[key].frame_buttons.setVisible(False)
+                    self.stacks[key].on_enter_exit_stack(False)
             if id in self.stacks:
-                self.stacks[id].frame_buttons.setVisible(True)
+                # self.stacks[id].frame_buttons.setVisible(True)
+                self.stacks[id].on_enter_exit_stack(True)
+                self.stacks[id].finish_init()
             
     def on_lock_for_edition(self, id, lock):
         if lock:
@@ -857,18 +734,18 @@ class MainGUI(QWidget):
             self.pB_new_menu.setEnabled(False)
             self.dateEdit.setEnabled(False)
             self.sB_days.setEnabled(False)
-            self.sB_desserts.setEnabled(False)
             self.cB_restes.setEnabled(False)
             self.pB_save.setEnabled(False)
+            self.pB_calendar.setEnabled(False)
         elif (not lock) and id == self.lockKeyId:
             self.lockKeyId = 'xx'
             self.lockedForEdition = False
             self.pB_new_menu.setEnabled(True)
             self.dateEdit.setEnabled(True)
             self.sB_days.setEnabled(True)
-            self.sB_desserts.setEnabled(True)
             self.cB_restes.setEnabled(True)
             self.pB_save.setEnabled(True)
+            self.pB_calendar.setEnabled(True)
             self.populate_shopping_list()
             self.populate_menu_list()
             self.compute_score()
@@ -903,34 +780,34 @@ class MainGUI(QWidget):
             # qtwi.setTextAlignment(Qt.AlignCenter)
             #and insert in from_cell (now empty after drop)
             from_row, from_column = self.from_cell
-            qtwi_to = QTableWidgetItem(cw.row_column_to_id(row,column))
+            qtwi_to = QTableWidgetItem(sr.row_column_to_id(row,column))
             self.tW_menu.setItem(from_row, from_column, qtwi_to)
             # self.tW_menu.setItem(from_row, from_column, qtwi)
 
             # cw.display_image(original_to_cell_recipe, self.dirname, qtwi, icon = True)
             
             #take stack from original to_cell and from_cell
-            original_to_cell_stack = self.stacks[cw.row_column_to_id(row, column)]
-            original_from_cell_stack = self.stacks[cw.row_column_to_id(from_row, from_column)]
+            original_to_cell_stack = self.stacks[sr.row_column_to_id(row, column)]
+            original_from_cell_stack = self.stacks[sr.row_column_to_id(from_row, from_column)]
             
             original_to_cell_stack_list = original_to_cell_stack.recipe_list
             original_from_cell_stack_list = original_from_cell_stack.recipe_list
             
-            new_stacked_to = cw.create_stack(original_from_cell_stack_list, self.recipe_db, id = cw.row_column_to_id(row, column))
-            new_stacked_from = cw.create_stack(original_to_cell_stack_list, self.recipe_db, id = cw.row_column_to_id(from_row, from_column))
+            new_stacked_to = StackedRecipes(original_from_cell_stack_list, self.recipe_db, id = sr.row_column_to_id(row, column))
+            new_stacked_from = StackedRecipes(original_to_cell_stack_list, self.recipe_db, id = sr.row_column_to_id(from_row, from_column))
             
-            new_stacked_to.signal.sig.connect(self.on_enter_recipe_stack)
-            new_stacked_to.signal2.sig2.connect(self.on_lock_for_edition)
-            new_stacked_to.signal3.sig3.connect(self.on_update_current_menu)
-            new_stacked_from.signal.sig.connect(self.on_enter_recipe_stack)
-            new_stacked_from.signal2.sig2.connect(self.on_lock_for_edition)
-            new_stacked_from.signal3.sig3.connect(self.on_update_current_menu)
+            new_stacked_to.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            new_stacked_to.on_lock_for_edition.connect(self.on_lock_for_edition)
+            new_stacked_to.on_update_current_menu.connect(self.on_update_current_menu)
+            new_stacked_from.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
+            new_stacked_from.on_lock_for_edition.connect(self.on_lock_for_edition)
+            new_stacked_from.on_update_current_menu.connect(self.on_update_current_menu)
             
-            self.stacks[cw.row_column_to_id(row, column)] = new_stacked_to
-            self.stacks[cw.row_column_to_id(from_row, from_column)] = new_stacked_from
+            self.stacks[sr.row_column_to_id(row, column)] = new_stacked_to
+            self.stacks[sr.row_column_to_id(from_row, from_column)] = new_stacked_from
             
-            qtwi_to = new_stacked_to.parentWidget()
-            qtwi_from = new_stacked_from.parentWidget()
+            qtwi_to = new_stacked_to
+            qtwi_from = new_stacked_from
             self.tW_menu.setCellWidget(from_row, from_column, qtwi_from)
             self.tW_menu.setCellWidget(row, column, qtwi_to)
             
@@ -963,10 +840,9 @@ class MainGUI(QWidget):
                 
             #reinit qtwi text (for consistency or possible reuse)
             for i in range(self.tW_menu.columnCount()):
-                qtwi_lunch, qtwi_dinner = (QTableWidgetItem(cw.row_column_to_id(0,i)), QTableWidgetItem(cw.row_column_to_id(1,i)))
+                qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
                 self.tW_menu.setItem(0, i, qtwi_lunch)
                 self.tW_menu.setItem(1, i, qtwi_dinner)
-            
 
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent) -> bool:
 
@@ -1043,42 +919,8 @@ class MainGUI(QWidget):
         self.lW_recipe.setCurrentItem(lwi)
         lwi.setSelected(True)
 
-    
-    def on_history_recipe_selection(self, row, column):
-        if self.tab_recipe.isEnabled():#no effect when waiting for user confirmation in history tab
-            recipes = self.tW_history.item(row, column).text().split(' | ')
-            if len(recipes) == 1:
-                recipe_name = recipes[0]
-                self.switch_to_recipe(recipe_name)
-            else:
-                #display context menu with choices
-                self.recipeMultiSelection = recipes
-                pyautogui.click(button='right')
-    
-    def on_history_right_click(self, pos):
-        if self.recipeMultiSelection != []:
-            globalPos = self.tW_history.mapToGlobal(pos)
-            
-            right_click_menu = QMenu(self)
-            right_click_menu.setToolTipsVisible(True)
-            right_click_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
-                                        (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
-            
-            mapper = QSignalMapper(self)
-            
-            for recipe_name in self.recipeMultiSelection:
-                action = QAction(right_click_menu)
-                action.setText(recipe_name)
-                mapper.setMapping(action, recipe_name)
-                action.triggered.connect(mapper.map)
-                right_click_menu.addAction(action)
-            
-            self.recipeMultiSelection = []
-            
-            mapper.mappedString.connect(self.switch_to_recipe)
-            right_click_menu.exec_(globalPos)
-            
     def switch_to_recipe(self, recipe_name):
+        self.on_quit_settings()
         self.tW.setCurrentWidget(self.tab_recipe)
         self.reset_recipes_list()
         self.reset_filters()
@@ -1140,11 +982,6 @@ class MainGUI(QWidget):
         self.lW_recipe.setCurrentItem(lwi)
         lwi.setSelected(True)
     
-    def on_title_changed(self):
-        title_ok = self.lE_title.text() != ''
-        self.pB_ok_2.setEnabled(title_ok)
-        self.pB_ok_2.setToolTip(['Il manque un titre pour la recette', 'Enregistrer'][title_ok])
-    
     def on_nb_days_changed(self, number):
         # #add/remove columns to table
         # adding = (number - self.tW_menu.columnCount()) == 1
@@ -1180,15 +1017,8 @@ class MainGUI(QWidget):
         self.compute_score()
         
     def on_save_menu(self):
-        #self.recipe_db.history = [['date(yyyy-mm-dd)','lunch','dinner'],...]
-        #self.current_menu.start_day = datetime.date , datetime.strptime('2021-10-19', '%Y-%m-%d').date()
-        #last_entry_date = datetime.strptime(self.recipe_db.history[-1][0], '%Y-%m-%d').date()
-        # last_entry_date = datetime.strptime(self.tW_history.verticalHeaderItem(self.tW_history.rowCount()-1).text(), '%Y-%m-%d').date()
-        # first_menu_date = self.current_menu.start_day
-
         new_history = []
-        #get current header labels
-        verticalHeader_labels = [self.tW_history.verticalHeaderItem(r).text() for r in range(self.tW_history.rowCount())]
+        
         for i in range(self.current_menu.number_of_days):
             date = self.current_menu.start_day + timedelta(days = i)
             # lunch_recipe_name = self.tW_menu.item(0, i).text()
@@ -1206,96 +1036,15 @@ class MainGUI(QWidget):
 
         self.new_history = self.recipe_db.consider_history_update(new_history)
 
-        for history in self.new_history:
-            date_text, lunch_recipe_name, dinner_recipe_name, index = history
-            
-            if index != -1:
-                if date_text in verticalHeader_labels:
-                    qtwi_lunch = self.tW_history.item(index, 0)
-                    qtwi_dinner = self.tW_history.item(index, 1)
-                    qtwi_lunch.setText(qtwi_lunch.text() + ' -> %s' % lunch_recipe_name)
-                    qtwi_dinner.setText(qtwi_dinner.text() + ' -> %s' % dinner_recipe_name)
-                else:
-                    verticalHeader_labels.insert(index, date_text)
-                    self.tW_history.insertRow(index)
-                    qtwi_lunch = QTableWidgetItem(lunch_recipe_name)
-                    qtwi_dinner = QTableWidgetItem(dinner_recipe_name)
-                    self.tW_history.setItem(index, 0, qtwi_lunch)
-                    self.tW_history.setItem(index, 1, qtwi_dinner)
-
-                
-            else:
-                self.tW_history.insertRow(self.tW_history.rowCount())
-                qtwi_lunch = QTableWidgetItem(lunch_recipe_name)
-                qtwi_dinner = QTableWidgetItem(dinner_recipe_name)
-                self.tW_history.setItem(self.tW_history.rowCount()-1, 0, qtwi_lunch)
-                self.tW_history.setItem(self.tW_history.rowCount()-1, 1, qtwi_dinner)
-                verticalHeader_labels.append(date_text)
-
-
-            qtwi_lunch.setTextColor(QColor(self.colors['#color2#']))
-            qtwi_dinner.setTextColor(QColor(self.colors['#color2#']))
-        
-        self.tW_history.setVerticalHeaderLabels(verticalHeader_labels)
-        #show warning and disable other actions
-        self.frame_confirm.show()
-        self.tW.setTabEnabled(0, False)
-        self.tW.setTabEnabled(1, False)
-        
-        #display history tab with modifications higlighted
-        self.tW.setCurrentIndex(2)
-        self.tW_history.scrollToItem(self.tW_history.item(self.tW_history.rowCount()-1, 0), QAbstractItemView.PositionAtTop)
-
-    def reset_history(self):
-        self.tW_history.clear()
-        self.tW_history.setHorizontalHeaderLabels(['Midi', 'Soir'])
-        self.tW_history.setRowCount(len(self.recipe_db.history))
-        self.tW_history.setVerticalHeaderLabels([h[0] for h in self.recipe_db.history])
-        # self.tW_history.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        # self.tW_history.resizeColumnsToContents()
-        for i, day in enumerate(self.recipe_db.history):
-            date, lunch, dinner = day
-            self.tW_history.setItem(i, 0, QTableWidgetItem(lunch))
-            self.tW_history.setItem(i, 1, QTableWidgetItem(dinner))
-
-        self.frame_confirm.hide()
-        
-        self.tW_history.scrollToBottom()
+        self.history_popup.on_save_menu(self.new_history)
+        self.on_display_history(self.new_history)
     
     def on_confirm_history_update(self):
-        #update rows where recipe has been replaced
-        for i in range(self.tW_history.rowCount()):
-            qtwi_lunch = self.tW_history.item(i, 0)
-            qtwi_dinner = self.tW_history.item(i, 1)
-            r,g,b = tuple(int(self.colors['#color2#'].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
-            if qtwi_lunch.textColor().getRgb() == (r,g,b,255):
-                # print(i,qtwi_lunch.textColor().getRgb())
-                #take new entry
-                lunch_recipe_name = qtwi_lunch.text().split(' -> ')[-1]
-                dinner_recipe_name = qtwi_dinner.text().split(' -> ')[-1]
-                qtwi_lunch.setText(lunch_recipe_name)
-                qtwi_dinner.setText(dinner_recipe_name)
-                #reset color
-                qtwi_lunch.setTextColor(QColor(self.colors['#color1_dark#']))
-                qtwi_dinner.setTextColor(QColor(self.colors['#color1_dark#']))
-        
         #backup file
-        copy2(self.recipe_db.history_file, self.dirname + '/backup/history_backup.ods')
+        copy2(self.recipe_db.history_file, self.dirname + '/backup/history_backup.csv')
         #update recipe_db variables and file
         self.recipe_db.update_history(self.new_history)
-        
-        #re-enable tabs
-        self.frame_confirm.hide()
-        self.tW.setTabEnabled(0, True)
-        self.tW.setTabEnabled(1, True)
-        
-    
-    def on_cancel_history_update(self):
-        # print('cancel')
-        self.frame_confirm.hide()
-        self.tW.setTabEnabled(0, True)
-        self.tW.setTabEnabled(1, True)
-        self.reset_history()
+        self.history_popup.history = self.recipe_db.history
 
     def on_calendar(self):
         # my_calendar_worker = cal.MyCalendar(self.current_menu)
@@ -1353,7 +1102,10 @@ class MainGUI(QWidget):
                 self.default_email = text
 
                 with open(self.user_id_file, 'w') as f:
-                    f.write(self.default_email)
+                    f.write(';'.join([self.default_email, 
+                                    str(self.default_nb_days), 
+                                    self.default_storage,
+                                    self.homepage.toString()]))
 
         images = [self.dirname + '/UI/images/icon_menu_3colors_LD.png']
         images.append(self.dirname + '/UI/images/icon_shopping_cart_LD.png')
@@ -1398,8 +1150,11 @@ class MainGUI(QWidget):
             if ok:
                 self.default_email = text
 
-                with open(user_id_file, 'w') as f:
-                    f.write(self.default_email)
+                with open(self.user_id_file, 'w') as f:
+                    f.write(';'.join([self.default_email, 
+                                    str(self.default_nb_days), 
+                                    self.default_storage,
+                                    self.homepage.toString()]))
 
         recipe_name = self.lW_recipe.currentItem().text()
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
@@ -1477,22 +1232,13 @@ class MainGUI(QWidget):
         if self.frame_search.isVisible():
             self.cB_search.click()
 
-    def clear_edit_recipe_window(self):
-        self.img_dish.setPixmap(QPixmap())
-
-        self.lw_ingredients.clear()
-
-        self.tB_preparation.clear()
-        tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
-                self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
-        for tag in tags:
-            tag.setChecked(False)
-        
-        # We keep that for now to remember how to add ing/units items to combo box
-        #ingredients, units = self.recipe_db.get_ingredients_units_list()
-        #self.cB_unit.addItems([''] + units)
-        #self.cB_unit.setCurrentIndex(0)
-        self.sB_time.setValue(0)
+    def init_edit_recipe(self):
+        self.edit_recipe = EditRecipe(self.user_settings, self.recipe_db)
+        self.edit_recipe.on_ok.connect(self.on_confirm_recipe)
+        self.edit_recipe.on_cancel.connect(self.on_cancel_recipe)
+        self.edit_recipe.on_error.connect(self.display_error)
+        self.edit_recipe.on_message.connect(self.print_thread_function)
+        self.vL_edit_recipe.addWidget(self.edit_recipe)
 
     def disable_other_tabs(self):
         self.tW.setTabEnabled(0, False)
@@ -1503,158 +1249,27 @@ class MainGUI(QWidget):
 
     def on_new_recipe(self):
         self.disable_other_tabs()
-        #reset all fields
-        self.label_newedit.setText('Nouvelle Recette')
-        self.lE_title.setText('Nouveau Titre')
-        
-        self.add_new_ingredient_to_list(Ingredient()) #Add empty ing for input
-        
+        self.edit_recipe.new_mode()
+         
     def on_edit_recipe(self):
         self.disable_other_tabs()
-        #populate all fields
-        self.label_newedit.setText('Modifier la recette')
-        recipe:Recipe
         recipe = self.recipe_db.get_recipe_object(self.lW_recipe.currentItem().text())
-        self.lE_title.setText(recipe.name)
-        cw.display_image(recipe, self.dirname, self.img_dish, icon=False)
-        self.populate_ing_list(recipe)
-        if recipe.time is not None:
-            self.sB_time.setValue(int(recipe.time))
-        else:
-            self.sB_time.setValue(0)
-        tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
-                self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
-        tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
-        for tag, tag_name in zip(tags, tag_names):
-            tag.setChecked(recipe.isTagged(tag_name))
-        self.tB_preparation.setText(recipe.preparation.replace('\n', '<br/>'))
-
-    def populate_ing_list(self, recipe:Recipe): #OK but can be improved
-        if self.lw_ingredients.count : #vider la liste si elle n'est pas deja vide
-            self.lw_ingredients.clear()
-        if recipe.ing_list is None:
-            return
-        mand_ing_list, opt_ing_list = recipe.get_mandatory_and_optional_ing_lists()
-        for ingredient in mand_ing_list:
-            self.add_new_ingredient_to_list(ingredient)
-        #self.lw_ingredients.addItem(QListWidgetItem("Optionels : "))
-        for ingredient in opt_ing_list:
-            self.add_new_ingredient_to_list(ingredient)
-        self.add_new_ingredient_to_list(Ingredient()) # Add extra line for new ing input
-
-    def on_btn_confirm_changes_clicked(self, ing_item_id):
-        ing_item:IngredientItem
-        ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(self.lw_ingredients.count()-1)).findChild(IngredientItem)
-        if ing_item.getUID() == ing_item_id:
-            self.add_new_ingredient_to_list(Ingredient())
-
-    def rm_ing_item_from_list(self, ing_item_id):
-        for i in range(0, self.lw_ingredients.count()):
-            ing_item:IngredientItem
-            ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(i)).findChild(IngredientItem)
-            if ing_item_id == ing_item.getUID():
-                self.lw_ingredients.takeItem(i)
-                break
-
-    def add_new_ingredient_to_list(self, ingredient:Ingredient):
-        #TODO : handle the case were the ingredient is already in the list
-        ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
-        # ing_item = IngredientItem(ingredient, self.lw_ingredients, parent = QUiLoader().load(ui_file))
-        ing_item = IngredientItem(ingredient, ui = QUiLoader().load(ui_file))
-        ing_item.on_btn_confirm_changes_clicked.connect(self.on_btn_confirm_changes_clicked)
-        ing_item.on_btn_rm_item_clicked.connect(self.rm_ing_item_from_list)
-        if ingredient.name == "" and ingredient.qty_unit == "" and ingredient.qty == -1:
-            ing_item.selectWidgetMode(IngredientItem.WIDGET_EDIT_ING_MODE)
-
-        list_widget_item = QListWidgetItem()
-        list_widget_item.setSizeHint(QSize(0,30))
+        self.edit_recipe.edit_mode(recipe)
         
-        # ui_file = QFile(os.path.dirname(__file__) + '/UI/ingredient_item.ui')
-       
-        # test_widget = QUiLoader().load(ui_file)
-
-        self.lw_ingredients.addItem(list_widget_item)
-        # self.lw_ingredients.setItemWidget(list_widget_item,ing_item.parent_widget)
-        self.lw_ingredients.setItemWidget(list_widget_item,ing_item)
-        # self.lw_ingredients.setItemWidget(list_widget_item,test_widget)
+    def on_confirm_recipe(self, input):
+        title, image_cell, ing_dict, preparation_cell, time, tag_checked_list, mode, auto_switch = input
         
-    def on_confirm_recipe(self):
-        #check if ok to save
-        #title not empty
-        title = self.lE_title.text()
-        #allow auto switch in case of warning message
-        auto_switch = ''
-        
-        #if not ok to save -> warning message
-        if self.label_newedit.text() == 'Nouvelle Recette' and self.recipe_db.contains(title):#recipe already exists
-            self.display_error('Cette recette existe déjà, vous pouvez la modifier')
-            
-            #enable swicth to edit mode
-            auto_switch = 'edit'
-        else:
-            #case with/without picture to be saved (filename = new_title.jpg and new_title_icon.jpg)
-            if self.recipe_image_path != '':
-                image_cell = title.lower().replace(' ', '_') #to be written in cell
-                filepath = self.dirname + '/images/%s.jpg' % image_cell #to be saved
-                filpath_icon = self.dirname + '/images/%s_icon.jpg' % image_cell #to be saved
-                #try to save it to file:
-                qpix = QPixmap(self.recipe_image_path)
-                if qpix.width() > qpix.height():
-                    # qpix_scaled = qpix.scaled(400, 300)
-                    qpix_scaled = qpix.scaled(1333, int(1333/qpix.width()*qpix.height()))
-                    qpix_scaled_icon = qpix.scaled(400, int(400/qpix.width()*qpix.height()))
-                else:
-                    # qpix_scaled = qpix.scaled(300, 400)
-                    qpix_scaled = qpix.scaled(int(1333/qpix.height()*qpix.width()), 1333)
-                    qpix_scaled_icon = qpix.scaled(int(400/qpix.height()*qpix.width()), 400)
-                    
-                image_file = QFile(filepath)
-                image_file.open(QIODevice.WriteOnly)
-                qpix_scaled.save(filepath, 'JPG')
-                
-                image_file_icon = QFile(filpath_icon)
-                image_file_icon.open(QIODevice.WriteOnly)
-                qpix_scaled_icon.save(filpath_icon, 'JPG')
-                
-                #reset internal variable
-                self.recipe_image_path = ''
-            else:
-                image_cell = ''
-                
+        if auto_switch != 'edit':
             image = ''
             if self.recipe_db.contains(title):
                 image = self.recipe_db.get_recipe_object(title).image
             if image_cell != '':
                 image = '/images/' + image_cell
-            #case with ingredients not empty -> combine ingredients to string
-            now_optionals = False
-            ing_dict = {}
-
-            for ing_index in range(self.lw_ingredients.count()-1): # "-1 in order to ignore the last 'input' line"
-                ing_item:IngredientItem
-                ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index)).findChild(IngredientItem)
-                ing_dict[ing_item.lbl_ing_name.text()] = [float(ing_item.lbl_ing_qty.text()), ing_item.lbl_ing_qty_unit.text()]
-
-            #combine tags to string
-            tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
-                    self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
-            tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
-            tag_checked_list = [tag_name for tag, tag_name in zip(tags, tag_names) if tag.isChecked()]
-            tag_cell = '/'.join(tag_checked_list)
-            #case with preparation not empty -> combine preparation to string
-            preparation_cell = web.with_clickable_links(self.tB_preparation.toPlainText())
-            #case with preparation time not 0
-            time_cell = ''
-            if self.sB_time.text() != '0':
-                time_cell = self.sB_time.text()
             
-            time = None
-            if time_cell != '':
-                time = time_cell
 
             #add recipe to database
             recipe = Recipe(uuid.uuid4(), title, ing_dict, preparation_cell, time, tag_checked_list, image)
-            if self.label_newedit.text() == 'Modifier la recette':  #update existing recipe
+            if self.edit_recipe.label_newedit.text() == 'Modifier la recette':  #update existing recipe
                 initial_recipe_name = self.lW_recipe.currentItem().text()
                 index_of_recipe = recipe_db.get_recipe_names(self.recipe_db.recipe_list).index(initial_recipe_name)
                 self.recipe_db.recipe_list[index_of_recipe] = recipe
@@ -1668,7 +1283,7 @@ class MainGUI(QWidget):
             # self.lW_recipe.addItems(recipe_list)
             
             #backup file
-            copy2(self.recipe_db.recipe_file, self.dirname + '/backup/recipe_backup.ods')
+            copy2(self.recipe_db.recipe_file, self.dirname + '/backup/recipe_backup.csv')
             #update recipe sheet (fully rewrite)
             self.recipe_db.update_recipe_file()
             
@@ -1686,7 +1301,7 @@ class MainGUI(QWidget):
         if auto_switch == 'edit':
             self.pB_modif_2.click()
 
-        self.clear_edit_recipe_window()
+        # self.clear_edit_recipe_window()
 
     def reenable_other_tabs(self):
         self.tW.setTabEnabled(0, True)
@@ -1697,31 +1312,8 @@ class MainGUI(QWidget):
         self.pB_delete.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
         self.pB_modif_2.setChecked(False)
-        self.cB_web.setChecked(False)
+        self.edit_recipe.cB_web.setChecked(False)
 
-    def on_tag_selected(self, cB):
-        tags = {'cB_tagdinner': [1, 0, 1, 1, 0, 1, 1, 1, 0],
-                'cB_tagdessert': [0, 1, 0, 1, 0, 1, 1, 1, 0],
-                'cB_tagdouble': [1, 0, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagkids': [1, 1, 1, 1, 1, 1, 1, 1, 0],
-                'cB_taglunch': [0, 0, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagwinter': [1, 1, 1, 1, 1, 1, 0, 1, 0],
-                'cB_tagsummer': [1, 1, 1, 1, 1, 0, 1, 1, 0],
-                'cB_tagvegan': [1, 1, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagtips': [0, 0 ,0, 0, 0, 0, 0, 0, 1]
-        }
-        
-        if cB.isChecked():
-            bool_matrix = tags[cB.objectName()]
-            for other_cB, checkable in zip(self.selectable_tags, bool_matrix):
-                if other_cB.isChecked() and not checkable:
-                    other_cB.setChecked(checkable)
-    
-    def on_add_photo(self):
-        self.recipe_image_path, filter = QFileDialog.getOpenFileName(self, 'Choisir une image', self.dirname, 'Images (*.png *.jpg)')
-        # print(image_path=='')
-        cw.display_new_image(self.recipe_image_path, self.img_dish)
-    
     def on_delete_recipe(self):
         #check if a recipe is selected
         recipe_name = self.lW_recipe.currentItem().text()
@@ -1761,7 +1353,6 @@ class MainGUI(QWidget):
     
     def on_cancel_recipe(self):
         self.reenable_other_tabs()
-        self.clear_edit_recipe_window()
     
     def update_recipe_list(self):
         self.lW_recipe.clear()
@@ -1804,50 +1395,45 @@ class MainGUI(QWidget):
                     self.default_email, nb_days, self.default_storage, homepage = data
                     self.default_nb_days = int(nb_days)
                     self.homepage = QUrl(homepage)
-                    
+        
+        
+        self.user_settings = UserSettings()
+        self.user_settings.on_save.connect(self.on_save_settings)
+        self.user_settings.on_quit.connect(self.on_quit_settings)
+        self.user_settings.on_error.connect(self.display_error)
+        self.user_settings.on_history.connect(self.on_display_history)
+        self.vL_settings.addWidget(self.user_settings)
+        
+        # qmlview = QtQuickWidgets.QQuickWidget(source= QUrl(self.dirname + '/UI/MyElement.qml'))
+        # self.vL_settings.addWidget(qmlview)
+        
+        self.history_popup = History(history = self.recipe_db.history, new_history = [])
+        self.history_popup.on_switch_to_recipe.connect(self.switch_to_recipe)
+        self.history_popup.on_confirm.connect(self.on_confirm_history_update)
+        
     def on_user_settings(self):
         self.frame_settings.show()
         self.frame.hide()
+        #test if values are different than user file and highlight accordingly
+        self.user_settings.highlight_diff()
         
-        # if os.path.isfile(self.user_id_file):
-        #     with open(self.user_id_file, 'r') as f:
-        #         #for legacy compatibility
-        #         data = f.readline().strip().split(';')
-        #         if len(data) == 1:
-        #             self.default_email = data[0]
-        #         else:
-        #             self.default_email, nb_days, self.default_storage = data
-        #             self.default_nb_days = int(nb_days)
-        self.lE_email.setText(self.default_email)
-        self.sB_settings_days.setValue(self.default_nb_days)
-        self.lE_storage.setText(self.default_storage)
-        self.lE_homepage.setText(self.homepage.toString())
-    
-    def on_save_settings(self):
-        self.default_email = self.lE_email.text()
-        self.default_nb_days = self.sB_settings_days.value()
-        storage = self.lE_storage.text()
-        if os.path.isdir(storage):
-            self.default_storage = storage
-        else:
-            self.default_storage = self.dirname + '/Mes_Fiches/'
-            self.display_error("Le chemin pour l'enregistrement des fiches n'est pas valide," +
-                               " l'emplacement par défaut a été sélectionné (%s)" % self.default_storage)
+    def on_save_settings(self, input):
+        email, nb_days, storage, homepage = input
+        self.default_email = email
+        self.default_nb_days = int(nb_days)
+        self.default_storage = storage
+        self.homepage = QUrl(homepage)
         
-        self.homepage = QUrl(self.lE_homepage.text())
-        
-        with open(self.user_id_file, 'w') as f:
-            f.write(';'.join([self.default_email, 
-                              str(self.default_nb_days), 
-                              self.default_storage,
-                              self.homepage.toString()]))
-            
         self.frame_settings.hide()
         self.frame.show()
         
     def on_quit_settings(self):
         self.frame_settings.hide()
         self.frame.show()
+    
+    def on_display_history(self, new_history = []):
+        self.history_popup.selectWidgetMode(new_history)
+        self.history_popup.show()
         
     def on_recipe_right_click(self, pos):
         # print('right clicked')
@@ -1888,19 +1474,19 @@ class MainGUI(QWidget):
             actionLunch = QAction(menuDay)
             actionLunch.setText('Midi')
             actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color_2.png'))
-            lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(0, i)].recipe_list))
+            lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[sr.row_column_to_id(0, i)].recipe_list))
             actionLunch.setToolTip(lunchToolTip)
             
-            mapper.setMapping(actionLunch, cw.row_column_to_id(0, i))
+            mapper.setMapping(actionLunch, sr.row_column_to_id(0, i))
             actionLunch.triggered.connect(mapper.map)
             
             actionDinner = QAction(menuDay)
             actionDinner.setText('Soir')
             actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color_2.png'))
-            dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[cw.row_column_to_id(1, i)].recipe_list))
+            dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[sr.row_column_to_id(1, i)].recipe_list))
             actionDinner.setToolTip(dinnerToolTip)
             
-            mapper.setMapping(actionDinner, cw.row_column_to_id(1, i))
+            mapper.setMapping(actionDinner, sr.row_column_to_id(1, i))
             actionDinner.triggered.connect(mapper.map)
             
             menuDay.addAction(actionLunch)
@@ -1933,7 +1519,7 @@ class MainGUI(QWidget):
         path = QFileDialog.getExistingDirectory(self, u"Choix de l'emplacement " + titre, directory = dirpath)
         field.setText(str(path).replace('\\', '/'))
         
-    def user_settings_ui(self):
+    def user_settings_pB(self):
         self.pB_user = QPushButton('', self.pW)
         self.pB_user.setIconSize(QSize(60,60))
         self.pB_user.setToolTip('Préférences')
@@ -1955,197 +1541,6 @@ class MainGUI(QWidget):
                                 }
                                    ''' % (self.colors['#color5#'], self.colors['#color5#']))
         self.tW.setCornerWidget(self.pB_user)
-        
-        self.label_contact.setOpenExternalLinks(True)
-        self.label_contact.setTextFormat(Qt.RichText)
-        self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
-        
-    def web_browser_ui(self):
-        os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--enable-logging --log-level=3"
-        self.frame_wB.hide()
-        self.wV = QWebEngineView()
-        page = cw.WebEnginePage(self.wV)
-        self.wV.setPage(page)
-        
-        self.wV.load(self.homepage)
-        self.gL_web.addWidget(self.wV)
-        self.navtb = QToolBar("Navigation")
-        self.navtb.setStyleSheet('QToolBar{background-color:transparent;}QToolButton{background:transparent;}')
-        self.navtb.setIconSize( QSize(30,30) )
-        self.hL_tools.addWidget(self.navtb)
-        
-        self.pB_cook = QPushButton('', self.frame_wB)
-        self.pB_cook.setFixedSize(60,60)
-        self.pB_cook.setIconSize(QSize(40,40))
-        self.pB_cook.setIcon(QIcon(self.dirname + '/UI/images/icon_service.png'))
-        self.pB_cook.setToolTip('Recopier cette recette')
-        self.pB_cook.clicked.connect(self.on_parse_html)
-        self.navtb.addWidget(self.pB_cook)
-        
-        back_btn = QAction( QIcon(self.dirname + '/UI/images/icon_back.png'), "Back", self)
-        back_btn.setToolTip("Page précédente")
-        back_btn.triggered.connect( self.wV.back )
-        self.navtb.addAction(back_btn)
-        
-        next_btn = QAction( QIcon(self.dirname + '/UI/images/icon_fwd.png'), "Forward", self)
-        next_btn.setToolTip("Page suivante")
-        next_btn.triggered.connect( self.wV.forward )
-        self.navtb.addAction(next_btn)
-
-        reload_btn = QAction( QIcon(self.dirname + '/UI/images/icon_reload.png'), "Reload", self)
-        reload_btn.setToolTip("Recharger la page")
-        reload_btn.triggered.connect( self.wV.reload )
-        self.navtb.addAction(reload_btn)
-
-        home_btn = QAction( QIcon(self.dirname + '/UI/images/icon_chef.png'), "Home", self)
-        home_btn.setToolTip("Page d'accueil")
-        home_btn.triggered.connect(lambda: self.wV.setUrl(self.homepage))
-        self.navtb.addAction(home_btn)
-        
-        self.httpsicon = QLabel()
-        self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_nolock_.png') )
-        self.navtb.addWidget(self.httpsicon)
-
-        self.urlbar = QLineEdit()
-        self.urlbar.returnPressed.connect( self.navigate_to_url )
-        self.navtb.addWidget(self.urlbar)
-
-        stop_btn = QAction( QIcon(self.dirname + '/UI/images/icon_fork_X.png'), "Stop", self)
-        stop_btn.setToolTip("Interrompre le chargement")
-        stop_btn.triggered.connect( self.wV.stop )
-        self.navtb.addAction(stop_btn)
-        
-        open_file_action = QAction( QIcon(self.dirname + '/UI/images/icon_open.png'), "Ouvrir une page web...", self)
-        open_file_action.setToolTip("Ouvrir le fichier HTML")
-        open_file_action.triggered.connect( self.open_html )
-        self.navtb.addAction(open_file_action)
-
-        save_file_action = QAction( QIcon(self.dirname + '/UI/images/icon_save.png'), "Enregistrer sous...", self)
-        save_file_action.setToolTip("Enregistrer la page en cours")
-        save_file_action.triggered.connect( self.save_file )
-        self.navtb.addAction(save_file_action)
-    
-    def open_html(self):
-        filename, _ = QFileDialog.getOpenFileName(self, "Ouvrir le fichier", "",
-                        "Hypertext Markup Language (*.htm *.html);;"
-                        "Tous types de fichiers (*.*)")
-
-        if filename:
-            with open(filename, 'r') as f:
-                html = f.read()
-
-            self.wV.setHtml( html )
-            self.urlbar.setText( filename )
-    
-    def save_file(self):
-        filename, _ = QFileDialog.getSaveFileName(self, "Enregistrer la page sous", "",
-                        "Hypertext Markup Language (*.htm *html);;"
-                        "Tous types de fichiers (*.*)")
-
-        if filename:
-            
-            def write_html_to_file(html):
-                with open(filename, 'w') as f:
-                    f.write(html)
-
-            self.wV.page().toHtml(write_html_to_file)
-            
-            # html = self.wV.page().toHtml()
-            # with open(filename, 'w') as f:
-            #     f.write(html)
-                
-    def navigate_to_url(self): # Does not receive the Url
-        q = QUrl( self.urlbar.text() )
-        if q.scheme() == "":
-            q.setScheme("http")
-
-        self.wV.setUrl(q)
-    
-    def update_urlbar(self, q):
-
-        if q.scheme() == 'https':
-            # Secure padlock icon
-            self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_lock_.png') )
-
-        else:
-            # Insecure padlock icon
-            self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_nolock_.png') )
-
-        self.urlbar.setText( q.toString() )
-        self.urlbar.setCursorPosition(0)
-        
-        my_html_worker = web.MyHTMLParser(self.urlbar.text())
-            
-        my_html_worker.signal.sig.connect(self.on_new_webpage)
-        
-        self.myThreads.append(my_html_worker)
-        my_html_worker.start()
-    
-    def on_parse_html(self):
-        url = self.urlbar.text()
-        recipe_name, ingredients_list, steps = web.marmiton_parser(url)
-        list_failed = []
-        message = ''
-        
-        if recipe_name != '':
-            self.lE_title.setText(recipe_name)
-        else:
-            list_failed.append('- Titre')
-            self.lE_title.setText('Nouvelle Recette')
-
-        if ingredients_list != []:
-            ing_dict = {}
-            for ing in ingredients_list:
-                ing_qty, ing_name = ing.split(" ", 1)
-                ing_dict[ing_name] = [ing_qty,""]
-            recipe = Recipe(uuid.uuid4(), "", ing_dict)
-            self.populate_ing_list(recipe)
-        else:
-            list_failed.append('- Liste des ingrédients')
-            self.tW_ingredients.clear()
-            self.tW_ingredients.setColumnCount(1)
-            self.tW_ingredients.setRowCount(1)
-            
-        if steps != []:
-            self.tB_preparation.setText('\n'.join(steps))
-        else:
-            list_failed.append('- Préparation')
-            self.tB_preparation.clear()
-            
-        #TBC to avoid previous settings removal, following lines commented
-        # self.sB_time.setValue(0)
-        
-        # tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
-        #         self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
-        # tag_names = ['dessert', 'soir', 'double', 'kids', 'midi', 'ete', 'hiver', 'vegan', 'tips']
-        # for tag, tag_name in zip(tags, tag_names):
-        #     tag.setChecked(False)
-                    
-        self.tB_preparation.append("<a href='%s'>%s</a>" % (url, url))
-        message += 'Le lien vers la recette a été ajouté.'
-        
-        if len(list_failed) > 0:
-            message += "\nLes éléments suivants n'ont pas pu être copiés :\n%s" % '\n'.join(list_failed)
-            self.display_error(message)
-        else:
-            message += "<br/>La recette a été correctement importée !"
-            self.print_thread_function(message, icon_path = self.dirname + '/UI/images/icon_service.png')
-       
-    def on_new_webpage(self, url, okToParse):
-        if url == self.urlbar.text():#make sure url validated matches current url (asynchronous thread treatment)
-            icon = QIcon(self.dirname + '/UI/images/icon_service%s.png' % ['_', ''][okToParse])
-            self.pB_cook.setIcon(icon)
-            self.pB_cook.setToolTip(['Copier le lien', 'Importer la recette'][okToParse])
-    
-    def on_show_web(self):
-        if self.cB_web.isChecked():
-            if self.lE_title.text() != 'Nouveau Titre':
-                new_search = QUrl("https://www.google.com/search?q=%s" %
-                                  self.lE_title.text().replace(' ', '+'))
-                self.wV.setUrl(new_search)
-        else:
-            self.wV.setUrl(self.homepage)
-
 
 def image_from_base64(base64_table, image_name):#Legacy function to store and read images -- can be removed
     with open(base64_table, 'r') as f:

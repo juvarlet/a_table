@@ -14,7 +14,9 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton#btn_ing_is_optional, QPushButton#btn_ing_is_optional_2 {
+   <string notr="true">
+   /**/
+   QPushButton#btn_ing_is_optional, QPushButton#btn_ing_is_optional_2 {
     background-color: #fdf1d9;
     border-style: outset;
     border-width: 0px;
@@ -33,7 +35,9 @@ QPushButton#btn_ing_is_optional:hover, QPushButton#btn_ing_is_optional_2:hover {
 QPushButton#btn_ing_is_optional:pressed, QPushButton#btn_ing_is_optional_2:pressed, QPushButton#btn_ing_is_optional:checked, QPushButton#btn_ing_is_optional_2:checked {
     color:#ffc05c;
     font: bold 20px;
-}</string>
+}
+/**/
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">

@@ -183,7 +183,10 @@ class Menu:
                             try:
                                 shopping_list[ingredient] = [int(qty), unit]
                             except:
-                                shopping_list[ingredient] = [float(qty), unit]
+                                try:
+                                    shopping_list[ingredient] = [float(qty), unit]
+                                except:
+                                    shopping_list[ingredient] = [qty, unit]
                         else:
                             if unit == shopping_list[ingredient][1]:
                                 try:

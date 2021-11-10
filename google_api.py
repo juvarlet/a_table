@@ -336,12 +336,12 @@ class MyCalendar(QThread):#QThread
             for d in range(nb_of_days):
                 start_lunch = datetime.datetime(start_day.year, 
                                         start_day.month, 
-                                        start_day.day + d,
-                                        12)
+                                        start_day.day,
+                                        12) + datetime.timedelta(days = d)
                 start_dinner = datetime.datetime(start_day.year, 
                                         start_day.month, 
-                                        start_day.day + d,
-                                        19)
+                                        start_day.day,
+                                        19) + datetime.timedelta(days = d)
                 
                 recipe_lunch  = menu_list[2*d]
                 recipe_dinner = menu_list[2*d+1]
@@ -396,6 +396,7 @@ class MyCalendar(QThread):#QThread
             message += '<a href="%s">Lien Google Calendar</a>' % link_dinner
             
             self.signal.sig.emit(message, self.icon_path)
+
         except:
             if self.occurences < 2:
                 print('Request failed, trying to regenerate token with authorization process...')
@@ -601,7 +602,7 @@ class MyMailbox(QThread):
             # print('Message %s sent to %s' % (subject, to_email))
             self.signal.sig.emit('Message "%s" envoyé à %s' % (subject, to_email), self.icon_path)
         except:
-            if self.occurences < 2:
+            if self.occurences < 2: 
                 print('Request failed, trying to regenerate token with authorization process...')
                 #delete token.json and run again
                 if os.path.exists('token.json'):
