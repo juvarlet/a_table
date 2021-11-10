@@ -103,8 +103,8 @@ class StackedRecipes(QWidget):
         self.pB_cancel: QPushButton
         self.pB_cancel = self.pW.pB_cancel
 
-        self.lineEdit: QLineEdit
-        self.lineEdit = self.pW.lineEdit
+        self.lE_search: QLineEdit
+        self.lE_search = self.pW.lE_search
 
         self.list_stack_2: QListWidget
         self.list_stack_2 = self.pW.list_stack_2
@@ -119,7 +119,7 @@ class StackedRecipes(QWidget):
         self.hL: QHBoxLayout
         self.hL = self.pW.hL
     
-    @cw.decoratortimer(1)
+    # @cw.decoratortimer(1)
     def initial_state(self):
         self.colors = COLORS
         self.frame_buttons.setVisible(False)
@@ -157,7 +157,7 @@ class StackedRecipes(QWidget):
         
         self.add_button_menu()
     
-    @cw.decoratortimer(1)
+    # @cw.decoratortimer(1)
     def init1(self):
         self.colors = COLORS
         self.frame_buttons.setVisible(False)
@@ -176,14 +176,14 @@ class StackedRecipes(QWidget):
                 # print('installed')
                 child.installEventFilter(self)
     
-    @cw.decoratortimer(1)
+    # @cw.decoratortimer(1)
     def init2(self):
         self.update_recipes()      
         self.show_hide_buttons()
         self.update_index()
         self.update_list()
     
-    @cw.decoratortimer(1)
+    # @cw.decoratortimer(1)
     def init3(self):
         self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe.png'))
         self.pB_add_2.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe.png'))
@@ -197,9 +197,10 @@ class StackedRecipes(QWidget):
         self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
         self.pB_list.setIcon(QIcon(self.dirname + '/UI/images/icon_list_view.png'))
     
-    @cw.decoratortimer(1)
+    # @cw.decoratortimer(1)
     def init4(self):
         self.add_button_menu()
+        self.connect_action_menu()
     
     def add_button_menu(self):
         self.pB_add_menu = QMenu(self)
@@ -230,17 +231,31 @@ class StackedRecipes(QWidget):
     
     def connect_actions(self):
         self.pB_delete.clicked.connect(self.on_delete)
+        self.pB_delete_2.clicked.connect(self.on_delete)
         self.pB_next.clicked.connect(self.on_right)
         self.pB_edit.clicked.connect(self.on_edit_recipe)
+        self.pB_edit_2.clicked.connect(self.on_edit_recipe)
         self.pB_list.clicked.connect(self.on_list_view)
         self.pB_stack.clicked.connect(self.on_stack_view)
-    
+        self.list_stack.itemSelectionChanged.connect(self.on_recipe_selection)
+        self.list_stack_2.itemSelectionChanged.connect(self.on_recipe_selection_2)
+        self.lE_search.textChanged.connect(self.dynamic_filter)
+        self.pB_ok.clicked.connect(self.on_ok)
+        self.pB_cancel.clicked.connect(self.on_cancel)
+        
     def connect_action_menu(self):
         self.actionRandomRecipe.triggered.connect(self.on_add_random_recipe)
         self.actionChoiceRecipe.triggered.connect(self.on_add_choice_recipe)
         self.actionRandomDessert.triggered.connect(self.on_add_random_dessert)
         self.actionChoiceDessert.triggered.connect(self.on_add_choice_dessert)
-        
+    
+    def finish_init(self):
+        if not self.initIsComplete:
+            self.init3()
+            self.init4()
+            self.initIsComplete = True
+            self.update_recipes()
+            
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent) -> bool:
         
         if event.type() == QEvent.Enter:
@@ -254,7 +269,10 @@ class StackedRecipes(QWidget):
         image_path = self.dirname + recipe.image + '_icon.jpg'
         qpix = QPixmap(image_path)
         if recipe.image != '' and recipe.image != '/images/':
-            p1 = qpix.scaledToHeight(self.height()*0.8, Qt.SmoothTransformation)
+            if qpix.height() < qpix.width():
+                p1 = qpix.scaledToHeight(self.height()*1, Qt.SmoothTransformation)
+            else:
+                p1 = qpix.scaledToWidth(self.width()*1, Qt.SmoothTransformation)
             self.label_image.setPixmap(p1)
         else:
             self.label_image.setPixmap(qpix)
@@ -262,9 +280,9 @@ class StackedRecipes(QWidget):
     
     def update_list(self):
         self.list_stack.clear()
-        self.list_stack_2.clear()
+        # self.list_stack_2.clear()
         self.list_stack.addItems([recipe.name for recipe in self.recipe_list])
-        self.list_stack_2.addItems([recipe.name for recipe in self.recipe_list])
+        # self.list_stack_2.addItems([recipe.name for recipe in self.recipe_list])
         
     def on_add_random_recipe(self, recipe = None, dinner = 0):
         #dinner = 0;1 => lunch;dinner
@@ -286,12 +304,18 @@ class StackedRecipes(QWidget):
         self.update_list()
         row, column = id_to_row_column(self.id)
         self.on_update_current_menu.emit(self.recipe_list, row, column)
-        
+        self.on_recipe_selection()
         # print(self.parentWidget().underMouse())
     
     def on_add_choice_recipe(self):
         self.on_add_random_recipe()
-        self.pB_edit.click()
+        self.from_page = self.stackedWidget.currentIndex()
+        if self.from_page == 0:
+            self.pB_edit.click()
+        elif self.from_page == 1:
+            self.list_stack.item(self.list_stack.count()-1).setSelected(True)
+            self.pB_edit_2.click()
+            
     
     def on_add_random_dessert(self):
         simple_menu = menu.Menu(number_of_days=1)
@@ -304,7 +328,7 @@ class StackedRecipes(QWidget):
         self.pB_edit.click()
     
     def on_delete(self):
-        self.recipe_list.remove(self.recipe_list[self.current_index])
+        self.recipe_list.remove(self.get_current_recipe())
         self.current_index = self.current_index % len(self.recipe_list)
         self.update_recipes(index = self.current_index)
         self.update_index()
@@ -312,6 +336,9 @@ class StackedRecipes(QWidget):
         self.show_hide_buttons()
         row, column = id_to_row_column(self.id)
         self.on_update_current_menu.emit(self.recipe_list, row, column)
+        if self.current_index == len(self.recipe_list):
+            self.current_index -= 1
+        self.on_recipe_selection()
         
     def on_right(self):
         self.a1 = cw.animate_button(self.pB_next)
@@ -320,9 +347,42 @@ class StackedRecipes(QWidget):
         self.update_recipes(index = self.current_index)
         self.update_index()
     
+    def on_recipe_selection(self):
+        # print(self.list_stack.currentItem().text())
+        isItemSelected = self.list_stack.currentItem() is not None
+        self.pB_edit_2.setVisible(isItemSelected)
+        self.pB_delete_2.setVisible(isItemSelected and len(self.recipe_list) > 1)
+        if isItemSelected:
+            self.current_index = self.list_stack.currentRow()
+        
+    def on_recipe_selection_2(self):
+        isItemSelected = self.list_stack_2.currentItem() is not None
+        isItemSelectedVisible = isItemSelected and not self.list_stack_2.currentItem().isHidden()
+        self.pB_ok.setVisible(isItemSelectedVisible)
+        
+    def dynamic_filter(self):
+        cw.dynamic_filter(self.lE_search.text(), self.list_stack_2, self.recipe_db)
+        self.on_recipe_selection_2()
+        
     def on_edit_recipe(self):
-        print('edit')
+        self.from_page = self.stackedWidget.currentIndex()
+        if self.from_page == 0:
+            recipe_name = self.label_title.text()
+        elif self.from_page == 1:
+            # recipe_name = self.list_stack.currentItem().text()
+            recipe_name = self.list_stack.selectedItems()[0].text()
         self.stackedWidget.setCurrentIndex(2)
+        
+        self.list_stack_2.clear()
+        full_recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
+        self.list_stack_2.addItems(full_recipe_list)
+        
+        lwi = self.list_stack_2.findItems(recipe_name, Qt.MatchExactly)[0]
+        self.list_stack_2.scrollToItem(lwi)
+        self.list_stack_2.setCurrentItem(lwi)
+        lwi.setSelected(True)
+        
+        self.on_lock_for_edition.emit(self.id, True)
         
         # self.comboBox.setVisible(self.pB_edit.isChecked())
         # self.pB_add.setVisible(not self.pB_edit.isChecked())
@@ -365,7 +425,27 @@ class StackedRecipes(QWidget):
         #     self.on_lock_for_edition.emit(self.id, False)
         #     row, column = id_to_row_column(self.id)
         #     self.on_update_current_menu.emit(self.recipe_list, row, column)
-            
+    
+    def on_ok(self):
+        text = self.list_stack_2.currentItem().text()
+        recipe_object = self.recipe_db.get_recipe_object(text)
+        if self.from_page == 1:
+            self.current_index = self.list_stack.currentRow()
+        self.recipe_list[self.current_index] = recipe_object
+        self.update_recipes(index = self.current_index)
+        self.update_list()
+        self.show_hide_buttons()
+        self.on_lock_for_edition.emit(self.id, False)
+        row, column = id_to_row_column(self.id)
+        self.on_update_current_menu.emit(self.recipe_list, row, column)
+        self.stackedWidget.setCurrentIndex(self.from_page)
+        self.on_recipe_selection()
+    
+    def on_cancel(self):
+        self.stackedWidget.setCurrentIndex(self.from_page)
+        self.on_lock_for_edition.emit(self.id, False)
+        self.on_recipe_selection()
+        
     def show_hide_buttons(self):
         self.pB_next.setVisible(len(self.recipe_list) > 1)
         self.pB_delete.setVisible(len(self.recipe_list) > 1)
@@ -386,10 +466,12 @@ class StackedRecipes(QWidget):
         if length > 1:
             for i in range(length - 1):
                 label_num = QLabel('')
+                label_num.setStyleSheet('QLabel{background:transparent;}')
                 cw.load_pic(label_num, self.dirname + '/UI/images/icon_circle.png')
                 self.hL.addWidget(label_num)
                 self.layout_widgets.append(label_num)
             label_pos = QLabel('')
+            label_pos.setStyleSheet('QLabel{background:transparent;}')
             cw.load_pic(label_pos, self.dirname + '/UI/images/icon_circle_full.png')
             self.hL.insertWidget(index - 1, label_pos)
             self.layout_widgets.append(label_pos)
@@ -401,9 +483,12 @@ class StackedRecipes(QWidget):
         # self.animate_button(self.pB_list)
         # self.stackedWidget.slideToNextWidget()
         self.stackedWidget.setCurrentIndex(1)
+        self.on_recipe_selection()
     
     def on_stack_view(self):
         # self.animate_button(self.pB_stack)
+        self.update_index()
+        self.update_recipes(self.current_index)
         self.stackedWidget.setCurrentIndex(0)
 
     def on_enter_exit_stack(self, isHovered):
@@ -419,11 +504,7 @@ class StackedRecipes(QWidget):
         #     self.init4()
         #     self.initIsComplete = True
     
-    def finish_init(self):
-        if not self.initIsComplete:
-            self.init3()
-            self.init4()
-            self.initIsComplete = True
+
         
 class RecipeCard(QThread):#QThread
     

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>397</width>
+    <width>396</width>
     <height>289</height>
    </rect>
   </property>
@@ -116,41 +116,56 @@ QComboBox::down-arrow {
 	height: 20px;
 }
 
- 
-QComboBox QAbstractItemView{
+ QComboBox QAbstractItemView{
 	background-color: #fdf1d9;
 	/*color: #1a5d75;*/
 	selection-background-color: #ffc05c;
 	/*selection-color: #2584a7;*/
 }
 
-QFrame #frame_buttons, QFrame #frame, QFrame #frame_4, QFrame #frame_buttons_2{
+QFrame #frame_buttons, QFrame #frame, QFrame #frame_4, QFrame #frame_buttons_2, QFrame #frame_2, QFrame #frame_3{
     background-color:transparent;
 	border-color:transparent;
+}
+
+QFrame#frame_list, QFrame #frame_buttons_2{
+	background-color:#ffe0ad;
+}
+QListWidget#list_stack{
+	background-color:transparent;
 }
 
 QMenu::item {
     icon-size:50px 50px;
 }
+
 QStackedWidget {
-	border: 3px solid #ffc05c;
+	border: 5px solid #ffc05c;
 	border-radius: 10px;
 }
+
+QLabel#label_title{
+		border: 1px solid #ffc05c;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		background-color:#ffc05c;
+    }
+
 /**/
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>0</number>
+    <number>4</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>4</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>4</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>4</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -199,18 +214,18 @@ QStackedWidget {
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>3</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>3</number>
+           <number>0</number>
           </property>
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="0" column="0" colspan="2">
+          <item row="0" column="0" rowspan="3" colspan="2">
            <widget class="QLabel" name="label_image">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -269,6 +284,19 @@ QStackedWidget {
                 <number>0</number>
                </property>
               </layout>
+             </item>
+             <item row="1" column="1">
+              <spacer name="verticalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
              </item>
              <item row="0" column="2">
               <spacer name="horizontalSpacer_3">
@@ -329,8 +357,8 @@ QStackedWidget {
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
-                 <height>20</height>
+                 <width>0</width>
+                 <height>0</height>
                 </size>
                </property>
               </spacer>
@@ -434,6 +462,12 @@ QStackedWidget {
           </item>
           <item row="2" column="0" colspan="2">
            <widget class="QFrame" name="frame_2">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>45</height>
+             </size>
+            </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -451,18 +485,21 @@ QStackedWidget {
               <number>35</number>
              </property>
              <property name="bottomMargin">
-              <number>1</number>
+              <number>0</number>
              </property>
              <property name="spacing">
               <number>0</number>
              </property>
-             <item row="0" column="0">
+             <item row="1" column="1">
               <widget class="QLabel" name="label_title">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
                </property>
                <property name="text">
                 <string>Title</string>
@@ -473,7 +510,49 @@ QStackedWidget {
                <property name="wordWrap">
                 <bool>true</bool>
                </property>
+               <property name="margin">
+                <number>3</number>
+               </property>
               </widget>
+             </item>
+             <item row="1" column="0">
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="2">
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="1">
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
@@ -503,37 +582,11 @@ QStackedWidget {
               <number>3</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>3</number>
              </property>
              <property name="spacing">
               <number>0</number>
              </property>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="pB_list">
-               <property name="maximumSize">
-                <size>
-                 <width>35</width>
-                 <height>35</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Changer de vue - Liste</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>images/icon_list_view.png</normaloff>images/icon_list_view.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>27</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="2">
               <widget class="QPushButton" name="pB_next">
                <property name="maximumSize">
@@ -551,6 +604,32 @@ QStackedWidget {
                <property name="icon">
                 <iconset>
                  <normaloff>images/icon_right_arrow.png</normaloff>images/icon_right_arrow.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="pB_list">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Changer de vue - Liste</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_list_view.png</normaloff>images/icon_list_view.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -617,13 +696,13 @@ QStackedWidget {
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>3</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>3</number>
+           <number>0</number>
           </property>
           <property name="spacing">
            <number>0</number>
@@ -644,7 +723,7 @@ QStackedWidget {
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>1</number>
+              <number>3</number>
              </property>
              <property name="rightMargin">
               <number>1</number>
@@ -822,7 +901,7 @@ QStackedWidget {
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>35</height>
+              <height>40</height>
              </size>
             </property>
             <property name="frameShape">
@@ -842,7 +921,7 @@ QStackedWidget {
               <number>3</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>3</number>
              </property>
              <property name="spacing">
               <number>0</number>
@@ -970,7 +1049,7 @@ QStackedWidget {
               <number>3</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>3</number>
              </property>
              <property name="spacing">
               <number>0</number>
@@ -997,7 +1076,7 @@ QStackedWidget {
                 </size>
                </property>
                <property name="toolTip">
-                <string>Ajouter une recette</string>
+                <string>Valider</string>
                </property>
                <property name="text">
                 <string/>
@@ -1023,7 +1102,7 @@ QStackedWidget {
                 </size>
                </property>
                <property name="toolTip">
-                <string>Changer de recette</string>
+                <string>Annuler</string>
                </property>
                <property name="text">
                 <string/>
@@ -1093,7 +1172,7 @@ QStackedWidget {
               </widget>
              </item>
              <item row="5" column="0">
-              <widget class="QLineEdit" name="lineEdit">
+              <widget class="QLineEdit" name="lE_search">
                <property name="placeholderText">
                 <string>Recherche...</string>
                </property>

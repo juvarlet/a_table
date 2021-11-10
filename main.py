@@ -457,22 +457,22 @@ class MainGUI(QWidget):
     def dummy_function(self, item):
         print('dummy function triggered %s' % item)
 
-    def is_filter_in_recipe_name(self, filter, recipe):
-        if self.cB_search_recipe_name.isChecked():
-            return filter in recipe.name.lower()
-        return False
+    # def is_filter_in_recipe_name(self, filter, recipe):
+    #     if self.cB_search_recipe_name.isChecked():
+    #         return filter in recipe.name.lower()
+    #     return False
 
-    def is_filter_in_ing_list(self,filter,recipe):
-        if self.cB_search_ingredients.isChecked() and recipe.ingredients_list_qty is not None: 
-            for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
-                if filter in ingredient:
-                    return True
-        return False
+    # def is_filter_in_ing_list(self,filter,recipe):
+    #     if self.cB_search_ingredients.isChecked() and recipe.ingredients_list_qty is not None: 
+    #         for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
+    #             if filter in ingredient:
+    #                 return True
+    #     return False
 
-    def is_filter_in_preparation(self, filter, recipe):
-        if self.cB_search_preparation.isChecked() and recipe.preparation is not None:
-            return filter in recipe.preparation.lower()
-        return False
+    # def is_filter_in_preparation(self, filter, recipe):
+    #     if self.cB_search_preparation.isChecked() and recipe.preparation is not None:
+    #         return filter in recipe.preparation.lower()
+    #     return False
 
     def is_filter_in_tags(self, recipe):
         output = True
@@ -524,27 +524,29 @@ class MainGUI(QWidget):
         return output
 
     def dynamic_filter(self):
-        with_filters = self.lE_with.text().split(',')
-        recipeCount = 0
+        # with_filters = self.lE_with.text().split(',')
+        # recipeCount = 0
 
-        for recipeIndex in range(self.lW_recipe.count()):
-            recipeListItem = self.lW_recipe.item(recipeIndex)
-            recipe = self.recipe_db.get_recipe_object(recipeListItem.text())
-            show_recipe_flag = True
+        # for recipeIndex in range(self.lW_recipe.count()):
+        #     recipeListItem = self.lW_recipe.item(recipeIndex)
+        #     recipe = self.recipe_db.get_recipe_object(recipeListItem.text())
+        #     show_recipe_flag = True
             
-            for filter in with_filters:
-                filter = filter.strip()
-                isCriteriaMet = self.is_filter_in_recipe_name(filter, recipe)
-                isCriteriaMet = isCriteriaMet or self.is_filter_in_ing_list(filter, recipe)
-                isCriteriaMet = isCriteriaMet or self.is_filter_in_preparation(filter, recipe)
+        #     for filter in with_filters:
+        #         filter = filter.strip()
+        #         isCriteriaMet = self.is_filter_in_recipe_name(filter, recipe)
+        #         isCriteriaMet = isCriteriaMet or self.is_filter_in_ing_list(filter, recipe)
+        #         isCriteriaMet = isCriteriaMet or self.is_filter_in_preparation(filter, recipe)
                 
-                show_recipe_flag = show_recipe_flag and isCriteriaMet
+        #         show_recipe_flag = show_recipe_flag and isCriteriaMet
 
-            show_recipe_flag = show_recipe_flag and self.is_filter_in_tags(recipe)
+        #     show_recipe_flag = show_recipe_flag and self.is_filter_in_tags(recipe)
 
-            self.lW_recipe.setItemHidden(recipeListItem, not show_recipe_flag)
-            if show_recipe_flag:
-                recipeCount += 1
+        #     self.lW_recipe.setItemHidden(recipeListItem, not show_recipe_flag)
+        #     if show_recipe_flag:
+        #         recipeCount += 1
+        
+        cw.dynamic_filter(self.lE_with.text(), self.lW_recipe, self.recipe_db, tagFunc = self.is_filter_in_tags)
 
     def print_thread_function(self, data, icon_path = None):
         self.info_dialog.close()
@@ -563,11 +565,7 @@ class MainGUI(QWidget):
     def on_new_menu(self):
         # start = time.process_time()
         
-        self.movie = QMovie(self)
-        gif = self.dirname + '/UI/images/icon_cover.gif'
-        self.movie.setFileName(gif)
-        self.movie.frameChanged.connect(lambda: self.pB_new_menu.setIcon(self.movie.currentPixmap()))
-        self.movie.start()
+        # movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
         
         self.new_menu()
         
@@ -575,18 +573,15 @@ class MainGUI(QWidget):
         # start = time.process_time()
         
         self.populate_tW_menu(self.current_menu)
-        
         self.populate_shopping_list()
-        
         self.populate_menu_list()
-        
         self.compute_score()
         
         self.pB_save.setEnabled(True)
         
-        self.movie.stop()
-        QCoreApplication.processEvents()
-        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+        # movie.stop()
+        # QCoreApplication.processEvents()
+        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
     
     def new_menu(self):
         current_QDate = self.dateEdit.date()
@@ -604,6 +599,8 @@ class MainGUI(QWidget):
         self.current_menu.use_double()
 
     def populate_tW_menu(self, menu):
+        movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        
         #reset tW_Menu
         self.tW_menu.setColumnCount(0)
         #update tW_menu with days
@@ -670,7 +667,9 @@ class MainGUI(QWidget):
             self.on_new_stack(recipe_lunch_stack, idplus, i, length)
             #--dinner
             self.on_new_stack(recipe_dinner_stack, idminus, i, length)
-            
+        
+        # for id, stack in self.stacks.items():
+        #     stack.update_recipes()
         # self.progress_update(5, 5)    
     #     recipe_card_worker = RecipeCard(list(self.stacks.values()))
     #     recipe_card_worker.on_init.connect(self.recipe_card_init)
@@ -686,6 +685,9 @@ class MainGUI(QWidget):
     # def stop_movie(self):
     #     self.movie.stop()
     #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+        movie.stop()
+        QCoreApplication.processEvents()
+        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
     
     
     def on_new_stack(self, recipe_stack, id, k, length):
@@ -734,6 +736,7 @@ class MainGUI(QWidget):
             self.sB_days.setEnabled(False)
             self.cB_restes.setEnabled(False)
             self.pB_save.setEnabled(False)
+            self.pB_calendar.setEnabled(False)
         elif (not lock) and id == self.lockKeyId:
             self.lockKeyId = 'xx'
             self.lockedForEdition = False
@@ -742,6 +745,7 @@ class MainGUI(QWidget):
             self.sB_days.setEnabled(True)
             self.cB_restes.setEnabled(True)
             self.pB_save.setEnabled(True)
+            self.pB_calendar.setEnabled(True)
             self.populate_shopping_list()
             self.populate_menu_list()
             self.compute_score()

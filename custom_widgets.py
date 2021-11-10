@@ -1,7 +1,7 @@
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QDoubleValidator, QEnterEvent, QFont, QMouseEvent, QPainterPath, QPalette, QPixmap, QIcon, QColor, QPainter
+from PySide2.QtGui import QBrush, QMovie, QDoubleValidator, QEnterEvent, QFont, QMouseEvent, QPainterPath, QPalette, QPixmap, QIcon, QColor, QPainter
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
@@ -172,3 +172,64 @@ def decoratortimer(decimal):
             return result
         return wrap
     return decoratorfunction
+
+def is_filter_in_recipe_name(filter, recipe, cB = None):
+    if type(cB) is QCheckBox:
+        if cB.isChecked():
+            return filter in recipe.name.lower()
+        return False
+    return filter in recipe.name.lower()
+
+def is_filter_in_ing_list(filter,recipe, cB = None):
+    if recipe.ingredients_list_qty is not None:
+        if type(cB) is QCheckBox:
+            if cB.isChecked(): 
+                for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
+                    if filter in ingredient:
+                        return True
+            return False
+        for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
+            if filter in ingredient:
+                return True
+    return False
+
+def is_filter_in_preparation(filter, recipe, cB = None):
+    if recipe.preparation is not None:
+        if type(cB) is QCheckBox:
+            if cB.isChecked():
+                return filter in recipe.preparation.lower()
+            return False
+        return filter in recipe.preparation.lower()
+    return False
+
+
+def dynamic_filter(text, lW, recipe_db, tagFunc = None):
+    with_filters = text.split(',')
+    recipeCount = 0
+
+    for recipeIndex in range(lW.count()):
+        recipeListItem = lW.item(recipeIndex)
+        recipe = recipe_db.get_recipe_object(recipeListItem.text())
+        show_recipe_flag = True
+        
+        for filter in with_filters:
+            filter = filter.strip()
+            isCriteriaMet = is_filter_in_recipe_name(filter, recipe)
+            isCriteriaMet = isCriteriaMet or is_filter_in_ing_list(filter, recipe)
+            isCriteriaMet = isCriteriaMet or is_filter_in_preparation(filter, recipe)
+            
+            show_recipe_flag = show_recipe_flag and isCriteriaMet
+
+        if tagFunc is not None:
+            show_recipe_flag = show_recipe_flag and tagFunc(recipe)
+
+        lW.setItemHidden(recipeListItem, not show_recipe_flag)
+        if show_recipe_flag:
+            recipeCount += 1
+
+def gif_to_button(gif_path, pB):
+    movie = QMovie()
+    movie.setFileName(gif_path)
+    movie.frameChanged.connect(lambda: pB.setIcon(movie.currentPixmap()))
+    movie.start()
+    return movie

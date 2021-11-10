@@ -29,7 +29,10 @@
         background-color: #fdf1d9;
     }
     
-    QFrame#frame_tags_2 {
+	QFrame#frame_carte{
+		background-color: #fdf1d9;
+	}
+    QFrame#frame_tags_2{
         background-color: #36a9d3;
         border: 2px solid #1a5d75;
         /*border-bottom-color: #1a5d75;  same as the pane color */
@@ -90,6 +93,7 @@
         /*border-bottom-color: #1a5d75; /* same as the pane color */
         /*border-top-left-radius: 0px;
         border-top-right-radius: 0px;*/
+		border-radius: 4px;
         min-width: 8ex;
         padding: 20px;
         color:#1a5d75;
@@ -445,6 +449,11 @@
         border-radius: 6px;
     }
     
+	QTableWidget QTableCornerButton::section {
+		background-color:transparent;
+		border:none;
+	}
+
     QTableWidget::item:hover{
         color:#ffc05c;
     }
@@ -463,10 +472,21 @@
     QHeaderView::section {
         background-color: #ffe0ad;
         color: #1a5d75;
-        border: none;
-        
+        border: 2px solid #ffc05c;
+		border-radius:11px;
+		padding:2px;
+		margin: 4px;
     }
 
+	QHeaderView::section:vertical {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+
+	QHeaderView::section:horizontal {
+		margin-left: 40px;
+		margin-right: 40px;
+	}
     QDateEdit {
         background-color: #36a9d3;
         color: #1a5d75;
@@ -806,6 +826,11 @@
                       <set>AlignCenter</set>
                      </property>
                     </row>
+                    <column>
+                     <property name="text">
+                      <string>New Column</string>
+                     </property>
+                    </column>
                    </widget>
                   </item>
                   <item row="0" column="0">
@@ -817,35 +842,6 @@
                      <enum>QFrame::Raised</enum>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_13">
-                     <item row="0" column="5">
-                      <widget class="QCheckBox" name="cB_restes_2">
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>92</width>
-                         <height>50</height>
-                        </size>
-                       </property>
-                       <property name="toolTip">
-                        <string>Le dernier repas, c'est les restes!</string>
-                       </property>
-                       <property name="text">
-                        <string>Restes</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="8">
-                      <spacer name="horizontalSpacer_3">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
                      <item row="0" column="4">
                       <widget class="QSpinBox" name="sB_days">
                        <property name="minimumSize">
@@ -865,6 +861,19 @@
                        </property>
                        <property name="value">
                         <number>7</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_date">
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="pixmap">
+                        <pixmap>images/icon_date_3colors_t_LD.png</pixmap>
+                       </property>
+                       <property name="textInteractionFlags">
+                        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
                        </property>
                       </widget>
                      </item>
@@ -890,41 +899,6 @@
                          <width>50</width>
                          <height>50</height>
                         </size>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="1">
-                      <widget class="QLabel" name="label_date">
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="pixmap">
-                        <pixmap>images/icon_date_3colors_t_LD.png</pixmap>
-                       </property>
-                       <property name="textInteractionFlags">
-                        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="5">
-                      <widget class="QCheckBox" name="cB_restes_2">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>14</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>Le dernier repas, c'est les restes!</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="checked">
-                        <bool>true</bool>
                        </property>
                       </widget>
                      </item>
@@ -980,6 +954,41 @@
                         <string>pour</string>
                        </property>
                       </widget>
+                     </item>
+                     <item row="0" column="5">
+                      <widget class="QCheckBox" name="cB_restes_2">
+                       <property name="font">
+                        <font>
+                         <family>Poiret One</family>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>Le dernier repas, c'est les restes!</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="checked">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="7">
+                      <spacer name="horizontalSpacer_3">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
                      </item>
                     </layout>
                    </widget>
@@ -1135,8 +1144,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>407</width>
-                <height>177</height>
+                <width>1132</width>
+                <height>435</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1794,12 +1803,18 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                             <property name="text">
                              <string>Ingrédients</string>
                             </property>
+                            <property name="checked">
+                             <bool>true</bool>
+                            </property>
                            </widget>
                           </item>
                           <item>
                            <widget class="QCheckBox" name="cB_search_preparation">
                             <property name="text">
                              <string>Préparation</string>
+                            </property>
+                            <property name="checked">
+                             <bool>true</bool>
                             </property>
                            </widget>
                           </item>
@@ -2277,7 +2292,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>dateEdit_2</tabstop>
   <tabstop>tW_menu</tabstop>
   <tabstop>tabWidget</tabstop>
-  <tabstop>cB_restes_2</tabstop>
   <tabstop>pB_new_menu_2</tabstop>
  </tabstops>
  <resources>
