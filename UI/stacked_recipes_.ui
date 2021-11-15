@@ -135,8 +135,8 @@ QListWidget#list_stack{
 	background-color:transparent;
 }
 
-QMenu::item {
-    icon-size:50px 50px;
+QMenu {
+    background-color:transparent;
 }
 
 QStackedWidget {

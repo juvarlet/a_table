@@ -18,7 +18,6 @@ COLORS = {
                     '#color5_dark#'     : '#fae2b2'
                     }
 
-
 def main():
     dirname = os.path.dirname(__file__)
     uiFiles = ['Main_Window', 'stacked_recipes']

@@ -1,7 +1,7 @@
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QMovie, QDoubleValidator, QEnterEvent, QFont, QMouseEvent, QPainterPath, QPalette, QPixmap, QIcon, QColor, QPainter
+from PySide2.QtGui import QBrush, QMovie, QDoubleValidator, QEnterEvent, QFont, QMouseEvent, QPainterPath, QPalette, QPixmap, QIcon, QColor, QPainter, QPen, QFontMetrics
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
@@ -35,6 +35,45 @@ class SpinBoxCustom(QSpinBox): #Custom SpinBox to force +- only, ignoring keyboa
 class WebEnginePage(QWebEnginePage):
     def javaScriptConsoleMessage(self, level, msg, line, sourceID):
         pass
+
+class MyStyle(QProxyStyle):#to be able to set value of slider immediately at mouse pos
+    
+    def styleHint(self, hint: PySide2.QtWidgets.QStyle.StyleHint, option=0, widget=0, returnData=0) -> int:
+        if hint == QStyle.SH_Slider_AbsoluteSetButtons:
+            return (Qt.LeftButton | Qt.MidButton | Qt.RightButton)
+        
+        return super().styleHint(hint, option=option, widget=widget, returnData=returnData)
+
+class SliderWithValue(QSlider):
+
+    def __init__(self, parent=None):
+        super(SliderWithValue, self).__init__(parent)
+        self.setStyle(MyStyle())
+        # self.setStyleSheet(self.stylesheet)
+
+    def paintEvent(self, event):
+        QSlider.paintEvent(self, event)
+
+        painter = QPainter(self)
+        qpen = QPen(QColor(COLORS['#color1_bright#']))
+        painter.setPen(qpen)
+
+        font_metrics = QFontMetrics(self.font())
+        font_width = font_metrics.boundingRect(str(self.value())).width()
+        
+        rect = self.geometry()
+        min_pos =  rect.width() - font_width - self.width() + 25
+        max_pos = rect.width() - font_width - 47
+        slider_pos = min_pos + (max_pos - min_pos) / (self.maximum()-1) * (self.value()-1)
+        
+        horizontal_x_pos = slider_pos
+        horizontal_y_pos = rect.height() * 0.75
+
+        text = '%s jour' % str(self.value()) + 's'*(self.value()>1)
+        painter.drawText(QPoint(horizontal_x_pos, horizontal_y_pos), text)
+
+        painter.drawRect(rect)
+
 
 
 def getFormAncestor(widget):

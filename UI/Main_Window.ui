@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1206</width>
-    <height>651</height>
+    <height>646</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -734,7 +734,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>1132</width>
-                <height>435</height>
+                <height>430</height>
                </rect>
               </property>
               <attribute name="label">
@@ -750,91 +750,8 @@
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_10">
-                  <item row="1" column="0">
-                   <widget class="QTableWidget" name="tW_menu">
-                    <property name="mouseTracking">
-                     <bool>true</bool>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::NoFrame</enum>
-                    </property>
-                    <property name="lineWidth">
-                     <number>0</number>
-                    </property>
-                    <property name="editTriggers">
-                     <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
-                    </property>
-                    <property name="dragEnabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="dragDropOverwriteMode">
-                     <bool>false</bool>
-                    </property>
-                    <property name="dragDropMode">
-                     <enum>QAbstractItemView::InternalMove</enum>
-                    </property>
-                    <property name="selectionMode">
-                     <enum>QAbstractItemView::SingleSelection</enum>
-                    </property>
-                    <property name="iconSize">
-                     <size>
-                      <width>60</width>
-                      <height>60</height>
-                     </size>
-                    </property>
-                    <property name="textElideMode">
-                     <enum>Qt::ElideMiddle</enum>
-                    </property>
-                    <property name="showGrid">
-                     <bool>false</bool>
-                    </property>
-                    <row>
-                     <property name="text">
-                      <string>Midi</string>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Poiret One</family>
-                       <weight>75</weight>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="textAlignment">
-                      <set>AlignCenter</set>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>Soir</string>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Poiret One</family>
-                       <weight>75</weight>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="textAlignment">
-                      <set>AlignCenter</set>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="textAlignment">
-                      <set>AlignCenter</set>
-                     </property>
-                    </row>
-                    <column>
-                     <property name="text">
-                      <string>New Column</string>
-                     </property>
-                    </column>
-                   </widget>
-                  </item>
                   <item row="0" column="0">
-                   <widget class="QFrame" name="frame_2">
+                   <widget class="QFrame" name="frame_top_actions">
                     <property name="frameShape">
                      <enum>QFrame::NoFrame</enum>
                     </property>
@@ -842,120 +759,23 @@
                      <enum>QFrame::Raised</enum>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_13">
-                     <item row="0" column="4">
-                      <widget class="QSpinBox" name="sB_days">
-                       <property name="minimumSize">
+                     <item row="0" column="3">
+                      <spacer name="horizontalSpacer_3">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
                         <size>
-                         <width>0</width>
-                         <height>50</height>
+                         <width>40</width>
+                         <height>20</height>
                         </size>
                        </property>
-                       <property name="buttonSymbols">
-                        <enum>QAbstractSpinBox::PlusMinus</enum>
-                       </property>
-                       <property name="keyboardTracking">
-                        <bool>false</bool>
-                       </property>
-                       <property name="suffix">
-                        <string> jours</string>
-                       </property>
-                       <property name="value">
-                        <number>7</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="1">
-                      <widget class="QLabel" name="label_date">
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="pixmap">
-                        <pixmap>images/icon_date_3colors_t_LD.png</pixmap>
-                       </property>
-                       <property name="textInteractionFlags">
-                        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="0">
-                      <widget class="QPushButton" name="pB_new_menu_2">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>-1</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>Nouvelle carte</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="iconSize">
-                        <size>
-                         <width>50</width>
-                         <height>50</height>
-                        </size>
-                       </property>
-                      </widget>
+                      </spacer>
                      </item>
                      <item row="0" column="2">
-                      <widget class="QDateEdit" name="dateEdit_2">
-                       <property name="minimumSize">
-                        <size>
-                         <width>170</width>
-                         <height>50</height>
-                        </size>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>-1</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="wrapping">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignCenter</set>
-                       </property>
-                       <property name="buttonSymbols">
-                        <enum>QAbstractSpinBox::NoButtons</enum>
-                       </property>
-                       <property name="displayFormat">
-                        <string>dd-MM-yyyy</string>
-                       </property>
-                       <property name="calendarPopup">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
+                      <layout class="QVBoxLayout" name="vL_time"/>
                      </item>
-                     <item row="0" column="3">
-                      <widget class="QLabel" name="label_9">
-                       <property name="font">
-                        <font>
-                         <family>Poiret One</family>
-                         <pointsize>14</pointsize>
-                         <weight>75</weight>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="text">
-                        <string>pour</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="5">
+                     <item row="0" column="4">
                       <widget class="QCheckBox" name="cB_restes_2">
                        <property name="font">
                         <font>
@@ -977,8 +797,37 @@
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="7">
-                      <spacer name="horizontalSpacer_3">
+                     <item row="0" column="0">
+                      <widget class="QPushButton" name="pB_new_menu_2">
+                       <property name="font">
+                        <font>
+                         <family>Poiret One</family>
+                         <pointsize>-1</pointsize>
+                         <weight>75</weight>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>Nouvelle carte</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>images/icon_cover_3colors_new.png</normaloff>images/icon_cover_3colors_new.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>50</width>
+                         <height>50</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <spacer name="horizontalSpacer_5">
                        <property name="orientation">
                         <enum>Qt::Horizontal</enum>
                        </property>
@@ -1031,6 +880,10 @@
                        </property>
                        <property name="text">
                         <string/>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>images/icon_plate_3colors.png</normaloff>images/icon_plate_3colors.png</iconset>
                        </property>
                        <property name="iconSize">
                         <size>
@@ -1123,12 +976,140 @@
                        <property name="text">
                         <string/>
                        </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>images/icon_calendar.png</normaloff>images/icon_calendar.png</iconset>
+                       </property>
                        <property name="iconSize">
                         <size>
                          <width>50</width>
                          <height>50</height>
                         </size>
                        </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QFrame" name="frame_2">
+                    <property name="frameShape">
+                     <enum>QFrame::NoFrame</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_4">
+                     <item row="0" column="1">
+                      <widget class="QTableWidget" name="tW_menu">
+                       <property name="mouseTracking">
+                        <bool>true</bool>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::NoFrame</enum>
+                       </property>
+                       <property name="lineWidth">
+                        <number>0</number>
+                       </property>
+                       <property name="editTriggers">
+                        <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
+                       </property>
+                       <property name="dragEnabled">
+                        <bool>true</bool>
+                       </property>
+                       <property name="dragDropOverwriteMode">
+                        <bool>false</bool>
+                       </property>
+                       <property name="dragDropMode">
+                        <enum>QAbstractItemView::InternalMove</enum>
+                       </property>
+                       <property name="selectionMode">
+                        <enum>QAbstractItemView::SingleSelection</enum>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>60</width>
+                         <height>60</height>
+                        </size>
+                       </property>
+                       <property name="textElideMode">
+                        <enum>Qt::ElideMiddle</enum>
+                       </property>
+                       <property name="showGrid">
+                        <bool>false</bool>
+                       </property>
+                       <attribute name="verticalHeaderVisible">
+                        <bool>false</bool>
+                       </attribute>
+                       <row>
+                        <property name="text">
+                         <string>Midi</string>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Poiret One</family>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="textAlignment">
+                         <set>AlignCenter</set>
+                        </property>
+                       </row>
+                       <row>
+                        <property name="text">
+                         <string>Soir</string>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Poiret One</family>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="textAlignment">
+                         <set>AlignCenter</set>
+                        </property>
+                       </row>
+                       <row>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="textAlignment">
+                         <set>AlignCenter</set>
+                        </property>
+                       </row>
+                       <column>
+                        <property name="text">
+                         <string>New Column</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="QFrame" name="frame_3">
+                       <property name="frameShape">
+                        <enum>QFrame::NoFrame</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_5">
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_lunch">
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QLabel" name="label_dinner">
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
                       </widget>
                      </item>
                     </layout>
@@ -1145,7 +1126,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>1132</width>
-                <height>435</height>
+                <height>430</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1207,6 +1188,10 @@
                           <property name="text">
                            <string/>
                           </property>
+                          <property name="icon">
+                           <iconset>
+                            <normaloff>images/icon_send.png</normaloff>images/icon_send.png</iconset>
+                          </property>
                           <property name="iconSize">
                            <size>
                             <width>50</width>
@@ -1223,6 +1208,10 @@
                           <property name="text">
                            <string/>
                           </property>
+                          <property name="icon">
+                           <iconset>
+                            <normaloff>images/icon_print.png</normaloff>images/icon_print.png</iconset>
+                          </property>
                           <property name="iconSize">
                            <size>
                             <width>50</width>
@@ -1238,6 +1227,10 @@
                           </property>
                           <property name="text">
                            <string/>
+                          </property>
+                          <property name="icon">
+                           <iconset>
+                            <normaloff>images/icon_copy.png</normaloff>images/icon_copy.png</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -2041,6 +2034,10 @@ p, li { white-space: pre-wrap; }
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>images/icon_send.png</normaloff>images/icon_send.png</iconset>
+                      </property>
                       <property name="iconSize">
                        <size>
                         <width>50</width>
@@ -2070,6 +2067,10 @@ p, li { white-space: pre-wrap; }
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>images/icon_back.png</normaloff>images/icon_back.png</iconset>
+                      </property>
                       <property name="iconSize">
                        <size>
                         <width>50</width>
@@ -2085,6 +2086,10 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="text">
                        <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>images/icon_print.png</normaloff>images/icon_print.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2102,6 +2107,10 @@ p, li { white-space: pre-wrap; }
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>images/icon_bin.png</normaloff>images/icon_bin.png</iconset>
+                      </property>
                       <property name="iconSize">
                        <size>
                         <width>50</width>
@@ -2117,6 +2126,10 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="text">
                        <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>images/icon_edit.png</normaloff>images/icon_edit.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2136,6 +2149,10 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="text">
                        <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>images/icon_new_recipe.png</normaloff>images/icon_new_recipe.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2281,7 +2298,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>cB_recherche</tabstop>
   <tabstop>pB_save</tabstop>
   <tabstop>pB_send</tabstop>
-  <tabstop>sB_days</tabstop>
   <tabstop>lW_menu</tabstop>
   <tabstop>lW_courses</tabstop>
   <tabstop>pB_print</tabstop>
@@ -2289,8 +2305,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>lE_with</tabstop>
   <tabstop>cB_search_tag_double</tabstop>
   <tabstop>cB_search_tag_kids</tabstop>
-  <tabstop>dateEdit_2</tabstop>
-  <tabstop>tW_menu</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>pB_new_menu_2</tabstop>
  </tabstops>
@@ -2321,12 +2335,12 @@ p, li { white-space: pre-wrap; }
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1037</x>
-     <y>898</y>
+     <x>1018</x>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1746</x>
-     <y>462</y>
+     <x>1146</x>
+     <y>562</y>
     </hint>
    </hints>
   </connection>
@@ -2337,8 +2351,8 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1037</x>
-     <y>898</y>
+     <x>1018</x>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -2353,12 +2367,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1037</x>
-     <y>898</y>
+     <x>1018</x>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
      <x>1098</x>
-     <y>898</y>
+     <y>595</y>
     </hint>
    </hints>
   </connection>
@@ -2370,11 +2384,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>1098</x>
-     <y>898</y>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1746</x>
-     <y>462</y>
+     <x>1146</x>
+     <y>562</y>
     </hint>
    </hints>
   </connection>
@@ -2386,7 +2400,7 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>1098</x>
-     <y>898</y>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -2402,11 +2416,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>1098</x>
-     <y>898</y>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1037</x>
-     <y>898</y>
+     <x>1018</x>
+     <y>595</y>
     </hint>
    </hints>
   </connection>
@@ -2418,11 +2432,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>1098</x>
-     <y>898</y>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
-     <x>976</x>
-     <y>898</y>
+     <x>938</x>
+     <y>595</y>
     </hint>
    </hints>
   </connection>
@@ -2433,12 +2447,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1037</x>
-     <y>898</y>
+     <x>1018</x>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
-     <x>976</x>
-     <y>898</y>
+     <x>938</x>
+     <y>595</y>
     </hint>
    </hints>
   </connection>
@@ -2449,8 +2463,8 @@ p, li { white-space: pre-wrap; }
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1037</x>
-     <y>898</y>
+     <x>1018</x>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
      <x>131</x>
@@ -2466,7 +2480,7 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>1098</x>
-     <y>898</y>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
      <x>131</x>

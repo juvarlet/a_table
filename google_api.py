@@ -311,6 +311,10 @@ class MySignal(QObject):
     sig = Signal(str, str)
 
 class MyCalendar(QThread):#QThread
+    
+    on_message = Signal(str, str)
+    on_finish = Signal()
+    
     def __init__(self, my_menu):
         QThread.__init__(self)
         self.menu = my_menu
@@ -321,7 +325,9 @@ class MyCalendar(QThread):#QThread
         
     def run(self):
         debug = True
-        self.signal.sig.emit('La céation des évènements est en cours...', self.icon_path)
+        # self.signal.sig.emit('La céation des évènements est en cours...', self.icon_path)
+        self.on_message.emit('La céation des évènements est en cours...', self.icon_path)
+        
         try:
             creds = get_credentials(debug=debug)
             service = build_calendar_service(creds, debug=debug)
@@ -395,7 +401,8 @@ class MyCalendar(QThread):#QThread
             message += "%i nouveaux évènements créés dans l'agenda<br/>" % (nb_of_days*2)
             message += '<a href="%s">Lien Google Calendar</a>' % link_dinner
             
-            self.signal.sig.emit(message, self.icon_path)
+            # self.signal.sig.emit(message, self.icon_path)
+            self.on_message.emit(message, self.icon_path)
 
         except:
             if self.occurences < 2:
@@ -407,8 +414,12 @@ class MyCalendar(QThread):#QThread
                 self.occurences += 1
                 self.run()
             else:
-                self.signal.sig.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
+                # self.signal.sig.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
+                self.on_message.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
+                
                 print(sys.exc_info())
+        
+        self.on_finish.emit()
 
 class MyMailbox(QThread):
     

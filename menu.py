@@ -220,16 +220,18 @@ class Menu:
         return shopping_list
     
     def update(self, my_recipe_db, number_of_days = 0, table = [], options = [], desserts = []):
-        if number_of_days != 0:
-            adding = (number_of_days - self.number_of_days) == 1
-            self.number_of_days = number_of_days
-            if adding:
-                additional_menu = generate_smart_menu_v2(my_recipe_db, self.start_day + timedelta(number_of_days), 1)
-                self.table += additional_menu
-            else:
-                self.table = self.table[:-2]
-
-
+        diff = number_of_days - self.number_of_days
+        adding = diff > 0
+        print(len(self.table))
+        if adding:
+            additional_menu = generate_smart_menu_v2(my_recipe_db, self.start_day + timedelta(self.number_of_days + 1), diff)
+            self.table += additional_menu
+        else:
+            self.table = self.table[:-(abs(diff)*2)]
+        print('from %s to %s' % (self.number_of_days, number_of_days))
+        print(len(self.table))
+        print([recipe.name for recipe in self.table])
+        self.number_of_days = number_of_days
                     
     
     # def toHtml(self, html_source_file):
