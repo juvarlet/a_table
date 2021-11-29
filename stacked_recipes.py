@@ -369,6 +369,7 @@ class StackedRecipes(QWidget):
             # recipe_name = self.list_stack.currentItem().text()
             recipe_name = self.list_stack.selectedItems()[0].text()
         self.stackedWidget.setCurrentIndex(2)
+        self.lE_search.setFocus(Qt.OtherFocusReason)
         
         self.list_stack_2.clear()
         full_recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)

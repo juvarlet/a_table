@@ -216,14 +216,16 @@ class EditRecipe(QWidget):
 
     def on_btn_confirm_changes_clicked(self, ing_item_id):
         ing_item:IngredientItem
-        ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(self.lw_ingredients.count()-1)).findChild(IngredientItem)
+        # ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(self.lw_ingredients.count()-1)).findChild(IngredientItem)
+        ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(self.lw_ingredients.count()-1))
         if ing_item.getUID() == ing_item_id:
             self.add_new_ingredient_to_list(Ingredient())
 
     def rm_ing_item_from_list(self, ing_item_id):
         for i in range(0, self.lw_ingredients.count()):
             ing_item:IngredientItem
-            ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(i)).findChild(IngredientItem)
+            # ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(i)).findChild(IngredientItem)
+            ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(i))
             if ing_item_id == ing_item.getUID():
                 self.lw_ingredients.takeItem(i)
                 break
@@ -274,9 +276,12 @@ class EditRecipe(QWidget):
             else:
                 image_cell = ''
                 
+            # print(self.lw_ingredients.count())
             for ing_index in range(self.lw_ingredients.count()-1): # "-1 in order to ignore the last 'input' line"
                 ing_item:IngredientItem
-                ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index)).findChild(IngredientItem)
+                # ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index)).findChild(IngredientItem)
+                ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index))
+                # print(ing_item)
                 ing_dict[ing_item.lbl_ing_name.text()] = [float(ing_item.lbl_ing_qty.text()), ing_item.lbl_ing_qty_unit.text()]
 
             #combine tags to string
