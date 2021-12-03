@@ -1,6 +1,11 @@
 
 from ingredient import Ingredient
+from PySide2.QtUiTools import QUiLoader
+import custom_widgets as cw
+import os
+from stylesheet_update import COLORS
 
+LINE_RECIPE_UI = os.path.dirname(__file__) + '/UI/line_recipe.ui'
 
 class Recipe:
     def __init__(self, uid, name, ingredients_list_qty = {}, preparation = '', time = 0, tags = [], image = ''):
@@ -12,6 +17,12 @@ class Recipe:
         self.time = time
         self.tags = tags
         self.image = image
+        
+        self.dirname = os.path.dirname(__file__)
+        # self.init_line_widget()
+    
+    def __str__(self):
+        return self.name
     
     def isTagged(self, tag):
         try:
@@ -143,3 +154,4 @@ class Recipe:
         cells[5] = self.image.split('/')[-1]
         cells[6] = self.preparation
         return cells
+        

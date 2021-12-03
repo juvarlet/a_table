@@ -143,7 +143,7 @@ class Menu:
             for i in range(self.number_of_days):
                 day = (self.start_day + timedelta(i))
                 #short french version of day
-                day_str = toFrench(day.strftime('%A'))[:2] + day.strftime(' %d')
+                day_str = toFrench(day.strftime('%A'))[:2] + day.strftime(' %d/%m')
                 full_menu.append([day_str, self.table[2*i], self.table[2*i+1]])
         
         return full_menu
