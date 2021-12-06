@@ -250,6 +250,7 @@ class MainGUI(QWidget):
         #variables
         self.recipe_db: recipe_db.RecipeDB
         self.recipe_db = my_recipe_db
+        self.line_widgets = []
         self.current_menu = menu.Menu()
         self.dessert_list = []
         self.dirname = os.path.dirname(__file__)
@@ -570,20 +571,47 @@ class MainGUI(QWidget):
         # info_dialog.setDetailedText(text)
         self.info_dialog.exec_()
     
-    def populate_lW_recipe(self):
+    
+    def populate_lW_recipe(self):#TODO update when lW modified + reduce line height
+        # self.line_widgets = []
+        
+        # mapper = QSignalMapper(self)
+        
         for recipeIndex in range(self.lW_recipe.count()):
             recipeListItem = self.lW_recipe.item(recipeIndex)
-            recipeListItem.setSizeHint(QSize(0,32))
+            recipeListItem.setSizeHint(QSize(0,27))
             recipe_object = self.recipe_db.get_recipe_object(recipeListItem.text())
             
             # recipe_object.init_line_widget()
-            line_widget = LineRecipe(recipe_object, self.current_menu)#TODO update on new menu
+            # line_widget = LineRecipe(recipe_object, self.current_menu)#TODO update on new menu
+            
+            
+            
+            line_widget = LineRecipe(recipe_object, recipeIndex)#TODO update on new menu
+            
+            # mapper.setMapping(line_widget, recipeIndex)
+            line_widget.on_menu_request.connect(self.on_update_line_widget)
+            
+            # line_widget.on_menu_request.connect(lambda: line_widget.on_update(self.current_menu))
+            # self.line_widgets.append(line_widget)
             self.lW_recipe.setItemWidget(recipeListItem, line_widget)
+            
+            
+            QCoreApplication.processEvents()
+        
+        # mapper.mappedString.connect(self.on_update_line_widget)
+    
+    # line_widget.on_update(self.current_menu)
+    
+    def on_update_line_widget(self, recipeIndex):
+        print('call map')
+        recipeListItem = self.lW_recipe.item(recipeIndex)
+        self.lW_recipe.itemWidget(recipeListItem).on_update(self.current_menu)
     
     def on_new_menu(self):
         # start = time.process_time()
         
-        # movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
         
         self.new_menu()
         
@@ -598,9 +626,10 @@ class MainGUI(QWidget):
         
         # self.pB_save.setEnabled(True)
         
-        # movie.stop()
+        movie.stop()
         # QCoreApplication.processEvents()
         # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
     
     def new_menu(self):
         # current_QDate = self.dateEdit.date()
@@ -620,7 +649,7 @@ class MainGUI(QWidget):
         self.current_menu.use_double()
 
     def populate_tW_menu(self, menu):
-        movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        # movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
         
         #reset tW_Menu
         self.tW_menu.setColumnCount(0)
@@ -707,9 +736,9 @@ class MainGUI(QWidget):
     # def stop_movie(self):
     #     self.movie.stop()
     #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
-        movie.stop()
+        # movie.stop()
         QCoreApplication.processEvents()
-        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
     
     
     def on_new_stack(self, recipe_stack, id, k, length):

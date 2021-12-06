@@ -46,9 +46,9 @@ class AddReplace(QWidget):
         for recipe in self.recipes:
             self.add_recipe(str(recipe))
 
-        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe.png'))
+        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe_LD.png'))
         self.pB_add.setToolTip("Ajouter '%s'" % self.name)
-        self.pB_replace.setIcon(QIcon(self.dirname + '/UI/images/icon_reset_all.png'))
+        self.pB_replace.setIcon(QIcon(self.dirname + '/UI/images/icon_reset_all_LD.png'))
         self.pB_replace.setToolTip("Remplacer tout par '%s'" % self.name)
         
     def connect_actions(self):
@@ -66,7 +66,7 @@ class AddReplace(QWidget):
         loader = QUiLoader()
         widget = loader.load(LINE_UI_FILE)
         widget.label.setText(name)
-        widget.pB_reset.setIcon(QIcon(self.dirname + '/UI/images/icon_reset.png'))
+        widget.pB_reset.setIcon(QIcon(self.dirname + '/UI/images/icon_reset_LD.png'))
         widget.pB_reset.setToolTip("Remplacer par '%s'" % self.name)
         widget.pB_reset.clicked.connect(lambda: widget.label.setText(self.name))
         self.line_widgets.append(widget)

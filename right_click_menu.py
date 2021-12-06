@@ -65,6 +65,8 @@ class RightClickMenu(QWidget):
         self.label_lunch = self.pW.label_lunch
         self.label_dinner: QLabel
         self.label_dinner = self.pW.label_dinner
+        self.label_carte: QLabel
+        self.label_carte = self.pW.label_carte
     
     def initial_state(self):
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
@@ -98,10 +100,11 @@ class RightClickMenu(QWidget):
             self.tW_menus.setCellWidget(i%2, int(i/2), card_widget)
         
         # self.tW_menus.cellWidget(0,0).show()
-        self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_check.png'))
-        self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        cw.load_pic(self.label_lunch, self.dirname + '/UI/images/tag_lunch_color_SLD.png')
-        cw.load_pic(self.label_dinner, self.dirname + '/UI/images/tag_dinner_color_SLD.png')
+        self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_check_LD.png'))
+        self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel_LD.png'))
+        cw.load_pic(self.label_lunch, self.dirname + '/UI/images/tag_midi_SLD.png')
+        cw.load_pic(self.label_dinner, self.dirname + '/UI/images/tag_soir_SLD.png')
+        cw.load_pic(self.label_carte, self.dirname + '/UI/images/icon_menu_SLD.png')
                 
     def connect_actions(self):
         self.pB_cancel.clicked.connect(self.on_cancel)
@@ -128,8 +131,25 @@ class RightClickMenu(QWidget):
             elif type(stack) is list:
                 self.card_widgets[i].update_recipes(stack)
     
-    def on_new_menu(self): #TODO reset with new menu
-        pass
+    def on_new_menu(self, menu): #TODO reset with new menu
+        print('on_new_menu')
+        self.card_widgets = []
+        self.table = menu.table
+        self.headers = [m[0] for m in menu.full_menu()]
+        print(self.table)
+        self.tW_menus.setColumnCount(len(self.table)/2)
+        self.tW_menus.setHorizontalHeaderLabels(self.headers)
+        for i, stack in enumerate(self.table):
+            if type(stack) is Recipe:
+                card_widget = AddReplace([stack], self.name)
+            elif type(stack) is list:
+                card_widget = AddReplace(stack, self.name)
+            self.card_widgets.append(card_widget)
+            # widget.show()
+            qtwi = QTableWidgetItem('')
+            self.tW_menus.setItem(i%2, int(i/2), qtwi)
+            self.tW_menus.setCellWidget(i%2, int(i/2), card_widget)
+        # pass
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

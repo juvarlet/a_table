@@ -85,6 +85,9 @@ class TimeEdition(QWidget):
         self.date_from.setDate(QDate().currentDate().addDays(1))
         self.date_to.setDate(self.date_from.date().addDays(self.default_nb_days - 1))
         
+        
+        
+    def connect_actions(self):
         self.pushMenu = QMenu(self.pB_from)
         self.pushCalendar = QCalendarWidget(self.pushMenu)
         self.pushCalendar.setSelectedDate(self.date_from.date())
@@ -97,9 +100,6 @@ class TimeEdition(QWidget):
         self.pushAction.setDefaultWidget(self.pushCalendar)
         self.pushMenu.addAction(self.pushAction)
         self.pB_from.setMenu(self.pushMenu)
-        
-    def connect_actions(self):
-        print('connect')
         # self.pB_from.clicked.connect(self.calendar_popup)
     
     def update_modif(self):

@@ -372,6 +372,9 @@ color: #1a5d75;
           <height>35</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Date de début</string>
+        </property>
         <property name="text">
          <string/>
         </property>

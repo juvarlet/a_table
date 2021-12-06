@@ -441,7 +441,7 @@
     }
 
 QLabel#label_calendar, QLabel#label_history {
-	font: 18px;
+	font: bold 18px;
 }
     
     QTableWidget {
