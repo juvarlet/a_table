@@ -18,7 +18,8 @@ class Recipe:
         self.tags = tags
         self.image = image
         
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         # self.init_line_widget()
     
     def __str__(self):

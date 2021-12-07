@@ -30,7 +30,7 @@ import stacked_recipes as sr
 from datetime import date, timedelta
 from pyperclip import copy
 from shutil import copy2
-import pyautogui
+# import pyautogui
 import uuid
 
 import PySide2
@@ -93,7 +93,7 @@ class MainGUI(QWidget):
         self.tW_menu.verticalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
         self.tW_menu.horizontalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
         self.cB_restes.setFont(QFont('Aller', 14, QtGui.QFont.Bold))
-    
+
     def save_components(self):
         self.pW = self.parentWidget()
         #-- ui widgets --
@@ -245,7 +245,7 @@ class MainGUI(QWidget):
         #tab settings
         self.vL_settings: QVBoxLayout
         self.vL_settings = self.pW.vL_settings
-        
+    
     def initial_state(self, my_recipe_db):
         #variables
         self.recipe_db: recipe_db.RecipeDB
@@ -253,7 +253,8 @@ class MainGUI(QWidget):
         self.line_widgets = []
         self.current_menu = menu.Menu()
         self.dessert_list = []
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         self.just_dropped = False
         self.cell_signal_count = 0
         self.from_cell = ()
@@ -351,6 +352,7 @@ class MainGUI(QWidget):
         # self.lW_recipe.setMouseTracking(True)
         self.pB_back.hide()      
 
+        self.populate_lW_recipe()
         
         self.frame_settings.hide()
         self.frame_search.hide()
@@ -604,7 +606,7 @@ class MainGUI(QWidget):
     # line_widget.on_update(self.current_menu)
     
     def on_update_line_widget(self, recipeIndex):
-        print('call map')
+        # print('call map')
         recipeListItem = self.lW_recipe.item(recipeIndex)
         self.lW_recipe.itemWidget(recipeListItem).on_update(self.current_menu)
     
@@ -619,7 +621,7 @@ class MainGUI(QWidget):
         # start = time.process_time()
         
         self.populate_tW_menu(self.current_menu)
-        self.populate_lW_recipe()
+        # self.populate_lW_recipe()
         self.populate_shopping_list()
         self.populate_menu_list()
         self.compute_score()
@@ -1661,16 +1663,39 @@ def extract_number(string):#Extract number from ingredient quantity string
 
 def start(recipe_db):
     app = QApplication(sys.argv)
+
+
     
     #current working directory
-    dirname = os.path.dirname(__file__)
+    # dirname = os.path.dirname(__file__)
+    dirname = os.path.dirname(os.path.abspath(__file__))
     #declare and read GUI file
     myUiFile = dirname + '/UI/Main_Window.ui'
+
+    # splash_pic = QPixmap(dirname + '/UI/images/donut_.png')
+    splash_pic = QPixmap(r"C:\Users\JVARRH02\Documents\PY_sandbox\New folder\a_table\UI\images\benchmark\cooking.gif")
+    
+    
+    splash = QSplashScreen(splash_pic)
+    
+    movie = QMovie()
+    # movie.setFileName(dirname + '/UI/images/icon_factory/donut.gif')
+    movie.setFileName(r"C:\Users\JVARRH02\Documents\PY_sandbox\New folder\a_table\UI\images\benchmark\cooking.gif")
+    movie.frameChanged.connect(lambda: splash.setPixmap(movie.currentPixmap()))
+    movie.start()
+
+    # splash.setPixmap(movie.currentPixmap())
+    
+    splash.show()
+    app.processEvents()
+    # print(myUiFile)
     w = QUiLoader().load(myUiFile)
     #Create and display GUI object
     myGUI = MainGUI(parent = w, recipe_db = recipe_db)
     myGUI.main()
     
+    splash.finish(myGUI.window())
+
     sys.exit(app.exec_())
 
 def debug(input = None):
@@ -1708,7 +1733,8 @@ def debug(input = None):
 
 def main(): #Entry point
 
-    dirname = os.path.dirname(__file__)
+    # dirname = os.path.dirname(__file__)
+    dirname = os.path.dirname(os.path.abspath(__file__))
     # input_recipe = dirname + '/MesRecettes (copy).ods'
     input_recipe = dirname + '/MesRecettes.csv'
     input_history = dirname + '/Historique.csv'

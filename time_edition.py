@@ -39,7 +39,8 @@ class TimeEdition(QWidget):
         self.pW = widget
     
     def saveComponents(self):
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         self.date_from: QDateEdit
         self.date_from = self.pW.date_from
         self.date_to: QDateEdit

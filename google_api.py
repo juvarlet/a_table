@@ -319,7 +319,8 @@ class MyCalendar(QThread):#QThread
         QThread.__init__(self)
         self.menu = my_menu
         self.signal = MySignal()
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         self.icon_path = self.dirname + '/UI/images/icon_calendar.png'
         self.occurences = 0
         

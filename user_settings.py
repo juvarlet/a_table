@@ -39,7 +39,9 @@ class UserSettings(QWidget):
         self.pW = widget
     
     def saveComponents(self):
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        
         self.label_user: QLabel
         self.label_user = self.pW.label_user
         self.pB_ok_3: QPushButton

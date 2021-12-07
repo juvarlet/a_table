@@ -37,7 +37,8 @@ class LineRecipe(QWidget):
         self.pW = widget
     
     def saveComponents(self):
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
 
         self.label_name: QLabel
         self.label_name = self.pW.label_name
@@ -62,7 +63,13 @@ class LineRecipe(QWidget):
         self.pB_add: QPushButton
         self.pB_add = self.pW.pB_add
     
+    # @cw.decoratortimer(1)
     def initial_state(self):
+        # self.initial_1()
+        # self.initial_2()
+        # self.initial_3()
+
+
         self.setMouseTracking(True)
         
         self.label_name.setText(self.recipe.name)
@@ -89,7 +96,42 @@ class LineRecipe(QWidget):
         self.pushAction.setDefaultWidget(self.rcm)
         self.pushMenu.addAction(self.pushAction)
         self.pB_add.setMenu(self.pushMenu)
+    
+    # @cw.decoratortimer(1)
+    def initial_1(self):
+        self.setMouseTracking(True)
         
+        self.label_name.setText(self.recipe.name)
+        tags = [self.label_vegan, 
+                self.label_kids, 
+                self.label_double, 
+                self.label_lunch, 
+                self.label_dinner, 
+                self.label_summer, 
+                self.label_winter, 
+                self.label_dessert, 
+                self.label_tips]
+        tags_names = ['vegan', 'kids', 'double', 'midi', 'soir', 'ete', 'hiver', 'dessert', 'tips']
+        for tag, tag_name in zip(tags, tags_names):
+            tag.setVisible(self.recipe.isTagged(tag_name))
+            if self.recipe.isTagged(tag_name):
+                cw.load_pic(tag, self.dirname + '/UI/images/tag_%s_SLD.png' % tag_name)
+
+    # @cw.decoratortimer(1)
+    def initial_2(self):
+        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe_LD.png'))
+        self.pB_add.setVisible(False)
+
+    @cw.decoratortimer(1)
+    def initial_3(self):
+        self.pushMenu = QMenu(self.pB_add)
+        self.pushAction = QWidgetAction(self.pushMenu)
+        self.rcm = RightClickMenu(Menu(), self.recipe.name)
+        self.pushAction.setDefaultWidget(self.rcm)
+        self.pushMenu.addAction(self.pushAction)
+        self.pB_add.setMenu(self.pushMenu)
+    
+
     def connect_actions(self):#TODO only on pb_add visible
         # print('action connected')
         
@@ -107,11 +149,12 @@ class LineRecipe(QWidget):
         return super().leaveEvent(event)
 
     def on_add(self):
-        print('signal emitted')
+        # print('signal emitted')
+        # self.initial_3()
         self.on_menu_request.emit(self.index)
     
     def on_update(self, menu):
-        print('update menu')
+        # print('update menu')
         self.rcm.on_new_menu(menu)
         #update with currentmenu
         #select corresponding line

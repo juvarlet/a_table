@@ -29,7 +29,8 @@ class EditRecipe(QWidget):
         super(EditRecipe, self).__init__(parent)
 
         self.colors = COLORS
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         self.recipe_image_path = ''
         self.mode = 0 #0:new ; 1:edit
         self.user_settings = user_settings

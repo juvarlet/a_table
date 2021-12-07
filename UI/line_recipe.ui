@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>969</width>
-    <height>25</height>
+    <width>973</width>
+    <height>37</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,6 +93,13 @@ QPushButton{
           <horstretch>60</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
         </property>
         <property name="text">
          <string>Name</string>

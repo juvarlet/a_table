@@ -33,7 +33,8 @@ class AddReplace(QWidget):
         self.pW = widget
         
     def saveComponents(self):
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
 
         self.lW: QListWidget
         self.lW = self.pW.lW

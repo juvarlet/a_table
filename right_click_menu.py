@@ -45,7 +45,8 @@ class RightClickMenu(QWidget):
         self.pW = widget
         
     def saveComponents(self):
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
 
         self.frame_actions: QFrame
         self.frame_actions = self.pW.frame_actions
@@ -132,11 +133,11 @@ class RightClickMenu(QWidget):
                 self.card_widgets[i].update_recipes(stack)
     
     def on_new_menu(self, menu): #TODO reset with new menu
-        print('on_new_menu')
+        # print('on_new_menu')
         self.card_widgets = []
         self.table = menu.table
         self.headers = [m[0] for m in menu.full_menu()]
-        print(self.table)
+        # print(self.table)
         self.tW_menus.setColumnCount(len(self.table)/2)
         self.tW_menus.setHorizontalHeaderLabels(self.headers)
         for i, stack in enumerate(self.table):

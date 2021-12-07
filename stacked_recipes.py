@@ -54,7 +54,8 @@ class StackedRecipes(QWidget):
         self.pW = widget
         
     def saveComponents(self):
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         
         self.stackedWidget: QStackedWidget
         self.stackedWidget = self.pW.stackedWidget
