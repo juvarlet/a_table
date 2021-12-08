@@ -1673,14 +1673,14 @@ def start(recipe_db):
     myUiFile = dirname + '/UI/Main_Window.ui'
 
     # splash_pic = QPixmap(dirname + '/UI/images/donut_.png')
-    splash_pic = QPixmap(r"C:\Users\JVARRH02\Documents\PY_sandbox\New folder\a_table\UI\images\benchmark\cooking.gif")
+    splash_pic = QPixmap(dirname + '/UI/images/splash_cooking.gif')
     
     
     splash = QSplashScreen(splash_pic)
     
     movie = QMovie()
     # movie.setFileName(dirname + '/UI/images/icon_factory/donut.gif')
-    movie.setFileName(r"C:\Users\JVARRH02\Documents\PY_sandbox\New folder\a_table\UI\images\benchmark\cooking.gif")
+    movie.setFileName(dirname + '/UI/images/splash_cooking.gif')
     movie.frameChanged.connect(lambda: splash.setPixmap(movie.currentPixmap()))
     movie.start()
 
