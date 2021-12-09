@@ -2,6 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 import random
 import recipe_db
+from recipe import Recipe
 import os
 
 class Menu:
@@ -13,6 +14,17 @@ class Menu:
         self.options = options
         self.desserts = desserts
         self.shopping_list = shopping_list
+
+    def __str__(self):
+        description = 'du %s' % self.start_day.strftime('%d_%m_%Y')
+        description += ' au %s\n' % (self.start_day + timedelta(self.number_of_days)).strftime('%d_%m_%Y')
+        for i, stack in enumerate(self.table):
+            if type(stack) is Recipe:
+                stack = [stack]
+            recipes = ' | '.join([str(r) for r in stack])
+            description += '%i-%s\n' % (i, recipes)
+
+        return description
 
     def generate_random_menu(self, my_recipe_db):#basic random function
         length = self.number_of_days * 2

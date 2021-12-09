@@ -13,8 +13,8 @@ UI_FILE = os.path.dirname(__file__) + '/UI/right_click_menu.ui'
 
 class RightClickMenu(QWidget):
     
-    # on_enter_recipe_stack = Signal(str)
-    on_reduce = Signal(QSize)
+    on_close = Signal()
+    on_update = Signal()
     
     def __init__(self, menu, name, parent=None):
         super(RightClickMenu, self).__init__(parent)
@@ -60,6 +60,8 @@ class RightClickMenu(QWidget):
         self.pB_ok = self.pW.pB_ok
         self.pB_cancel: QPushButton
         self.pB_cancel = self.pW.pB_cancel
+        self.pB_reset: QPushButton
+        self.pB_reset = self.pW.pB_reset
         self.tW_menus: QTableWidget
         self.tW_menus = self.pW.tW_menus
         self.label_lunch: QLabel
@@ -103,6 +105,7 @@ class RightClickMenu(QWidget):
         # self.tW_menus.cellWidget(0,0).show()
         self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_check_LD.png'))
         self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel_LD.png'))
+        self.pB_reset.setIcon(QIcon(self.dirname + '/UI/images/icon_back_LD.png'))
         cw.load_pic(self.label_lunch, self.dirname + '/UI/images/tag_midi_SLD.png')
         cw.load_pic(self.label_dinner, self.dirname + '/UI/images/tag_soir_SLD.png')
         cw.load_pic(self.label_carte, self.dirname + '/UI/images/icon_menu_SLD.png')
@@ -110,10 +113,11 @@ class RightClickMenu(QWidget):
     def connect_actions(self):
         self.pB_cancel.clicked.connect(self.on_cancel)
         self.pB_ok.clicked.connect(self.on_validate)
+        self.pB_reset.clicked.connect(self.update_qtable)
 
-       
     def on_cancel(self):
         self.update_qtable()
+        self.on_close.emit()
 
     def on_validate(self):
         new_table = []
@@ -121,10 +125,17 @@ class RightClickMenu(QWidget):
             for r in range(self.tW_menus.rowCount()):
                 recipes = self.tW_menus.cellWidget(r, c).get_recipes()
                 new_table.append(recipes)
-        # print(new_table)
         self.table = new_table
+
+        for i, stack in enumerate(self.table):
+            if type(stack) is Recipe:
+                stack = [stack]
+            recipes_str = ' | '.join([str(r) for r in stack])
+            print('%i-%s' % (i, recipes_str))
         # self.update_qtable()
-    
+        self.on_update.emit()
+
+
     def update_qtable(self):
         for i, stack in enumerate(self.table):
             if type(stack) is Recipe:
@@ -132,12 +143,10 @@ class RightClickMenu(QWidget):
             elif type(stack) is list:
                 self.card_widgets[i].update_recipes(stack)
     
-    def on_new_menu(self, menu): #TODO reset with new menu
-        # print('on_new_menu')
+    def on_new_menu(self, menu):
         self.card_widgets = []
         self.table = menu.table
         self.headers = [m[0] for m in menu.full_menu()]
-        # print(self.table)
         self.tW_menus.setColumnCount(len(self.table)/2)
         self.tW_menus.setHorizontalHeaderLabels(self.headers)
         for i, stack in enumerate(self.table):
@@ -146,11 +155,9 @@ class RightClickMenu(QWidget):
             elif type(stack) is list:
                 card_widget = AddReplace(stack, self.name)
             self.card_widgets.append(card_widget)
-            # widget.show()
             qtwi = QTableWidgetItem('')
             self.tW_menus.setItem(i%2, int(i/2), qtwi)
             self.tW_menus.setCellWidget(i%2, int(i/2), card_widget)
-        # pass
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

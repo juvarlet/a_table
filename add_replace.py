@@ -61,6 +61,7 @@ class AddReplace(QWidget):
     
     def on_replace_all(self):
         self.lW.clear()
+        self.line_widgets = []
         self.on_add_recipe()
     
     def create_list_widget(self, name):
@@ -97,7 +98,8 @@ class AddReplace(QWidget):
                 line_widget.label.setText(str(self.recipes[i]))
             else:#if recipe has been removed
                 self.line_widgets = self.line_widgets[:-1]
-                self.lW.takeItem(-1)
+                self.lW.takeItem(self.lW.count()-1)
+                
         
         for i, recipe in enumerate(self.recipes):#if recipe has been added
             if i >= len(self.line_widgets):

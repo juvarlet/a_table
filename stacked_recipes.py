@@ -263,6 +263,8 @@ class StackedRecipes(QWidget):
     
     def update_recipes(self, index = -1):
         recipe = self.recipe_list[index]
+        if type(recipe) is str:
+            recipe = self.recipe_db.get_recipe_object(recipe)
 
         image_path = self.dirname + recipe.image + '_icon.jpg'
         qpix = QPixmap(image_path)
@@ -279,7 +281,11 @@ class StackedRecipes(QWidget):
     def update_list(self):
         self.list_stack.clear()
         # self.list_stack_2.clear()
-        self.list_stack.addItems([recipe.name for recipe in self.recipe_list])
+        self.list_stack.addItems([
+            recipe.name 
+            if type(recipe) is not str 
+            else self.recipe_db.get_recipe_object(recipe) 
+            for recipe in self.recipe_list])
         # self.list_stack_2.addItems([recipe.name for recipe in self.recipe_list])
         
     def on_add_random_recipe(self, recipe = None, dinner = 0):

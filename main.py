@@ -250,7 +250,6 @@ class MainGUI(QWidget):
         #variables
         self.recipe_db: recipe_db.RecipeDB
         self.recipe_db = my_recipe_db
-        self.line_widgets = []
         self.current_menu = menu.Menu()
         self.dessert_list = []
         # self.dirname = os.path.dirname(__file__)
@@ -346,13 +345,14 @@ class MainGUI(QWidget):
         self.info_dialog = QMessageBox(self)
 
         # self.tW_shopping.setVisible(False)
-        recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
-        self.lW_recipe.addItems(recipe_list)
+        # recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
+        # self.lW_recipe.addItems(recipe_list)
+        self.reset_recipes_list()
         self.lW_recipe.setContextMenuPolicy(Qt.CustomContextMenu)
         # self.lW_recipe.setMouseTracking(True)
         self.pB_back.hide()      
 
-        self.populate_lW_recipe()
+        # self.populate_lW_recipe()
         
         self.frame_settings.hide()
         self.frame_search.hide()
@@ -439,7 +439,6 @@ class MainGUI(QWidget):
         self.pB_modif_2.clicked.connect(self.on_edit_recipe)
         self.pB_delete.clicked.connect(self.on_delete_recipe)
         self.pB_user.clicked.connect(self.on_user_settings)
-        self.lW_recipe.customContextMenuRequested.connect(self.on_recipe_right_click)
         
     def update_modif(self):
         self.tW_menu.cellChanged.connect(self.on_drag_drop_event)
@@ -573,42 +572,22 @@ class MainGUI(QWidget):
         # info_dialog.setDetailedText(text)
         self.info_dialog.exec_()
     
-    
-    def populate_lW_recipe(self):#TODO update when lW modified + reduce line height
-        # self.line_widgets = []
-        
-        # mapper = QSignalMapper(self)
-        
+    def populate_lW_recipe(self):
         for recipeIndex in range(self.lW_recipe.count()):
             recipeListItem = self.lW_recipe.item(recipeIndex)
             recipeListItem.setSizeHint(QSize(0,27))
             recipe_object = self.recipe_db.get_recipe_object(recipeListItem.text())
             
-            # recipe_object.init_line_widget()
-            # line_widget = LineRecipe(recipe_object, self.current_menu)#TODO update on new menu
-            
-            
-            
-            line_widget = LineRecipe(recipe_object, recipeIndex)#TODO update on new menu
-            
-            # mapper.setMapping(line_widget, recipeIndex)
+            line_widget = LineRecipe(recipe_object, recipeIndex)
             line_widget.on_menu_request.connect(self.on_update_line_widget)
-            
-            # line_widget.on_menu_request.connect(lambda: line_widget.on_update(self.current_menu))
-            # self.line_widgets.append(line_widget)
+            line_widget.on_validate.connect(self.on_update_full_menu)
             self.lW_recipe.setItemWidget(recipeListItem, line_widget)
             
-            
             QCoreApplication.processEvents()
-        
-        # mapper.mappedString.connect(self.on_update_line_widget)
-    
-    # line_widget.on_update(self.current_menu)
     
     def on_update_line_widget(self, recipeIndex):
-        # print('call map')
         recipeListItem = self.lW_recipe.item(recipeIndex)
-        self.lW_recipe.itemWidget(recipeListItem).on_update(self.current_menu)
+        self.lW_recipe.itemWidget(recipeListItem).on_update_rcm(self.current_menu)
     
     def on_new_menu(self):
         # start = time.process_time()
@@ -649,6 +628,8 @@ class MainGUI(QWidget):
             options = ['leftovers']
         self.current_menu.generate_smart_menu_v2(self.recipe_db, options = options)
         self.current_menu.use_double()
+
+        # print(self.current_menu)
 
     def populate_tW_menu(self, menu):
         # movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
@@ -808,6 +789,13 @@ class MainGUI(QWidget):
         self.populate_menu_list()
         self.compute_score()
         # print(self.current_menu.table)
+    
+    def on_update_full_menu(self, table):
+        self.current_menu.table = table
+        self.populate_tW_menu(self.current_menu)
+        self.populate_shopping_list()
+        self.populate_menu_list()
+        self.compute_score()
     
     def on_drag_drop_event(self, row, column):
         
@@ -1294,7 +1282,9 @@ class MainGUI(QWidget):
     
     def reset_recipes_list(self): #reset list of recipes
         self.lW_recipe.clear()     #reset list
-        self.lW_recipe.addItems(recipe_db.get_recipe_names(self.recipe_db.recipe_list))         #repopulate recipe list
+        recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
+        self.lW_recipe.addItems(recipe_list)         #repopulate recipe list
+        self.populate_lW_recipe()
 
     def reset_filters(self): #reset search/filter section(frame)
         self.cB_search.setText('Recherche avancée')   
@@ -1517,82 +1507,6 @@ class MainGUI(QWidget):
         self.history_popup.selectWidgetMode(new_history)
         self.history_popup.show()
         
-    def on_recipe_right_click(self, pos): #TODO to be removed with new mechanism (cf line_recipe)
-        # print('right clicked')
-        # print(pos)
-        globalPos = self.lW_recipe.mapToGlobal(pos)
-        # print(globalPos)
-        #create right-click menu
-        right_click_menu = QMenu(self)
-        right_click_menu.setToolTipsVisible(True)
-        right_click_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
-                                       (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
-        
-        #modify
-        actionModify = QAction(right_click_menu)
-        actionModify.setText('Modifier')
-        actionModify.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
-        actionModify.triggered.connect(self.pB_modif_2.click)
-        #print
-        actionPrint = QAction(right_click_menu)
-        actionPrint.setText('Imprimer')
-        actionPrint.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
-        actionPrint.triggered.connect(self.pB_print_2.click)
-        #send
-        actionSend = QAction(right_click_menu)
-        actionSend.setText('Envoyer')
-        actionSend.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
-        actionSend.triggered.connect(self.pB_send_2.click)
-        #add to menu -> days -> lunch/dinner -> add/replace
-        add_to_menu = QMenu('Prévoir cette recette...', right_click_menu)
-        add_to_menu.setToolTipsVisible(True)
-        
-        mapper = QSignalMapper(self) #instead of lambda to connect action signals properly
-         
-        for i in range(self.tW_menu.columnCount()):
-            menuDay = QMenu(self.tW_menu.horizontalHeaderItem(i).text(), add_to_menu)
-            menuDay.setToolTipsVisible(True)
-            
-            actionLunch = QAction(menuDay)
-            actionLunch.setText('Midi')
-            actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color_2.png'))
-            lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[sr.row_column_to_id(0, i)].recipe_list))
-            actionLunch.setToolTip(lunchToolTip)
-            
-            mapper.setMapping(actionLunch, sr.row_column_to_id(0, i))
-            actionLunch.triggered.connect(mapper.map)
-            
-            actionDinner = QAction(menuDay)
-            actionDinner.setText('Soir')
-            actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color_2.png'))
-            dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[sr.row_column_to_id(1, i)].recipe_list))
-            actionDinner.setToolTip(dinnerToolTip)
-            
-            mapper.setMapping(actionDinner, sr.row_column_to_id(1, i))
-            actionDinner.triggered.connect(mapper.map)
-            
-            menuDay.addAction(actionLunch)
-            menuDay.addAction(actionDinner)
-            add_to_menu.addMenu(menuDay)
-        
-        # right_click_menu.addMenu(add_to_menu)
-        # right_click_menu.addSeparator()
-        # right_click_menu.addAction(actionModify)
-        # right_click_menu.addAction(actionPrint)
-        # right_click_menu.addAction(actionSend)
-        mapper.mappedString.connect(self.on_add_recipe_right_click)
-        
-        
-        qwa = QWidgetAction(right_click_menu)
-        recipe_name = self.lW_recipe.currentItem().text()
-        rcm = RightClickMenu(self.current_menu, recipe_name)
-        # rcm.on_reduce.connect(right_click_menu.resize)
-        qwa.setDefaultWidget(rcm)
-        right_click_menu.addAction(qwa)
-        right_click_menu.setFixedSize(rcm.dimensions)
-        right_click_menu.exec_(globalPos)
-        
-        
     def on_add_recipe_right_click(self, id):
         recipe_name = self.lW_recipe.currentItem().text()
         recipe = self.recipe_db.get_recipe_object(recipe_name)
@@ -1664,31 +1578,25 @@ def extract_number(string):#Extract number from ingredient quantity string
 def start(recipe_db):
     app = QApplication(sys.argv)
 
-
-    
     #current working directory
     # dirname = os.path.dirname(__file__)
     dirname = os.path.dirname(os.path.abspath(__file__))
     #declare and read GUI file
     myUiFile = dirname + '/UI/Main_Window.ui'
 
-    # splash_pic = QPixmap(dirname + '/UI/images/donut_.png')
     splash_pic = QPixmap(dirname + '/UI/images/splash_cooking.gif')
-    
-    
     splash = QSplashScreen(splash_pic)
     
     movie = QMovie()
-    # movie.setFileName(dirname + '/UI/images/icon_factory/donut.gif')
     movie.setFileName(dirname + '/UI/images/splash_cooking.gif')
     movie.frameChanged.connect(lambda: splash.setPixmap(movie.currentPixmap()))
     movie.start()
-
-    # splash.setPixmap(movie.currentPixmap())
-    
     splash.show()
     app.processEvents()
-    # print(myUiFile)
+    splash.showMessage('Veuillez patienter pendant la préparation de votre table...', 
+                        Qt.AlignHCenter | Qt.AlignBottom, 
+                        QColor(COLORS['#color1_dark#']))
+    
     w = QUiLoader().load(myUiFile)
     #Create and display GUI object
     myGUI = MainGUI(parent = w, recipe_db = recipe_db)
