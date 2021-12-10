@@ -1,3 +1,4 @@
+from re import T
 import PySide2
 from PySide2.QtWidgets import*
 from PySide2.QtCore import*
@@ -8,8 +9,8 @@ from PySide2.QtGui import QFont, QPixmap, QIcon
 import os
 import custom_widgets as cw
 
-UI_FILE = os.path.dirname(__file__) + '/UI/user_settings.ui'
-USER_ID_FILE = os.path.dirname(__file__) + '/user.id'
+UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/user_settings.ui'
+USER_ID_FILE = os.path.dirname(os.path.abspath(__file__)) + '/user.id'
 CONTACT = 'notification.a.table@gmail.com'
 
 class UserSettings(QWidget):
@@ -54,8 +55,10 @@ class UserSettings(QWidget):
         self.pB_reset = self.pW.pB_reset
         self.lE_email: QLineEdit
         self.lE_email = self.pW.lE_email
-        self.sB_settings_days: QSpinBox
-        self.sB_settings_days = self.pW.sB_settings_days
+        # self.sB_settings_days: QSpinBox
+        # self.sB_settings_days = self.pW.sB_settings_days
+        self.slider: QSlider
+        self.slider = self.pW.slider
         self.lE_storage: QLineEdit
         self.lE_storage = self.pW.lE_storage
         self.tB_storage: QToolBox
@@ -78,7 +81,24 @@ class UserSettings(QWidget):
         self.default_nb_days = 7
         self.default_storage = self.dirname + '/Mes_Fiches/'
         self.homepage = QUrl("https://www.google.com/")
-        self.user_id_file = self.dirname + '/user.id'
+        # self.user_id_file = self.dirname + '/user.id'
+        
+        new_slider = cw.SliderWithValue(Qt.Horizontal, suffix = False)
+        new_slider.setStyleSheet(self.slider.styleSheet())
+        new_slider.setMinimum(1)
+        new_slider.setMaximum(14)
+        new_slider.setSingleStep(1)
+        new_slider.setPageStep(1)
+        new_slider.setValue(self.default_nb_days)
+        new_slider.setTracking(True)
+        new_slider.setTickPosition(QSlider.NoTicks)
+        new_slider.setTickInterval(1)
+        new_slider.setMinimumHeight(26)
+        
+        self.pW.gridLayout_42.replaceWidget(self.slider, new_slider)
+        self.slider = new_slider
+        self.pW.slider.setParent(None)
+        
         self.init_user_settings()
         
         self.label_contact.setOpenExternalLinks(True)
@@ -107,7 +127,7 @@ class UserSettings(QWidget):
     
     def update_modif(self):
         self.lE_email.textChanged.connect(self.highlight_diff)
-        self.sB_settings_days.valueChanged.connect(self.highlight_diff)
+        self.slider.valueChanged.connect(self.highlight_diff)
         self.lE_storage.textChanged.connect(self.highlight_diff)
         self.lE_homepage.textChanged.connect(self.highlight_diff)
     
@@ -127,7 +147,7 @@ class UserSettings(QWidget):
                     self.homepage = QUrl(homepage)
         
         self.lE_email.setText(self.default_email)
-        self.sB_settings_days.setValue(self.default_nb_days)
+        self.slider.setValue(self.default_nb_days)
         self.lE_storage.setText(self.default_storage)
         self.lE_homepage.setText(self.homepage.toString())
     
@@ -147,12 +167,12 @@ class UserSettings(QWidget):
                     self.homepage = QUrl(homepage)
         
         email_diff = (self.lE_email.text() != self.default_email)
-        days_diff = (self.sB_settings_days.value() != self.default_nb_days)
+        days_diff = (self.slider.value() != self.default_nb_days)
         storage_diff = (self.lE_storage.text() != self.default_storage)
         homepage_diff = (self.lE_homepage.text() != self.homepage.toString())
 
         cw.changeFont(self.lE_email, change = email_diff)
-        cw.changeFont(self.sB_settings_days, change = days_diff)
+        cw.changeFont(self.slider, change = days_diff)
         cw.changeFont(self.lE_storage, change = storage_diff)
         cw.changeFont(self.lE_homepage, change = homepage_diff)
         
@@ -164,7 +184,7 @@ class UserSettings(QWidget):
     def on_save_settings(self):
         if self.pB_reset.isEnabled():#modification detected
             self.default_email = self.lE_email.text()
-            self.default_nb_days = self.sB_settings_days.value()
+            self.default_nb_days = self.slider.value()
             storage = self.lE_storage.text()
             if os.path.isdir(storage):
                 self.default_storage = storage

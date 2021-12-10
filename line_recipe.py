@@ -9,7 +9,7 @@ from menu import Menu
 from stylesheet_update import COLORS
 import os, sys
 
-UI_FILE = os.path.dirname(__file__) + '/UI/line_recipe.ui'
+UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/line_recipe.ui'
 
 class LineRecipe(QWidget):
     

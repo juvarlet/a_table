@@ -16,7 +16,7 @@ import pyautogui
 from stylesheet_update import COLORS
 from web_browser import WebBrowser
 
-UI_FILE = os.path.dirname(__file__) + '/UI/edit_recipe.ui'
+UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/edit_recipe.ui'
 
 class EditRecipe(QWidget):
     

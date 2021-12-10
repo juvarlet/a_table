@@ -38,6 +38,12 @@ class RecipeDB:
             print('! Recipe %s not in Database !' % recipe_name)
             return None
     
+    def get_recipe_object_list(self, recipe_name_list):
+        return [
+            self.get_recipe_object(recipe_name)
+            for recipe_name in recipe_name_list
+        ]
+    
     def remove_recipe(self, recipe_name):
         if self.contains(recipe_name):
             self.recipe_list.remove(self.get_recipe_object(recipe_name))

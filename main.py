@@ -637,7 +637,6 @@ class MainGUI(QWidget):
         #reset tW_Menu
         self.tW_menu.setColumnCount(0)
         #update tW_menu with days
-        # self.tW_menu.setColumnCount(self.sB_days.value())
         self.tW_menu.setColumnCount(self.time_edition.slider.value())
         
         table_menu = menu.full_menu()
@@ -653,14 +652,7 @@ class MainGUI(QWidget):
         length = len(recipe_list_lunch)
         for i, recipes_of_day in enumerate(recipe_list):
             recipe_lunch, recipe_dinner = recipes_of_day
-            # qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
-            # qtwi_lunch = QTableWidgetItem(sr.row_column_to_id(0,i))
-            # qtwi_dinner = QTableWidgetItem(sr.row_column_to_id(1,i))
-
-            # self.tW_menu.setItem(0, i, qtwi_lunch)
-            # self.tW_menu.setItem(1, i, qtwi_dinner)
-
-        #ability to add several recipes to a given slot
+            
             idplus = '0' + str(i+1)
             idplus = idplus[-2:]
             idminus = '-' + idplus
@@ -675,55 +667,15 @@ class MainGUI(QWidget):
             elif type(recipe_dinner) == list:
                 recipe_dinner_stack = recipe_dinner
             
-            # stacked_lunch = StackedRecipes(recipe_lunch_stack, self.recipe_db, id = idplus)
-            # stacked_dinner = StackedRecipes(recipe_dinner_stack, self.recipe_db, id = idminus)
-            
-            # stacked_lunch.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
-            # stacked_lunch.on_lock_for_edition.connect(self.on_lock_for_edition)
-            # stacked_lunch.on_update_current_menu.connect(self.on_update_current_menu)
-            # stacked_dinner.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
-            # stacked_dinner.on_lock_for_edition.connect(self.on_lock_for_edition)
-            # stacked_dinner.on_update_current_menu.connect(self.on_update_current_menu)
-            
-            # self.stacks[idplus] = stacked_lunch
-            # self.stacks[idminus] = stacked_dinner
-            
-            # qtwi_lunch = stacked_lunch
-            # qtwi_dinner = stacked_dinner
-            
-            # self.tW_menu.setCellWidget(0, i, qtwi_lunch)
-            # self.tW_menu.setCellWidget(1, i, qtwi_dinner)
-            
-            # QCoreApplication.processEvents()
-            
             #separate lunch and dinner processes:
             #--lunch
             self.on_new_stack(recipe_lunch_stack, idplus, i, length)
             #--dinner
             self.on_new_stack(recipe_dinner_stack, idminus, i, length)
         
-        # for id, stack in self.stacks.items():
-        #     stack.update_recipes()
-        # self.progress_update(5, 5)    
-    #     recipe_card_worker = RecipeCard(list(self.stacks.values()))
-    #     recipe_card_worker.on_init.connect(self.recipe_card_init)
-    #     recipe_card_worker.on_connect.connect(self.recipe_card_connect)
-    #     recipe_card_worker.on_stop.connect(self.stop_movie)
-    #     self.myThreads.append(recipe_card_worker)
-    #     recipe_card_worker.start()
- 
-    # def recipe_card_init(self, stacked_recipe):
-    #     stacked_recipe.initial_state()
-    # def recipe_card_connect(self, stacked_recipe):
-    #     stacked_recipe.connect_actions()
-    # def stop_movie(self):
-    #     self.movie.stop()
-    #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
-        # movie.stop()
         QCoreApplication.processEvents()
         # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
-    
-    
+
     def on_new_stack(self, recipe_stack, id, k, length):
         qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
         stack = StackedRecipes(recipe_stack, self.recipe_db, id)
@@ -740,15 +692,7 @@ class MainGUI(QWidget):
             self.tW_menu.setCellWidget(1, k, stack)
             x = (k * 2 + 1) % (length+1)
         
-        # self.progress_update(x, length)
-        
         QCoreApplication.processEvents()
-        
-            
-    # def progress_update(self, k, length):
-    #     progress = round(k/length * 5) 
-    #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_%i.png' % progress))
-        
         
     def on_enter_recipe_stack(self, id):
         if not self.lockedForEdition:#ongoing edition of recipe, locking others
@@ -791,7 +735,10 @@ class MainGUI(QWidget):
         # print(self.current_menu.table)
     
     def on_update_full_menu(self, table):
-        self.current_menu.table = table
+        self.current_menu.table = [
+            self.recipe_db.get_recipe_object_list(stack)
+            for stack in table
+        ]
         self.populate_tW_menu(self.current_menu)
         self.populate_shopping_list()
         self.populate_menu_list()

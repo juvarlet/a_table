@@ -9,7 +9,7 @@ from add_replace import AddReplace
 import custom_widgets as cw
 from recipe import Recipe
 
-UI_FILE = os.path.dirname(__file__) + '/UI/right_click_menu.ui'
+UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/right_click_menu.ui'
 
 class RightClickMenu(QWidget):
     
@@ -127,14 +127,14 @@ class RightClickMenu(QWidget):
                 new_table.append(recipes)
         self.table = new_table
 
-        for i, stack in enumerate(self.table):
-            if type(stack) is Recipe:
-                stack = [stack]
-            recipes_str = ' | '.join([str(r) for r in stack])
-            print('%i-%s' % (i, recipes_str))
+        # for i, stack in enumerate(self.table):
+        #     if type(stack) is Recipe:
+        #         stack = [stack]
+        #     recipes_str = ' | '.join([str(r) for r in stack])
+            # print('%i-%s' % (i, recipes_str))
         # self.update_qtable()
         self.on_update.emit()
-
+        self.on_close.emit()
 
     def update_qtable(self):
         for i, stack in enumerate(self.table):

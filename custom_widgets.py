@@ -46,35 +46,48 @@ class MyStyle(QProxyStyle):#to be able to set value of slider immediately at mou
 
 class SliderWithValue(QSlider):
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, suffix=True):
         super(SliderWithValue, self).__init__(parent)
         self.setStyle(MyStyle())
         # self.setStyleSheet(self.stylesheet)
+        self.suffix = suffix
+        self.qpen = QPen(QColor(COLORS['#color1_bright#']))
 
     def paintEvent(self, event):
         QSlider.paintEvent(self, event)
 
         painter = QPainter(self)
-        qpen = QPen(QColor(COLORS['#color1_bright#']))
-        painter.setPen(qpen)
+        # qpen = QPen(QColor(COLORS['#color1_bright#']))
+        painter.setPen(self.qpen)
 
         font_metrics = QFontMetrics(self.font())
         font_width = font_metrics.boundingRect(str(self.value())).width()
         
         rect = self.geometry()
         min_pos =  rect.width() - font_width - self.width() + 25
-        max_pos = rect.width() - font_width - 47
-        slider_pos = min_pos + (max_pos - min_pos) / (self.maximum()-1) * (self.value()-1)
+        max_pos = rect.width() - font_width - 19
         
+        text = str(self.value())
+        
+        if self.suffix:
+            text += ' jour' + 's'*(self.value()>1)
+            max_pos = rect.width() - font_width - 47
+        
+        slider_pos = min_pos + (max_pos - min_pos) / (self.maximum()-1) * (self.value()-1)
+            
         horizontal_x_pos = slider_pos
         horizontal_y_pos = rect.height() * 0.75
-
-        text = '%s jour' % str(self.value()) + 's'*(self.value()>1)
+        
         painter.drawText(QPoint(horizontal_x_pos, horizontal_y_pos), text)
 
         painter.drawRect(rect)
 
-
+    def changeFont(self, change=True):
+        if change:
+            print(COLORS['#color3_bright#'])
+            self.qpen = QPen(QColor(COLORS['#color3_bright#']))
+        else:
+            self.qpen = QPen(QColor(COLORS['#color1_bright#']))
 
 def getFormAncestor(widget):
     ancestor = widget
@@ -177,12 +190,15 @@ def style_factory(widget : QWidget, init_colors, colors):
     # return colors
 
 def changeFont(lineEdit, change=True):
-    stylesheet_init = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color1_dark#']
-    stylesheet_change = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color3_bright#']
-    if change:
-        lineEdit.setStyleSheet(stylesheet_change)
+    if type(lineEdit) is SliderWithValue:
+        lineEdit.changeFont(change)
     else:
-        lineEdit.setStyleSheet(stylesheet_init)
+        stylesheet_init = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color1_dark#']
+        stylesheet_change = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color3_bright#']
+        if change:
+            lineEdit.setStyleSheet(stylesheet_change)
+        else:
+            lineEdit.setStyleSheet(stylesheet_init)
         
 def animate_button(pB, custom = False, options = {}):
     animation = QPropertyAnimation(pB, b"iconSize")

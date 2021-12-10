@@ -12,7 +12,7 @@ import recipe_db
 from stylesheet_update import COLORS
 import time
 
-UI_FILE = os.path.dirname(__file__) + '/UI/stacked_recipes_.ui'
+UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/stacked_recipes_.ui'
 
 class StackedRecipes(QWidget):
     
