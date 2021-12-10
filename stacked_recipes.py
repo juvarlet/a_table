@@ -12,7 +12,7 @@ import recipe_db
 from stylesheet_update import COLORS
 import time
 
-UI_FILE = os.path.dirname(__file__) + '/UI/stacked_recipes_.ui'
+UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/stacked_recipes_.ui'
 
 class StackedRecipes(QWidget):
     
@@ -54,7 +54,8 @@ class StackedRecipes(QWidget):
         self.pW = widget
         
     def saveComponents(self):
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         
         self.stackedWidget: QStackedWidget
         self.stackedWidget = self.pW.stackedWidget
@@ -206,26 +207,18 @@ class StackedRecipes(QWidget):
         self.pB_add_menu = QMenu(self)
         self.pB_add_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
                                        (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
-        
-        self.actionRandomRecipe = QAction(self)
-        self.actionRandomRecipe.setText('Plat au hasard')
-        self.actionRandomRecipe.setIcon(QIcon(self.dirname + '/UI/images/icon_random_recipe.png'))
-        self.actionChoiceRecipe = QAction(self)
-        self.actionChoiceRecipe.setText('Plat au choix')
-        self.actionChoiceRecipe.setIcon(QIcon(self.dirname + '/UI/images/icon_choice_recipe.png'))
-        
-        self.actionRandomDessert = QAction(self)
-        self.actionRandomDessert.setText('Dessert au hasard')
-        self.actionRandomDessert.setIcon(QIcon(self.dirname + '/UI/images/icon_random_dessert.png'))
-        self.actionChoiceDessert = QAction(self)
-        self.actionChoiceDessert.setText('Dessert au choix')
-        self.actionChoiceDessert.setIcon(QIcon(self.dirname + '/UI/images/icon_choice_dessert.png'))
-        
-        self.pB_add_menu.addAction(self.actionRandomRecipe)
-        self.pB_add_menu.addAction(self.actionChoiceRecipe)
-        self.pB_add_menu.addAction(self.actionRandomDessert)
-        self.pB_add_menu.addAction(self.actionChoiceDessert)
-        
+        # self.pB_add_menu.setStyleSheet('QMenu{background-color:transparent;}')
+
+        self.actionWidget = QWidgetAction(self.pB_add_menu)
+        ui_actions = os.path.dirname(__file__) + '/UI/add_menu.ui'
+        self.widget_menu = QUiLoader().load(ui_actions)
+        self.widget_menu.pB_choice_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_choice_recipe.png'))
+        self.widget_menu.pB_choice_dessert.setIcon(QIcon(self.dirname + '/UI/images/icon_choice_dessert.png'))
+        self.widget_menu.pB_random_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_random_recipe.png'))
+        self.widget_menu.pB_random_dessert.setIcon(QIcon(self.dirname + '/UI/images/icon_random_dessert.png'))
+        self.actionWidget.setDefaultWidget(self.widget_menu)
+        self.pB_add_menu.addAction(self.actionWidget)
+                
         self.pB_add.setMenu(self.pB_add_menu)
         self.pB_add_2.setMenu(self.pB_add_menu)
     
@@ -244,11 +237,16 @@ class StackedRecipes(QWidget):
         self.pB_cancel.clicked.connect(self.on_cancel)
         
     def connect_action_menu(self):
-        self.actionRandomRecipe.triggered.connect(self.on_add_random_recipe)
-        self.actionChoiceRecipe.triggered.connect(self.on_add_choice_recipe)
-        self.actionRandomDessert.triggered.connect(self.on_add_random_dessert)
-        self.actionChoiceDessert.triggered.connect(self.on_add_choice_dessert)
-    
+        self.widget_menu.pB_random_recipe.clicked.connect(self.on_add_random_recipe)
+        self.widget_menu.pB_choice_recipe.clicked.connect(self.on_add_choice_recipe)
+        self.widget_menu.pB_random_dessert.clicked.connect(self.on_add_random_dessert)
+        self.widget_menu.pB_choice_dessert.clicked.connect(self.on_add_choice_dessert)
+        
+        self.widget_menu.pB_random_recipe.clicked.connect(self.pB_add_menu.close)
+        self.widget_menu.pB_choice_recipe.clicked.connect(self.pB_add_menu.close)
+        self.widget_menu.pB_random_dessert.clicked.connect(self.pB_add_menu.close)
+        self.widget_menu.pB_choice_dessert.clicked.connect(self.pB_add_menu.close)
+        
     def finish_init(self):
         if not self.initIsComplete:
             self.init3()
@@ -265,6 +263,8 @@ class StackedRecipes(QWidget):
     
     def update_recipes(self, index = -1):
         recipe = self.recipe_list[index]
+        if type(recipe) is str:
+            recipe = self.recipe_db.get_recipe_object(recipe)
 
         image_path = self.dirname + recipe.image + '_icon.jpg'
         qpix = QPixmap(image_path)
@@ -281,7 +281,11 @@ class StackedRecipes(QWidget):
     def update_list(self):
         self.list_stack.clear()
         # self.list_stack_2.clear()
-        self.list_stack.addItems([recipe.name for recipe in self.recipe_list])
+        self.list_stack.addItems([
+            recipe.name 
+            if type(recipe) is not str 
+            else self.recipe_db.get_recipe_object(recipe) 
+            for recipe in self.recipe_list])
         # self.list_stack_2.addItems([recipe.name for recipe in self.recipe_list])
         
     def on_add_random_recipe(self, recipe = None, dinner = 0):
@@ -372,6 +376,7 @@ class StackedRecipes(QWidget):
             # recipe_name = self.list_stack.currentItem().text()
             recipe_name = self.list_stack.selectedItems()[0].text()
         self.stackedWidget.setCurrentIndex(2)
+        self.lE_search.setFocus(Qt.OtherFocusReason)
         
         self.list_stack_2.clear()
         full_recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)

@@ -2,6 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 import random
 import recipe_db
+from recipe import Recipe
 import os
 
 class Menu:
@@ -13,6 +14,17 @@ class Menu:
         self.options = options
         self.desserts = desserts
         self.shopping_list = shopping_list
+
+    def __str__(self):
+        description = 'du %s' % self.start_day.strftime('%d_%m_%Y')
+        description += ' au %s\n' % (self.start_day + timedelta(self.number_of_days)).strftime('%d_%m_%Y')
+        for i, stack in enumerate(self.table):
+            if type(stack) is Recipe:
+                stack = [stack]
+            recipes = ' | '.join([str(r) for r in stack])
+            description += '%i-%s\n' % (i, recipes)
+
+        return description
 
     def generate_random_menu(self, my_recipe_db):#basic random function
         length = self.number_of_days * 2
@@ -74,76 +86,14 @@ class Menu:
     
     def generate_smart_menu_v2(self, my_recipe_db, options = []):
         self.table = generate_smart_menu_v2(my_recipe_db, self.start_day, self.number_of_days, options)
-        
-        # initial_pool = []
-        # #remove 'dessert', 'leftovers', 'tips' from list
-        # initial_pool = recipe_db.get_recipe_sublist(my_recipe_db.recipe_list, tagsOut = ['dessert', 'restes', 'tips'])
-        # #seasons
-        # y = self.start_day.year
-        # if datetime(y, 6, 1).date() <= self.start_day <= datetime(y, 10, 1).date():
-        #     #summer -> remove winter tags
-        #     initial_pool = recipe_db.get_recipe_sublist(initial_pool, tagsOut = ['hiver'])
-        # elif datetime(y, 12, 1).date() <= self.start_day or self.start_day <= datetime(y, 4, 1).date():
-        #     #winter -> remove summer tags
-        #     initial_pool = recipe_db.get_recipe_sublist(initial_pool, tagsOut = ['ete'])
-        # else:
-        #     #out of winter and summer
-        #     initial_pool = recipe_db.get_recipe_sublist(initial_pool, tagsOut = ['ete', 'hiver'])
-        
-        # initial_lunch_pool = recipe_db.get_recipe_sublist(initial_pool, tagsOut = ['soir'])
-        # initial_dinner_pool = recipe_db.get_recipe_sublist(initial_pool, tagsOut = ['midi'])
-
-        # super_lunch_pool = []
-        # for lunch in initial_lunch_pool:
-        #     super_lunch_pool += my_recipe_db.background_score(lunch, self.start_day) * [lunch]
-        
-        # lunch_list = self.number_of_days * [None]
-
-        # super_dinner_pool = []
-        # for dinner in initial_dinner_pool:
-        #     super_dinner_pool += my_recipe_db.background_score(dinner, self.start_day) * [dinner]
-        
-        # dinner_list = self.number_of_days * [None]
-
-        # for i, (lunch_slot, dinner_slot) in enumerate(zip(lunch_list, dinner_list)):
-        #     # print(len(super_lunch_pool))
-        #     if lunch_slot is None:
-        #         #take random menu from pool
-        #         lunch_list[i] = random.choice(super_lunch_pool)                
-        #         #use double
-        #         if lunch_list[i].isTagged('double') and (i+2) < len(lunch_list)-1:
-        #             lunch_list[i+2] = lunch_list[i]
-
-        #         #update pools
-        #         super_lunch_pool = list(filter(lambda l: l != lunch_list[i], super_lunch_pool))
-        #         super_dinner_pool = list(filter(lambda l: l != lunch_list[i], super_dinner_pool))
-            
-        #     if dinner_slot is None:
-        #         #take random menu from pool
-        #         dinner_list[i] = random.choice(super_dinner_pool)                
-        #         #use double
-        #         if dinner_list[i].isTagged('double') and (i+2) < len(dinner_list)-1:
-        #             dinner_list[i+2] = dinner_list[i]
-
-        #         #update pools
-        #         super_lunch_pool = list(filter(lambda l: l != dinner_list[i], super_lunch_pool))
-        #         super_dinner_pool = list(filter(lambda l: l != dinner_list[i], super_dinner_pool))
-
-
-        # if 'leftovers' in options:
-        #     dinner_list[-1] = my_recipe_db.get_recipe_object('Restes')
-
-        # smart_table = [j for i in zip(lunch_list, dinner_list) for j in i]
-        # #assign this smart table to menu
-        # self.table = smart_table
-    
+  
     def full_menu(self):
         full_menu = []
         if len(self.table) == self.number_of_days * 2: #table has been generated correctly
             for i in range(self.number_of_days):
                 day = (self.start_day + timedelta(i))
                 #short french version of day
-                day_str = toFrench(day.strftime('%A'))[:2] + day.strftime(' %d')
+                day_str = toFrench(day.strftime('%A'))[:2] + day.strftime(' %d/%m')
                 full_menu.append([day_str, self.table[2*i], self.table[2*i+1]])
         
         return full_menu
@@ -220,16 +170,18 @@ class Menu:
         return shopping_list
     
     def update(self, my_recipe_db, number_of_days = 0, table = [], options = [], desserts = []):
-        if number_of_days != 0:
-            adding = (number_of_days - self.number_of_days) == 1
-            self.number_of_days = number_of_days
-            if adding:
-                additional_menu = generate_smart_menu_v2(my_recipe_db, self.start_day + timedelta(number_of_days), 1)
-                self.table += additional_menu
-            else:
-                self.table = self.table[:-2]
-
-
+        diff = number_of_days - self.number_of_days
+        adding = diff > 0
+        # print(len(self.table))
+        if adding:
+            additional_menu = generate_smart_menu_v2(my_recipe_db, self.start_day + timedelta(self.number_of_days + 1), diff)
+            self.table += additional_menu
+        else:
+            self.table = self.table[:-(abs(diff)*2)]
+        # print('from %s to %s' % (self.number_of_days, number_of_days))
+        # print(len(self.table))
+        # print([recipe.name for recipe in self.table])
+        self.number_of_days = number_of_days
                     
     
     # def toHtml(self, html_source_file):

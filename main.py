@@ -1,3 +1,4 @@
+import datetime
 from re import split
 from uid_widget import UIDWidget
 from ingredient import Ingredient
@@ -7,6 +8,9 @@ from stacked_recipes import StackedRecipes, RecipeCard
 from user_settings import UserSettings
 from history import History
 from edit_recipe import EditRecipe
+from time_edition import TimeEdition
+from right_click_menu import RightClickMenu
+from line_recipe import LineRecipe
 from stylesheet_update import COLORS
 import os
 from os.path import basename
@@ -26,7 +30,7 @@ import stacked_recipes as sr
 from datetime import date, timedelta
 from pyperclip import copy
 from shutil import copy2
-import pyautogui
+# import pyautogui
 import uuid
 
 import PySide2
@@ -88,9 +92,8 @@ class MainGUI(QWidget):
         self.tW_menu.setFont(QFont('Aller', 13, QtGui.QFont.Light))
         self.tW_menu.verticalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
         self.tW_menu.horizontalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
-        self.dateEdit.setFont(QFont('Aller', 11, QtGui.QFont.Bold))
         self.cB_restes.setFont(QFont('Aller', 14, QtGui.QFont.Bold))
-    
+
     def save_components(self):
         self.pW = self.parentWidget()
         #-- ui widgets --
@@ -105,24 +108,30 @@ class MainGUI(QWidget):
         self.tab_menus = self.pW.tab_menus
         self.tB: QToolBox
         self.tB = self.pW.toolBox
-        self.label_date: QLabel
-        self.label_date = self.pW.label_date
+        self.frame_top_actions: QFrame
+        self.frame_top_actions = self.pW.frame_top_actions
+        self.vL_time: QVBoxLayout
+        self.vL_time = self.pW.vL_time
         self.cB_restes: QCheckBox
         self.cB_restes = self.pW.cB_restes_2
-        self.dateEdit: QDateEdit
-        self.dateEdit = self.pW.dateEdit_2
-        self.sB_days: QSpinBox
-        self.sB_days = self.pW.sB_days
         self.p_carte: QWidget
         self.p_carte = self.pW.page_carte
-        self.pB_save: QPushButton
-        self.pB_save = self.pW.pB_save
+        # self.pB_save: QPushButton
+        # self.pB_save = self.pW.pB_save
+        self.cB_calendar: QCheckBox
+        self.cB_calendar = self.pW.cB_calendar
+        self.cB_history: QCheckBox
+        self.cB_history = self.pW.cB_history
         self.pB_calendar: QPushButton
         self.pB_calendar = self.pW.pB_calendar
         self.pB_new_menu: QPushButton
         self.pB_new_menu = self.pW.pB_new_menu_2
         self.tW_menu: QTableWidget
         self.tW_menu = self.pW.tW_menu
+        self.label_lunch: QLabel
+        self.label_lunch = self.pW.label_lunch
+        self.label_dinner: QLabel
+        self.label_dinner = self.pW.label_dinner
         self.score_vegan: QLabel
         self.score_vegan = self.pW.label_s_vegan
         self.score_kids: QLabel
@@ -236,14 +245,15 @@ class MainGUI(QWidget):
         #tab settings
         self.vL_settings: QVBoxLayout
         self.vL_settings = self.pW.vL_settings
-        
+    
     def initial_state(self, my_recipe_db):
         #variables
         self.recipe_db: recipe_db.RecipeDB
         self.recipe_db = my_recipe_db
         self.current_menu = menu.Menu()
         self.dessert_list = []
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         self.just_dropped = False
         self.cell_signal_count = 0
         self.from_cell = ()
@@ -303,7 +313,8 @@ class MainGUI(QWidget):
         #-replace qtablewidget tW_menu by custom class
         new_tW_menu = cw.TableWidgetCustom(self.pW)
         new_tW_menu.setRowCount(3)
-        new_tW_menu.setVerticalHeaderLabels([' Midi ', ' Soir ', ' Desserts '])
+        # new_tW_menu.setVerticalHeaderLabels([' Midi ', ' Soir ', ' Desserts '])
+        new_tW_menu.verticalHeader().hide()
         new_tW_menu.hideRow(2)
         
         new_tW_menu.setMouseTracking(True)
@@ -319,44 +330,39 @@ class MainGUI(QWidget):
         new_tW_menu.setLineWidth(0)
         new_tW_menu.setShowGrid(False)
         new_tW_menu.setStyleSheet(self.pW.styleSheet())
-        self.pW.gridLayout_10.replaceWidget(self.tW_menu, new_tW_menu)
+        self.pW.gridLayout_4.replaceWidget(self.tW_menu, new_tW_menu)
         self.tW_menu = new_tW_menu
         self.pW.tW_menu.setParent(None)
         
-        new_sB_days = cw.SpinBoxCustom(self.pW)
-        new_sB_days.setMinimumHeight(50)
-        new_sB_days.setButtonSymbols(QAbstractSpinBox.PlusMinus)
-        new_sB_days.setSuffix(' jours')
-        new_sB_days.setValue(self.default_nb_days)
-        new_sB_days.setMinimum(1)
-        self.pW.gridLayout_13.replaceWidget(self.sB_days, new_sB_days)
-        # self.pW.horizontalLayout.insertWidget(5,new_sB_days)
-        self.sB_days = new_sB_days
-        self.pW.sB_days.setParent(None)
-
-        self.dateEdit.setDate(QDate().currentDate().addDays(1))
         self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_menu.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_menu.setIconSize(QSize(160, 160))
         self.tW_menu.verticalHeader().setDefaultAlignment(Qt.AlignCenter)
         self.tW_menu.viewport().installEventFilter(self)
         
-        self.pB_save.setEnabled(False)
+        # self.pB_save.setEnabled(False)
         
         self.info_dialog = QMessageBox(self)
 
         # self.tW_shopping.setVisible(False)
-        recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
-        self.lW_recipe.addItems(recipe_list)
+        # recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
+        # self.lW_recipe.addItems(recipe_list)
+        self.reset_recipes_list()
         self.lW_recipe.setContextMenuPolicy(Qt.CustomContextMenu)
+        # self.lW_recipe.setMouseTracking(True)
         self.pB_back.hide()      
 
+        # self.populate_lW_recipe()
+        
         self.frame_settings.hide()
         self.frame_search.hide()
         
         #User settings
         self.init_user_settings()
         self.user_settings_pB()
+        
+        self.time_edition = TimeEdition(self.default_nb_days)
+        self.vL_time.addWidget(self.time_edition)
         
         #init edit_recipe
         self.init_edit_recipe()
@@ -368,7 +374,6 @@ class MainGUI(QWidget):
         #images
         self.window().setWindowIcon(QIcon(self.dirname + '/UI/images/donut.png'))
 
-        cw.load_pic(self.label_date, self.dirname + '/UI/images/icon_date_3colors_t_LD.png')
         # cw.load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
         # cw.load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
         # load_pic(self.label_dessert_2, self.dirname + '/UI/images/tag_dessert_color_LD.png')
@@ -381,7 +386,7 @@ class MainGUI(QWidget):
         # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
         self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
         # self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
-        self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
+        # self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
         self.pB_calendar.setIcon(QIcon(self.dirname + '/UI/images/icon_calendar.png'))
         cw.load_pic(self.tag_vegan, self.dirname + '/UI/images/tag_vegan_black_LD.png')
         cw.load_pic(self.tag_kids, self.dirname + '/UI/images/tag_kids_black_LD.png')
@@ -395,6 +400,8 @@ class MainGUI(QWidget):
         self.pB_print_2.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
         self.pB_send_2.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
 
+        cw.load_pic(self.label_lunch, self.dirname + '/UI/images/tag_lunch_color_LD.png')
+        cw.load_pic(self.label_dinner, self.dirname + '/UI/images/tag_dinner_color_LD.png')
         cw.load_pic(self.score_vegan, self.dirname + '/UI/images/score_vegan_0.png')
         cw.load_pic(self.score_kids, self.dirname + '/UI/images/score_kids_0.png')
         cw.load_pic(self.score_double, self.dirname + '/UI/images/score_double_0.png')
@@ -418,8 +425,9 @@ class MainGUI(QWidget):
     def connect_actions(self):
         self.pB_new_menu.clicked.connect(self.on_new_menu)
         self.tW_menu.cellDoubleClicked.connect(self.on_card_recipe_selection)
-        self.pB_save.clicked.connect(self.on_save_menu)
-        self.pB_calendar.clicked.connect(self.on_calendar)
+        # self.pB_save.clicked.connect(self.on_save_menu)
+        # self.pB_calendar.clicked.connect(self.on_calendar)
+        self.pB_calendar.clicked.connect(self.on_export_menu)
         self.tE_ingredients.anchorClicked.connect(self.on_recipe_link)
         self.pB_back.clicked.connect(self.on_previous_recipe)
         self.pB_copy.clicked.connect(self.on_copy_shopping_list)
@@ -431,12 +439,14 @@ class MainGUI(QWidget):
         self.pB_modif_2.clicked.connect(self.on_edit_recipe)
         self.pB_delete.clicked.connect(self.on_delete_recipe)
         self.pB_user.clicked.connect(self.on_user_settings)
-        self.lW_recipe.customContextMenuRequested.connect(self.on_recipe_right_click)
         
     def update_modif(self):
-        self.dateEdit.dateChanged.connect(self.dummy_function)
         self.tW_menu.cellChanged.connect(self.on_drag_drop_event)
-        self.sB_days.valueChanged.connect(self.on_nb_days_changed)
+        self.time_edition.on_start_date_changed.connect(self.on_date_changed)
+        self.time_edition.on_nb_days_changed.connect(self.on_nb_days_changed)
+        # self.time_edition.on_dates_changed.connect(self.on_nb_days_changed)
+        self.cB_calendar.stateChanged.connect(self.on_export_condition)
+        self.cB_history.stateChanged.connect(self.on_export_condition)
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
@@ -562,10 +572,27 @@ class MainGUI(QWidget):
         # info_dialog.setDetailedText(text)
         self.info_dialog.exec_()
     
+    def populate_lW_recipe(self):
+        for recipeIndex in range(self.lW_recipe.count()):
+            recipeListItem = self.lW_recipe.item(recipeIndex)
+            recipeListItem.setSizeHint(QSize(0,27))
+            recipe_object = self.recipe_db.get_recipe_object(recipeListItem.text())
+            
+            line_widget = LineRecipe(recipe_object, recipeIndex)
+            line_widget.on_menu_request.connect(self.on_update_line_widget)
+            line_widget.on_validate.connect(self.on_update_full_menu)
+            self.lW_recipe.setItemWidget(recipeListItem, line_widget)
+            
+            QCoreApplication.processEvents()
+    
+    def on_update_line_widget(self, recipeIndex):
+        recipeListItem = self.lW_recipe.item(recipeIndex)
+        self.lW_recipe.itemWidget(recipeListItem).on_update_rcm(self.current_menu)
+    
     def on_new_menu(self):
         # start = time.process_time()
         
-        # movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
         
         self.new_menu()
         
@@ -573,23 +600,27 @@ class MainGUI(QWidget):
         # start = time.process_time()
         
         self.populate_tW_menu(self.current_menu)
+        # self.populate_lW_recipe()
         self.populate_shopping_list()
         self.populate_menu_list()
         self.compute_score()
         
-        self.pB_save.setEnabled(True)
+        # self.pB_save.setEnabled(True)
         
-        # movie.stop()
+        movie.stop()
         # QCoreApplication.processEvents()
         # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
     
     def new_menu(self):
-        current_QDate = self.dateEdit.date()
+        # current_QDate = self.dateEdit.date()
+        current_QDate = self.time_edition.date_from.date()
         y = current_QDate.year()
         m = current_QDate.month()
         d = current_QDate.day()
         self.current_menu.start_day = date(y, m, d)
-        self.current_menu.number_of_days = self.sB_days.value()
+        # self.current_menu.number_of_days = self.sB_days.value()
+        self.current_menu.number_of_days = self.time_edition.slider.value()
 
         # self.current_menu.generate_random_menu(self.recipe_db)
         options = []
@@ -598,13 +629,15 @@ class MainGUI(QWidget):
         self.current_menu.generate_smart_menu_v2(self.recipe_db, options = options)
         self.current_menu.use_double()
 
+        # print(self.current_menu)
+
     def populate_tW_menu(self, menu):
-        movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        # movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
         
         #reset tW_Menu
         self.tW_menu.setColumnCount(0)
         #update tW_menu with days
-        self.tW_menu.setColumnCount(self.sB_days.value())
+        self.tW_menu.setColumnCount(self.time_edition.slider.value())
         
         table_menu = menu.full_menu()
         self.tW_menu.setHorizontalHeaderLabels([m[0] for m in table_menu])
@@ -619,14 +652,7 @@ class MainGUI(QWidget):
         length = len(recipe_list_lunch)
         for i, recipes_of_day in enumerate(recipe_list):
             recipe_lunch, recipe_dinner = recipes_of_day
-            # qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
-            # qtwi_lunch = QTableWidgetItem(sr.row_column_to_id(0,i))
-            # qtwi_dinner = QTableWidgetItem(sr.row_column_to_id(1,i))
-
-            # self.tW_menu.setItem(0, i, qtwi_lunch)
-            # self.tW_menu.setItem(1, i, qtwi_dinner)
-
-        #ability to add several recipes to a given slot
+            
             idplus = '0' + str(i+1)
             idplus = idplus[-2:]
             idminus = '-' + idplus
@@ -641,55 +667,15 @@ class MainGUI(QWidget):
             elif type(recipe_dinner) == list:
                 recipe_dinner_stack = recipe_dinner
             
-            # stacked_lunch = StackedRecipes(recipe_lunch_stack, self.recipe_db, id = idplus)
-            # stacked_dinner = StackedRecipes(recipe_dinner_stack, self.recipe_db, id = idminus)
-            
-            # stacked_lunch.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
-            # stacked_lunch.on_lock_for_edition.connect(self.on_lock_for_edition)
-            # stacked_lunch.on_update_current_menu.connect(self.on_update_current_menu)
-            # stacked_dinner.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
-            # stacked_dinner.on_lock_for_edition.connect(self.on_lock_for_edition)
-            # stacked_dinner.on_update_current_menu.connect(self.on_update_current_menu)
-            
-            # self.stacks[idplus] = stacked_lunch
-            # self.stacks[idminus] = stacked_dinner
-            
-            # qtwi_lunch = stacked_lunch
-            # qtwi_dinner = stacked_dinner
-            
-            # self.tW_menu.setCellWidget(0, i, qtwi_lunch)
-            # self.tW_menu.setCellWidget(1, i, qtwi_dinner)
-            
-            # QCoreApplication.processEvents()
-            
             #separate lunch and dinner processes:
             #--lunch
             self.on_new_stack(recipe_lunch_stack, idplus, i, length)
             #--dinner
             self.on_new_stack(recipe_dinner_stack, idminus, i, length)
         
-        # for id, stack in self.stacks.items():
-        #     stack.update_recipes()
-        # self.progress_update(5, 5)    
-    #     recipe_card_worker = RecipeCard(list(self.stacks.values()))
-    #     recipe_card_worker.on_init.connect(self.recipe_card_init)
-    #     recipe_card_worker.on_connect.connect(self.recipe_card_connect)
-    #     recipe_card_worker.on_stop.connect(self.stop_movie)
-    #     self.myThreads.append(recipe_card_worker)
-    #     recipe_card_worker.start()
- 
-    # def recipe_card_init(self, stacked_recipe):
-    #     stacked_recipe.initial_state()
-    # def recipe_card_connect(self, stacked_recipe):
-    #     stacked_recipe.connect_actions()
-    # def stop_movie(self):
-    #     self.movie.stop()
-    #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
-        movie.stop()
         QCoreApplication.processEvents()
-        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
-    
-    
+        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+
     def on_new_stack(self, recipe_stack, id, k, length):
         qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
         stack = StackedRecipes(recipe_stack, self.recipe_db, id)
@@ -706,15 +692,7 @@ class MainGUI(QWidget):
             self.tW_menu.setCellWidget(1, k, stack)
             x = (k * 2 + 1) % (length+1)
         
-        # self.progress_update(x, length)
-        
         QCoreApplication.processEvents()
-        
-            
-    # def progress_update(self, k, length):
-    #     progress = round(k/length * 5) 
-    #     self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_%i.png' % progress))
-        
         
     def on_enter_recipe_stack(self, id):
         if not self.lockedForEdition:#ongoing edition of recipe, locking others
@@ -732,19 +710,17 @@ class MainGUI(QWidget):
             self.lockKeyId = id
             self.lockedForEdition = True
             self.pB_new_menu.setEnabled(False)
-            self.dateEdit.setEnabled(False)
-            self.sB_days.setEnabled(False)
+            self.frame_top_actions.setEnabled(False)
             self.cB_restes.setEnabled(False)
-            self.pB_save.setEnabled(False)
+            # self.pB_save.setEnabled(False)
             self.pB_calendar.setEnabled(False)
         elif (not lock) and id == self.lockKeyId:
             self.lockKeyId = 'xx'
             self.lockedForEdition = False
             self.pB_new_menu.setEnabled(True)
-            self.dateEdit.setEnabled(True)
-            self.sB_days.setEnabled(True)
+            self.frame_top_actions.setEnabled(True)
             self.cB_restes.setEnabled(True)
-            self.pB_save.setEnabled(True)
+            # self.pB_save.setEnabled(True)
             self.pB_calendar.setEnabled(True)
             self.populate_shopping_list()
             self.populate_menu_list()
@@ -757,6 +733,16 @@ class MainGUI(QWidget):
         self.populate_menu_list()
         self.compute_score()
         # print(self.current_menu.table)
+    
+    def on_update_full_menu(self, table):
+        self.current_menu.table = [
+            self.recipe_db.get_recipe_object_list(stack)
+            for stack in table
+        ]
+        self.populate_tW_menu(self.current_menu)
+        self.populate_shopping_list()
+        self.populate_menu_list()
+        self.compute_score()
     
     def on_drag_drop_event(self, row, column):
         
@@ -965,7 +951,7 @@ class MainGUI(QWidget):
             else:
                 self.on_wrong_recipe_name(recipe_name)
                 # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
-    
+        
     def on_recipe_link(self, link):
         self.reset_recipes_list()
         self.previous_recipe_name = self.label_recipe_title.text()
@@ -982,6 +968,12 @@ class MainGUI(QWidget):
         self.lW_recipe.setCurrentItem(lwi)
         lwi.setSelected(True)
     
+    def on_date_changed(self, qdate):
+        self.current_menu.start_day = datetime.date(qdate.year(), qdate.month(), qdate.day())
+        #update headers only
+        table_menu = self.current_menu.full_menu()
+        self.tW_menu.setHorizontalHeaderLabels([m[0] for m in table_menu])
+        
     def on_nb_days_changed(self, number):
         # #add/remove columns to table
         # adding = (number - self.tW_menu.columnCount()) == 1
@@ -989,7 +981,6 @@ class MainGUI(QWidget):
         # self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)        
         # #update existing menu
         self.current_menu.update(self.recipe_db, number)
-        
         # #update tW_menu with menus
         # table_menu = self.current_menu.full_menu()
         # self.tW_menu.setHorizontalHeaderLabels([m[0] for m in table_menu])
@@ -1015,7 +1006,26 @@ class MainGUI(QWidget):
         self.populate_shopping_list()
         self.populate_menu_list()
         self.compute_score()
-        
+    
+    def on_export_menu(self):
+        if self.cB_calendar.isChecked():
+            self.on_calendar()
+        if self.cB_history.isChecked():
+            self.on_save_menu()
+    
+    def on_export_condition(self):
+        self.pB_calendar.setEnabled(True)
+        if self.cB_calendar.isChecked():
+            tooltip = "Copier dans l'Agenda"
+            if self.cB_history.isChecked():
+                tooltip += " + Sauvegarder l'Historique"
+        elif self.cB_history.isChecked():
+            tooltip = "Sauvegarder l'Historique"
+        else:
+            tooltip = "Sélectionner au moins une option !"
+            self.pB_calendar.setEnabled(False)
+        self.pB_calendar.setToolTip(tooltip)
+
     def on_save_menu(self):
         new_history = []
         
@@ -1047,14 +1057,21 @@ class MainGUI(QWidget):
         self.history_popup.history = self.recipe_db.history
 
     def on_calendar(self):
+        self.movie = cw.gif_to_button(self.dirname + '/UI/images/icon_calendar.gif', self.pB_calendar)
+        
         # my_calendar_worker = cal.MyCalendar(self.current_menu)
         my_calendar_worker = gapi.MyCalendar(self.current_menu)
         
-        my_calendar_worker.signal.sig.connect(self.print_thread_function)
-        
+        # my_calendar_worker.signal.sig.connect(self.print_thread_function)
+        my_calendar_worker.on_message.connect(self.print_thread_function)
+        my_calendar_worker.on_finish.connect(self.on_calendar_gif_stop)
         self.myThreads.append(my_calendar_worker)
         my_calendar_worker.start()
     
+    def on_calendar_gif_stop(self):
+        self.movie.stop()
+        self.pB_calendar.setIcon(QIcon(self.dirname + '/UI/images/icon_calendar.png'))
+        
     def on_ingredient_selection(self):
         #reset list menu background
         for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
@@ -1212,14 +1229,16 @@ class MainGUI(QWidget):
     
     def reset_recipes_list(self): #reset list of recipes
         self.lW_recipe.clear()     #reset list
-        self.lW_recipe.addItems(recipe_db.get_recipe_names(self.recipe_db.recipe_list))         #repopulate recipe list
+        recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
+        self.lW_recipe.addItems(recipe_list)         #repopulate recipe list
+        self.populate_lW_recipe()
 
     def reset_filters(self): #reset search/filter section(frame)
         self.cB_search.setText('Recherche avancée')   
         self.lE_with.setText('')
         self.cB_search_recipe_name.setChecked(True)
-        self.cB_search_ingredients.setChecked(False)
-        self.cB_search_preparation.setChecked(False)
+        self.cB_search_ingredients.setChecked(True)
+        self.cB_search_preparation.setChecked(True)
         self.cB_search_tag_lunch.setChecked(False)
         self.cB_search_tag_dinner.setChecked(False)
         self.cB_search_tag_dessert.setChecked(False)
@@ -1435,73 +1454,6 @@ class MainGUI(QWidget):
         self.history_popup.selectWidgetMode(new_history)
         self.history_popup.show()
         
-    def on_recipe_right_click(self, pos):
-        # print('right clicked')
-        # print(pos)
-        globalPos = self.lW_recipe.mapToGlobal(pos)
-        # print(globalPos)
-        #create right-click menu
-        right_click_menu = QMenu(self)
-        right_click_menu.setToolTipsVisible(True)
-        right_click_menu.setStyleSheet('QWidget{color:%s;selection-color:%s;}' % 
-                                       (self.colors['#color1_dark#'], self.colors['#color3_dark#']))
-        
-        #modify
-        actionModify = QAction(right_click_menu)
-        actionModify.setText('Modifier')
-        actionModify.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
-        actionModify.triggered.connect(self.pB_modif_2.click)
-        #print
-        actionPrint = QAction(right_click_menu)
-        actionPrint.setText('Imprimer')
-        actionPrint.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
-        actionPrint.triggered.connect(self.pB_print_2.click)
-        #send
-        actionSend = QAction(right_click_menu)
-        actionSend.setText('Envoyer')
-        actionSend.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
-        actionSend.triggered.connect(self.pB_send_2.click)
-        #add to menu -> days -> lunch/dinner -> add/replace
-        add_to_menu = QMenu('Prévoir cette recette...', right_click_menu)
-        add_to_menu.setToolTipsVisible(True)
-        
-        mapper = QSignalMapper(self) #instead of lambda to connect action signals properly
-         
-        for i in range(self.tW_menu.columnCount()):
-            menuDay = QMenu(self.tW_menu.horizontalHeaderItem(i).text(), add_to_menu)
-            menuDay.setToolTipsVisible(True)
-            
-            actionLunch = QAction(menuDay)
-            actionLunch.setText('Midi')
-            actionLunch.setIcon(QIcon(self.dirname + '/UI/images/tag_lunch_color_2.png'))
-            lunchToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[sr.row_column_to_id(0, i)].recipe_list))
-            actionLunch.setToolTip(lunchToolTip)
-            
-            mapper.setMapping(actionLunch, sr.row_column_to_id(0, i))
-            actionLunch.triggered.connect(mapper.map)
-            
-            actionDinner = QAction(menuDay)
-            actionDinner.setText('Soir')
-            actionDinner.setIcon(QIcon(self.dirname + '/UI/images/tag_dinner_color_2.png'))
-            dinnerToolTip = '\n'.join(recipe_db.get_recipe_names(self.stacks[sr.row_column_to_id(1, i)].recipe_list))
-            actionDinner.setToolTip(dinnerToolTip)
-            
-            mapper.setMapping(actionDinner, sr.row_column_to_id(1, i))
-            actionDinner.triggered.connect(mapper.map)
-            
-            menuDay.addAction(actionLunch)
-            menuDay.addAction(actionDinner)
-            add_to_menu.addMenu(menuDay)
-        
-        right_click_menu.addMenu(add_to_menu)
-        right_click_menu.addSeparator()
-        right_click_menu.addAction(actionModify)
-        right_click_menu.addAction(actionPrint)
-        right_click_menu.addAction(actionSend)
-        mapper.mappedString.connect(self.on_add_recipe_right_click)
-        
-        right_click_menu.exec_(globalPos)
-        
     def on_add_recipe_right_click(self, id):
         recipe_name = self.lW_recipe.currentItem().text()
         recipe = self.recipe_db.get_recipe_object(recipe_name)
@@ -1572,16 +1524,33 @@ def extract_number(string):#Extract number from ingredient quantity string
 
 def start(recipe_db):
     app = QApplication(sys.argv)
-    
+
     #current working directory
-    dirname = os.path.dirname(__file__)
+    # dirname = os.path.dirname(__file__)
+    dirname = os.path.dirname(os.path.abspath(__file__))
     #declare and read GUI file
     myUiFile = dirname + '/UI/Main_Window.ui'
+
+    splash_pic = QPixmap(dirname + '/UI/images/splash_cooking.gif')
+    splash = QSplashScreen(splash_pic)
+    
+    movie = QMovie()
+    movie.setFileName(dirname + '/UI/images/splash_cooking.gif')
+    movie.frameChanged.connect(lambda: splash.setPixmap(movie.currentPixmap()))
+    movie.start()
+    splash.show()
+    app.processEvents()
+    splash.showMessage('Veuillez patienter pendant la préparation de votre table...', 
+                        Qt.AlignHCenter | Qt.AlignBottom, 
+                        QColor(COLORS['#color1_dark#']))
+    
     w = QUiLoader().load(myUiFile)
     #Create and display GUI object
     myGUI = MainGUI(parent = w, recipe_db = recipe_db)
     myGUI.main()
     
+    splash.finish(myGUI.window())
+
     sys.exit(app.exec_())
 
 def debug(input = None):
@@ -1619,7 +1588,8 @@ def debug(input = None):
 
 def main(): #Entry point
 
-    dirname = os.path.dirname(__file__)
+    # dirname = os.path.dirname(__file__)
+    dirname = os.path.dirname(os.path.abspath(__file__))
     # input_recipe = dirname + '/MesRecettes (copy).ods'
     input_recipe = dirname + '/MesRecettes.csv'
     input_history = dirname + '/Historique.csv'

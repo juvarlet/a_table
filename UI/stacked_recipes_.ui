@@ -135,8 +135,8 @@ QListWidget#list_stack{
 	background-color:transparent;
 }
 
-QMenu::item {
-    icon-size:50px 50px;
+QMenu {
+    background-color:transparent;
 }
 
 QStackedWidget {
@@ -1190,6 +1190,22 @@ QLabel#label_title{
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pB_add</tabstop>
+  <tabstop>pB_edit</tabstop>
+  <tabstop>pB_delete</tabstop>
+  <tabstop>pB_list</tabstop>
+  <tabstop>pB_next</tabstop>
+  <tabstop>pB_add_2</tabstop>
+  <tabstop>pB_edit_2</tabstop>
+  <tabstop>pB_delete_2</tabstop>
+  <tabstop>list_stack</tabstop>
+  <tabstop>pB_stack</tabstop>
+  <tabstop>lE_search</tabstop>
+  <tabstop>list_stack_2</tabstop>
+  <tabstop>pB_cancel</tabstop>
+  <tabstop>pB_ok</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

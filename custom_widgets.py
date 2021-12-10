@@ -1,7 +1,7 @@
 import PySide2
 from PySide2.QtWidgets import*
 # QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QMovie, QDoubleValidator, QEnterEvent, QFont, QMouseEvent, QPainterPath, QPalette, QPixmap, QIcon, QColor, QPainter
+from PySide2.QtGui import QBrush, QMovie, QDoubleValidator, QEnterEvent, QFont, QMouseEvent, QPainterPath, QPalette, QPixmap, QIcon, QColor, QPainter, QPen, QFontMetrics
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
@@ -36,6 +36,58 @@ class WebEnginePage(QWebEnginePage):
     def javaScriptConsoleMessage(self, level, msg, line, sourceID):
         pass
 
+class MyStyle(QProxyStyle):#to be able to set value of slider immediately at mouse pos
+    
+    def styleHint(self, hint: PySide2.QtWidgets.QStyle.StyleHint, option=0, widget=0, returnData=0) -> int:
+        if hint == QStyle.SH_Slider_AbsoluteSetButtons:
+            return (Qt.LeftButton | Qt.MidButton | Qt.RightButton)
+        
+        return super().styleHint(hint, option=option, widget=widget, returnData=returnData)
+
+class SliderWithValue(QSlider):
+
+    def __init__(self, parent=None, suffix=True):
+        super(SliderWithValue, self).__init__(parent)
+        self.setStyle(MyStyle())
+        # self.setStyleSheet(self.stylesheet)
+        self.suffix = suffix
+        self.qpen = QPen(QColor(COLORS['#color1_bright#']))
+
+    def paintEvent(self, event):
+        QSlider.paintEvent(self, event)
+
+        painter = QPainter(self)
+        # qpen = QPen(QColor(COLORS['#color1_bright#']))
+        painter.setPen(self.qpen)
+
+        font_metrics = QFontMetrics(self.font())
+        font_width = font_metrics.boundingRect(str(self.value())).width()
+        
+        rect = self.geometry()
+        min_pos =  rect.width() - font_width - self.width() + 25
+        max_pos = rect.width() - font_width - 19
+        
+        text = str(self.value())
+        
+        if self.suffix:
+            text += ' jour' + 's'*(self.value()>1)
+            max_pos = rect.width() - font_width - 47
+        
+        slider_pos = min_pos + (max_pos - min_pos) / (self.maximum()-1) * (self.value()-1)
+            
+        horizontal_x_pos = slider_pos
+        horizontal_y_pos = rect.height() * 0.75
+        
+        painter.drawText(QPoint(horizontal_x_pos, horizontal_y_pos), text)
+
+        painter.drawRect(rect)
+
+    def changeFont(self, change=True):
+        if change:
+            print(COLORS['#color3_bright#'])
+            self.qpen = QPen(QColor(COLORS['#color3_bright#']))
+        else:
+            self.qpen = QPen(QColor(COLORS['#color1_bright#']))
 
 def getFormAncestor(widget):
     ancestor = widget
@@ -138,12 +190,15 @@ def style_factory(widget : QWidget, init_colors, colors):
     # return colors
 
 def changeFont(lineEdit, change=True):
-    stylesheet_init = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color1_dark#']
-    stylesheet_change = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color3_bright#']
-    if change:
-        lineEdit.setStyleSheet(stylesheet_change)
+    if type(lineEdit) is SliderWithValue:
+        lineEdit.changeFont(change)
     else:
-        lineEdit.setStyleSheet(stylesheet_init)
+        stylesheet_init = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color1_dark#']
+        stylesheet_change = 'QLineEdit,QSpinBox{color:%s;}' % COLORS['#color3_bright#']
+        if change:
+            lineEdit.setStyleSheet(stylesheet_change)
+        else:
+            lineEdit.setStyleSheet(stylesheet_init)
         
 def animate_button(pB, custom = False, options = {}):
     animation = QPropertyAnimation(pB, b"iconSize")

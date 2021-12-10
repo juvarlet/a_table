@@ -13,6 +13,37 @@
   <property name="windowTitle">
    <string>User Settings</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QSlider::groove:horizontal {
+		background-color: #ffe0ad;
+        color: #1a5d75;
+        border: 2px solid #ffc05c;
+    /*border: 1px solid #1a5d75;*/
+    	height: 18px;
+    /*background: #ffc05c;*/
+    	margin: 0px;
+    	border-radius: 12px;
+		padding: 2px;
+	}
+	QSlider::handle:horizontal {
+    	background: #1a5d75;
+    	border: 1px solid #1a5d75;
+    	width: 70px;
+    	border-radius: 9px;
+	}
+
+	QSlider::sub-page:horizontal{
+		background-color: #36a9d3;
+        color: #1a5d75;
+        border: 2px solid #ffc05c;
+    /*border: 1px solid #1a5d75;*/
+    	height: 18px;
+    /*background: #ffc05c;*/
+    	margin: 0px;
+    	border-radius: 12px;
+		padding: 2px;
+	}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label_user">
@@ -151,34 +182,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="sB_settings_days">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::PlusMinus</enum>
-           </property>
-           <property name="suffix">
-            <string> jours</string>
-           </property>
-           <property name="value">
-            <number>7</number>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0" rowspan="2">
           <widget class="QLabel" name="img_settings_days">
            <property name="maximumSize">
@@ -195,6 +198,34 @@
            </property>
            <property name="scaledContents">
             <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSlider" name="slider">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>26</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>14</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>7</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickInterval">
+            <number>1</number>
            </property>
           </widget>
          </item>

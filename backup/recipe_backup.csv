@@ -107,7 +107,7 @@ Quand la preparation a la texture de la semoule, incorporer une petite quantite 
 Former une boule de pate.
 Abaisser la pate.
 C'est pret !"
-306975b6-e665-40a4-94a8-cbb8fd22e82d;Pates au pesto;Pates,500,g/Pesto,1,();;vegan/kids;;Faire cuire les pates, ajouter le pesto
+2230d077-10f5-48fe-a059-c0ce95a1d702;Pates au pesto;Pates,500.0,g/Pesto,1.0,;;kids/vegan;pates_au_pesto;Faire cuire les pates, ajouter le pesto
 1b9f7226-3ca6-4882-b808-9cc03fa89a53;Pates bolognaise;;;kids;;
 277c981b-a648-4502-a154-e6240f88d7e0;Pates carbonara;;;kids;;
 83ad4c4a-2080-4cdf-9e47-26327577795b;Pates épinards creme champignons;;;vegan;;
@@ -182,7 +182,7 @@ c933b8f0-2430-4459-a06c-6fced97b56ee;Roules au fromage;;;vegan;;
 884565d1-7000-4d40-a082-c40e22730835;Surprises du marché;;;midi;;
 65601584-b314-49b6-95d8-f2ecbb4ad4dd;Pique-nique;;;kids/midi/ete;pique-nique;
 1c97556a-98ab-425c-afd8-90e25a260b64;Resto;;;;resto;
-28753ed2-5ad5-4fd9-b516-df0bf92f1454;Soupe de legumes;;;soir/ete;;
+bd516917-e487-411e-ab9b-757d55db1d86;Soupe de legumes;;;soir/ete;soupe_de_legumes;
 f38e3afc-14a3-4fa1-8c2c-b765c3893c26;Soupe Céleri branche;;;soir/double/vegan;;
 56e28fa0-09a4-46f5-ae10-502f0727d0cc;Salade du marché;;;midi/vegan;salade_du_marché;
 55adc2a4-859b-441a-a00a-2d3883927bf3;Quiche brocoli chêvre;;;soir/vegan;;
@@ -349,3 +349,9 @@ en salade, froid ou tiède
 snacké à la poêle : 5 minutes de chaque côté à l'huile d'olive."
 acb9fd53-9a9f-496e-a03e-38b1991574c3;Porridge avoine potimarron;;;vegan;;
 ec60d477-3bf5-4d6f-8c8d-1d437410fd96;Poêlée chou rouge chataignes;;;vegan;;
+50aef3b2-c83b-41bd-a833-750e514afe96;Steak;;;midi;;
+442cc614-0fab-4af5-9934-4244c2f00d42;Chou au lard;;;midi/hiver;;
+0e93f160-217a-4e57-9d47-1c6913e9480a;Piperade;;;ete/vegan;;
+6b86603e-0675-47ed-982d-ecf97fef6f1c;Poêlée de légumes;;;vegan;;
+9e2fa0cc-be6e-4761-a8c4-6145faa27294;Quiche aux blettes;;;vegan;;
+72d270e1-b54c-4f74-9ea0-77b4f33e6f77;Purée céleri pomme de terre;;;vegan;;

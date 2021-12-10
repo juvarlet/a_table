@@ -24,7 +24,8 @@ class History(QWidget):
         self.history = history
         self.recipeMultiSelection = []
         self.colors = COLORS
-        self.dirname = os.path.dirname(__file__)
+        # self.dirname = os.path.dirname(__file__)
+        self.dirname = os.path.dirname(os.path.abspath(__file__))
         self.loadUI()
         self.saveComponents()
         
