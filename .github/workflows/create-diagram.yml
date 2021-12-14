@@ -1,5 +1,7 @@
 name: Generate Diagram
 on: push
+  branches:
+    - 'dev'
 jobs:
   get_data:
     runs-on: ubuntu-latest
