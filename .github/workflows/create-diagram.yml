@@ -1,7 +1,9 @@
 name: Generate Diagram
-on: push
-  branches:
-    - 'dev'
+on:
+  push:
+    branches:
+    - main
+    - dev
 jobs:
   get_data:
     runs-on: ubuntu-latest
