@@ -84,7 +84,6 @@ class SliderWithValue(QSlider):
 
     def changeFont(self, change=True):
         if change:
-            print(COLORS['#color3_bright#'])
             self.qpen = QPen(QColor(COLORS['#color3_bright#']))
         else:
             self.qpen = QPen(QColor(COLORS['#color1_bright#']))
