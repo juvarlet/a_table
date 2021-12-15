@@ -15,7 +15,7 @@ from recipe import Recipe
 from stylesheet_update import COLORS
 from web_browser import WebBrowser
 
-UI_FILE = cw.dirname(ui_file = True) + '/UI/edit_recipe.ui'
+UI_FILE = cw.dirname('UI') + 'edit_recipe.ui'
 
 class EditRecipe(QWidget):
     
@@ -28,7 +28,6 @@ class EditRecipe(QWidget):
         super(EditRecipe, self).__init__(parent)
 
         self.colors = COLORS
-        self.dirname = cw.dirname()
         self.recipe_image_path = ''
         self.mode = 0 #0:new ; 1:edit
         self.user_settings = user_settings
@@ -96,9 +95,9 @@ class EditRecipe(QWidget):
         self.vL_web_browser = self.pW.vL_web_browser
         
     def initial_state(self):
-        self.pB_cancel_2.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_ok_2.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
-        self.pB_photo.setIcon(QIcon(self.dirname + '/UI/images/icon_photo.png'))
+        self.pB_cancel_2.setIcon(QIcon(cw.dirname('UI/images') + 'icon_cancel.png'))
+        self.pB_ok_2.setIcon(QIcon(cw.dirname('UI/images') + 'icon_ok.png'))
+        self.pB_photo.setIcon(QIcon(cw.dirname('UI/images') + 'icon_photo.png'))
         
         self.lw_ingredients.setMouseTracking(True)
         
@@ -145,7 +144,7 @@ class EditRecipe(QWidget):
                     
     def reset_fields(self):
         # self.img_dish.setPixmap(QPixmap())
-        cw.load_pic(self.img_dish, self.dirname + '/images/placeholder_dish_icon.jpg')
+        cw.load_pic(self.img_dish, cw.dirname('images') + 'placeholder_dish_icon.jpg')
 
         self.lw_ingredients.clear()
         self.tB_preparation.clear()
@@ -172,7 +171,7 @@ class EditRecipe(QWidget):
         self.reset_fields()
         self.label_newedit.setText('Modifier la recette')
         self.lE_title.setText(recipe.name)
-        cw.display_image(recipe, self.dirname, self.img_dish, icon=False)
+        cw.display_image(recipe, cw.dirname(''), self.img_dish, icon=False)
         self.populate_ing_list(recipe)
         if recipe.time is not None:
             self.sB_time.setValue(int(recipe.time))
@@ -249,8 +248,8 @@ class EditRecipe(QWidget):
             #case with/without picture to be saved (filename = new_title.jpg and new_title_icon.jpg)
             if self.recipe_image_path != '':
                 image_cell = title.lower().replace(' ', '_') #to be written in cell
-                filepath = self.dirname + '/images/%s.jpg' % image_cell #to be saved
-                filpath_icon = self.dirname + '/images/%s_icon.jpg' % image_cell #to be saved
+                filepath = cw.dirname('images') + '%s.jpg' % image_cell #to be saved
+                filpath_icon = cw.dirname('images') + '%s_icon.jpg' % image_cell #to be saved
                 #try to save it to file:
                 qpix = QPixmap(self.recipe_image_path)
                 if qpix.width() > qpix.height():
@@ -315,7 +314,7 @@ class EditRecipe(QWidget):
         self.on_cancel.emit()
     
     def on_add_photo(self):
-        self.recipe_image_path, filter = QFileDialog.getOpenFileName(self, 'Choisir une image', self.dirname, 'Images (*.png *.jpg)')
+        self.recipe_image_path, filter = QFileDialog.getOpenFileName(self, 'Choisir une image', cw.dirname(''), 'Images (*.png *.jpg)')
         # print(image_path=='')
         cw.display_new_image(self.recipe_image_path, self.img_dish)
     

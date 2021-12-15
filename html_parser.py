@@ -162,8 +162,8 @@ def with_clickable_links(string):
     return string
     
 def main():
-    input_html1 = cw.dirname() + '/Mes_Fiches/test_marmiton.html'
-    input_html2 = cw.dirname() + '/Mes_Fiches/test_marmiton2.html'
+    input_html1 = cw.dirname('Mes_Fiches') + 'test_marmiton.html'
+    input_html2 = cw.dirname('Mes_Fiches') + 'test_marmiton2.html'
     # parser = MyHTMLParser()
     
     input_url1 = 'https://www.marmiton.org/recettes/recette_lasagnes-aux-courgettes-et-au-chevre_22798.aspx'

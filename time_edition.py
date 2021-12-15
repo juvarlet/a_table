@@ -12,7 +12,7 @@ from datetime import date
 from stylesheet_update import COLORS
 
 
-UI_FILE = cw.dirname(ui_file = True) + '/UI/time_edition.ui'
+UI_FILE = cw.dirname('UI') + 'time_edition.ui'
 
 class TimeEdition(QWidget):
     
@@ -39,7 +39,7 @@ class TimeEdition(QWidget):
         self.pW = widget
     
     def saveComponents(self):
-        self.dirname = cw.dirname()
+        self.dirname = cw.dirname('UI/images')
         self.date_from: QDateEdit
         self.date_from = self.pW.date_from
         self.date_to: QDateEdit
@@ -80,7 +80,7 @@ class TimeEdition(QWidget):
         self.slider = new_slider
         self.pW.slider.setParent(None)
         
-        self.pB_from.setIcon(QIcon(self.dirname + '/UI/images/icon_date_2.png'))
+        self.pB_from.setIcon(QIcon(self.dirname + 'icon_date_2.png'))
         
         self.date_from.setDate(QDate().currentDate().addDays(1))
         self.date_to.setDate(self.date_from.date().addDays(self.default_nb_days - 1))

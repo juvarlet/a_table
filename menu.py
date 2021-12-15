@@ -388,7 +388,7 @@ def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = []
     return smart_table
         
 def debug():
-    dirname = cw.dirname()
+    dirname = cw.dirname('')
     input_recipe = dirname + '/MesRecettes.ods'
     input_history = dirname + '/Historique.ods'
     html_source_file = dirname + '/shopping_core.html'

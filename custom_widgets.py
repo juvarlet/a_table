@@ -286,11 +286,19 @@ def gif_to_button(gif_path, pB):
     movie.start()
     return movie
 
-def dirname(ui_file = False):
-    if getattr(sys, 'frozen', False) and not ui_file:
-        dirname = os.path.dirname(os.path.abspath(sys.executable))
+# def dirname(ui_file = False):
+#     if getattr(sys, 'frozen', False) and not ui_file:
+#         dirname = os.path.dirname(os.path.abspath(sys.executable))
+#     elif __file__:
+#         dirname = os.path.dirname(os.path.abspath(__file__))
+    
+#     return dirname
+
+def dirname(folder):
+    if getattr(sys, 'frozen', False) and 'UI' not in folder:#script run from exe
+        dirname = '%s/%s/' % (os.path.dirname(os.path.abspath(sys.executable)), folder)
     elif __file__:
-        dirname = os.path.dirname(os.path.abspath(__file__))
+        dirname = '%s/%s/' % (os.path.dirname(os.path.abspath(__file__)), folder)
     
     return dirname
 

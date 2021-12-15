@@ -12,7 +12,7 @@ import recipe_db
 from stylesheet_update import COLORS
 import time
 
-UI_FILE = cw.dirname(ui_file = True) + '/UI/stacked_recipes_.ui'
+UI_FILE = cw.dirname('UI') + 'stacked_recipes_.ui'
 
 class StackedRecipes(QWidget):
     
@@ -54,7 +54,8 @@ class StackedRecipes(QWidget):
         self.pW = widget
         
     def saveComponents(self):
-        self.dirname = cw.dirname()
+        self.dirname = cw.dirname('')
+        self.icon_folder = cw.dirname('UI/images')
         
         self.stackedWidget: QStackedWidget
         self.stackedWidget = self.pW.stackedWidget
@@ -143,17 +144,17 @@ class StackedRecipes(QWidget):
         self.update_index()
         self.update_list()
         
-        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe.png'))
-        self.pB_add_2.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe.png'))
-        self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
-        self.pB_delete_2.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
-        self.pB_next.setIcon(QIcon(self.dirname + '/UI/images/icon_right_arrow.png'))
-        self.pB_edit.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
-        self.pB_edit_2.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
-        self.pB_stack.setIcon(QIcon(self.dirname + '/UI/images/icon_stack.png'))
-        self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
-        self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_list.setIcon(QIcon(self.dirname + '/UI/images/icon_list_view.png'))
+        self.pB_add.setIcon(QIcon(self.icon_folder + 'icon_add_recipe.png'))
+        self.pB_add_2.setIcon(QIcon(self.icon_folder + 'icon_add_recipe.png'))
+        self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        self.pB_delete_2.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        self.pB_next.setIcon(QIcon(self.icon_folder + 'icon_right_arrow.png'))
+        self.pB_edit.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
+        self.pB_edit_2.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
+        self.pB_stack.setIcon(QIcon(self.icon_folder + 'icon_stack.png'))
+        self.pB_ok.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
+        self.pB_cancel.setIcon(QIcon(self.icon_folder + 'icon_cancel.png'))
+        self.pB_list.setIcon(QIcon(self.icon_folder + 'icon_list_view.png'))
         
         self.add_button_menu()
     
@@ -185,17 +186,17 @@ class StackedRecipes(QWidget):
     
     # @cw.decoratortimer(1)
     def init3(self):
-        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe.png'))
-        self.pB_add_2.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe.png'))
-        self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
-        self.pB_delete_2.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
-        self.pB_next.setIcon(QIcon(self.dirname + '/UI/images/icon_right_arrow.png'))
-        self.pB_edit.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
-        self.pB_edit_2.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
-        self.pB_stack.setIcon(QIcon(self.dirname + '/UI/images/icon_stack.png'))
-        self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
-        self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_list.setIcon(QIcon(self.dirname + '/UI/images/icon_list_view.png'))
+        self.pB_add.setIcon(QIcon(self.icon_folder + 'icon_add_recipe.png'))
+        self.pB_add_2.setIcon(QIcon(self.icon_folder + 'icon_add_recipe.png'))
+        self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        self.pB_delete_2.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        self.pB_next.setIcon(QIcon(self.icon_folder + 'icon_right_arrow.png'))
+        self.pB_edit.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
+        self.pB_edit_2.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
+        self.pB_stack.setIcon(QIcon(self.icon_folder + 'icon_stack.png'))
+        self.pB_ok.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
+        self.pB_cancel.setIcon(QIcon(self.icon_folder + 'icon_cancel.png'))
+        self.pB_list.setIcon(QIcon(self.icon_folder + 'icon_list_view.png'))
     
     # @cw.decoratortimer(1)
     def init4(self):
@@ -209,12 +210,12 @@ class StackedRecipes(QWidget):
         # self.pB_add_menu.setStyleSheet('QMenu{background-color:transparent;}')
 
         self.actionWidget = QWidgetAction(self.pB_add_menu)
-        ui_actions = cw.dirname(ui_file = True) + '/UI/add_menu.ui'
+        ui_actions = cw.dirname('UI') + 'add_menu.ui'
         self.widget_menu = QUiLoader().load(ui_actions)
-        self.widget_menu.pB_choice_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_choice_recipe.png'))
-        self.widget_menu.pB_choice_dessert.setIcon(QIcon(self.dirname + '/UI/images/icon_choice_dessert.png'))
-        self.widget_menu.pB_random_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_random_recipe.png'))
-        self.widget_menu.pB_random_dessert.setIcon(QIcon(self.dirname + '/UI/images/icon_random_dessert.png'))
+        self.widget_menu.pB_choice_recipe.setIcon(QIcon(self.icon_folder + 'icon_choice_recipe.png'))
+        self.widget_menu.pB_choice_dessert.setIcon(QIcon(self.icon_folder + 'icon_choice_dessert.png'))
+        self.widget_menu.pB_random_recipe.setIcon(QIcon(self.icon_folder + 'icon_random_recipe.png'))
+        self.widget_menu.pB_random_dessert.setIcon(QIcon(self.icon_folder + 'icon_random_dessert.png'))
         self.actionWidget.setDefaultWidget(self.widget_menu)
         self.pB_add_menu.addAction(self.actionWidget)
                 
@@ -409,7 +410,7 @@ class StackedRecipes(QWidget):
             
         #     self.comboBox.setCurrentText(selected_recipe)
             
-        #     self.pB_edit.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
+        #     self.pB_edit.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
         
         #     self.on_lock_for_edition.emit(self.id, True)
         # else:
@@ -423,7 +424,7 @@ class StackedRecipes(QWidget):
             
         #     self.show_hide_buttons()
             
-        #     self.pB_edit.setIcon(QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
+        #     self.pB_edit.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
         
             
         #     self.on_lock_for_edition.emit(self.id, False)
@@ -471,12 +472,12 @@ class StackedRecipes(QWidget):
             for i in range(length - 1):
                 label_num = QLabel('')
                 label_num.setStyleSheet('QLabel{background:transparent;}')
-                cw.load_pic(label_num, self.dirname + '/UI/images/icon_circle.png')
+                cw.load_pic(label_num, self.icon_folder + 'icon_circle.png')
                 self.hL.addWidget(label_num)
                 self.layout_widgets.append(label_num)
             label_pos = QLabel('')
             label_pos.setStyleSheet('QLabel{background:transparent;}')
-            cw.load_pic(label_pos, self.dirname + '/UI/images/icon_circle_full.png')
+            cw.load_pic(label_pos, self.icon_folder + 'icon_circle_full.png')
             self.hL.insertWidget(index - 1, label_pos)
             self.layout_widgets.append(label_pos)
     
