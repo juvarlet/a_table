@@ -12,7 +12,7 @@ from datetime import date
 from stylesheet_update import COLORS
 
 
-UI_FILE = cw.dirname() + '/UI/time_edition.ui'
+UI_FILE = cw.dirname(ui_file = True) + '/UI/time_edition.ui'
 
 class TimeEdition(QWidget):
     

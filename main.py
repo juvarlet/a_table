@@ -1519,7 +1519,7 @@ def start(recipe_db):
     #current working directory
     dirname = cw.dirname()
     #declare and read GUI file
-    myUiFile = dirname + '/UI/Main_Window.ui'
+    myUiFile = cw.dirname(ui_file = True) + '/UI/Main_Window.ui'
 
     splash_pic = QPixmap(dirname + '/UI/images/splash_cooking.gif')
     splash = QSplashScreen(splash_pic)

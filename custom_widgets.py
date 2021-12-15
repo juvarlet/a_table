@@ -286,8 +286,8 @@ def gif_to_button(gif_path, pB):
     movie.start()
     return movie
 
-def dirname():
-    if getattr(sys, 'frozen', False):
+def dirname(ui_file = False):
+    if getattr(sys, 'frozen', False) and not ui_file:
         dirname = os.path.dirname(os.path.abspath(sys.executable))
     elif __file__:
         dirname = os.path.dirname(os.path.abspath(__file__))

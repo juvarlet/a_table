@@ -10,7 +10,7 @@ import custom_widgets as cw
 import pyautogui
 from stylesheet_update import COLORS
 
-UI_FILE = cw.dirname() + '/UI/history.ui'
+UI_FILE = cw.dirname(ui_file = True) + '/UI/history.ui'
 
 class History(QWidget):
     

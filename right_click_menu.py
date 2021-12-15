@@ -9,7 +9,7 @@ from add_replace import AddReplace
 import custom_widgets as cw
 from recipe import Recipe
 
-UI_FILE = cw.dirname() + '/UI/right_click_menu.ui'
+UI_FILE = cw.dirname(ui_file = True) + '/UI/right_click_menu.ui'
 
 class RightClickMenu(QWidget):
     

@@ -15,7 +15,7 @@ from recipe import Recipe
 from stylesheet_update import COLORS
 from web_browser import WebBrowser
 
-UI_FILE = cw.dirname() + '/UI/edit_recipe.ui'
+UI_FILE = cw.dirname(ui_file = True) + '/UI/edit_recipe.ui'
 
 class EditRecipe(QWidget):
     

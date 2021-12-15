@@ -12,7 +12,7 @@ import recipe_db
 from stylesheet_update import COLORS
 import time
 
-UI_FILE = cw.dirname() + '/UI/stacked_recipes_.ui'
+UI_FILE = cw.dirname(ui_file = True) + '/UI/stacked_recipes_.ui'
 
 class StackedRecipes(QWidget):
     
@@ -209,7 +209,7 @@ class StackedRecipes(QWidget):
         # self.pB_add_menu.setStyleSheet('QMenu{background-color:transparent;}')
 
         self.actionWidget = QWidgetAction(self.pB_add_menu)
-        ui_actions = self.dirname + '/UI/add_menu.ui'
+        ui_actions = cw.dirname(ui_file = True) + '/UI/add_menu.ui'
         self.widget_menu = QUiLoader().load(ui_actions)
         self.widget_menu.pB_choice_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_choice_recipe.png'))
         self.widget_menu.pB_choice_dessert.setIcon(QIcon(self.dirname + '/UI/images/icon_choice_dessert.png'))

@@ -16,7 +16,7 @@ import pyautogui
 from stylesheet_update import COLORS
 import uuid
 
-UI_FILE = cw.dirname() + '/UI/web_browser.ui'
+UI_FILE = cw.dirname(ui_file = True) + '/UI/web_browser.ui'
 
 class WebBrowser(QWidget):
     

@@ -7,9 +7,9 @@ from PySide2.QtGui import QPixmap, QIcon
 import os, sys
 import custom_widgets as cw
 
-CARD_UI_FILE = cw.dirname() + '/UI/add_replace.ui'
+CARD_UI_FILE = cw.dirname(ui_file = True) + '/UI/add_replace.ui'
 
-LINE_UI_FILE = cw.dirname() + '/UI/line_label_button.ui'
+LINE_UI_FILE = cw.dirname(ui_file = True) + '/UI/line_label_button.ui'
 
 class AddReplace(QWidget):
     def __init__(self, recipes, name, parent=None):

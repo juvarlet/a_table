@@ -8,7 +8,7 @@ from PySide2.QtCore import*
 from uid_widget import UIDWidget
 import custom_widgets as cw
 
-UI_FILE = cw.dirname() + '/UI/ingredient_item.ui'
+UI_FILE = cw.dirname(ui_file = True) + '/UI/ingredient_item.ui'
 
 class IngredientItem(UIDWidget):
     WIDGET_EDIT_ING_MODE = "0000"

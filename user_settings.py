@@ -9,7 +9,7 @@ from PySide2.QtGui import QFont, QPixmap, QIcon
 import os
 import custom_widgets as cw
 
-UI_FILE = cw.dirname() + '/UI/user_settings.ui'
+UI_FILE = cw.dirname(ui_file = True) + '/UI/user_settings.ui'
 USER_ID_FILE = cw.dirname() + '/user.id'
 CONTACT = 'notification.a.table@gmail.com'
 
