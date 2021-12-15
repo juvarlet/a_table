@@ -899,7 +899,7 @@ class MainGUI(QWidget):
     def switch_to_recipe(self, recipe_name):
         self.on_quit_settings()
         self.tW.setCurrentWidget(self.tab_recipe)
-        self.reset_recipes_list()
+        # self.reset_recipes_list()
         self.reset_filters()
         try:
             lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
