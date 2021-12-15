@@ -10,7 +10,7 @@ import custom_widgets as cw
 import pyautogui
 from stylesheet_update import COLORS
 
-UI_FILE = os.path.dirname(__file__) + '/UI/history.ui'
+UI_FILE = cw.dirname() + '/UI/history.ui'
 
 class History(QWidget):
     
@@ -24,8 +24,7 @@ class History(QWidget):
         self.history = history
         self.recipeMultiSelection = []
         self.colors = COLORS
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname()
         self.loadUI()
         self.saveComponents()
         

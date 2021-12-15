@@ -12,6 +12,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, ListFlowable, ListItem, PageBreak
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
+import custom_widgets as cw
 import os
 import menu
 import math
@@ -21,8 +22,8 @@ class Printer:
     def __init__(self, output_pdf):
         pdfmetrics.registerFont(TTFont('Poiret One', '/home/jv/.local/share/fonts/PoiretOne-Regular.ttf'))
         # self.canvas = Canvas(output_pdf, pagesize = A4)
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        
+        self.dirname = cw.dirname()
         self.doc = SimpleDocTemplate(output_pdf,pagesize=A4,
                         rightMargin=24,leftMargin=24,
                         topMargin=70,bottomMargin=70)

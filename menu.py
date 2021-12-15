@@ -3,6 +3,7 @@ from datetime import timedelta
 import random
 import recipe_db
 from recipe import Recipe
+import custom_widgets as cw
 import os
 
 class Menu:
@@ -387,7 +388,7 @@ def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = []
     return smart_table
         
 def debug():
-    dirname = os.path.dirname(__file__)
+    dirname = cw.dirname()
     input_recipe = dirname + '/MesRecettes.ods'
     input_history = dirname + '/Historique.ods'
     html_source_file = dirname + '/shopping_core.html'

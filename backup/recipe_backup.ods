@@ -107,7 +107,7 @@ Quand la preparation a la texture de la semoule, incorporer une petite quantite 
 Former une boule de pate.
 Abaisser la pate.
 C'est pret !"
-306975b6-e665-40a4-94a8-cbb8fd22e82d;Pates au pesto;Pates,500,g/Pesto,1,();;vegan/kids;;Faire cuire les pates, ajouter le pesto
+2230d077-10f5-48fe-a059-c0ce95a1d702;Pates au pesto;Pates,500.0,g/Pesto,1.0,;;kids/vegan;pates_au_pesto;Faire cuire les pates, ajouter le pesto
 1b9f7226-3ca6-4882-b808-9cc03fa89a53;Pates bolognaise;;;kids;;
 277c981b-a648-4502-a154-e6240f88d7e0;Pates carbonara;;;kids;;
 83ad4c4a-2080-4cdf-9e47-26327577795b;Pates épinards creme champignons;;;vegan;;
@@ -186,7 +186,7 @@ bd516917-e487-411e-ab9b-757d55db1d86;Soupe de legumes;;;soir/ete;soupe_de_legume
 f38e3afc-14a3-4fa1-8c2c-b765c3893c26;Soupe Céleri branche;;;soir/double/vegan;;
 56e28fa0-09a4-46f5-ae10-502f0727d0cc;Salade du marché;;;midi/vegan;salade_du_marché;
 55adc2a4-859b-441a-a00a-2d3883927bf3;Quiche brocoli chêvre;;;soir/vegan;;
-2ab9ff6d-5639-4a18-8d2e-8bb9d211a109;Tarte aux blettes;;;vegan;;
+42afbff5-5615-4c3f-b427-338fc50dd670;Tarte aux blettes;;;vegan;tarte_aux_blettes;
 9be5313a-9fb3-48be-ba76-9aad778db370;Soupe poireaux pois cassés;;;soir/vegan;;
 e27c81c2-f625-46db-8e79-a9f1c3bd2d76;Salade nouilles soba;nouilles soba,1,/avocat,1,/poivron,1,/carottes,1,/[mangue],1,/[asperges],1,;;midi/ete/vegan;salade_nouilles_soba;
 143b73a3-ad37-47a9-99cc-65724a7190aa;Fruits de mer;;;;fruits_de_mer;
@@ -349,3 +349,10 @@ en salade, froid ou tiède
 snacké à la poêle : 5 minutes de chaque côté à l'huile d'olive."
 acb9fd53-9a9f-496e-a03e-38b1991574c3;Porridge avoine potimarron;;;vegan;;
 ec60d477-3bf5-4d6f-8c8d-1d437410fd96;Poêlée chou rouge chataignes;;;vegan;;
+50aef3b2-c83b-41bd-a833-750e514afe96;Steak;;;midi;;
+442cc614-0fab-4af5-9934-4244c2f00d42;Chou au lard;;;midi/hiver;;
+0e93f160-217a-4e57-9d47-1c6913e9480a;Piperade;;;ete/vegan;;
+6b86603e-0675-47ed-982d-ecf97fef6f1c;Poêlée de légumes;;;vegan;;
+9e2fa0cc-be6e-4761-a8c4-6145faa27294;Quiche aux blettes;;;vegan;;
+72d270e1-b54c-4f74-9ea0-77b4f33e6f77;Purée céleri pomme de terre;;;vegan;;
+c591f2b8-17af-4313-80c1-f752b6421426;Test;;;;;

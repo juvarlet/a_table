@@ -9,7 +9,7 @@ from menu import Menu
 from stylesheet_update import COLORS
 import os, sys
 
-UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/line_recipe.ui'
+UI_FILE = cw.dirname() + '/UI/line_recipe.ui'
 
 class LineRecipe(QWidget):
     
@@ -38,8 +38,7 @@ class LineRecipe(QWidget):
         self.pW = widget
     
     def saveComponents(self):
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname()
 
         self.label_name: QLabel
         self.label_name = self.pW.label_name

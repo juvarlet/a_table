@@ -12,7 +12,7 @@ from datetime import date
 from stylesheet_update import COLORS
 
 
-UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/time_edition.ui'
+UI_FILE = cw.dirname() + '/UI/time_edition.ui'
 
 class TimeEdition(QWidget):
     
@@ -39,8 +39,7 @@ class TimeEdition(QWidget):
         self.pW = widget
     
     def saveComponents(self):
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname()
         self.date_from: QDateEdit
         self.date_from = self.pW.date_from
         self.date_to: QDateEdit

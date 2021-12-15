@@ -16,7 +16,7 @@ import pyautogui
 from stylesheet_update import COLORS
 import uuid
 
-UI_FILE = os.path.dirname(__file__) + '/UI/web_browser.ui'
+UI_FILE = cw.dirname() + '/UI/web_browser.ui'
 
 class WebBrowser(QWidget):
     
@@ -30,8 +30,7 @@ class WebBrowser(QWidget):
         super(WebBrowser, self).__init__(parent)
 
         self.colors = COLORS
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname()
         self.user_settings = user_settings
         self.myThreads = []
         

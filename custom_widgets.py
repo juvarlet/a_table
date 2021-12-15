@@ -5,9 +5,7 @@ from PySide2.QtGui import QBrush, QMovie, QDoubleValidator, QEnterEvent, QFont, 
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
-import os
-import menu
-import recipe_db
+import os, sys
 from stylesheet_update import COLORS
 import time
 
@@ -287,3 +285,14 @@ def gif_to_button(gif_path, pB):
     movie.frameChanged.connect(lambda: pB.setIcon(movie.currentPixmap()))
     movie.start()
     return movie
+
+def dirname():
+    if getattr(sys, 'frozen', False):
+        dirname = os.path.dirname(os.path.abspath(sys.executable))
+    elif __file__:
+        dirname = os.path.dirname(os.path.abspath(__file__))
+    
+    return dirname
+
+if __name__ == "__main__":
+    print(dirname())

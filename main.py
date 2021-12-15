@@ -1,15 +1,10 @@
 import datetime
 from re import split
-from uid_widget import UIDWidget
-from ingredient import Ingredient
-import string
-from ingredient_item import IngredientItem
-from stacked_recipes import StackedRecipes, RecipeCard
+from stacked_recipes import StackedRecipes
 from user_settings import UserSettings
 from history import History
 from edit_recipe import EditRecipe
 from time_edition import TimeEdition
-from right_click_menu import RightClickMenu
 from line_recipe import LineRecipe
 from stylesheet_update import COLORS
 import os
@@ -24,7 +19,6 @@ import recipe_db
 import menu
 import google_api as gapi
 import printer
-import html_parser as web
 import custom_widgets as cw
 import stacked_recipes as sr
 from datetime import date, timedelta
@@ -35,11 +29,9 @@ import uuid
 
 import PySide2
 from PySide2.QtWidgets import*
-# QApplication, QWidget, QPushButton, QTableWidget, QSpinBox
-from PySide2.QtGui import QBrush, QDoubleValidator, QMovie, QPainterPath, QPixmap, QIcon, QColor, QPainter, QFontDatabase, QFont, QWindow
+from PySide2.QtGui import QBrush, QMovie, QPixmap, QIcon, QColor, QFontDatabase, QFont
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import*
-from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
 # from PySide2 import QtQuickWidgets
 # QDate
 
@@ -82,17 +74,17 @@ class MainGUI(QWidget):
         self.pB_new_menu.click()
 
     def set_custom_font(self):
-        fontDir = self.dirname + '/fonts/aller-font/Aller_It.ttf'
+        fontDir = self.dirname + '/fonts/Poiret_One/PoiretOne-Regular.ttf'
         QFontDatabase.addApplicationFont(fontDir)
        
-        self.parentWidget().setStyleSheet("QWidget{font-family:Aller;}" + self.parentWidget().styleSheet())
-        self.tB.setFont(QFont('Aller', 20, QtGui.QFont.Light))
-        self.lW_shopping.setFont(QFont('Aller', 13, QtGui.QFont.Bold))
-        self.lW_menu.setFont(QFont('Aller', 13, QtGui.QFont.Bold))
-        self.tW_menu.setFont(QFont('Aller', 13, QtGui.QFont.Light))
-        self.tW_menu.verticalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
-        self.tW_menu.horizontalHeader().setFont(QFont('Aller', 10, QtGui.QFont.Bold))
-        self.cB_restes.setFont(QFont('Aller', 14, QtGui.QFont.Bold))
+        self.parentWidget().setStyleSheet("QWidget{font-family:Poiret One;}" + self.parentWidget().styleSheet())
+        self.tB.setFont(QFont('Poiret One', 20, QtGui.QFont.Light))
+        self.lW_shopping.setFont(QFont('Poiret One', 13, QtGui.QFont.Bold))
+        self.lW_menu.setFont(QFont('Poiret One', 13, QtGui.QFont.Bold))
+        self.tW_menu.setFont(QFont('Poiret One', 13, QtGui.QFont.Light))
+        self.tW_menu.verticalHeader().setFont(QFont('Poiret One', 10, QtGui.QFont.Bold))
+        self.tW_menu.horizontalHeader().setFont(QFont('Poiret One', 10, QtGui.QFont.Bold))
+        self.cB_restes.setFont(QFont('Poiret One', 14, QtGui.QFont.Bold))
 
     def save_components(self):
         self.pW = self.parentWidget()
@@ -252,8 +244,7 @@ class MainGUI(QWidget):
         self.recipe_db = my_recipe_db
         self.current_menu = menu.Menu()
         self.dessert_list = []
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname()
         self.just_dropped = False
         self.cell_signal_count = 0
         self.from_cell = ()
@@ -1526,8 +1517,7 @@ def start(recipe_db):
     app = QApplication(sys.argv)
 
     #current working directory
-    # dirname = os.path.dirname(__file__)
-    dirname = os.path.dirname(os.path.abspath(__file__))
+    dirname = cw.dirname()
     #declare and read GUI file
     myUiFile = dirname + '/UI/Main_Window.ui'
 
@@ -1588,8 +1578,7 @@ def debug(input = None):
 
 def main(): #Entry point
 
-    # dirname = os.path.dirname(__file__)
-    dirname = os.path.dirname(os.path.abspath(__file__))
+    dirname = cw.dirname()
     # input_recipe = dirname + '/MesRecettes (copy).ods'
     input_recipe = dirname + '/MesRecettes.csv'
     input_history = dirname + '/Historique.csv'

@@ -9,8 +9,8 @@ from PySide2.QtGui import QFont, QPixmap, QIcon
 import os
 import custom_widgets as cw
 
-UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/user_settings.ui'
-USER_ID_FILE = os.path.dirname(os.path.abspath(__file__)) + '/user.id'
+UI_FILE = cw.dirname() + '/UI/user_settings.ui'
+USER_ID_FILE = cw.dirname() + '/user.id'
 CONTACT = 'notification.a.table@gmail.com'
 
 class UserSettings(QWidget):
@@ -40,8 +40,7 @@ class UserSettings(QWidget):
         self.pW = widget
     
     def saveComponents(self):
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname()
         
         self.label_user: QLabel
         self.label_user = self.pW.label_user

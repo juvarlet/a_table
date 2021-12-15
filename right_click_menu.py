@@ -9,7 +9,7 @@ from add_replace import AddReplace
 import custom_widgets as cw
 from recipe import Recipe
 
-UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/right_click_menu.ui'
+UI_FILE = cw.dirname() + '/UI/right_click_menu.ui'
 
 class RightClickMenu(QWidget):
     
@@ -45,8 +45,7 @@ class RightClickMenu(QWidget):
         self.pW = widget
         
     def saveComponents(self):
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname()
 
         self.frame_actions: QFrame
         self.frame_actions = self.pW.frame_actions
