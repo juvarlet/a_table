@@ -14,8 +14,16 @@ pywin32-ctypes
 
 pip install -r requirements.txt
 
-pyinstaller -w --noconsole --clean main.spec
 
 tar -cvzf a_table.zip dist
 
-path\to\venv\Scripts\pyinstaller.exe --onefile --paths path\to\venv\Lib\site-packages file.py
+path\to\venv\Scripts\pyinstaller.exe --onefile --paths path\to\venv\Lib\site-packages -w --noconsole --clean main.spec
+
+remove useless heavy folders from UI/images/ and images/
+
+manually copy 
+images/ 
+Mes_Fiches/
+Historique.csv
+MesRecettes.csv
+
