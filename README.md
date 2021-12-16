@@ -5,17 +5,34 @@ App to create, organize and plan your own recipes
 
 ## Prerequesites
 * Python 3.8.5 or higher
-* Qt 5.12.8 or higher
+
 
 ### Python dependencies
-- [ ] list all additional python libraries
+- Refer to [requirements.txt](https://github.com/juvarlet/a_table/blob/ju_branch/requirements.txt)
 
-## Contributing
-https://github.com/gitextensions/gitextensions/wiki/How-To:-run-Git-Extensions-on-Linux
 
 ## Installation
-* Clone the entire repository to any local folder
+* Clone the repository
+* Run 
+  >     pip install -r requirements.txt
 * Launch main.py
+
+## Generate standalone executable for windows
+* Checkout [exe_pack branch](https://github.com/juvarlet/a_table/tree/exe_pack)
+* Create and activate virtual environment
+  >     python -m venv path\to\venv
+  >     cd path\to\venv\Scripts
+  >     activate
+* Install required python libraries 
+  >     pip install -r requirements.txt
+* Generate package with pyinstaller
+  >     cd path\to\a_table
+  >     path\to\venv\Scripts\pyinstaller.exe --onefile --paths path\to\venv\Lib\site-packages -w --noconsole --clean main.spec
+* Copy data files and folders to \dist\ (next to "A_Table.exe")
+  * images\ 
+  * Mes_Fiches\
+  * Historique.csv
+  * MesRecettes.csv
 
 ## Repository visualization
 Interactive HTML visualization: [Diagram](https://octo-repo-visualization.vercel.app/?repo=juvarlet%2Fa_table)
