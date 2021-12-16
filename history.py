@@ -34,12 +34,7 @@ class History(QWidget):
         self.selectWidgetMode(new_history)
     
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        widget = QUiLoader().load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
+        self.pW = cw.loadUI(self, UI_FILE)
     
     def saveComponents(self):
         self.tW_history: QTableWidget

@@ -417,13 +417,13 @@
     }
     
     QCheckBox#cB_search_tag_dessert::indicator:unchecked {
-        image: url(./UI/images/tag_dessert_black_LD.png);
+        image: url(file:///../UI/images/tag_dessert_black_LD.png);
         width:50px;
         height:50px;
     }
     
     QCheckBox#cB_search_tag_dessert::indicator:checked {
-        image: url(./UI/images/tag_dessert_color_LD.png);
+        image: url(file:///../UI/images/tag_dessert_color_LD.png);
         width:50px;
         height:50px;
     }
@@ -434,13 +434,13 @@
     }
 
     QCheckBox#cB_search_recipe_name::indicator:checked, QCheckBox#cB_search_preparation::indicator:checked, QCheckBox#cB_search_ingredients::indicator:checked {
-        image: url(./UI/images/icon_check.png);
+        image: url(file:///../UI/images/icon_check.png);
         width:20px;
         height:20px;
     }
 
     QCheckBox#cB_search_recipe_name::indicator:unchecked, QCheckBox#cB_search_preparation::indicator:unchecked, QCheckBox#cB_search_ingredients::indicator:unchecked {
-        image: url(./UI/images/icon_uncheck.png);
+        image: url(file:///../UI/images/icon_uncheck.png);
         width:20px;
         height:20px;
     }
@@ -1517,11 +1517,11 @@
 }
 
 QCheckBox#cB_search_tag_double::indicator:unchecked {
-    image: url(./UI/images/tag_double_black_LD.png);
+    image: url(file:///../UI/images/tag_double_black_LD.png);
 }
 
 QCheckBox#cB_search_tag_double::indicator:checked {
-    image: url(./UI/images/tag_double_color_LD.png);
+    image: url(file:///../UI/images/tag_double_color_LD.png);
 }
 
 QCheckBox#cB_search_tag_double::indicator:checked:hover {
@@ -1554,11 +1554,11 @@ QCheckBox#cB_search_tag_double::indicator:unchecked:hover {
 }
 
 QCheckBox#cB_search_tag_kids::indicator:unchecked {
-    image: url(./UI/images/tag_kids_black.png);
+    image: url(file:///../UI/images/tag_kids_black.png);
 }
 
 QCheckBox#cB_search_tag_kids::indicator:checked {
-    image: url(./UI/images/tag_kids_color.png);
+    image: url(file:///../UI/images/tag_kids_color.png);
 }
 
 QCheckBox#cB_search_tag_kids::indicator:checked:hover {
@@ -1594,11 +1594,11 @@ QCheckBox#cB_search_tag_kids::indicator:unchecked:hover {
 }
 
 QCheckBox#cB_search_tag_vegan::indicator:unchecked {
-    image: url(./UI/images/tag_vegan_black.png);
+    image: url(file:///../UI/images/tag_vegan_black.png);
 }
 
 QCheckBox#cB_search_tag_vegan::indicator:checked {
-    image: url(./UI/images/tag_vegan_color.png);
+    image: url(file:///../UI/images/tag_vegan_color.png);
 }
 
 QCheckBox#cB_search_tag_vegan::indicator:hover {
@@ -1626,11 +1626,11 @@ QCheckBox#cB_search_tag_vegan::indicator:hover {
 }
 
 QCheckBox#cB_search_tag_summer::indicator:unchecked {
-    image: url(./UI/images/tag_ete_black_LD.png);
+    image: url(file:///../UI/images/tag_ete_black_LD.png);
 }
 
 QCheckBox#cB_search_tag_summer::indicator:checked {
-    image: url(./UI/images/tag_ete_color_LD.png);
+    image: url(file:///../UI/images/tag_ete_color_LD.png);
 }
 
 QCheckBox#cB_search_tag_summer::indicator:checked:hover {
@@ -1666,11 +1666,11 @@ QCheckBox#cB_search_tag_summer::indicator:unchecked:hover {
 }
 
 QCheckBox#cB_search_tag_winter::indicator:unchecked {
-    image: url(./UI/images/tag_hiver_black_LD.png);
+    image: url(file:///../UI/images/tag_hiver_black_LD.png);
 }
 
 QCheckBox#cB_search_tag_winter::indicator:checked {
-    image: url(./UI/images/tag_hiver_color_LD.png);
+    image: url(file:///../UI/images/tag_hiver_color_LD.png);
 }
 
 QCheckBox#cB_search_tag_winter::indicator:checked:hover {
@@ -1703,11 +1703,11 @@ QCheckBox#cB_search_tag_winter::indicator:unchecked:hover {
 }
 
 QCheckBox#cB_search_tag_dessert::indicator:unchecked {
-    image: url(./UI/images/tag_dessert_black_LD.png);
+    image: url(file:///../UI/images/tag_dessert_black_LD.png);
 }
 
 QCheckBox#cB_search_tag_dessert::indicator:checked {
-    image: url(./UI/images/tag_dessert_color_LD.png);
+    image: url(file:///../UI/images/tag_dessert_color_LD.png);
 }
 
 QCheckBox#cB_search_tag_dessert::indicator:checked:hover {
@@ -1743,11 +1743,11 @@ QCheckBox#cB_search_tag_dessert::indicator:unchecked:hover {
 }
 
 QCheckBox#cB_search_tag_lunch::indicator:unchecked {
-    image: url(./UI/images/tag_lunch_black_LD.png);
+    image: url(file:///../UI/images/tag_lunch_black_LD.png);
 }
 
 QCheckBox#cB_search_tag_lunch::indicator:checked {
-    image: url(./UI/images/tag_lunch_color_LD.png);
+    image: url(file:///../UI/images/tag_lunch_color_LD.png);
 }
 
 QCheckBox#cB_search_tag_lunch::indicator:checked:hover {
@@ -1774,11 +1774,11 @@ QCheckBox#cB_search_tag_lunch::indicator:unchecked:hover {
 }
 
 QCheckBox#cB_search_tag_dinner::indicator:unchecked {
-    image: url(./UI/images/tag_dinner_black_LD.png);
+    image: url(file:///../UI/images/tag_dinner_black_LD.png);
 }
 
 QCheckBox#cB_search_tag_dinner::indicator:checked {
-    image: url(./UI/images/tag_dinner_color_LD.png);
+    image: url(file:///../UI/images/tag_dinner_color_LD.png);
 }
 
 QCheckBox#cB_search_tag_dinner::indicator:checked:hover {
@@ -1811,11 +1811,11 @@ QCheckBox#cB_search_tag_dinner::indicator:unchecked:hover {
 }
 
 QCheckBox#cB_search_tag_tips::indicator:unchecked {
-    image: url(./UI/images/tag_tips_black_LD.png);
+    image: url(file:///../UI/images/tag_tips_black_LD.png);
 }
 
 QCheckBox#cB_search_tag_tips::indicator:checked {
-    image: url(./UI/images/tag_tips_color_LD.png);
+    image: url(file:///../UI/images/tag_tips_color_LD.png);
 }
 
 QCheckBox#cB_search_tag_tips::indicator:checked:hover {

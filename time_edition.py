@@ -31,12 +31,7 @@ class TimeEdition(QWidget):
         self.update_modif()
             
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        widget = QUiLoader().load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
+        self.pW = cw.loadUI(self, UI_FILE)
     
     def saveComponents(self):
         self.dirname = cw.dirname('UI/images')

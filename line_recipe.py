@@ -29,13 +29,7 @@ class LineRecipe(QWidget):
         self.connect_actions()
     
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        loader = QUiLoader()
-        widget = loader.load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
+        self.pW = cw.loadUI(self, UI_FILE)
     
     def saveComponents(self):
         self.dirname = cw.dirname('UI/images')

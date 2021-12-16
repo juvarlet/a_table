@@ -337,26 +337,26 @@ class MainGUI(QWidget):
         self.info_dialog = QMessageBox(self)
 
         #TODO apply process to all QSS images url
-        self.cB_restes.setStyleSheet('''
-        QCheckBox#cB_restes_2::indicator:unchecked {
-        image: url(icon_recycle_uncheck);
-        width:50px;
-        height:50px;
-    }
+    #     self.cB_restes.setStyleSheet('''
+    #     QCheckBox#cB_restes_2::indicator:unchecked {
+    #     image: url(icon_recycle_uncheck);
+    #     width:50px;
+    #     height:50px;
+    # }
     
-    QCheckBox#cB_restes_2::indicator:checked {
-        image: url(file:///../UI/images/icon_recycle_check.png);
-        width:50px;
-        height:50px;
-    }
+    # QCheckBox#cB_restes_2::indicator:checked {
+    #     image: url(file:///../UI/images/icon_recycle_check.png);
+    #     width:50px;
+    #     height:50px;
+    # }
     
-    QCheckBox#cB_restes_2::indicator:hover {
-        width:45px;
-        height:45px;
-    }
-        '''.replace('icon_recycle_uncheck', cw.relative_path('./UI/images/icon_recycle_uncheck.png').replace("\\", "/"))
-        )
-
+    # QCheckBox#cB_restes_2::indicator:hover {
+    #     width:45px;
+    #     height:45px;
+    # }
+    #     '''.replace('icon_recycle_uncheck', cw.relative_path('./UI/images/icon_recycle_uncheck.png').replace("\\", "/"))
+    #     )
+        print(cw.relative_path('./UI/images/icon_recycle_uncheck.png').replace("\\", "/"))
         # self.tW_shopping.setVisible(False)
         # recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
         # self.lW_recipe.addItems(recipe_list)
@@ -1478,7 +1478,7 @@ class MainGUI(QWidget):
         self.pB_user = QPushButton('', self.pW)
         self.pB_user.setIconSize(QSize(60,60))
         self.pB_user.setToolTip('Préférences')
-        self.pB_user.setStyleSheet('''
+        stylesheet = '''
                                 QPushButton{
                                     image: url(file:///../UI/images/icon_user.png);
                                     background-color: %s;
@@ -1494,7 +1494,11 @@ class MainGUI(QWidget):
                                 QPushButton:pressed{
                                     image: url(file:///../UI/images/icon_user_color_.png);
                                 }
-                                   ''' % (self.colors['#color5#'], self.colors['#color5#']))
+                                   ''' % (self.colors['#color5#'], self.colors['#color5#'])
+        if getattr(sys, 'frozen', False):
+            stylesheet = cw.convert_ui_image_paths(stylesheet)
+            
+        self.pB_user.setStyleSheet(stylesheet)
         self.tW.setCornerWidget(self.pB_user)
 
 def image_from_base64(base64_table, image_name):#Legacy function to store and read images -- can be removed
@@ -1547,6 +1551,10 @@ def start(recipe_db):
                         QColor(COLORS['#color1_dark#']))
     
     w = QUiLoader().load(myUiFile)
+
+    if getattr(sys, 'frozen', False):
+        w.setStyleSheet(cw.convert_ui_image_paths(w.styleSheet()))
+
     #Create and display GUI object
     myGUI = MainGUI(parent = w, recipe_db = recipe_db)
     myGUI.main()

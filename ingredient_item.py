@@ -45,12 +45,7 @@ class IngredientItem(UIDWidget):
         self.btn_confirm_changes.clicked.connect(self.confirmChanges)
     
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        widget = QUiLoader().load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.parent_widget = widget
+        self.parent_widget = cw.loadUI(self, UI_FILE)
     
     def saveComponents(self):
         self.widget_show_ing:QWidget

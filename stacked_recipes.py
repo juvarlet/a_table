@@ -5,7 +5,7 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtGui import QPixmap, QIcon
 
 
-import os
+import os, sys
 import custom_widgets as cw
 import menu
 import recipe_db
@@ -46,12 +46,7 @@ class StackedRecipes(QWidget):
         self.initIsComplete = False
         
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        widget = QUiLoader().load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
+        self.pW = cw.loadUI(self, UI_FILE)
         
     def saveComponents(self):
         self.dirname = cw.dirname('')
@@ -212,6 +207,8 @@ class StackedRecipes(QWidget):
         self.actionWidget = QWidgetAction(self.pB_add_menu)
         ui_actions = cw.dirname('UI') + 'add_menu.ui'
         self.widget_menu = QUiLoader().load(ui_actions)
+        if getattr(sys, 'frozen', False):
+            self.widget_menu.setStyleSheet(cw.convert_ui_image_paths(self.widget_menu.styleSheet()))
         self.widget_menu.pB_choice_recipe.setIcon(QIcon(self.icon_folder + 'icon_choice_recipe.png'))
         self.widget_menu.pB_choice_dessert.setIcon(QIcon(self.icon_folder + 'icon_choice_dessert.png'))
         self.widget_menu.pB_random_recipe.setIcon(QIcon(self.icon_folder + 'icon_random_recipe.png'))

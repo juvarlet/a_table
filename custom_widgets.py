@@ -310,5 +310,37 @@ def relative_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
+def convert_ui_image_paths(stylesheet):
+    output_lines = []
+    lines = stylesheet.split('\n')
+    #find appropriate lines
+    for line in lines:
+        if 'image: url(' in line:
+            image_path = line.split('/')[-1].split(')')[0]
+            #replace with relative path
+            output_lines.append(
+                # 'image :url(%s);\n' % relative_path('./UI/images/%s' % image_path).replace("\\", "/")
+                'image :url(%s);\n' % relative_path('UI/images/%s' % image_path).replace("\\", "/")
+            )
+        else:
+            output_lines.append(line)
+    
+    #generate new stylesheet
+    return '\n'.join(output_lines)
+
+def loadUI(o, ui_file):
+    vlayout = QVBoxLayout()
+    vlayout.setMargin(0)
+    widget = QUiLoader().load(ui_file)
+
+    #convert paths only when run from exe
+    if getattr(sys, 'frozen', False):
+        widget.setStyleSheet(convert_ui_image_paths(widget.styleSheet()))
+        print(widget.styleSheet())
+
+    vlayout.addWidget(widget)
+    o.setLayout(vlayout)
+    return widget
+
 if __name__ == "__main__":
     print(dirname())

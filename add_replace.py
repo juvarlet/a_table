@@ -23,16 +23,9 @@ class AddReplace(QWidget):
         self.initial_state()
         self.connect_actions()
         
-
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        loader = QUiLoader()
-        widget = loader.load(CARD_UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
-        
+        self.pW = cw.loadUI(self, CARD_UI_FILE)
+    
     def saveComponents(self):
         self.dirname = cw.dirname('UI/images')
 
@@ -67,6 +60,8 @@ class AddReplace(QWidget):
     def create_list_widget(self, name):
         loader = QUiLoader()
         widget = loader.load(LINE_UI_FILE)
+        if getattr(sys, 'frozen', False):
+            widget.setStyleSheet(cw.convert_ui_image_paths(widget.styleSheet()))
         widget.label.setText(name)
         widget.pB_reset.setIcon(QIcon(self.dirname + 'icon_reset_LD.png'))
         widget.pB_reset.setToolTip("Remplacer par '%s'" % self.name)
