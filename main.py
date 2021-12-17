@@ -336,27 +336,6 @@ class MainGUI(QWidget):
         
         self.info_dialog = QMessageBox(self)
 
-        #TODO apply process to all QSS images url
-    #     self.cB_restes.setStyleSheet('''
-    #     QCheckBox#cB_restes_2::indicator:unchecked {
-    #     image: url(icon_recycle_uncheck);
-    #     width:50px;
-    #     height:50px;
-    # }
-    
-    # QCheckBox#cB_restes_2::indicator:checked {
-    #     image: url(file:///../UI/images/icon_recycle_check.png);
-    #     width:50px;
-    #     height:50px;
-    # }
-    
-    # QCheckBox#cB_restes_2::indicator:hover {
-    #     width:45px;
-    #     height:45px;
-    # }
-    #     '''.replace('icon_recycle_uncheck', cw.relative_path('./UI/images/icon_recycle_uncheck.png').replace("\\", "/"))
-    #     )
-        print(cw.relative_path('./UI/images/icon_recycle_uncheck.png').replace("\\", "/"))
         # self.tW_shopping.setVisible(False)
         # recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
         # self.lW_recipe.addItems(recipe_list)

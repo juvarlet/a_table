@@ -336,7 +336,7 @@ def loadUI(o, ui_file):
     #convert paths only when run from exe
     if getattr(sys, 'frozen', False):
         widget.setStyleSheet(convert_ui_image_paths(widget.styleSheet()))
-        print(widget.styleSheet())
+        # print(widget.styleSheet())
 
     vlayout.addWidget(widget)
     o.setLayout(vlayout)

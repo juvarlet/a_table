@@ -72,7 +72,6 @@ QComboBox::drop-down {
 }
 QComboBox::down-arrow {
      image: url(file:///../UI/images/icon_down_arrow.png);
-	/*image: url(file:///../UI/images/icon_edit.png);*/
 	width: 20px;
 	height: 20px;
 }
