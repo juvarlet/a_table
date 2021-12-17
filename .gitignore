@@ -136,7 +136,7 @@ credentials.json
 token.json
 
 #workshop
-UI/images/benchmark/
-UI/images/header/
-UI/images/icon_factory/
-images/HD/
+**/benchmark/
+**/header/
+**/icon_factory/
+**/HD/
