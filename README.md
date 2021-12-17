@@ -18,7 +18,6 @@ App to create, organize and plan your own recipes
 * Launch main.py
 
 ## Generate standalone executable for windows
-* Checkout [exe_pack branch](https://github.com/juvarlet/a_table/tree/exe_pack)
 * Create and activate virtual environment
   >     python -m venv path\to\venv
   >     cd path\to\venv\Scripts
