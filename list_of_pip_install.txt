@@ -1,0 +1,29 @@
+pyside2
+pandas_ods_reader
+pyautogui
+bs4
+urllib3
+httplib2
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+reportlab
+
+pyinstaller
+pywin32-ctypes
+
+pip install -r requirements.txt
+
+
+tar -cvzf a_table.zip dist
+
+path\to\venv\Scripts\pyinstaller.exe --onefile --paths path\to\venv\Lib\site-packages -w --noconsole --clean main.spec
+
+remove useless heavy folders from UI/images/ and images/
+
+manually copy 
+images/ 
+Mes_Fiches/
+Historique.csv
+MesRecettes.csv
+

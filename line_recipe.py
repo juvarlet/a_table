@@ -9,7 +9,7 @@ from menu import Menu
 from stylesheet_update import COLORS
 import os, sys
 
-UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/line_recipe.ui'
+UI_FILE = cw.dirname('UI') + 'line_recipe.ui'
 
 class LineRecipe(QWidget):
     
@@ -29,17 +29,10 @@ class LineRecipe(QWidget):
         self.connect_actions()
     
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        loader = QUiLoader()
-        widget = loader.load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
+        self.pW = cw.loadUI(self, UI_FILE)
     
     def saveComponents(self):
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname('UI/images')
 
         self.label_name: QLabel
         self.label_name = self.pW.label_name
@@ -81,9 +74,9 @@ class LineRecipe(QWidget):
         tags_names = ['vegan', 'kids', 'double', 'midi', 'soir', 'ete', 'hiver', 'dessert', 'tips']
         for tag, tag_name in zip(tags, tags_names):
             tag.setVisible(self.recipe.isTagged(tag_name))
-            cw.load_pic(tag, self.dirname + '/UI/images/tag_%s_SLD.png' % tag_name)
+            cw.load_pic(tag, self.dirname + 'tag_%s_SLD.png' % tag_name)
 
-        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe_LD.png'))
+        self.pB_add.setIcon(QIcon(self.dirname + 'icon_add_recipe_LD.png'))
         self.pB_add.setVisible(False)
         
         self.pushMenu = QMenu(self.pB_add)

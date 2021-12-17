@@ -24,7 +24,6 @@ from email.mime.base import MIMEBase
 import lxml.html
 from os.path import basename
 import base64
-import json
 
 from PySide2.QtCore import QThread
 from PySide2.QtGui import *
@@ -33,6 +32,7 @@ from PySide2.QtCore import *
 import menu
 import re
 from recipe import Recipe
+import custom_widgets as cw
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar', 
@@ -319,9 +319,7 @@ class MyCalendar(QThread):#QThread
         QThread.__init__(self)
         self.menu = my_menu
         self.signal = MySignal()
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
-        self.icon_path = self.dirname + '/UI/images/icon_calendar.png'
+        self.icon_path = cw.dirname('UI/images') + 'icon_calendar.png'
         self.occurences = 0
         
     def run(self):
@@ -424,8 +422,8 @@ class MyCalendar(QThread):#QThread
 
 class MyMailbox(QThread):
     
-    CORE_SHOPPING_HTML = os.path.dirname(__file__) + '/shopping_core.html'
-    CORE_RECIPE_HTML = os.path.dirname(__file__) + '/recipe_core.html'
+    CORE_SHOPPING_HTML = cw.dirname('') + 'shopping_core.html'
+    CORE_RECIPE_HTML = cw.dirname('') + 'recipe_core.html'
 
     def __init__(self, option, list_args):
         QThread.__init__(self)
@@ -451,8 +449,7 @@ class MyMailbox(QThread):
             self.pdf = pdf
             
         self.signal = MySignal()
-        self.dirname = os.path.dirname(__file__)
-        self.icon_path = self.dirname + '/UI/images/icon_send.png'
+        self.icon_path = cw.dirname('UI/images') + '/UI/images/icon_send.png'
         
     
     def run(self):

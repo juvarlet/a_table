@@ -1,4 +1,4 @@
-import os
+import os, sys
 
 COLORS = {
                     '#color1_bright#'   : '#36a9d3',
@@ -18,8 +18,16 @@ COLORS = {
                     '#color5_dark#'     : '#fae2b2'
                     }
 
+def local_dirname():
+    if getattr(sys, 'frozen', False):
+        dirname = os.path.dirname(os.path.abspath(sys.executable))
+    elif __file__:
+        dirname = os.path.dirname(os.path.abspath(__file__))
+    
+    return dirname
+
 def main():
-    dirname = os.path.dirname(__file__)
+    dirname = local_dirname()
     uiFiles = ['Main_Window', 'stacked_recipes']
     color_hex = COLORS
     
@@ -38,7 +46,7 @@ def main():
             fw.write(newcontent)
 
 def update_colors():
-    dirname = os.path.dirname(__file__)
+    dirname = local_dirname()
     template = dirname + '/UI/stylesheet_template.txt'
     color_hex = COLORS
     files_ss = read_template(template)
@@ -78,7 +86,7 @@ def read_template(template_file):
 
 def debug():
     print('debug')
-    dirname = os.path.dirname(__file__)
+    dirname = local_dirname()
     template = dirname + '/UI/stylesheet_template.txt'
     files_ss = read_template(template)
     print(files_ss)

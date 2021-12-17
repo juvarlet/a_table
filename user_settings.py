@@ -9,8 +9,8 @@ from PySide2.QtGui import QFont, QPixmap, QIcon
 import os
 import custom_widgets as cw
 
-UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/user_settings.ui'
-USER_ID_FILE = os.path.dirname(os.path.abspath(__file__)) + '/user.id'
+UI_FILE = cw.dirname('UI') + 'user_settings.ui'
+USER_ID_FILE = cw.dirname('') + '/user.id'
 CONTACT = 'notification.a.table@gmail.com'
 
 class UserSettings(QWidget):
@@ -32,16 +32,11 @@ class UserSettings(QWidget):
         self.update_modif()
     
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        widget = QUiLoader().load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
-    
+        self.pW = cw.loadUI(self, UI_FILE)
+
     def saveComponents(self):
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname('')
+        self.icon_folder = cw.dirname('UI/images')
         
         self.label_user: QLabel
         self.label_user = self.pW.label_user
@@ -105,16 +100,16 @@ class UserSettings(QWidget):
         self.label_contact.setTextFormat(Qt.RichText)
         self.label_contact.setText("<a href='mailto:%s?Subject=Contact'>%s</a>" % (self.contact, self.contact))
         
-        self.pB_ok_3.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
-        self.pB_cancel_3.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_history.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
-        self.pB_reset.setIcon(QIcon(self.dirname + '/UI/images/icon_reset.png'))
+        self.pB_ok_3.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
+        self.pB_cancel_3.setIcon(QIcon(self.icon_folder + 'icon_cancel.png'))
+        self.pB_history.setIcon(QIcon(self.icon_folder + 'icon_plate_3colors.png'))
+        self.pB_reset.setIcon(QIcon(self.icon_folder + 'icon_reset.png'))
         
-        self.img_settings_email.setPixmap(QPixmap(self.dirname + '/UI/images/icon_send.png').scaled(40,40))
-        self.img_settings_days.setPixmap(QPixmap(self.dirname + '/UI/images/icon_date_3colors_t_LD.png').scaled(40,40))
-        self.img_settings_storage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_print.png').scaled(40,40))
-        self.label_homepage.setPixmap(QPixmap(self.dirname + '/UI/images/icon_web_search_gp.png').scaled(40,40))
-        cw.load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
+        self.img_settings_email.setPixmap(QPixmap(self.icon_folder + 'icon_send.png').scaled(40,40))
+        self.img_settings_days.setPixmap(QPixmap(self.icon_folder + 'icon_date_3colors_t_LD.png').scaled(40,40))
+        self.img_settings_storage.setPixmap(QPixmap(self.icon_folder + 'icon_print.png').scaled(40,40))
+        self.label_homepage.setPixmap(QPixmap(self.icon_folder + 'icon_web_search_gp.png').scaled(40,40))
+        cw.load_pic(self.label_user, self.icon_folder + 'icon_user_color.png')
         
         self.pB_reset.setEnabled(False)
         

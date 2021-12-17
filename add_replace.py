@@ -5,10 +5,11 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtGui import QPixmap, QIcon
 
 import os, sys
+import custom_widgets as cw
 
-CARD_UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/add_replace.ui'
+CARD_UI_FILE = cw.dirname('UI') + 'add_replace.ui'
 
-LINE_UI_FILE = os.path.dirname(os.path.abspath(__file__)) + '/UI/line_label_button.ui'
+LINE_UI_FILE = cw.dirname('UI') + 'line_label_button.ui'
 
 class AddReplace(QWidget):
     def __init__(self, recipes, name, parent=None):
@@ -22,19 +23,11 @@ class AddReplace(QWidget):
         self.initial_state()
         self.connect_actions()
         
-
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        loader = QUiLoader()
-        widget = loader.load(CARD_UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
-        
+        self.pW = cw.loadUI(self, CARD_UI_FILE)
+    
     def saveComponents(self):
-        # self.dirname = os.path.dirname(__file__)
-        self.dirname = os.path.dirname(os.path.abspath(__file__))
+        self.dirname = cw.dirname('UI/images')
 
         self.lW: QListWidget
         self.lW = self.pW.lW
@@ -47,9 +40,9 @@ class AddReplace(QWidget):
         for recipe in self.recipes:
             self.add_recipe(str(recipe))
 
-        self.pB_add.setIcon(QIcon(self.dirname + '/UI/images/icon_add_recipe_LD.png'))
+        self.pB_add.setIcon(QIcon(self.dirname + 'icon_add_recipe_LD.png'))
         self.pB_add.setToolTip("Ajouter '%s'" % self.name)
-        self.pB_replace.setIcon(QIcon(self.dirname + '/UI/images/icon_reset_all_LD.png'))
+        self.pB_replace.setIcon(QIcon(self.dirname + 'icon_reset_all_LD.png'))
         self.pB_replace.setToolTip("Remplacer tout par '%s'" % self.name)
         
     def connect_actions(self):
@@ -67,8 +60,10 @@ class AddReplace(QWidget):
     def create_list_widget(self, name):
         loader = QUiLoader()
         widget = loader.load(LINE_UI_FILE)
+        if getattr(sys, 'frozen', False):
+            widget.setStyleSheet(cw.convert_ui_image_paths(widget.styleSheet()))
         widget.label.setText(name)
-        widget.pB_reset.setIcon(QIcon(self.dirname + '/UI/images/icon_reset_LD.png'))
+        widget.pB_reset.setIcon(QIcon(self.dirname + 'icon_reset_LD.png'))
         widget.pB_reset.setToolTip("Remplacer par '%s'" % self.name)
         widget.pB_reset.clicked.connect(lambda: widget.label.setText(self.name))
         self.line_widgets.append(widget)
