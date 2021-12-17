@@ -134,3 +134,9 @@ dmypy.json
 #credentials
 credentials.json
 token.json
+
+#workshop
+benchmark/
+header/
+icon_factory/
+HD/
