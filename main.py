@@ -74,7 +74,7 @@ class MainGUI(QWidget):
         self.pB_new_menu.click()
 
     def set_custom_font(self):
-        fontDir = self.dirname + '/fonts/Poiret_One/PoiretOne-Regular.ttf'
+        fontDir = cw.dirname('UI/fonts') + 'Poiret_One/PoiretOne-Regular.ttf'
         QFontDatabase.addApplicationFont(fontDir)
        
         self.parentWidget().setStyleSheet("QWidget{font-family:Poiret One;}" + self.parentWidget().styleSheet())
@@ -244,7 +244,8 @@ class MainGUI(QWidget):
         self.recipe_db = my_recipe_db
         self.current_menu = menu.Menu()
         self.dessert_list = []
-        self.dirname = cw.dirname()
+        self.dirname = cw.dirname('')
+        self.icon_folder = cw.dirname('UI/images')
         self.just_dropped = False
         self.cell_signal_count = 0
         self.from_cell = ()
@@ -363,52 +364,42 @@ class MainGUI(QWidget):
         #self.tW_ingredients.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
          
         #images
-        self.window().setWindowIcon(QIcon(self.dirname + '/UI/images/donut.png'))
-
-        # cw.load_pic(self.label_dessert, self.dirname + '/UI/images/icon_cupcake_t.png')
-        # cw.load_pic(self.label_user, self.dirname + '/UI/images/icon_user_color.png')
-        # load_pic(self.label_dessert_2, self.dirname + '/UI/images/tag_dessert_color_LD.png')
-        self.tW.setTabIcon(0,QIcon(self.dirname + '/UI/images/icon_chef_3colors.png'))
-        self.tW.setTabIcon(1,QIcon(self.dirname + '/UI/images/icon_recipe_3colors.png'))
-        self.tW.setTabIcon(2,QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
-        self.tB.setItemIcon(0, QIcon(self.dirname + '/UI/images/icon_menu_3colors.png'))
-        self.tB.setItemIcon(1, QIcon(self.dirname + '/UI/images/icon_shopping_cart.png'))
-        self.pB_user.setIcon(QIcon(self.dirname + '/UI/images/icon_user_t.png'))
-        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_3colors_new.png'))
-        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
-        # self.pB_modif.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
-        # self.pB_save.setIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
-        self.pB_calendar.setIcon(QIcon(self.dirname + '/UI/images/icon_calendar.png'))
-        cw.load_pic(self.tag_vegan, self.dirname + '/UI/images/tag_vegan_black_LD.png')
-        cw.load_pic(self.tag_kids, self.dirname + '/UI/images/tag_kids_black_LD.png')
-        cw.load_pic(self.tag_double, self.dirname + '/UI/images/tag_double_black_LD.png')
-        cw.load_pic(self.tag_summer, self.dirname + '/UI/images/tag_ete_black_LD.png')
-        cw.load_pic(self.tag_winter, self.dirname + '/UI/images/tag_hiver_black_LD.png')
-        cw.load_pic(self.tag_dessert, self.dirname + '/UI/images/tag_dessert_black_LD.png')
-        cw.load_pic(self.tag_tips, self.dirname + '/UI/images/tag_tips_black_LD.png')
-        cw.load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_black_LD.png')
-        self.pB_back.setIcon(QIcon(self.dirname + '/UI/images/icon_back.png'))
-        self.pB_print_2.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
-        self.pB_send_2.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
-
-        cw.load_pic(self.label_lunch, self.dirname + '/UI/images/tag_lunch_color_LD.png')
-        cw.load_pic(self.label_dinner, self.dirname + '/UI/images/tag_dinner_color_LD.png')
-        cw.load_pic(self.score_vegan, self.dirname + '/UI/images/score_vegan_0.png')
-        cw.load_pic(self.score_kids, self.dirname + '/UI/images/score_kids_0.png')
-        cw.load_pic(self.score_double, self.dirname + '/UI/images/score_double_0.png')
-        cw.load_pic(self.score_summer, self.dirname + '/UI/images/score_ete_0.png')
-        cw.load_pic(self.score_winter, self.dirname + '/UI/images/score_hiver_0.png')
-        
-        cw.load_pic(self.label_top, self.dirname + '/UI/images/icon_list.png')
-        cw.load_pic(self.label_icon_carte, self.dirname + '/UI/images/icon_menu_3colors_LD.png')
-        cw.load_pic(self.label_cocktail, self.dirname + '/UI/images/icon_cocktail_3colors_LD.png')
-        self.pB_print.setIcon(QIcon(self.dirname + '/UI/images/icon_print.png'))
-        self.pB_send.setIcon(QIcon(self.dirname + '/UI/images/icon_send.png'))
-        self.pB_copy.setIcon(QIcon(self.dirname + '/UI/images/icon_copy.png'))
-
-        self.pB_modif_2.setIcon(QIcon(self.dirname + '/UI/images/icon_edit.png'))
-        self.pB_new_recipe.setIcon(QIcon(self.dirname + '/UI/images/icon_new_recipe.png'))
-        self.pB_delete.setIcon(QIcon(self.dirname + '/UI/images/icon_bin.png'))
+        self.window().setWindowIcon(QIcon(self.icon_folder + 'donut.png'))
+        self.tW.setTabIcon(0,QIcon(self.icon_folder + 'icon_chef_3colors.png'))
+        self.tW.setTabIcon(1,QIcon(self.icon_folder + 'icon_recipe_3colors.png'))
+        self.tW.setTabIcon(2,QIcon(self.icon_folder + 'icon_plate_3colors.png'))
+        self.tB.setItemIcon(0, QIcon(self.icon_folder + 'icon_menu_3colors.png'))
+        self.tB.setItemIcon(1, QIcon(self.icon_folder + 'icon_shopping_cart.png'))
+        self.pB_user.setIcon(QIcon(self.icon_folder + 'icon_user_t.png'))
+        self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
+        self.pB_calendar.setIcon(QIcon(self.icon_folder + 'icon_calendar.png'))
+        cw.load_pic(self.tag_vegan, self.icon_folder + 'tag_vegan_black_LD.png')
+        cw.load_pic(self.tag_kids, self.icon_folder + 'tag_kids_black_LD.png')
+        cw.load_pic(self.tag_double, self.icon_folder + 'tag_double_black_LD.png')
+        cw.load_pic(self.tag_summer, self.icon_folder + 'tag_ete_black_LD.png')
+        cw.load_pic(self.tag_winter, self.icon_folder + 'tag_hiver_black_LD.png')
+        cw.load_pic(self.tag_dessert, self.icon_folder + 'tag_dessert_black_LD.png')
+        cw.load_pic(self.tag_tips, self.icon_folder + 'tag_tips_black_LD.png')
+        cw.load_pic(self.tag_lunchdinner, self.icon_folder + 'tag_lunch_black_LD.png')
+        self.pB_back.setIcon(QIcon(self.icon_folder + 'icon_back.png'))
+        self.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        self.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
+        cw.load_pic(self.label_lunch, self.icon_folder + 'tag_lunch_color_LD.png')
+        cw.load_pic(self.label_dinner, self.icon_folder + 'tag_dinner_color_LD.png')
+        cw.load_pic(self.score_vegan, self.icon_folder + 'score_vegan_0.png')
+        cw.load_pic(self.score_kids, self.icon_folder + 'score_kids_0.png')
+        cw.load_pic(self.score_double, self.icon_folder + 'score_double_0.png')
+        cw.load_pic(self.score_summer, self.icon_folder + 'score_ete_0.png')
+        cw.load_pic(self.score_winter, self.icon_folder + 'score_hiver_0.png')
+        cw.load_pic(self.label_top, self.icon_folder + 'icon_list.png')
+        cw.load_pic(self.label_icon_carte, self.icon_folder + 'icon_menu_3colors_LD.png')
+        cw.load_pic(self.label_cocktail, self.icon_folder + 'icon_cocktail_3colors_LD.png')
+        self.pB_print.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        self.pB_send.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
+        self.pB_copy.setIcon(QIcon(self.icon_folder + 'icon_copy.png'))
+        self.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
+        self.pB_new_recipe.setIcon(QIcon(self.icon_folder + 'icon_new_recipe.png'))
+        self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
         
     def main(self):
         self.pW.show()
@@ -583,7 +574,7 @@ class MainGUI(QWidget):
     def on_new_menu(self):
         # start = time.process_time()
         
-        movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        movie = cw.gif_to_button(self.icon_folder + 'icon_cover.gif', self.pB_new_menu)
         
         self.new_menu()
         
@@ -600,8 +591,8 @@ class MainGUI(QWidget):
         
         movie.stop()
         # QCoreApplication.processEvents()
-        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
-        self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+        # self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
+        self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
     
     def new_menu(self):
         # current_QDate = self.dateEdit.date()
@@ -623,7 +614,7 @@ class MainGUI(QWidget):
         # print(self.current_menu)
 
     def populate_tW_menu(self, menu):
-        # movie = cw.gif_to_button(self.dirname + '/UI/images/icon_cover.gif', self.pB_new_menu)
+        # movie = cw.gif_to_button(self.icon_folder + 'icon_cover.gif', self.pB_new_menu)
         
         #reset tW_Menu
         self.tW_menu.setColumnCount(0)
@@ -665,7 +656,7 @@ class MainGUI(QWidget):
             self.on_new_stack(recipe_dinner_stack, idminus, i, length)
         
         QCoreApplication.processEvents()
-        # self.pB_new_menu.setIcon(QIcon(self.dirname + '/UI/images/icon_cover_5.png'))
+        # self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
 
     def on_new_stack(self, recipe_stack, id, k, length):
         qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
@@ -932,13 +923,13 @@ class MainGUI(QWidget):
                 tags = [self.tag_vegan, self.tag_kids, self.tag_double, self.tag_summer, self.tag_winter, self.tag_dessert, self.tag_tips]
                 tags_names = ['vegan', 'kids', 'double', 'ete', 'hiver', 'dessert', 'tips']
                 for tag, tag_name in zip(tags, tags_names):
-                    cw.load_pic(tag, self.dirname + '/UI/images/tag_%s_%s_LD.png' % (tag_name, ['black', 'color'][recipe_object.isTagged(tag_name)]))
+                    cw.load_pic(tag, self.icon_folder + 'tag_%s_%s_LD.png' % (tag_name, ['black', 'color'][recipe_object.isTagged(tag_name)]))
                 if recipe_object.isTagged('midi'):
-                    cw.load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_color_LD.png')
+                    cw.load_pic(self.tag_lunchdinner, self.icon_folder + 'tag_lunch_color_LD.png')
                 elif recipe_object.isTagged('soir'):
-                    cw.load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_dinner_color_LD.png')
+                    cw.load_pic(self.tag_lunchdinner, self.icon_folder + 'tag_dinner_color_LD.png')
                 else:
-                    cw.load_pic(self.tag_lunchdinner, self.dirname + '/UI/images/tag_lunch_black_LD.png')
+                    cw.load_pic(self.tag_lunchdinner, self.icon_folder + 'tag_lunch_black_LD.png')
             else:
                 self.on_wrong_recipe_name(recipe_name)
                 # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
@@ -1048,7 +1039,7 @@ class MainGUI(QWidget):
         self.history_popup.history = self.recipe_db.history
 
     def on_calendar(self):
-        self.movie = cw.gif_to_button(self.dirname + '/UI/images/icon_calendar.gif', self.pB_calendar)
+        self.movie = cw.gif_to_button(self.icon_folder + 'icon_calendar.gif', self.pB_calendar)
         
         # my_calendar_worker = cal.MyCalendar(self.current_menu)
         my_calendar_worker = gapi.MyCalendar(self.current_menu)
@@ -1061,7 +1052,7 @@ class MainGUI(QWidget):
     
     def on_calendar_gif_stop(self):
         self.movie.stop()
-        self.pB_calendar.setIcon(QIcon(self.dirname + '/UI/images/icon_calendar.png'))
+        self.pB_calendar.setIcon(QIcon(self.icon_folder + 'icon_calendar.png'))
         
     def on_ingredient_selection(self):
         #reset list menu background
@@ -1115,9 +1106,9 @@ class MainGUI(QWidget):
                                     self.default_storage,
                                     self.homepage.toString()]))
 
-        images = [self.dirname + '/UI/images/icon_menu_3colors_LD.png']
-        images.append(self.dirname + '/UI/images/icon_shopping_cart_LD.png')
-        images.append(self.dirname + '/UI/images/icon_user_color.png')
+        images = [self.icon_folder + 'icon_menu_3colors_LD.png']
+        images.append(self.icon_folder + 'icon_shopping_cart_LD.png')
+        images.append(self.icon_folder + 'icon_user_color.png')
         icon_dict = {'[ICON_MENU_PATH]': 'cid:%s' % (basename(images[0]))}
         icon_dict['[ICON_SHOPPING_PATH]'] = 'cid:%s' % (basename(images[1]))
         icon_dict['[ICON_TABLE_PATH]'] = 'cid:%s' % (basename(images[2]))
@@ -1134,9 +1125,9 @@ class MainGUI(QWidget):
         os.makedirs(self.default_storage + '/Menus/', exist_ok=True)
         pdf_title = self.default_storage + '/Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
                                                                             self.current_menu.to_day().strftime('%d_%m_%Y'))
-        images = [self.dirname + '/UI/images/icon_menu_3colors_LD.png']
-        images.append(self.dirname + '/UI/images/icon_shopping_cart_LD.png')
-        images.append(self.dirname + '/UI/images/icon_user_color.png')
+        images = [self.icon_folder + 'icon_menu_3colors_LD.png']
+        images.append(self.icon_folder + 'icon_shopping_cart_LD.png')
+        images.append(self.icon_folder + 'icon_user_color.png')
         my_printer = printer.Printer(pdf_title)
         # my_printer = printer.Printer('test.pdf')
         my_printer.print_shopping_list(self.current_menu, icons=images, images=self.compute_score(draw=False))
@@ -1144,7 +1135,7 @@ class MainGUI(QWidget):
         self.print_thread_function('Les menus du %s au %s ont été enregistrés<br/><a href="%s">%s</a>' % (self.current_menu.start_day.strftime('%d/%m/%Y'),
                                                                                         self.current_menu.to_day().strftime('%d/%m/%Y'), 
                                                                                         pdf_title, pdf_title),
-                                   icon_path = self.dirname + '/UI/images/icon_print.png')
+                                   icon_path = self.icon_folder + 'icon_print.png')
     
     def on_send_recipe(self):
         user_id_file = self.dirname + '/user.id'
@@ -1167,8 +1158,8 @@ class MainGUI(QWidget):
         recipe_name = self.lW_recipe.currentItem().text()
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
 
-        images = [self.dirname + '/UI/images/icon_recipe_3colors_LD_t.png']
-        images.append(self.dirname + '/UI/images/icon_user_color.png')
+        images = [self.icon_folder + 'icon_recipe_3colors_LD_t.png']
+        images.append(self.icon_folder + 'icon_user_color.png')
         icon_dict = {'[ICON_RECIPE_PATH]': 'cid:%s' % (basename(images[0]))}
         icon_dict['[ICON_TABLE_PATH]'] = 'cid:%s' % (basename(images[1]))
 
@@ -1192,7 +1183,7 @@ class MainGUI(QWidget):
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
 
         tags_names = ['vegan', 'kids', 'double', 'ete', 'hiver', 'dessert']
-        images = [self.dirname + '/UI/images/tag_%s_%s_LD.png' % (tag, ['black', 'color'][recipe_object.isTagged(tag)]) for tag in tags_names]
+        images = [self.icon_folder + 'tag_%s_%s_LD.png' % (tag, ['black', 'color'][recipe_object.isTagged(tag)]) for tag in tags_names]
 
         my_printer = printer.Printer(pdf_title)
         my_printer.print_recipe(recipe_object, images)
@@ -1200,10 +1191,10 @@ class MainGUI(QWidget):
         if not silent:
             # self.print_thread_function('La recette "%s" a été enregistrée<br/><a href="%s">%s</a>' % 
             #                            (recipe_name, pdf_title, pdf_title),
-            #                         icon_path = self.dirname + '/UI/images/icon_print.png')
+            #                         icon_path = self.icon_folder + 'icon_print.png')
             self.print_thread_function('La recette "%s" a été enregistrée<br/>%s' % 
                                        (recipe_name, pdf_title),
-                                    icon_path = self.dirname + '/UI/images/icon_print.png')
+                                    icon_path = self.icon_folder + 'icon_print.png')
 
         return pdf_title
 
@@ -1214,9 +1205,9 @@ class MainGUI(QWidget):
         
         if draw:
             for tag, tag_name in zip(tags, tags_names):
-                cw.load_pic(tag, self.dirname + '/UI/images/score_%s_%s.png' % (tag_name, score[tag_name]))
+                cw.load_pic(tag, self.icon_folder + 'score_%s_%s.png' % (tag_name, score[tag_name]))
 
-        return [self.dirname + '/UI/images/score_%s_%s.png' % (tag_name, score[tag_name]) for tag, tag_name in zip(tags, tags_names)]
+        return [self.icon_folder + 'score_%s_%s.png' % (tag_name, score[tag_name]) for tag, tag_name in zip(tags, tags_names)]
     
     def reset_recipes_list(self): #reset list of recipes
         self.lW_recipe.clear()     #reset list
@@ -1454,7 +1445,7 @@ class MainGUI(QWidget):
         #highlight success and keep current tab
         # self.tW.setCurrentWidget(self.tab_menus)
         self.print_thread_function('Recette "%s" ajoutée aux Menus !' % recipe_name,
-                                   icon_path = self.dirname + '/UI/images/icon_choice_recipe.png')
+                                   icon_path = self.icon_folder + 'icon_choice_recipe.png')
     
     def openDir(self, field, titre, dirpath = ''):
         if dirpath == '':
@@ -1466,7 +1457,7 @@ class MainGUI(QWidget):
         self.pB_user = QPushButton('', self.pW)
         self.pB_user.setIconSize(QSize(60,60))
         self.pB_user.setToolTip('Préférences')
-        self.pB_user.setStyleSheet('''
+        stylesheet = '''
                                 QPushButton{
                                     image: url(file:///../UI/images/icon_user.png);
                                     background-color: %s;
@@ -1482,7 +1473,11 @@ class MainGUI(QWidget):
                                 QPushButton:pressed{
                                     image: url(file:///../UI/images/icon_user_color_.png);
                                 }
-                                   ''' % (self.colors['#color5#'], self.colors['#color5#']))
+                                   ''' % (self.colors['#color5#'], self.colors['#color5#'])
+        if getattr(sys, 'frozen', False):
+            stylesheet = cw.convert_ui_image_paths(stylesheet)
+            
+        self.pB_user.setStyleSheet(stylesheet)
         self.tW.setCornerWidget(self.pB_user)
 
 def image_from_base64(base64_table, image_name):#Legacy function to store and read images -- can be removed
@@ -1517,15 +1512,15 @@ def start(recipe_db):
     app = QApplication(sys.argv)
 
     #current working directory
-    dirname = cw.dirname()
+    icon_folder = cw.dirname('UI/images')
     #declare and read GUI file
-    myUiFile = dirname + '/UI/Main_Window.ui'
+    myUiFile = cw.dirname('UI') + 'Main_Window.ui'
 
-    splash_pic = QPixmap(dirname + '/UI/images/splash_cooking.gif')
+    splash_pic = QPixmap(icon_folder + 'splash_cooking.gif')
     splash = QSplashScreen(splash_pic)
     
     movie = QMovie()
-    movie.setFileName(dirname + '/UI/images/splash_cooking.gif')
+    movie.setFileName(icon_folder + 'splash_cooking.gif')
     movie.frameChanged.connect(lambda: splash.setPixmap(movie.currentPixmap()))
     movie.start()
     splash.show()
@@ -1535,6 +1530,10 @@ def start(recipe_db):
                         QColor(COLORS['#color1_dark#']))
     
     w = QUiLoader().load(myUiFile)
+
+    if getattr(sys, 'frozen', False):
+        w.setStyleSheet(cw.convert_ui_image_paths(w.styleSheet()))
+
     #Create and display GUI object
     myGUI = MainGUI(parent = w, recipe_db = recipe_db)
     myGUI.main()
@@ -1578,7 +1577,7 @@ def debug(input = None):
 
 def main(): #Entry point
 
-    dirname = cw.dirname()
+    dirname = cw.dirname('')
     # input_recipe = dirname + '/MesRecettes (copy).ods'
     input_recipe = dirname + '/MesRecettes.csv'
     input_history = dirname + '/Historique.csv'

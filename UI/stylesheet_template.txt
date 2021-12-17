@@ -389,13 +389,13 @@
     }
     
     QCheckBox#cB_search_tag_dessert::indicator:unchecked {
-        image: url(./UI/images/tag_dessert_black_LD.png);
+        image: url(file:///../UI/images/tag_dessert_black_LD.png);
         width:50px;
         height:50px;
     }
     
     QCheckBox#cB_search_tag_dessert::indicator:checked {
-        image: url(./UI/images/tag_dessert_color_LD.png);
+        image: url(file:///../UI/images/tag_dessert_color_LD.png);
         width:50px;
         height:50px;
     }
@@ -406,13 +406,13 @@
     }
 
     QCheckBox#cB_search_recipe_name::indicator:checked, QCheckBox#cB_search_preparation::indicator:checked, QCheckBox#cB_search_ingredients::indicator:checked {
-        image: url(./UI/images/icon_check.png);
+        image: url(file:///../UI/images/icon_check.png);
         width:20px;
         height:20px;
     }
 
     QCheckBox#cB_search_recipe_name::indicator:unchecked, QCheckBox#cB_search_preparation::indicator:unchecked, QCheckBox#cB_search_ingredients::indicator:unchecked {
-        image: url(./UI/images/icon_uncheck.png);
+        image: url(file:///../UI/images/icon_uncheck.png);
         width:20px;
         height:20px;
     }
@@ -651,7 +651,6 @@ QComboBox::drop-down {
 }
 QComboBox::down-arrow {
      image: url(file:///../UI/images/icon_down_arrow.png);
-	/*image: url(file:///../UI/images/icon_edit.png);*/
 	width: 20px;
 	height: 20px;
 }

@@ -9,7 +9,7 @@ from add_replace import AddReplace
 import custom_widgets as cw
 from recipe import Recipe
 
-UI_FILE = cw.dirname() + '/UI/right_click_menu.ui'
+UI_FILE = cw.dirname('UI') + 'right_click_menu.ui'
 
 class RightClickMenu(QWidget):
     
@@ -36,16 +36,10 @@ class RightClickMenu(QWidget):
         self.connect_actions()
 
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        loader = QUiLoader()
-        widget = loader.load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
+        self.pW = cw.loadUI(self, UI_FILE)
         
     def saveComponents(self):
-        self.dirname = cw.dirname()
+        self.dirname = cw.dirname('UI/images')
 
         self.frame_actions: QFrame
         self.frame_actions = self.pW.frame_actions
@@ -102,12 +96,12 @@ class RightClickMenu(QWidget):
             self.tW_menus.setCellWidget(i%2, int(i/2), card_widget)
         
         # self.tW_menus.cellWidget(0,0).show()
-        self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_check_LD.png'))
-        self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel_LD.png'))
-        self.pB_reset.setIcon(QIcon(self.dirname + '/UI/images/icon_back_LD.png'))
-        cw.load_pic(self.label_lunch, self.dirname + '/UI/images/tag_midi_SLD.png')
-        cw.load_pic(self.label_dinner, self.dirname + '/UI/images/tag_soir_SLD.png')
-        cw.load_pic(self.label_carte, self.dirname + '/UI/images/icon_menu_SLD.png')
+        self.pB_ok.setIcon(QIcon(self.dirname + 'icon_check_LD.png'))
+        self.pB_cancel.setIcon(QIcon(self.dirname + 'icon_cancel_LD.png'))
+        self.pB_reset.setIcon(QIcon(self.dirname + 'icon_back_LD.png'))
+        cw.load_pic(self.label_lunch, self.dirname + 'tag_midi_SLD.png')
+        cw.load_pic(self.label_dinner, self.dirname + 'tag_soir_SLD.png')
+        cw.load_pic(self.label_carte, self.dirname + 'icon_menu_SLD.png')
                 
     def connect_actions(self):
         self.pB_cancel.clicked.connect(self.on_cancel)

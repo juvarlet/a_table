@@ -8,7 +8,7 @@ from PySide2.QtCore import*
 from uid_widget import UIDWidget
 import custom_widgets as cw
 
-UI_FILE = cw.dirname() + '/UI/ingredient_item.ui'
+UI_FILE = cw.dirname('UI') + 'ingredient_item.ui'
 
 class IngredientItem(UIDWidget):
     WIDGET_EDIT_ING_MODE = "0000"
@@ -21,7 +21,7 @@ class IngredientItem(UIDWidget):
     def __init__(self, ingredient:Ingredient, parent=None):
         super(IngredientItem, self).__init__(parent)
 
-        self.dirname = cw.dirname()
+        self.dirname = cw.dirname('UI/images')
         self.loadUI()
         # self.lw_ingredients = lw_ingredients
         self.saveComponents()
@@ -45,12 +45,7 @@ class IngredientItem(UIDWidget):
         self.btn_confirm_changes.clicked.connect(self.confirmChanges)
     
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        widget = QUiLoader().load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.parent_widget = widget
+        self.parent_widget = cw.loadUI(self, UI_FILE)
     
     def saveComponents(self):
         self.widget_show_ing:QWidget
@@ -71,16 +66,16 @@ class IngredientItem(UIDWidget):
         self.le_ing_qty_unit = self.parent_widget.le_ing_qty_unit
         self.btn_remove_ing : QPushButton
         self.btn_remove_ing = self.parent_widget.btn_remove_ing
-        self.btn_remove_ing.setIcon(QtGui.QIcon(self.dirname + '/UI/images/icon_bin_2.png'))
+        self.btn_remove_ing.setIcon(QtGui.QIcon(self.dirname + 'icon_bin_2.png'))
         self.btn_edit_ing:QPushButton
         self.btn_edit_ing = self.parent_widget.btn_edit_ing
-        self.btn_edit_ing.setIcon(QtGui.QIcon(self.dirname + '/UI/images/icon_edit_2.png'))
+        self.btn_edit_ing.setIcon(QtGui.QIcon(self.dirname + 'icon_edit_2.png'))
         self.btn_cancel_changes:QPushButton
         self.btn_cancel_changes = self.parent_widget.btn_cancel_changes
-        self.btn_cancel_changes.setIcon(QtGui.QIcon(self.dirname + '/UI/images/icon_cancel.png'))
+        self.btn_cancel_changes.setIcon(QtGui.QIcon(self.dirname + 'icon_cancel.png'))
         self.btn_confirm_changes:QPushButton
         self.btn_confirm_changes = self.parent_widget.btn_confirm_changes
-        self.btn_confirm_changes.setIcon(QtGui.QIcon(self.dirname + '/UI/images/icon_ok.png'))
+        self.btn_confirm_changes.setIcon(QtGui.QIcon(self.dirname + 'icon_ok.png'))
         self.btn_ing_is_optional:QPushButton
         self.btn_ing_is_optional = self.parent_widget.btn_ing_is_optional
 

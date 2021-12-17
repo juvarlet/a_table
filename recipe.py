@@ -5,7 +5,7 @@ import custom_widgets as cw
 import os
 from stylesheet_update import COLORS
 
-LINE_RECIPE_UI = cw.dirname() + '/UI/line_recipe.ui'
+LINE_RECIPE_UI = cw.dirname('UI') + 'line_recipe.ui'
 
 class Recipe:
     def __init__(self, uid, name, ingredients_list_qty = {}, preparation = '', time = 0, tags = [], image = ''):
@@ -18,7 +18,7 @@ class Recipe:
         self.tags = tags
         self.image = image
         
-        self.dirname = cw.dirname()
+        self.dirname = cw.dirname('')
         # self.init_line_widget()
     
     def __str__(self):

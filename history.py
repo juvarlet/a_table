@@ -10,7 +10,7 @@ import custom_widgets as cw
 import pyautogui
 from stylesheet_update import COLORS
 
-UI_FILE = cw.dirname() + '/UI/history.ui'
+UI_FILE = cw.dirname('UI') + 'history.ui'
 
 class History(QWidget):
     
@@ -24,7 +24,7 @@ class History(QWidget):
         self.history = history
         self.recipeMultiSelection = []
         self.colors = COLORS
-        self.dirname = cw.dirname()
+        self.dirname = cw.dirname('UI/images')
         self.loadUI()
         self.saveComponents()
         
@@ -34,12 +34,7 @@ class History(QWidget):
         self.selectWidgetMode(new_history)
     
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        widget = QUiLoader().load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
+        self.pW = cw.loadUI(self, UI_FILE)
     
     def saveComponents(self):
         self.tW_history: QTableWidget
@@ -89,7 +84,7 @@ class History(QWidget):
     
     def initial_state(self):
         self.setWindowTitle('Historique')
-        self.setWindowIcon(QIcon(self.dirname + '/UI/images/icon_plate_3colors.png'))
+        self.setWindowIcon(QIcon(self.dirname + 'icon_plate_3colors.png'))
         self.setWindowModality(Qt.WindowModal)
         
         self.tW_history.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -103,11 +98,11 @@ class History(QWidget):
                   self.label_deco_13,self.label_deco_14,self.label_deco_15,self.label_deco_16]
         
         for i, label in enumerate(labels):
-            cw.load_pic(label, self.dirname + '/UI/images/icon_deco_%s.png' % (i+1))
+            cw.load_pic(label, self.dirname + 'icon_deco_%s.png' % (i+1))
         
-        cw.load_pic(self.label_warning, self.dirname + '/UI/images/icon_fork_X_3colors_t_LD.png')
-        self.pB_cancel.setIcon(QIcon(self.dirname + '/UI/images/icon_cancel.png'))
-        self.pB_ok.setIcon(QIcon(self.dirname + '/UI/images/icon_ok.png'))
+        cw.load_pic(self.label_warning, self.dirname + 'icon_fork_X_3colors_t_LD.png')
+        self.pB_cancel.setIcon(QIcon(self.dirname + 'icon_cancel.png'))
+        self.pB_ok.setIcon(QIcon(self.dirname + 'icon_ok.png'))
         
         self.reset_history()
     

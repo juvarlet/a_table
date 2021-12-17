@@ -319,8 +319,7 @@ class MyCalendar(QThread):#QThread
         QThread.__init__(self)
         self.menu = my_menu
         self.signal = MySignal()
-        self.dirname = cw.dirname()
-        self.icon_path = self.dirname + '/UI/images/icon_calendar.png'
+        self.icon_path = cw.dirname('UI/images') + 'icon_calendar.png'
         self.occurences = 0
         
     def run(self):
@@ -423,8 +422,8 @@ class MyCalendar(QThread):#QThread
 
 class MyMailbox(QThread):
     
-    CORE_SHOPPING_HTML = cw.dirname() + '/shopping_core.html'
-    CORE_RECIPE_HTML = cw.dirname() + '/recipe_core.html'
+    CORE_SHOPPING_HTML = cw.dirname('') + 'shopping_core.html'
+    CORE_RECIPE_HTML = cw.dirname('') + 'recipe_core.html'
 
     def __init__(self, option, list_args):
         QThread.__init__(self)
@@ -450,8 +449,7 @@ class MyMailbox(QThread):
             self.pdf = pdf
             
         self.signal = MySignal()
-        self.dirname = cw.dirname()
-        self.icon_path = self.dirname + '/UI/images/icon_send.png'
+        self.icon_path = cw.dirname('UI/images') + '/UI/images/icon_send.png'
         
     
     def run(self):

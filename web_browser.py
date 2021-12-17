@@ -16,7 +16,7 @@ import pyautogui
 from stylesheet_update import COLORS
 import uuid
 
-UI_FILE = cw.dirname() + '/UI/web_browser.ui'
+UI_FILE = cw.dirname('UI') + 'web_browser.ui'
 
 class WebBrowser(QWidget):
     
@@ -30,7 +30,7 @@ class WebBrowser(QWidget):
         super(WebBrowser, self).__init__(parent)
 
         self.colors = COLORS
-        self.dirname = cw.dirname()
+        self.icon_folder = cw.dirname('UI/images')
         self.user_settings = user_settings
         self.myThreads = []
         
@@ -43,12 +43,7 @@ class WebBrowser(QWidget):
         self.update_modif()
         
     def loadUI(self):
-        vlayout = QVBoxLayout()
-        vlayout.setMargin(0)
-        widget = QUiLoader().load(UI_FILE)
-        vlayout.addWidget(widget)
-        self.setLayout(vlayout)
-        self.pW = widget
+        self.pW = cw.loadUI(self, UI_FILE)
     
     def saveComponents(self):
         self.gL_web: QGridLayout
@@ -78,42 +73,42 @@ class WebBrowser(QWidget):
         self.pB_cook = QPushButton('', self.frame_wB)
         self.pB_cook.setFixedSize(60,60)
         self.pB_cook.setIconSize(QSize(40,40))
-        self.pB_cook.setIcon(QIcon(self.dirname + '/UI/images/icon_service.png'))
+        self.pB_cook.setIcon(QIcon(self.icon_folder + 'icon_service.png'))
         self.pB_cook.setToolTip('Recopier cette recette')
         self.navtb.addWidget(self.pB_cook)
         
-        self.back_btn = QAction( QIcon(self.dirname + '/UI/images/icon_back.png'), "Back", self)
+        self.back_btn = QAction( QIcon(self.icon_folder + 'icon_back.png'), "Back", self)
         self.back_btn.setToolTip("Page précédente")
         self.navtb.addAction(self.back_btn)
         
-        self.next_btn = QAction( QIcon(self.dirname + '/UI/images/icon_fwd.png'), "Forward", self)
+        self.next_btn = QAction( QIcon(self.icon_folder + 'icon_fwd.png'), "Forward", self)
         self.next_btn.setToolTip("Page suivante")
         self.navtb.addAction(self.next_btn)
 
-        self.reload_btn = QAction( QIcon(self.dirname + '/UI/images/icon_reload.png'), "Reload", self)
+        self.reload_btn = QAction( QIcon(self.icon_folder + 'icon_reload.png'), "Reload", self)
         self.reload_btn.setToolTip("Recharger la page")
         self.navtb.addAction(self.reload_btn)
 
-        self.home_btn = QAction( QIcon(self.dirname + '/UI/images/icon_chef.png'), "Home", self)
+        self.home_btn = QAction( QIcon(self.icon_folder + 'icon_chef.png'), "Home", self)
         self.home_btn.setToolTip("Page d'accueil")
         self.navtb.addAction(self.home_btn)
         
         self.httpsicon = QLabel()
-        self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_nolock_.png') )
+        self.httpsicon.setPixmap( QPixmap(self.icon_folder + 'icon_nolock_.png') )
         self.navtb.addWidget(self.httpsicon)
 
         self.urlbar = QLineEdit()
         self.navtb.addWidget(self.urlbar)
 
-        self.stop_btn = QAction( QIcon(self.dirname + '/UI/images/icon_fork_X.png'), "Stop", self)
+        self.stop_btn = QAction( QIcon(self.icon_folder + 'icon_fork_X.png'), "Stop", self)
         self.stop_btn.setToolTip("Interrompre le chargement")
         self.navtb.addAction(self.stop_btn)
         
-        self.open_file_action = QAction( QIcon(self.dirname + '/UI/images/icon_open.png'), "Ouvrir une page web...", self)
+        self.open_file_action = QAction( QIcon(self.icon_folder + 'icon_open.png'), "Ouvrir une page web...", self)
         self.open_file_action.setToolTip("Ouvrir le fichier HTML")
         self.navtb.addAction(self.open_file_action)
 
-        self.save_file_action = QAction( QIcon(self.dirname + '/UI/images/icon_save.png'), "Enregistrer sous...", self)
+        self.save_file_action = QAction( QIcon(self.icon_folder + 'icon_save.png'), "Enregistrer sous...", self)
         self.save_file_action.setToolTip("Enregistrer la page en cours")
         self.navtb.addAction(self.save_file_action)
         
@@ -171,11 +166,11 @@ class WebBrowser(QWidget):
 
         if q.scheme() == 'https':
             # Secure padlock icon
-            self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_lock_.png') )
+            self.httpsicon.setPixmap( QPixmap(self.icon_folder + 'icon_lock_.png') )
 
         else:
             # Insecure padlock icon
-            self.httpsicon.setPixmap( QPixmap(self.dirname + '/UI/images/icon_nolock_.png') )
+            self.httpsicon.setPixmap( QPixmap(self.icon_folder + 'icon_nolock_.png') )
 
         self.urlbar.setText( q.toString() )
         self.urlbar.setCursorPosition(0)
@@ -247,12 +242,12 @@ class WebBrowser(QWidget):
             # self.display_error(message)
         else:
             message += "<br/>La recette a été correctement importée !"
-            self.message.emit([message, self.dirname + '/UI/images/icon_service.png'], False)
-            # self.print_thread_function(message, icon_path = self.dirname + '/UI/images/icon_service.png')
+            self.message.emit([message, self.icon_folder + 'icon_service.png'], False)
+            # self.print_thread_function(message, icon_path = self.icon_folder + 'icon_service.png')
        
     def on_new_webpage(self, url, okToParse):
         if url == self.urlbar.text():#make sure url validated matches current url (asynchronous thread treatment)
-            icon = QIcon(self.dirname + '/UI/images/icon_service%s.png' % ['_', ''][okToParse])
+            icon = QIcon(self.icon_folder + 'icon_service%s.png' % ['_', ''][okToParse])
             self.pB_cook.setIcon(icon)
             self.pB_cook.setToolTip(['Copier le lien', 'Importer la recette'][okToParse])
     

@@ -23,7 +23,8 @@ class Printer:
         pdfmetrics.registerFont(TTFont('Poiret One', '/home/jv/.local/share/fonts/PoiretOne-Regular.ttf'))
         # self.canvas = Canvas(output_pdf, pagesize = A4)
         
-        self.dirname = cw.dirname()
+        self.dirname = cw.dirname('')
+        self.icon_folder = cw.dirname('UI/images')
         self.doc = SimpleDocTemplate(output_pdf,pagesize=A4,
                         rightMargin=24,leftMargin=24,
                         topMargin=70,bottomMargin=70)
@@ -41,7 +42,7 @@ class Printer:
         Story.append(Paragraph(ptext, styles['myTitle']))
         ptext = 'du %s au %s' % ('lundi', 'dimanche')
         Story.append(Paragraph(ptext, styles['myTitle']))
-        image = self.dirname + '/UI/images/icon_menu_3colors_LD.png'
+        image = self.icon_folder + 'icon_menu_3colors_LD.png'
         im = Image(image, 1*cm, 1*cm)
         Story.append(im)
         Story.append(Spacer(1, 12))
@@ -170,7 +171,7 @@ class Printer:
         self.doc.build(self.Story, onFirstPage=self.AllPageSetup, onLaterPages=self.AllPageSetup)
         
     def print_recipe(self, recipe, images =[]):
-        self.add_icon(self.dirname + '/UI/images/icon_recipe_3colors_LD_t.png')
+        self.add_icon(self.icon_folder + 'icon_recipe_3colors_LD_t.png')
         self.write('Recette', 'Title_Center') 
         self.write(recipe.name, 'Subtitle_Center')
         
@@ -350,26 +351,26 @@ class Printer:
         canvas.saveState()
         
         #background
-        canvas.drawImage(self.dirname + '/UI/images/clement_chef_bg2.jpg', x=0.5*cm, y=0.5*cm, width=20*cm, height=28.7*cm)
+        canvas.drawImage(self.icon_folder + 'clement_chef_bg2.jpg', x=0.5*cm, y=0.5*cm, width=20*cm, height=28.7*cm)
 
         #header
         canvas.setFont("Poiret One", 12)
         canvas.setStrokeColor('#fdf1d9')
         canvas.setFillColor('#1a5d75')
-        canvas.drawImage(self.dirname + '/UI/images/donut.png', x=1*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.icon_folder + 'donut.png', x=1*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
         canvas.drawString(2.2*cm, 28*cm, 'À table')
         canvas.line(1.5*cm, 27.5*cm, 19.5*cm, 27.5*cm)
-        canvas.drawImage(self.dirname + '/UI/images/icon_chef_3colors.png', x=19*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
-        canvas.drawImage(self.dirname + '/UI/images/icon_recipe_3colors.png', x=17*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
-        canvas.drawImage(self.dirname + '/UI/images/icon_plate_3colors.png', x=15*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.icon_folder + 'icon_chef_3colors.png', x=19*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.icon_folder + 'icon_recipe_3colors.png', x=17*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.icon_folder + 'icon_plate_3colors.png', x=15*cm, y=27.7*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
 
         #footers
-        canvas.drawImage(self.dirname + '/UI/images/icon_cocktail_3colors.png', x=19*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.icon_folder + 'icon_cocktail_3colors.png', x=19*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
         canvas.drawRightString(18.5*cm, 1.3*cm, 'Contact : notification.a.table@gmail.com')
         canvas.line(1.5*cm, 2.1*cm, 19.5*cm, 2.1*cm)
-        canvas.drawImage(self.dirname + '/UI/images/score_ete_8.png', x=2*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
-        canvas.drawImage(self.dirname + '/UI/images/icon_cover_3colors_new.png', x=4*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
-        canvas.drawImage(self.dirname + '/UI/images/score_vegan_8.png', x=6*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.icon_folder + 'score_ete_8.png', x=2*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.icon_folder + 'icon_cover_3colors_new.png', x=4*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
+        canvas.drawImage(self.icon_folder + 'score_vegan_8.png', x=6*cm, y=0.9*cm, width=1*cm, height=1*cm, mask = [0,0,0,0,0,0])
         
 
         
