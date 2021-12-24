@@ -166,16 +166,10 @@ class MainGUI(QWidget):
         self.label_recipe_image = self.pW.label_image
         self.pB_back: QPushButton
         self.pB_back = self.pW.pB_back
-        self.pB_print_2: QPushButton
-        self.pB_print_2 = self.pW.pB_print_2
-        self.pB_send_2: QPushButton
-        self.pB_send_2 = self.pW.pB_send_2
-        self.pB_modif_2: QPushButton
-        self.pB_modif_2 = self.pW.pB_modif_2
         self.pB_new_recipe: QPushButton
         self.pB_new_recipe = self.pW.pB_new_recipe
-        self.pB_delete: QPushButton
-        self.pB_delete = self.pW.pB_delete
+        self.pB_action_recipe: QPushButton
+        self.pB_action_recipe = self.pW.pB_action_recipe
         self.tE_ingredients: QTextEdit
         self.tE_ingredients = self.pW.tE_ingredients
         self.tE_recipe: QTextBrowser
@@ -212,6 +206,10 @@ class MainGUI(QWidget):
         self.frame_search = self.pW.frame_recherche
         self.frame_edit_recipe: QFrame
         self.frame_edit_recipe = self.pW.frame_edit_recipe
+        self.frame_details: QFrame
+        self.frame_details = self.pW.frame_details
+        self.frame_list_recipes: QFrame
+        self.frame_list_recipes = self.pW.frame_liste_recettes
         self.lE_with: QLineEdit
         self.lE_with = self.pW.lE_with
         self.frame_tags: QFrame
@@ -342,7 +340,24 @@ class MainGUI(QWidget):
         self.reset_recipes_list()
         self.lW_recipe.setContextMenuPolicy(Qt.CustomContextMenu)
         # self.lW_recipe.setMouseTracking(True)
-        self.pB_back.hide()      
+        self.pB_back.hide()
+        
+        self.pB_action_menu = QMenu(self)
+        self.actionWidget = QWidgetAction(self.pB_action_menu)
+        ui_actions = cw.dirname('UI') + 'actions_recipe.ui'
+        self.widget_menu = QUiLoader().load(ui_actions)
+        self.widget_menu.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
+        self.widget_menu.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
+        self.widget_menu.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        self.widget_menu.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        self.actionWidget.setDefaultWidget(self.widget_menu)
+        self.pB_action_menu.addAction(self.actionWidget)
+        self.pB_action_recipe.setMenu(self.pB_action_menu)
+        
+        self.pB_modif_2 = self.widget_menu.pB_modif_2
+        self.pB_send_2 = self.widget_menu.pB_send_2
+        self.pB_print_2 = self.widget_menu.pB_print_2
+        self.pB_delete = self.widget_menu.pB_delete
 
         # self.populate_lW_recipe()
         
@@ -382,8 +397,11 @@ class MainGUI(QWidget):
         cw.load_pic(self.tag_tips, self.icon_folder + 'tag_tips_black_LD.png')
         cw.load_pic(self.tag_lunchdinner, self.icon_folder + 'tag_lunch_black_LD.png')
         self.pB_back.setIcon(QIcon(self.icon_folder + 'icon_back.png'))
-        self.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        self.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
         self.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
+        self.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        self.pB_action_recipe.setIcon(QIcon(self.icon_folder + 'icon_actions.png'))
         cw.load_pic(self.label_lunch, self.icon_folder + 'tag_lunch_color_LD.png')
         cw.load_pic(self.label_dinner, self.icon_folder + 'tag_dinner_color_LD.png')
         cw.load_pic(self.score_vegan, self.icon_folder + 'score_vegan_0.png')
@@ -397,9 +415,7 @@ class MainGUI(QWidget):
         self.pB_print.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
         self.pB_send.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
         self.pB_copy.setIcon(QIcon(self.icon_folder + 'icon_copy.png'))
-        self.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
         self.pB_new_recipe.setIcon(QIcon(self.icon_folder + 'icon_new_recipe.png'))
-        self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
         
     def main(self):
         self.pW.show()
@@ -416,7 +432,9 @@ class MainGUI(QWidget):
         self.pB_send.clicked.connect(self.on_send_shopping_list)
         self.pB_print.clicked.connect(self.on_print_shopping_list)
         self.pB_send_2.clicked.connect(self.on_send_recipe)
+        self.pB_send_2.clicked.connect(self.pB_action_menu.close)
         self.pB_print_2.clicked.connect(self.on_print_recipe)
+        self.pB_print_2.clicked.connect(self.pB_action_menu.close)
         self.pB_new_recipe.clicked.connect(self.on_new_recipe)
         self.pB_modif_2.clicked.connect(self.on_edit_recipe)
         self.pB_delete.clicked.connect(self.on_delete_recipe)
@@ -430,6 +448,9 @@ class MainGUI(QWidget):
         self.cB_calendar.stateChanged.connect(self.on_export_condition)
         self.cB_history.stateChanged.connect(self.on_export_condition)
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
+        self.pB_modif_2.toggled.connect(self.frame_edit_recipe.setVisible)
+        self.pB_modif_2.toggled.connect(self.frame_details.setHidden)
+        self.pB_modif_2.toggled.connect(self.frame_list_recipes.setHidden)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
         self.lE_with.textChanged.connect(self.dynamic_filter)
@@ -935,7 +956,7 @@ class MainGUI(QWidget):
                 # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
         
     def on_recipe_link(self, link):
-        self.reset_recipes_list()
+        # self.reset_recipes_list()
         self.previous_recipe_name = self.label_recipe_title.text()
         lwi = self.lW_recipe.findItems(link.toString(), Qt.MatchFixedString)[0]
         self.lW_recipe.scrollToItem(lwi)
@@ -1243,10 +1264,11 @@ class MainGUI(QWidget):
 
     def disable_other_tabs(self):
         self.tW.setTabEnabled(0, False)
-        self.tW.setTabEnabled(2, False)
+        # self.tW.setTabEnabled(2, False)
         self.cB_search.setEnabled(False)
         self.pB_new_recipe.setEnabled(False)
         self.pB_modif_2.setEnabled(False)
+        self.pB_action_menu.close()
 
     def on_new_recipe(self):
         self.disable_other_tabs()
@@ -1306,7 +1328,7 @@ class MainGUI(QWidget):
 
     def reenable_other_tabs(self):
         self.tW.setTabEnabled(0, True)
-        self.tW.setTabEnabled(2, True)
+        # self.tW.setTabEnabled(2, True)
         self.cB_search.setEnabled(True)
         self.pB_new_recipe.setEnabled(True)
         self.pB_modif_2.setEnabled(True)

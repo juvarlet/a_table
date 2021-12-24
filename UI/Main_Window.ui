@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1206</width>
-    <height>646</height>
+    <width>1277</width>
+    <height>635</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
         background-color: #fdf1d9;
     }
     
-	QFrame#frame_carte, QFrame#frame_save {
+	QFrame#frame_carte, QFrame#frame_save, QFrame#frame_new_recipe{
 		background-color: #fdf1d9;
 	}
     QFrame#frame_tags_2{
@@ -52,7 +52,7 @@
         background-color:#ffe0ad;
     }
     
-    QFrame#frame_details, QFrame#frame_new_recipe, QFrame#frame_6, 
+    QFrame#frame_details, QFrame#frame_6, 
     QFrame#frame_4, QFrame#frame_16, QFrame#frame_8, QFrame#frame_9, 
     QFrame#frame_7, QFrame#frame_10, QFrame#frame_20, QFrame#frame_ingredients,
     QFrame#frame_wB, QFrame#frame_17, QFrame#frame_19{
@@ -930,8 +930,8 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1132</width>
-                <height>430</height>
+                <width>1203</width>
+                <height>419</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1403,7 +1403,7 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1132</width>
+                <width>1137</width>
                 <height>430</height>
                </rect>
               </property>
@@ -1962,6 +1962,82 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QFrame" name="frame_new_recipe">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_12">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>5</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="1">
+                     <widget class="QPushButton" name="pB_new_recipe">
+                      <property name="toolTip">
+                       <string>Nouvelle recette</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>images/icon_new_recipe.png</normaloff>images/icon_new_recipe.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>50</width>
+                        <height>50</height>
+                       </size>
+                      </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <spacer name="horizontalSpacer_7">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="0" column="0">
+                     <spacer name="horizontalSpacer_9">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -1989,24 +2065,29 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_33">
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label_6">
-                      <property name="font">
-                       <font>
-                        <family>Poiret One</family>
-                        <pointsize>16</pointsize>
-                        <weight>75</weight>
-                        <italic>false</italic>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Préparation :</string>
-                      </property>
-                     </widget>
-                    </item>
+                    <property name="leftMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="horizontalSpacing">
+                     <number>2</number>
+                    </property>
                     <item row="0" column="0" alignment="Qt::AlignHCenter">
                      <widget class="QFrame" name="frame_tags">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>80</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
                       </property>
@@ -2014,13 +2095,33 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_8">
-                       <item row="1" column="0">
-                        <widget class="QLabel" name="label_summer">
+                       <item row="0" column="0">
+                        <widget class="QLabel" name="label_double">
                          <property name="toolTip">
-                          <string>Plat d'été</string>
+                          <string>Peut servir pour 2 repas</string>
                          </property>
                          <property name="text">
-                          <string>tagsum</string>
+                          <string>tagdouble</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="3">
+                        <widget class="QLabel" name="label_vegan">
+                         <property name="toolTip">
+                          <string>Vegan</string>
+                         </property>
+                         <property name="text">
+                          <string>tagvegan</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="3">
+                        <widget class="QLabel" name="label_tips">
+                         <property name="toolTip">
+                          <string>Préparation</string>
+                         </property>
+                         <property name="text">
+                          <string>tagtips</string>
                          </property>
                         </widget>
                        </item>
@@ -2044,26 +2145,6 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                          </property>
                         </widget>
                        </item>
-                       <item row="0" column="0">
-                        <widget class="QLabel" name="label_double">
-                         <property name="toolTip">
-                          <string>Peut servir pour 2 repas</string>
-                         </property>
-                         <property name="text">
-                          <string>tagdouble</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="3">
-                        <widget class="QLabel" name="label_tips">
-                         <property name="toolTip">
-                          <string>Préparation</string>
-                         </property>
-                         <property name="text">
-                          <string>tagtips</string>
-                         </property>
-                        </widget>
-                       </item>
                        <item row="0" column="1">
                         <widget class="QLabel" name="label_kids">
                          <property name="toolTip">
@@ -2071,6 +2152,16 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                          </property>
                          <property name="text">
                           <string>tagkids</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QLabel" name="label_summer">
+                         <property name="toolTip">
+                          <string>Plat d'été</string>
+                         </property>
+                         <property name="text">
+                          <string>tagsum</string>
                          </property>
                         </widget>
                        </item>
@@ -2084,20 +2175,85 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                          </property>
                         </widget>
                        </item>
-                       <item row="0" column="3">
-                        <widget class="QLabel" name="label_vegan">
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QFrame" name="frame_7">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>20</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_16">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <item row="0" column="0">
+                        <widget class="QPushButton" name="pB_action_recipe">
+                         <property name="maximumSize">
+                          <size>
+                           <width>70</width>
+                           <height>70</height>
+                          </size>
+                         </property>
                          <property name="toolTip">
-                          <string>Vegan</string>
+                          <string>Actions...</string>
                          </property>
                          <property name="text">
-                          <string>tagvegan</string>
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset>
+                           <normaloff>images/icon_actions.png</normaloff>images/icon_actions.png</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>50</width>
+                           <height>50</height>
+                          </size>
                          </property>
                         </widget>
                        </item>
                       </layout>
                      </widget>
                     </item>
-                    <item row="2" column="0">
+                    <item row="1" column="0" colspan="2">
+                     <widget class="QLabel" name="label_6">
+                      <property name="font">
+                       <font>
+                        <family>Poiret One</family>
+                        <pointsize>16</pointsize>
+                        <weight>75</weight>
+                        <italic>false</italic>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Préparation :</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0" colspan="2">
                      <widget class="QTextBrowser" name="tE_recipe">
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
@@ -2132,17 +2288,38 @@ p, li { white-space: pre-wrap; }
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_26">
-                    <item row="0" column="2" alignment="Qt::AlignLeft">
-                     <widget class="QPushButton" name="pB_send_2">
+                    <property name="leftMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="1" alignment="Qt::AlignLeft">
+                     <widget class="QPushButton" name="pB_back">
+                      <property name="maximumSize">
+                       <size>
+                        <width>70</width>
+                        <height>70</height>
+                       </size>
+                      </property>
                       <property name="toolTip">
-                       <string>Envoyer</string>
+                       <string>Revenir à la recette précédente</string>
                       </property>
                       <property name="text">
                        <string/>
                       </property>
                       <property name="icon">
                        <iconset>
-                        <normaloff>images/icon_send.png</normaloff>images/icon_send.png</iconset>
+                        <normaloff>images/icon_back.png</normaloff>images/icon_back.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2164,112 +2341,6 @@ p, li { white-space: pre-wrap; }
                        </size>
                       </property>
                      </spacer>
-                    </item>
-                    <item row="0" column="1" alignment="Qt::AlignLeft">
-                     <widget class="QPushButton" name="pB_back">
-                      <property name="toolTip">
-                       <string>Revenir à la recette précédente</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="icon">
-                       <iconset>
-                        <normaloff>images/icon_back.png</normaloff>images/icon_back.png</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>50</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="3" alignment="Qt::AlignLeft">
-                     <widget class="QPushButton" name="pB_print_2">
-                      <property name="toolTip">
-                       <string>Imprimer</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="icon">
-                       <iconset>
-                        <normaloff>images/icon_print.png</normaloff>images/icon_print.png</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>50</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QPushButton" name="pB_delete">
-                      <property name="toolTip">
-                       <string>Supprimer cette recette</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="icon">
-                       <iconset>
-                        <normaloff>images/icon_bin.png</normaloff>images/icon_bin.png</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>50</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="2">
-                     <widget class="QPushButton" name="pB_modif_2">
-                      <property name="toolTip">
-                       <string>Modifier cette recette</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="icon">
-                       <iconset>
-                        <normaloff>images/icon_edit.png</normaloff>images/icon_edit.png</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>50</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="3">
-                     <widget class="QPushButton" name="pB_new_recipe">
-                      <property name="toolTip">
-                       <string>Nouvelle recette</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="icon">
-                       <iconset>
-                        <normaloff>images/icon_new_recipe.png</normaloff>images/icon_new_recipe.png</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>50</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -2394,12 +2465,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>cB_search_preparation</tabstop>
   <tabstop>lW_recettes</tabstop>
   <tabstop>tE_recipe</tabstop>
-  <tabstop>pB_send_2</tabstop>
   <tabstop>pB_back</tabstop>
-  <tabstop>pB_print_2</tabstop>
-  <tabstop>pB_delete</tabstop>
-  <tabstop>pB_modif_2</tabstop>
-  <tabstop>pB_new_recipe</tabstop>
   <tabstop>tE_ingredients</tabstop>
   <tabstop>cB_recherche</tabstop>
   <tabstop>pB_send</tabstop>
@@ -2434,54 +2500,6 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>pB_modif_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>frame_edit_recipe</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1018</x>
-     <y>595</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1146</x>
-     <y>562</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_modif_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>frame_details</receiver>
-   <slot>setHidden(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1018</x>
-     <y>595</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>784</x>
-     <y>388</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_modif_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>pB_new_recipe</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1018</x>
-     <y>595</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1098</x>
-     <y>595</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pB_new_recipe</sender>
    <signal>toggled(bool)</signal>
    <receiver>frame_edit_recipe</receiver>
@@ -2510,70 +2528,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>784</x>
      <y>388</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_new_recipe</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>pB_modif_2</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1098</x>
-     <y>595</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1018</x>
-     <y>595</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_new_recipe</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>pB_delete</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1098</x>
-     <y>595</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>938</x>
-     <y>595</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_modif_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>pB_delete</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1018</x>
-     <y>595</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>938</x>
-     <y>595</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pB_modif_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>frame_liste_recettes</receiver>
-   <slot>setHidden(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1018</x>
-     <y>595</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>131</x>
-     <y>416</y>
     </hint>
    </hints>
   </connection>
