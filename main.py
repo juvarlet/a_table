@@ -354,6 +354,19 @@ class MainGUI(QWidget):
         self.pB_action_menu.addAction(self.actionWidget)
         self.pB_action_recipe.setMenu(self.pB_action_menu)
         
+        stylesheet = '''
+                QPushButton{
+                    image: url(file:///../UI/images/icon_actions_.png);
+                }
+
+                QPushButton:hover{
+                    image: url(file:///../UI/images/icon_actions.png);
+                }
+        '''
+        if getattr(sys, 'frozen', False):
+            stylesheet = cw.convert_ui_image_paths(stylesheet)
+        self.pB_action_recipe.setStyleSheet(stylesheet)
+        
         self.pB_modif_2 = self.widget_menu.pB_modif_2
         self.pB_send_2 = self.widget_menu.pB_send_2
         self.pB_print_2 = self.widget_menu.pB_print_2
@@ -401,7 +414,7 @@ class MainGUI(QWidget):
         self.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
         self.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
         self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
-        self.pB_action_recipe.setIcon(QIcon(self.icon_folder + 'icon_actions.png'))
+        # self.pB_action_recipe.setIcon(QIcon(self.icon_folder + 'icon_actions.png'))
         cw.load_pic(self.label_lunch, self.icon_folder + 'tag_lunch_color_LD.png')
         cw.load_pic(self.label_dinner, self.icon_folder + 'tag_dinner_color_LD.png')
         cw.load_pic(self.score_vegan, self.icon_folder + 'score_vegan_0.png')

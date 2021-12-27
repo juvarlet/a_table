@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1277</width>
+    <width>1273</width>
     <height>635</height>
    </rect>
   </property>
@@ -186,6 +186,14 @@
         color:#ffc05c;
         font: bold 20px;
     }
+
+QPushButton#pB_action_recipe {
+	image: url(file:///../UI/images/icon_actions_.png);
+}
+
+QPushButton#pB_action_recipe:hover {
+	image: url(file:///../UI/images/icon_actions.png);
+}
 
     QCheckBox {
         color: #1a5d75;
@@ -930,7 +938,7 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1203</width>
+                <width>1199</width>
                 <height>419</height>
                </rect>
               </property>
@@ -1403,8 +1411,8 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1137</width>
-                <height>430</height>
+                <width>1199</width>
+                <height>419</height>
                </rect>
               </property>
               <attribute name="label">
@@ -2221,10 +2229,6 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                          </property>
                          <property name="text">
                           <string/>
-                         </property>
-                         <property name="icon">
-                          <iconset>
-                           <normaloff>images/icon_actions.png</normaloff>images/icon_actions.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
