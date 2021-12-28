@@ -86,6 +86,52 @@ class SliderWithValue(QSlider):
         else:
             self.qpen = QPen(QColor(COLORS['#color1_bright#']))
 
+class ThreeStatesButton(QPushButton):
+    
+    stateChanged = Signal()
+    
+    def __init__(self, text: str, icons = [],parent = None):
+        
+        super().__init__(text, parent=parent)
+        self.state = 0 #0:unselected, 1:with, 2:without
+        self.icons = icons
+        self.update_state()
+        self.setIconSize(QSize(45,45))
+        self.setMaximumSize(50,50)
+        stylesheet = '''
+        QPushButton{
+            background-color:transparent;
+            border:none;
+        }
+        QPushButton:hover{
+            background-color:%s;
+        }
+        ''' % COLORS['#color3_bright#']
+        self.setStyleSheet(stylesheet)
+    
+    def mousePressEvent(self, e: PySide2.QtGui.QMouseEvent) -> None:
+        self.state = (self.state + 1) % 3
+        self.update_state()
+        
+        return super().mousePressEvent(e)
+        
+    def update_state(self):
+        self.setIcon(QIcon(self.icons[self.state]))
+        self.stateChanged.emit()
+    
+    def isUnselected(self):
+        return self.state == 0
+    
+    def isSelectedWith(self):
+        return self.state == 1
+        
+    def isSelectedWithout(self):
+        return self.state == 2
+    
+    def setUnselected(self):
+        self.state = 0
+        self.update_state()
+
 def getFormAncestor(widget):
     ancestor = widget
     while ancestor is not None and not ancestor.objectName() == 'Form':

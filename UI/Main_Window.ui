@@ -1718,151 +1718,11 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                            <number>1</number>
                           </property>
                           <item>
-                           <widget class="QCheckBox" name="cB_search_tag_double">
-                            <property name="styleSheet">
-                             <string notr="true"/>
+                           <layout class="QHBoxLayout" name="hL_cB_search">
+                            <property name="spacing">
+                             <number>0</number>
                             </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>1</width>
-                              <height>1</height>
-                             </size>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="cB_search_tag_kids">
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>45</width>
-                              <height>45</height>
-                             </size>
-                            </property>
-                            <property name="checkable">
-                             <bool>true</bool>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="cB_search_tag_vegan">
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>45</width>
-                              <height>45</height>
-                             </size>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="cB_search_tag_summer">
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>45</width>
-                              <height>45</height>
-                             </size>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="cB_search_tag_winter">
-                            <property name="mouseTracking">
-                             <bool>true</bool>
-                            </property>
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>45</width>
-                              <height>45</height>
-                             </size>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="cB_search_tag_dessert">
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>45</width>
-                              <height>45</height>
-                             </size>
-                            </property>
-                            <property name="checkable">
-                             <bool>true</bool>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="cB_search_tag_lunch">
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="cB_search_tag_dinner">
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>45</width>
-                              <height>45</height>
-                             </size>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="cB_search_tag_tips">
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>45</width>
-                              <height>45</height>
-                             </size>
-                            </property>
-                           </widget>
+                           </layout>
                           </item>
                           <item>
                            <spacer name="horizontalSpacer_16">
@@ -2457,13 +2317,6 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <tabstops>
-  <tabstop>cB_search_tag_vegan</tabstop>
-  <tabstop>cB_search_tag_summer</tabstop>
-  <tabstop>cB_search_tag_winter</tabstop>
-  <tabstop>cB_search_tag_dessert</tabstop>
-  <tabstop>cB_search_tag_lunch</tabstop>
-  <tabstop>cB_search_tag_dinner</tabstop>
-  <tabstop>cB_search_tag_tips</tabstop>
   <tabstop>cB_search_recipe_name</tabstop>
   <tabstop>cB_search_ingredients</tabstop>
   <tabstop>cB_search_preparation</tabstop>
@@ -2478,8 +2331,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>pB_print</tabstop>
   <tabstop>pB_copy</tabstop>
   <tabstop>lE_with</tabstop>
-  <tabstop>cB_search_tag_double</tabstop>
-  <tabstop>cB_search_tag_kids</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>pB_new_menu_2</tabstop>
  </tabstops>
