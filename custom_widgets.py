@@ -388,5 +388,28 @@ def loadUI(o, ui_file):
     o.setLayout(vlayout)
     return widget
 
+def pb_hover_stylesheet(pb, image, image_hover, image_pressed = None):
+    stylesheet = '''
+            QPushButton{
+                image: url(file:///../UI/images/%s.png);
+            }
+
+            QPushButton:hover{
+                image: url(file:///../UI/images/%s.png);
+            }
+    ''' % (image, image_hover)
+    
+    if image_pressed:
+        stylesheet += '''
+            QPushButton:pressed{
+                image: url(file:///../UI/images/%s.png);
+            }
+        ''' % image_pressed
+    
+    if getattr(sys, 'frozen', False):
+        stylesheet = convert_ui_image_paths(stylesheet)
+    pb.setStyleSheet(stylesheet)
+
+
 if __name__ == "__main__":
     print(dirname())

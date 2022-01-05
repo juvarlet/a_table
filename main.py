@@ -370,10 +370,10 @@ class MainGUI(QWidget):
         cw.load_pic(self.tag_tips, self.icon_folder + 'tag_tips_black_LD.png')
         cw.load_pic(self.tag_lunchdinner, self.icon_folder + 'tag_lunch_black_LD.png')
         self.pB_back.setIcon(QIcon(self.icon_folder + 'icon_back.png'))
-        self.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
-        self.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
-        self.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
-        self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        # self.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
+        # self.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
+        # self.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        # self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
         # self.pB_action_recipe.setIcon(QIcon(self.icon_folder + 'icon_actions.png'))
         cw.load_pic(self.label_lunch, self.icon_folder + 'tag_lunch_color_LD.png')
         cw.load_pic(self.label_dinner, self.icon_folder + 'tag_dinner_color_LD.png')
@@ -385,10 +385,15 @@ class MainGUI(QWidget):
         cw.load_pic(self.label_top, self.icon_folder + 'icon_list.png')
         cw.load_pic(self.label_icon_carte, self.icon_folder + 'icon_menu_3colors_LD.png')
         cw.load_pic(self.label_cocktail, self.icon_folder + 'icon_cocktail_3colors_LD.png')
-        self.pB_print.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
-        self.pB_send.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
+        # self.pB_print.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        # self.pB_send.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
         self.pB_copy.setIcon(QIcon(self.icon_folder + 'icon_copy.png'))
-        self.pB_new_recipe.setIcon(QIcon(self.icon_folder + 'icon_new_recipe.png'))
+        
+        cw.pb_hover_stylesheet(self.pB_send, 'icon_send', 'icon_send_')
+        cw.pb_hover_stylesheet(self.pB_print, 'icon_print', 'icon_print_')
+        
+        
+        cw.pb_hover_stylesheet(self.pB_new_recipe, 'icon_recipe_3colors_LD_t', 'icon_new_recipe')
         
     def main(self):
         self.pW.show()
@@ -1580,26 +1585,23 @@ class MainGUI(QWidget):
         self.actionWidget = QWidgetAction(self.pB_action_menu)
         ui_actions = cw.dirname('UI') + 'actions_recipe.ui'
         self.widget_menu = QUiLoader().load(ui_actions)
-        self.widget_menu.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
-        self.widget_menu.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
-        self.widget_menu.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
-        self.widget_menu.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        # self.widget_menu.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
+        cw.pb_hover_stylesheet(self.widget_menu.pB_modif_2, 'icon_edit', 'icon_edit_')
+        
+        # self.widget_menu.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
+        cw.pb_hover_stylesheet(self.widget_menu.pB_send_2, 'icon_send', 'icon_send_')
+        
+        # self.widget_menu.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        cw.pb_hover_stylesheet(self.widget_menu.pB_print_2, 'icon_print', 'icon_print_')
+        
+        # self.widget_menu.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        cw.pb_hover_stylesheet(self.widget_menu.pB_delete, 'icon_bin', 'icon_bin_')
+        
         self.actionWidget.setDefaultWidget(self.widget_menu)
         self.pB_action_menu.addAction(self.actionWidget)
         self.pB_action_recipe.setMenu(self.pB_action_menu)
         
-        stylesheet = '''
-                QPushButton{
-                    image: url(file:///../UI/images/icon_actions_.png);
-                }
-
-                QPushButton:hover{
-                    image: url(file:///../UI/images/icon_actions.png);
-                }
-        '''
-        if getattr(sys, 'frozen', False):
-            stylesheet = cw.convert_ui_image_paths(stylesheet)
-        self.pB_action_recipe.setStyleSheet(stylesheet)
+        cw.pb_hover_stylesheet(self.pB_action_menu, 'icon_actions_', 'icon_actions')
         
         self.pB_modif_2 = self.widget_menu.pB_modif_2
         self.pB_send_2 = self.widget_menu.pB_send_2
