@@ -1565,63 +1565,63 @@ class MainGUI(QWidget):
                         self.icon_folder + 'tag_double_color_LD.png',
                         self.icon_folder + 'tag_no_double_LD.png']
         
-        self.cB_search_tag_double_ = cw.ThreeStatesButton('', icons=icons_double)
+        self.cB_search_tag_double_ = cw.ThreeStatesButton('Peut servir pour 2 repas', icons=icons_double)
         
         #cB_kids
         icons_kids = [self.icon_folder + 'tag_kids_black_LD.png',
                         self.icon_folder + 'tag_kids_color_LD.png',
                         self.icon_folder + 'tag_no_kids_LD.png']
         
-        self.cB_search_tag_kids_ = cw.ThreeStatesButton('', icons=icons_kids)
+        self.cB_search_tag_kids_ = cw.ThreeStatesButton('Les enfants aiment', icons=icons_kids)
         
         #cB_vegan
         icons_vegan = [self.icon_folder + 'tag_vegan_black_LD.png',
                         self.icon_folder + 'tag_vegan_color_LD.png',
                         self.icon_folder + 'tag_no_vegan_LD.png']
         
-        self.cB_search_tag_vegan_ = cw.ThreeStatesButton('', icons=icons_vegan)
+        self.cB_search_tag_vegan_ = cw.ThreeStatesButton('Vegan', icons=icons_vegan)
         
         #cB_summer
         icons_summer = [self.icon_folder + 'tag_ete_black_LD.png',
                         self.icon_folder + 'tag_ete_color_LD.png',
                         self.icon_folder + 'tag_no_summer_LD.png']
         
-        self.cB_search_tag_summer_ = cw.ThreeStatesButton('', icons=icons_summer)
+        self.cB_search_tag_summer_ = cw.ThreeStatesButton("Plat d'été", icons=icons_summer)
         
         #cB_winter
         icons_winter = [self.icon_folder + 'tag_hiver_black_LD.png',
                         self.icon_folder + 'tag_hiver_color_LD.png',
                         self.icon_folder + 'tag_no_winter_LD.png']
         
-        self.cB_search_tag_winter_ = cw.ThreeStatesButton('', icons=icons_winter)
+        self.cB_search_tag_winter_ = cw.ThreeStatesButton("Plat d'hiver", icons=icons_winter)
         
         #cB_dessert
         icons_dessert = [self.icon_folder + 'tag_dessert_black_LD.png',
                         self.icon_folder + 'tag_dessert_color_LD.png',
                         self.icon_folder + 'tag_no_dessert_LD.png']
         
-        self.cB_search_tag_dessert_ = cw.ThreeStatesButton('', icons=icons_dessert)
+        self.cB_search_tag_dessert_ = cw.ThreeStatesButton('Dessert', icons=icons_dessert)
         
         #cB_lunch
         icons_lunch = [self.icon_folder + 'tag_lunch_black_LD.png',
                         self.icon_folder + 'tag_lunch_color_LD.png',
                         self.icon_folder + 'tag_no_lunch_LD.png']
         
-        self.cB_search_tag_lunch_ = cw.ThreeStatesButton('', icons=icons_lunch)
+        self.cB_search_tag_lunch_ = cw.ThreeStatesButton('Midi', icons=icons_lunch)
         
         #cB_dinner
         icons_dinner = [self.icon_folder + 'tag_dinner_black_LD.png',
                         self.icon_folder + 'tag_dinner_color_LD.png',
                         self.icon_folder + 'tag_no_dinner_LD.png']
         
-        self.cB_search_tag_dinner_ = cw.ThreeStatesButton('', icons=icons_dinner)
+        self.cB_search_tag_dinner_ = cw.ThreeStatesButton('Soir', icons=icons_dinner)
         
         #cB_tips
         icons_tips = [self.icon_folder + 'tag_tips_black_LD.png',
                         self.icon_folder + 'tag_tips_color_LD.png',
                         self.icon_folder + 'tag_no_tips_LD.png']
         
-        self.cB_search_tag_tips_ = cw.ThreeStatesButton('', icons=icons_tips)
+        self.cB_search_tag_tips_ = cw.ThreeStatesButton('Préparation', icons=icons_tips)
         
         self.hL_cB_search.addWidget(self.cB_search_tag_double_)
         self.hL_cB_search.addWidget(self.cB_search_tag_kids_)

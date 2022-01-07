@@ -1205,7 +1205,7 @@
          <item row="2" column="5">
           <widget class="QCheckBox" name="cB_tagwinter">
            <property name="toolTip">
-            <string>Plat d'hiver</string>
+            <string>Plat d'hiver (colonne A!)</string>
            </property>
            <property name="text">
             <string/>

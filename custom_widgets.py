@@ -92,8 +92,9 @@ class ThreeStatesButton(QPushButton):
     
     def __init__(self, text: str, icons = [],parent = None):
         
-        super().__init__(text, parent=parent)
+        super().__init__('', parent=parent)
         self.state = 0 #0:unselected, 1:with, 2:without
+        self.tooltip_text = text
         self.icons = icons
         self.update_state()
         self.setIconSize(QSize(45,45))
@@ -117,6 +118,10 @@ class ThreeStatesButton(QPushButton):
         
     def update_state(self):
         self.setIcon(QIcon(self.icons[self.state]))
+        tooltip = [self.tooltip_text,
+                   'contient le tag "%s"' % self.tooltip_text,
+                   'NE contient PAS le tag "%s"' % self.tooltip_text]
+        self.setToolTip(tooltip[self.state])
         self.stateChanged.emit()
     
     def isUnselected(self):
