@@ -102,7 +102,9 @@ class UserSettings(QWidget):
         
         self.pB_ok_3.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
         self.pB_cancel_3.setIcon(QIcon(self.icon_folder + 'icon_cancel.png'))
-        self.pB_history.setIcon(QIcon(self.icon_folder + 'icon_plate_3colors.png'))
+        # self.pB_history.setIcon(QIcon(self.icon_folder + 'icon_date_LD.png'))
+        cw.pb_hover_stylesheet(self.pB_history, 'icon_date_LD', 'icon_plate_LD')
+        
         self.pB_reset.setIcon(QIcon(self.icon_folder + 'icon_reset.png'))
         
         self.img_settings_email.setPixmap(QPixmap(self.icon_folder + 'icon_send.png').scaled(40,40))

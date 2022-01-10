@@ -76,7 +76,7 @@ class LineRecipe(QWidget):
             tag.setVisible(self.recipe.isTagged(tag_name))
             cw.load_pic(tag, self.dirname + 'tag_%s_SLD.png' % tag_name)
 
-        self.pB_add.setIcon(QIcon(self.dirname + 'icon_add_recipe_LD.png'))
+        self.pB_add.setIcon(QIcon(self.dirname + 'icon_chef_LD.png'))
         self.pB_add.setVisible(False)
         
         self.pushMenu = QMenu(self.pB_add)

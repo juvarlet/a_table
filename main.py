@@ -352,7 +352,7 @@ class MainGUI(QWidget):
          
         #images
         self.window().setWindowIcon(QIcon(self.icon_folder + 'donut.png'))
-        self.tW.setTabIcon(0,QIcon(self.icon_folder + 'icon_chef_3colors.png'))
+        self.tW.setTabIcon(0,QIcon(self.icon_folder + 'icon_chef_LD.png'))
         self.tW.setTabIcon(1,QIcon(self.icon_folder + 'icon_recipe_3colors.png'))
         self.tW.setTabIcon(2,QIcon(self.icon_folder + 'icon_plate_3colors.png'))
         self.tB.setItemIcon(0, QIcon(self.icon_folder + 'icon_menu_3colors.png'))
@@ -1076,6 +1076,9 @@ class MainGUI(QWidget):
         self.movie.stop()
         self.pB_calendar.setIcon(QIcon(self.icon_folder + 'icon_calendar.png'))
         
+        if self.history_popup.isVisible() and self.cB_history.isChecked():
+            self.history_popup.activateWindow()
+        
     def on_ingredient_selection(self):
         #reset list menu background
         for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
@@ -1507,7 +1510,7 @@ class MainGUI(QWidget):
     def user_settings_pB(self):
         self.pB_user = QPushButton('', self.pW)
         self.pB_user.setIconSize(QSize(60,60))
-        self.pB_user.setToolTip('Préférences')
+        self.pB_user.setToolTip('Réglages')
         stylesheet = '''
                                 QPushButton{
                                     image: url(file:///../UI/images/icon_user.png);

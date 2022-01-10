@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>329</width>
-    <height>568</height>
+    <height>599</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -339,6 +339,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="pB_history">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
+           </property>
            <property name="toolTip">
             <string>Afficher l'historique</string>
            </property>

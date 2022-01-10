@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1273</width>
-    <height>635</height>
+    <width>1007</width>
+    <height>678</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -604,7 +604,7 @@ QLabel#label_calendar, QLabel#label_history {
 
     QToolTip {
         opacity: 300;
-        border: 2px solid #ffc05c;
+        border: 2px solid #fdf1d9;
         border-radius: 4px;
         padding: 2px;
         background-color: #fdf1d9;
@@ -938,8 +938,8 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1199</width>
-                <height>419</height>
+                <width>933</width>
+                <height>462</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1411,8 +1411,8 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1199</width>
-                <height>419</height>
+                <width>933</width>
+                <height>462</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1924,6 +1924,21 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_20">
+                 <property name="leftMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="spacing">
+                  <number>4</number>
+                 </property>
                  <item row="0" column="1" rowspan="6">
                   <widget class="QFrame" name="frame_9">
                    <property name="frameShape">

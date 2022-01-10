@@ -34,6 +34,8 @@ import re
 from recipe import Recipe
 import custom_widgets as cw
 
+import requests
+
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar', 
           'https://www.googleapis.com/auth/calendar.events', 
@@ -307,6 +309,15 @@ def replace_multiple(string, from_to_dict):
     text = pattern.sub(lambda m: rep[re.escape(m.group(0))], string)
     return text
 
+def is_internet_available():
+    url = "https://www.google.com"
+    timeout = 5
+    try:
+        request = requests.get(url, timeout=timeout)
+        return True
+    except (requests.ConnectionError, requests.Timeout) as exception:
+        return False
+
 class MySignal(QObject):
     sig = Signal(str, str)
 
@@ -325,98 +336,105 @@ class MyCalendar(QThread):#QThread
     def run(self):
         debug = True
         # self.signal.sig.emit('La céation des évènements est en cours...', self.icon_path)
-        self.on_message.emit('La céation des évènements est en cours...', self.icon_path)
         
-        try:
-            creds = get_credentials(debug=debug)
-            service = build_calendar_service(creds, debug=debug)
-            timeZone = getTimeZone(service, debug=debug)
-            id = createCalendar(service, timeZone, debug=debug)
+        if is_internet_available():
+        
+            self.on_message.emit('La céation des évènements est en cours...', self.icon_path)
             
-            message = ''
-            menu_list = self.menu.table
-            start_day = self.menu.start_day
-            nb_of_days = self.menu.number_of_days
-            
-            for d in range(nb_of_days):
-                start_lunch = datetime.datetime(start_day.year, 
-                                        start_day.month, 
-                                        start_day.day,
-                                        12) + datetime.timedelta(days = d)
-                start_dinner = datetime.datetime(start_day.year, 
-                                        start_day.month, 
-                                        start_day.day,
-                                        19) + datetime.timedelta(days = d)
+            try:
+                creds = get_credentials(debug=debug)
+                service = build_calendar_service(creds, debug=debug)
+                timeZone = getTimeZone(service, debug=debug)
+                id = createCalendar(service, timeZone, debug=debug)
                 
-                recipe_lunch  = menu_list[2*d]
-                recipe_dinner = menu_list[2*d+1]
+                message = ''
+                menu_list = self.menu.table
+                start_day = self.menu.start_day
+                nb_of_days = self.menu.number_of_days
                 
-                if type(recipe_lunch) == Recipe:
-                    recipe_lunch_stack = [recipe_lunch]
-                elif type(recipe_lunch) == list:
-                    recipe_lunch_stack = recipe_lunch
+                for d in range(nb_of_days):
+                    start_lunch = datetime.datetime(start_day.year, 
+                                            start_day.month, 
+                                            start_day.day,
+                                            12) + datetime.timedelta(days = d)
+                    start_dinner = datetime.datetime(start_day.year, 
+                                            start_day.month, 
+                                            start_day.day,
+                                            19) + datetime.timedelta(days = d)
+                    
+                    recipe_lunch  = menu_list[2*d]
+                    recipe_dinner = menu_list[2*d+1]
+                    
+                    if type(recipe_lunch) == Recipe:
+                        recipe_lunch_stack = [recipe_lunch]
+                    elif type(recipe_lunch) == list:
+                        recipe_lunch_stack = recipe_lunch
+                    
+                    if type(recipe_dinner) == Recipe:
+                        recipe_dinner_stack = [recipe_dinner]
+                    elif type(recipe_dinner) == list:
+                        recipe_dinner_stack = recipe_dinner
+                    
+                    title_lunch  = ' | '.join([recipe_lunch.name 
+                                            for recipe_lunch in recipe_lunch_stack])
+                    
+                    description_lunch = ''
+                    for recipe_lunch in recipe_lunch_stack:
+                        description_lunch += '<br/><b>%s</b><br/>' % recipe_lunch.name
+                        if len(recipe_lunch.ingredients_string_list()) > 0:
+                            description_lunch += '<br/><i>Ingrédients</i><br/>'
+                            description_lunch += '<br/>'.join(recipe_lunch.ingredients_string_list())
+                        if recipe_lunch.preparation != '':
+                            description_lunch += '<br/><i>Préparation</i><br/>'
+                            description_lunch += '<br/>%s<br/>' % recipe_lunch.preparation
+                    
+                    title_dinner = ' | '.join(recipe_dinner.name 
+                                            for recipe_dinner in recipe_dinner_stack)
+                    
+                    description_dinner = ''
+                    for recipe_dinner in recipe_dinner_stack:
+                        description_dinner += '<br/><b>%s</b><br/>' % recipe_dinner.name
+                        if len(recipe_dinner.ingredients_string_list()) > 0:
+                            description_dinner += '<br/><i>Ingrédients</i><br/>'
+                            description_dinner += '<br/>'.join(recipe_dinner.ingredients_string_list())
+                        if recipe_dinner.preparation != '':
+                            description_dinner += '<br/><i>Préparation</i><br/>'
+                            description_dinner += '<br/>%s<br/>' % recipe_dinner.preparation
+                    
+                    
+                    event_lunch  = build_event(timeZone, title_lunch,  description_lunch,  start_lunch, debug=debug)
+                    event_dinner = build_event(timeZone, title_dinner, description_dinner, start_dinner, debug=debug)
+                    
+                    link_lunch  = add_event(service, id, event_lunch, debug=debug)
+                    link_dinner = add_event(service, id, event_dinner, debug=debug)
+                    
+                    # message += '%s :\n' % menu.full_date_to_french(start_lunch)
+                    # message += 'Midi : %s - %s\n' % (title_lunch, link_lunch)
+                    # message += 'Soir : %s - %s\n' % (title_dinner, link_dinner)
+                message += "%i nouveaux évènements créés dans l'agenda<br/>" % (nb_of_days*2)
+                message += '<a href="%s">Lien Google Calendar</a>' % link_dinner
                 
-                if type(recipe_dinner) == Recipe:
-                    recipe_dinner_stack = [recipe_dinner]
-                elif type(recipe_dinner) == list:
-                    recipe_dinner_stack = recipe_dinner
-                
-                title_lunch  = ' | '.join([recipe_lunch.name 
-                                           for recipe_lunch in recipe_lunch_stack])
-                
-                description_lunch = ''
-                for recipe_lunch in recipe_lunch_stack:
-                    description_lunch += '<br/><b>%s</b><br/>' % recipe_lunch.name
-                    if len(recipe_lunch.ingredients_string_list()) > 0:
-                        description_lunch += '<br/><i>Ingrédients</i><br/>'
-                        description_lunch += '<br/>'.join(recipe_lunch.ingredients_string_list())
-                    if recipe_lunch.preparation != '':
-                        description_lunch += '<br/><i>Préparation</i><br/>'
-                        description_lunch += '<br/>%s<br/>' % recipe_lunch.preparation
-                
-                title_dinner = ' | '.join(recipe_dinner.name 
-                                          for recipe_dinner in recipe_dinner_stack)
-                
-                description_dinner = ''
-                for recipe_dinner in recipe_dinner_stack:
-                    description_dinner += '<br/><b>%s</b><br/>' % recipe_dinner.name
-                    if len(recipe_dinner.ingredients_string_list()) > 0:
-                        description_dinner += '<br/><i>Ingrédients</i><br/>'
-                        description_dinner += '<br/>'.join(recipe_dinner.ingredients_string_list())
-                    if recipe_dinner.preparation != '':
-                        description_dinner += '<br/><i>Préparation</i><br/>'
-                        description_dinner += '<br/>%s<br/>' % recipe_dinner.preparation
-                
-                
-                event_lunch  = build_event(timeZone, title_lunch,  description_lunch,  start_lunch, debug=debug)
-                event_dinner = build_event(timeZone, title_dinner, description_dinner, start_dinner, debug=debug)
-                
-                link_lunch  = add_event(service, id, event_lunch, debug=debug)
-                link_dinner = add_event(service, id, event_dinner, debug=debug)
-                
-                # message += '%s :\n' % menu.full_date_to_french(start_lunch)
-                # message += 'Midi : %s - %s\n' % (title_lunch, link_lunch)
-                # message += 'Soir : %s - %s\n' % (title_dinner, link_dinner)
-            message += "%i nouveaux évènements créés dans l'agenda<br/>" % (nb_of_days*2)
-            message += '<a href="%s">Lien Google Calendar</a>' % link_dinner
-            
-            # self.signal.sig.emit(message, self.icon_path)
-            self.on_message.emit(message, self.icon_path)
+                # self.signal.sig.emit(message, self.icon_path)
+                self.on_message.emit(message, self.icon_path)
 
-        except:
-            if self.occurences < 2:
-                print('Request failed, trying to regenerate token with authorization process...')
-                #delete token.json and run again
-                if os.path.exists('token.json'):
-                    os.remove('token.json')
-                #increment occurences
-                self.occurences += 1
-                self.run()
-            else:
-                # self.signal.sig.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
-                self.on_message.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
-                
-                print(sys.exc_info())
+            except:
+                if self.occurences < 2:
+                    print('Request failed, trying to regenerate token with authorization process...')
+                    #delete token.json and run again
+                    if os.path.exists('token.json'):
+                        os.remove('token.json')
+                    #increment occurences
+                    self.occurences += 1
+                    self.run()
+                else:
+                    # self.signal.sig.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
+                    self.on_message.emit("Le calendrier n'est pas accessible (Request Time Out)", self.icon_path)
+                    
+                    print(sys.exc_info())
+        
+        else:
+            self.on_message.emit('Pas de connection à Internet !<br/>'
+                                 + "Les menus n'ont pas pu être copiés dans l'agenda", '')
         
         self.on_finish.emit()
 
@@ -651,8 +669,9 @@ if __name__ == '__main__':
     # except:
     #     print("Unexpected error:", sys.exc_info())
         
-    creds = get_credentials(debug=True)
-    service = build_gmail_service(creds, debug=True)
+    # creds = get_credentials(debug=True)
+    # service = build_gmail_service(creds, debug=True)
+    
     # message = create_message('notification.a.table@gmail.com', 
     #                             'varlet.ju@gmail.com', 
     #                             'hello', 
@@ -662,9 +681,12 @@ if __name__ == '__main__':
     #                         'hello', 
     #                         'world', 
     #                         '/home/jv/Documents/gitRepos/a_table/diagram.svg')
-    message = build_message('notification.a.table@gmail.com', 
-                            'varlet.ju@gmail.com', 
-                            'hello', 
-                            'world')
-    message = insert_message(service, 'varlet.ju@gmail.com', message)
-    print(message)
+    
+    # message = build_message('notification.a.table@gmail.com', 
+    #                         'varlet.ju@gmail.com', 
+    #                         'hello', 
+    #                         'world')
+    # message = insert_message(service, 'varlet.ju@gmail.com', message)
+    # print(message)
+    
+    check_internet_connection()
