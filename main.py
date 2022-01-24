@@ -435,23 +435,6 @@ class MainGUI(QWidget):
     def dummy_function(self, item):
         print('dummy function triggered %s' % item)
 
-    # def is_filter_in_recipe_name(self, filter, recipe):
-    #     if self.cB_search_recipe_name.isChecked():
-    #         return filter in recipe.name.lower()
-    #     return False
-
-    # def is_filter_in_ing_list(self,filter,recipe):
-    #     if self.cB_search_ingredients.isChecked() and recipe.ingredients_list_qty is not None: 
-    #         for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
-    #             if filter in ingredient:
-    #                 return True
-    #     return False
-
-    # def is_filter_in_preparation(self, filter, recipe):
-    #     if self.cB_search_preparation.isChecked() and recipe.preparation is not None:
-    #         return filter in recipe.preparation.lower()
-    #     return False
-
     def is_filter_in_tags(self, recipe):
         output = True
         
@@ -932,6 +915,18 @@ class MainGUI(QWidget):
         if self.lW_recipe.count() > 0:
             #display title
             recipe_name = self.lW_recipe.currentItem().text()
+            
+            #reset former line background
+            try:
+                former_line_text = self.label_recipe_title.text()
+                former_line_qlwi = self.lW_recipe.findItems(former_line_text, Qt.MatchExactly)[0]
+                former_line_widget = self.lW_recipe.itemWidget(former_line_qlwi)
+                former_line_widget.reset_style()
+            except:
+                print('No previous line to reset')
+            #apply selected style to new line background
+            self.lW_recipe.itemWidget(self.lW_recipe.currentItem()).set_selected_style()
+            
             self.label_recipe_title.setText(recipe_name)
             if self.recipe_db.contains(recipe_name):
                 recipe_object = self.recipe_db.get_recipe_object(recipe_name)
@@ -1063,10 +1058,7 @@ class MainGUI(QWidget):
     def on_calendar(self):
         self.movie = cw.gif_to_button(self.icon_folder + 'icon_calendar.gif', self.pB_calendar)
         
-        # my_calendar_worker = cal.MyCalendar(self.current_menu)
         my_calendar_worker = gapi.MyCalendar(self.current_menu)
-        
-        # my_calendar_worker.signal.sig.connect(self.print_thread_function)
         my_calendar_worker.on_message.connect(self.print_thread_function)
         my_calendar_worker.on_finish.connect(self.on_calendar_gif_stop)
         self.myThreads.append(my_calendar_worker)
@@ -1141,7 +1133,7 @@ class MainGUI(QWidget):
         # my_mailbox_worker = mail.Mailbox('shopping', [self.current_menu, self.default_email, images, icon_dict])
         my_mailbox_worker = gapi.MyMailbox('shopping', [self.current_menu, self.default_email, images, icon_dict])
         
-        my_mailbox_worker.signal.sig.connect(self.print_thread_function)
+        my_mailbox_worker.on_message.connect(self.print_thread_function)
         
         self.myThreads.append(my_mailbox_worker)
         my_mailbox_worker.start()
@@ -1154,7 +1146,6 @@ class MainGUI(QWidget):
         images.append(self.icon_folder + 'icon_shopping_cart_LD.png')
         images.append(self.icon_folder + 'icon_user_color.png')
         my_printer = printer.Printer(pdf_title)
-        # my_printer = printer.Printer('test.pdf')
         my_printer.print_shopping_list(self.current_menu, icons=images, images=self.compute_score(draw=False))
         
         self.print_thread_function('Les menus du %s au %s ont été enregistrés<br/><a href="%s">%s</a>' % (self.current_menu.start_day.strftime('%d/%m/%Y'),
@@ -1384,13 +1375,6 @@ class MainGUI(QWidget):
     def on_cancel_recipe(self):
         self.reenable_other_tabs()
     
-    #DEPRECATED
-    # def update_recipe_list(self):
-    #     self.lW_recipe.clear()
-    #     recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
-    #     self.lW_recipe.addItems(recipe_list)
-    #     self.populate_lW_recipe()
-    
     def update_recipe_list_smart(self, recipe: Recipe, option):
         if option == 'new':
             #add item to lw
@@ -1412,7 +1396,6 @@ class MainGUI(QWidget):
         elif option == 'delete':
             #delete item in list
             lwi = self.lW_recipe.takeItem(self.lW_recipe.currentRow())
-            
     
     def display_error(self, text, title = 'Attention'):
         error_dialog = QMessageBox(self)
@@ -1451,16 +1434,12 @@ class MainGUI(QWidget):
                     self.default_nb_days = int(nb_days)
                     self.homepage = QUrl(homepage)
         
-        
         self.user_settings = UserSettings()
         self.user_settings.on_save.connect(self.on_save_settings)
         self.user_settings.on_quit.connect(self.on_quit_settings)
         self.user_settings.on_error.connect(self.display_error)
         self.user_settings.on_history.connect(self.on_display_history)
         self.vL_settings.addWidget(self.user_settings)
-        
-        # qmlview = QtQuickWidgets.QQuickWidget(source= QUrl(self.dirname + '/UI/MyElement.qml'))
-        # self.vL_settings.addWidget(qmlview)
         
         self.history_popup = History(history = self.recipe_db.history, new_history = [])
         self.history_popup.on_switch_to_recipe.connect(self.switch_to_recipe)

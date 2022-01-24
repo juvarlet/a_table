@@ -60,7 +60,7 @@ QLabel {
 QSlider::groove:horizontal {
 		background-color: #ffe0ad;
         color: #1a5d75;
-        border: 2px solid #ffc05c;
+        border: 2px solid #ffe0ad;
     /*border: 1px solid #1a5d75;*/
     	height: 18px;
     /*background: #ffc05c;*/
@@ -70,7 +70,7 @@ QSlider::groove:horizontal {
 	}
 	QSlider::handle:horizontal {
     	background: #1a5d75;
-    	border: 1px solid #1a5d75;
+    	border: 0px solid #1a5d75;
     	width: 70px;
     	border-radius: 9px;
 	}
@@ -78,7 +78,7 @@ QSlider::groove:horizontal {
 	QSlider::sub-page:horizontal{
 		background-color: #36a9d3;
         color: #1a5d75;
-        border: 2px solid #ffc05c;
+        border: 2px solid #36a9d3;
     /*border: 1px solid #1a5d75;*/
     	height: 18px;
     /*background: #ffc05c;*/

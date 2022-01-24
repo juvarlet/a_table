@@ -484,7 +484,7 @@ QLabel#label_calendar, QLabel#label_history {
     QHeaderView::section {
         background-color: #ffe0ad;
         color: #1a5d75;
-        border: 2px solid #ffc05c;
+        border: 2px solid #ffe0ad;
 		border-radius:11px;
 		padding:2px;
 		margin: 4px;
@@ -534,8 +534,9 @@ QLabel#label_calendar, QLabel#label_history {
     QLineEdit {
         background-color: #36a9d3;
         color: #1a5d75;
+		border: 4px solid #36a9d3;
+		border-radius: 5px;
     }
-    
 
     QLabel {
         color: #1a5d75;
@@ -613,14 +614,18 @@ QLabel#label_calendar, QLabel#label_history {
     }
     
     QScrollBar:vertical, QScrollBar:horizontal {
-        border: 1px solid #1a5d75;
-        background:#fdf1d9;
+        border: 0px solid #fdf1d9;
+		border-radius: 5px;
+        /*background:#fdf1d9;*/
+		background:transparent;
         width:10px; 
         margin: 0px 0px 0px 0px;
       }
     QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
         background: #ffc05c;
         min-height: 0px;
+		border: 0px solid #fdf1d9;
+		border-radius: 5px;
     }
     QScrollBar::add-line:vertical, QScrollBar::add-line:horizontal {
         background: #ffc05c;

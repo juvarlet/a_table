@@ -56,6 +56,8 @@ class LineRecipe(QWidget):
         self.label_winter = self.pW.label_winter
         self.pB_add: QPushButton
         self.pB_add = self.pW.pB_add
+        self.frame: QFrame
+        self.frame = self.pW.frame
     
     # @cw.decoratortimer(1)
     def initial_state(self):
@@ -85,6 +87,8 @@ class LineRecipe(QWidget):
         self.pushAction.setDefaultWidget(self.rcm)
         self.pushMenu.addAction(self.pushAction)
         self.pB_add.setMenu(self.pushMenu)
+        
+        self.init_style = self.styleSheet()
 
     def connect_actions(self):
         self.pushMenu.aboutToShow.connect(self.on_add)
@@ -109,4 +113,22 @@ class LineRecipe(QWidget):
     
     def on_update_full_menu(self):
         self.on_validate.emit(self.rcm.table)
+    
+    def set_selected_style(self):
+        stylesheet = '''
+            QFrame{
+                background:%s;
+                border-style: solid;
+                border-width: 0px;
+                border-radius: 10px;
+                border-color: %s;
+            }
+        ''' % (COLORS['#color3_bright#'], COLORS['#color3_bright#'])
+        
+        stylesheet = self.init_style + stylesheet
+        
+        self.frame.setStyleSheet(stylesheet)
+    
+    def reset_style(self):
+        self.frame.setStyleSheet(self.init_style)
     

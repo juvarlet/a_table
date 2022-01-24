@@ -318,9 +318,6 @@ def is_internet_available():
     except (requests.ConnectionError, requests.Timeout) as exception:
         return False
 
-class MySignal(QObject):
-    sig = Signal(str, str)
-
 class MyCalendar(QThread):#QThread
     
     on_message = Signal(str, str)
@@ -329,7 +326,6 @@ class MyCalendar(QThread):#QThread
     def __init__(self, my_menu):
         QThread.__init__(self)
         self.menu = my_menu
-        self.signal = MySignal()
         self.icon_path = cw.dirname('UI/images') + 'icon_calendar.png'
         self.occurences = 0
         
@@ -442,6 +438,7 @@ class MyMailbox(QThread):
     
     CORE_SHOPPING_HTML = cw.dirname('') + 'shopping_core.html'
     CORE_RECIPE_HTML = cw.dirname('') + 'recipe_core.html'
+    on_message = Signal(str, str)
 
     def __init__(self, option, list_args):
         QThread.__init__(self)
@@ -466,7 +463,6 @@ class MyMailbox(QThread):
             self.images_dict = images_dict
             self.pdf = pdf
             
-        self.signal = MySignal()
         self.icon_path = cw.dirname('UI/images') + '/UI/images/icon_send.png'
         
     
@@ -627,7 +623,7 @@ class MyMailbox(QThread):
             
             # send_mail_with_attachment(self.sender, to_email, subject, body, files)
             # print('Message %s sent to %s' % (subject, to_email))
-            self.signal.sig.emit('Message "%s" envoyé à %s' % (subject, to_email), self.icon_path)
+            self.on_message.emit('Message "%s" envoyé à %s' % (subject, to_email), self.icon_path)
         except:
             if self.occurences < 2: 
                 print('Request failed, trying to regenerate token with authorization process...')
@@ -639,7 +635,7 @@ class MyMailbox(QThread):
                 self.run()
             else:
                 print(sys.exc_info())
-                self.signal.sig.emit("Erreur lors de l'envoi du message '%s' à %s" % (subject, to_email), "")
+                self.on_message.emit("Erreur lors de l'envoi du message '%s' à %s" % (subject, to_email), "")
             
 
 if __name__ == '__main__':
@@ -689,4 +685,4 @@ if __name__ == '__main__':
     # message = insert_message(service, 'varlet.ju@gmail.com', message)
     # print(message)
     
-    check_internet_connection()
+    print(is_internet_available())
