@@ -108,7 +108,6 @@ Former une boule de pate.
 Abaisser la pate.
 C'est pret !"
 2230d077-10f5-48fe-a059-c0ce95a1d702;Pates au pesto;Pates,500.0,g/Pesto,1.0,;;kids/vegan;pates_au_pesto;Faire cuire les pates, ajouter le pesto
-1b9f7226-3ca6-4882-b808-9cc03fa89a53;Pates bolognaise;;;kids;;
 277c981b-a648-4502-a154-e6240f88d7e0;Pates carbonara;;;kids;;
 83ad4c4a-2080-4cdf-9e47-26327577795b;Pates épinards creme champignons;;;vegan;;
 8d88df34-3359-4623-b007-d559e6e46346;Pates gorgonzola poires;Pates,500,g;;vegan;pates_poires;
@@ -193,7 +192,7 @@ e27c81c2-f625-46db-8e79-a9f1c3bd2d76;Salade nouilles soba;nouilles soba,1,/avoca
 da5f8095-ce71-4513-91ad-74736cf14fb7;Tarte fraises verveine;;;dessert;;
 12a81670-bd47-471f-81ea-b6dc536ac347;Lasagnes aux blettes;;;double/vegan;;
 798bbe7d-4cff-4880-a70c-830b3ba20e64;Légumes rotis;;;vegan;légumes_rotis;
-385676e6-a56e-4345-b93e-c06e3fa373cd;Absent;;;;;
+e7361f6a-e9f9-4d6d-99f6-cbb231e8dc9a;Absent;;;;;
 09367367-a167-4641-9248-c862e39cfcd6;Pates pois carrés;Pates,500,g/carottes,1,/ail,1,gousses/sauce tomate,1,/pois carrés,1,/laurier,1,;;kids/vegan;pates_pois_carrés;
 17511a17-14ca-486c-8f27-ccfe2a345247;Poisson fenouil purée pommes de terre;;;midi;poisson_fenouil_purée_pommes_de_terre;
 eefba3bc-1a7c-42f0-af43-f85a0e1dc90e;Chorba;;;;chorba;
@@ -355,3 +354,7 @@ ec60d477-3bf5-4d6f-8c8d-1d437410fd96;Poêlée chou rouge chataignes;;;vegan;;
 6b86603e-0675-47ed-982d-ecf97fef6f1c;Poêlée de légumes;;;vegan;;
 9e2fa0cc-be6e-4761-a8c4-6145faa27294;Quiche aux blettes;;;vegan;;
 72d270e1-b54c-4f74-9ea0-77b4f33e6f77;Purée céleri pomme de terre;;;vegan;;
+ea78c3b0-f3ba-42f9-9638-3d7eac606b9a;Pates bolognese;;;kids;;
+61dab39d-0309-4848-9197-b83809210dc0;Boudin noir St Jacques;boudin noir,1.0,/noix de st jacques,10.0,;;soir;boudin_noir_st_jacques;
+484c2c69-3c4a-4fb3-9e5a-47a56e7dcc27;Purée chataigne potimarron;;;vegan;;
+25bd4c02-0f25-4c1e-af90-23460930c343;Salade d'endives;;;midi/vegan;;

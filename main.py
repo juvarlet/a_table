@@ -1,5 +1,4 @@
 import datetime
-from re import split
 from stacked_recipes import StackedRecipes
 from user_settings import UserSettings
 from history import History
@@ -166,16 +165,10 @@ class MainGUI(QWidget):
         self.label_recipe_image = self.pW.label_image
         self.pB_back: QPushButton
         self.pB_back = self.pW.pB_back
-        self.pB_print_2: QPushButton
-        self.pB_print_2 = self.pW.pB_print_2
-        self.pB_send_2: QPushButton
-        self.pB_send_2 = self.pW.pB_send_2
-        self.pB_modif_2: QPushButton
-        self.pB_modif_2 = self.pW.pB_modif_2
         self.pB_new_recipe: QPushButton
         self.pB_new_recipe = self.pW.pB_new_recipe
-        self.pB_delete: QPushButton
-        self.pB_delete = self.pW.pB_delete
+        self.pB_action_recipe: QPushButton
+        self.pB_action_recipe = self.pW.pB_action_recipe
         self.tE_ingredients: QTextEdit
         self.tE_ingredients = self.pW.tE_ingredients
         self.tE_recipe: QTextBrowser
@@ -190,28 +183,16 @@ class MainGUI(QWidget):
         self.cB_search_ingredients = self.pW.cB_search_ingredients
         self.cB_search_preparation: QCheckBox
         self.cB_search_preparation = self.pW.cB_search_preparation
-        self.cB_search_tag_double: QCheckBox
-        self.cB_search_tag_double = self.pW.cB_search_tag_double
-        self.cB_search_tag_kids: QCheckBox
-        self.cB_search_tag_kids = self.pW.cB_search_tag_kids
-        self.cB_search_tag_vegan: QCheckBox
-        self.cB_search_tag_vegan = self.pW.cB_search_tag_vegan
-        self.cB_search_tag_summer: QCheckBox
-        self.cB_search_tag_summer = self.pW.cB_search_tag_summer
-        self.cB_search_tag_winter: QCheckBox
-        self.cB_search_tag_winter = self.pW.cB_search_tag_winter
-        self.cB_search_tag_dessert: QCheckBox
-        self.cB_search_tag_dessert = self.pW.cB_search_tag_dessert
-        self.cB_search_tag_dinner: QCheckBox
-        self.cB_search_tag_dinner = self.pW.cB_search_tag_dinner
-        self.cB_search_tag_lunch: QCheckBox
-        self.cB_search_tag_lunch = self.pW.cB_search_tag_lunch
-        self.cB_search_tag_tips: QCheckBox
-        self.cB_search_tag_tips = self.pW.cB_search_tag_tips
+        self.hL_cB_search: QHBoxLayout
+        self.hL_cB_search = self.pW.hL_cB_search
         self.frame_search: QFrame
         self.frame_search = self.pW.frame_recherche
         self.frame_edit_recipe: QFrame
         self.frame_edit_recipe = self.pW.frame_edit_recipe
+        self.frame_details: QFrame
+        self.frame_details = self.pW.frame_details
+        self.frame_list_recipes: QFrame
+        self.frame_list_recipes = self.pW.frame_liste_recettes
         self.lE_with: QLineEdit
         self.lE_with = self.pW.lE_with
         self.frame_tags: QFrame
@@ -342,7 +323,7 @@ class MainGUI(QWidget):
         self.reset_recipes_list()
         self.lW_recipe.setContextMenuPolicy(Qt.CustomContextMenu)
         # self.lW_recipe.setMouseTracking(True)
-        self.pB_back.hide()      
+        self.pB_back.hide()
 
         # self.populate_lW_recipe()
         
@@ -353,6 +334,12 @@ class MainGUI(QWidget):
         self.init_user_settings()
         self.user_settings_pB()
         
+        #recipe action pB
+        self.recipe_action_menu()
+        
+        #cB_search
+        self.cB_search_init()
+
         self.time_edition = TimeEdition(self.default_nb_days)
         self.vL_time.addWidget(self.time_edition)
         
@@ -365,7 +352,7 @@ class MainGUI(QWidget):
          
         #images
         self.window().setWindowIcon(QIcon(self.icon_folder + 'donut.png'))
-        self.tW.setTabIcon(0,QIcon(self.icon_folder + 'icon_chef_3colors.png'))
+        self.tW.setTabIcon(0,QIcon(self.icon_folder + 'icon_chef_LD.png'))
         self.tW.setTabIcon(1,QIcon(self.icon_folder + 'icon_recipe_3colors.png'))
         self.tW.setTabIcon(2,QIcon(self.icon_folder + 'icon_plate_3colors.png'))
         self.tB.setItemIcon(0, QIcon(self.icon_folder + 'icon_menu_3colors.png'))
@@ -382,8 +369,6 @@ class MainGUI(QWidget):
         cw.load_pic(self.tag_tips, self.icon_folder + 'tag_tips_black_LD.png')
         cw.load_pic(self.tag_lunchdinner, self.icon_folder + 'tag_lunch_black_LD.png')
         self.pB_back.setIcon(QIcon(self.icon_folder + 'icon_back.png'))
-        self.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
-        self.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
         cw.load_pic(self.label_lunch, self.icon_folder + 'tag_lunch_color_LD.png')
         cw.load_pic(self.label_dinner, self.icon_folder + 'tag_dinner_color_LD.png')
         cw.load_pic(self.score_vegan, self.icon_folder + 'score_vegan_0.png')
@@ -394,12 +379,11 @@ class MainGUI(QWidget):
         cw.load_pic(self.label_top, self.icon_folder + 'icon_list.png')
         cw.load_pic(self.label_icon_carte, self.icon_folder + 'icon_menu_3colors_LD.png')
         cw.load_pic(self.label_cocktail, self.icon_folder + 'icon_cocktail_3colors_LD.png')
-        self.pB_print.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
-        self.pB_send.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
         self.pB_copy.setIcon(QIcon(self.icon_folder + 'icon_copy.png'))
-        self.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
-        self.pB_new_recipe.setIcon(QIcon(self.icon_folder + 'icon_new_recipe.png'))
-        self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        
+        cw.pb_hover_stylesheet(self.pB_send, 'icon_send', 'icon_send_')
+        cw.pb_hover_stylesheet(self.pB_print, 'icon_print', 'icon_print_')
+        cw.pb_hover_stylesheet(self.pB_new_recipe, 'icon_recipe_3colors_LD_t', 'icon_new_recipe')
         
     def main(self):
         self.pW.show()
@@ -407,8 +391,6 @@ class MainGUI(QWidget):
     def connect_actions(self):
         self.pB_new_menu.clicked.connect(self.on_new_menu)
         self.tW_menu.cellDoubleClicked.connect(self.on_card_recipe_selection)
-        # self.pB_save.clicked.connect(self.on_save_menu)
-        # self.pB_calendar.clicked.connect(self.on_calendar)
         self.pB_calendar.clicked.connect(self.on_export_menu)
         self.tE_ingredients.anchorClicked.connect(self.on_recipe_link)
         self.pB_back.clicked.connect(self.on_previous_recipe)
@@ -416,7 +398,9 @@ class MainGUI(QWidget):
         self.pB_send.clicked.connect(self.on_send_shopping_list)
         self.pB_print.clicked.connect(self.on_print_shopping_list)
         self.pB_send_2.clicked.connect(self.on_send_recipe)
+        self.pB_send_2.clicked.connect(self.pB_action_menu.close)
         self.pB_print_2.clicked.connect(self.on_print_recipe)
+        self.pB_print_2.clicked.connect(self.pB_action_menu.close)
         self.pB_new_recipe.clicked.connect(self.on_new_recipe)
         self.pB_modif_2.clicked.connect(self.on_edit_recipe)
         self.pB_delete.clicked.connect(self.on_delete_recipe)
@@ -426,118 +410,127 @@ class MainGUI(QWidget):
         self.tW_menu.cellChanged.connect(self.on_drag_drop_event)
         self.time_edition.on_start_date_changed.connect(self.on_date_changed)
         self.time_edition.on_nb_days_changed.connect(self.on_nb_days_changed)
-        # self.time_edition.on_dates_changed.connect(self.on_nb_days_changed)
         self.cB_calendar.stateChanged.connect(self.on_export_condition)
         self.cB_history.stateChanged.connect(self.on_export_condition)
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
+        self.pB_modif_2.toggled.connect(self.frame_edit_recipe.setVisible)
+        self.pB_modif_2.toggled.connect(self.frame_details.setHidden)
+        self.pB_modif_2.toggled.connect(self.frame_list_recipes.setHidden)
         self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
         self.lE_with.textChanged.connect(self.dynamic_filter)
         self.cB_search_ingredients.stateChanged.connect(self.dynamic_filter)
         self.cB_search_preparation.stateChanged.connect(self.dynamic_filter)
         self.cB_search_recipe_name.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_dessert.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_dinner.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_lunch.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_double.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_kids.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_summer.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_tips.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_vegan.stateChanged.connect(self.dynamic_filter)
-        self.cB_search_tag_winter.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_dessert_.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_dinner_.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_lunch_.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_double_.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_kids_.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_summer_.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_tips_.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_vegan_.stateChanged.connect(self.dynamic_filter)
+        self.cB_search_tag_winter_.stateChanged.connect(self.dynamic_filter)
         
     def dummy_function(self, item):
         print('dummy function triggered %s' % item)
 
-    # def is_filter_in_recipe_name(self, filter, recipe):
-    #     if self.cB_search_recipe_name.isChecked():
-    #         return filter in recipe.name.lower()
-    #     return False
-
-    # def is_filter_in_ing_list(self,filter,recipe):
-    #     if self.cB_search_ingredients.isChecked() and recipe.ingredients_list_qty is not None: 
-    #         for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
-    #             if filter in ingredient:
-    #                 return True
-    #     return False
-
-    # def is_filter_in_preparation(self, filter, recipe):
-    #     if self.cB_search_preparation.isChecked() and recipe.preparation is not None:
-    #         return filter in recipe.preparation.lower()
-    #     return False
-
     def is_filter_in_tags(self, recipe):
         output = True
-        if self.cB_search_tag_double.isChecked():
+        
+        if self.cB_search_tag_double_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("double")
             else:
                 output = False
-        if self.cB_search_tag_kids.isChecked():
+        if self.cB_search_tag_double_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("double")
+            else:
+                output = False
+        if self.cB_search_tag_kids_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("kids")
             else:
                 output = False
-        if self.cB_search_tag_dessert.isChecked():
+        if self.cB_search_tag_kids_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("kids")
+            else:
+                output = False
+        if self.cB_search_tag_dessert_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("dessert")
             else:
                 output = False
-        if self.cB_search_tag_dinner.isChecked():
+        if self.cB_search_tag_dessert_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("dessert")
+            else:
+                output = False        
+        if self.cB_search_tag_dinner_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("soir")
             else:
                 output = False
-        if self.cB_search_tag_lunch.isChecked():
+        if self.cB_search_tag_dinner_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("soir")
+            else:
+                output = False
+        if self.cB_search_tag_lunch_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("midi")
             else:
                 output = False
-        if self.cB_search_tag_summer.isChecked():
+        if self.cB_search_tag_lunch_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("midi")
+            else:
+                output = False
+        if self.cB_search_tag_summer_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("ete")
             else:
                 output = False
-        if self.cB_search_tag_tips.isChecked():
+        if self.cB_search_tag_summer_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("ete")
+            else:
+                output = False
+        if self.cB_search_tag_tips_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("tips")
             else:
                 output = False
-        if self.cB_search_tag_vegan.isChecked():
+        if self.cB_search_tag_tips_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("tips")
+            else:
+                output = False
+        if self.cB_search_tag_vegan_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("vegan")
             else:
                 output = False
-        if self.cB_search_tag_winter.isChecked():
+        if self.cB_search_tag_vegan_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("vegan")
+            else:
+                output = False
+        if self.cB_search_tag_winter_.isSelectedWith():
             if recipe.tags is not None:
                 output = output and recipe.isTagged("hiver")
+            else:
+                output = False
+        if self.cB_search_tag_winter_.isSelectedWithout():
+            if recipe.tags is not None:
+                output = output and not recipe.isTagged("hiver")
             else:
                 output = False
         return output
 
     def dynamic_filter(self):
-        # with_filters = self.lE_with.text().split(',')
-        # recipeCount = 0
-
-        # for recipeIndex in range(self.lW_recipe.count()):
-        #     recipeListItem = self.lW_recipe.item(recipeIndex)
-        #     recipe = self.recipe_db.get_recipe_object(recipeListItem.text())
-        #     show_recipe_flag = True
-            
-        #     for filter in with_filters:
-        #         filter = filter.strip()
-        #         isCriteriaMet = self.is_filter_in_recipe_name(filter, recipe)
-        #         isCriteriaMet = isCriteriaMet or self.is_filter_in_ing_list(filter, recipe)
-        #         isCriteriaMet = isCriteriaMet or self.is_filter_in_preparation(filter, recipe)
-                
-        #         show_recipe_flag = show_recipe_flag and isCriteriaMet
-
-        #     show_recipe_flag = show_recipe_flag and self.is_filter_in_tags(recipe)
-
-        #     self.lW_recipe.setItemHidden(recipeListItem, not show_recipe_flag)
-        #     if show_recipe_flag:
-        #         recipeCount += 1
-        
         cw.dynamic_filter(self.lE_with.text(), self.lW_recipe, self.recipe_db, tagFunc = self.is_filter_in_tags)
 
     def print_thread_function(self, data, icon_path = None):
@@ -556,16 +549,28 @@ class MainGUI(QWidget):
     
     def populate_lW_recipe(self):
         for recipeIndex in range(self.lW_recipe.count()):
-            recipeListItem = self.lW_recipe.item(recipeIndex)
-            recipeListItem.setSizeHint(QSize(0,27))
-            recipe_object = self.recipe_db.get_recipe_object(recipeListItem.text())
+            # recipeListItem = self.lW_recipe.item(recipeIndex)
+            # recipeListItem.setSizeHint(QSize(0,27))
+            # recipe_object = self.recipe_db.get_recipe_object(recipeListItem.text())
             
-            line_widget = LineRecipe(recipe_object, recipeIndex)
-            line_widget.on_menu_request.connect(self.on_update_line_widget)
-            line_widget.on_validate.connect(self.on_update_full_menu)
-            self.lW_recipe.setItemWidget(recipeListItem, line_widget)
+            # line_widget = LineRecipe(recipe_object, recipeIndex)
+            # line_widget.on_menu_request.connect(self.on_update_line_widget)
+            # line_widget.on_validate.connect(self.on_update_full_menu)
+            # self.lW_recipe.setItemWidget(recipeListItem, line_widget)
+            
+            self.add_recipe_line_widget(recipeIndex)
             
             QCoreApplication.processEvents()
+    
+    def add_recipe_line_widget(self, recipeIndex):
+        recipeListItem = self.lW_recipe.item(recipeIndex)
+        recipeListItem.setSizeHint(QSize(0,27))
+        recipe_object = self.recipe_db.get_recipe_object(recipeListItem.text())
+        
+        line_widget = LineRecipe(recipe_object, recipeIndex)
+        line_widget.on_menu_request.connect(self.on_update_line_widget)
+        line_widget.on_validate.connect(self.on_update_full_menu)
+        self.lW_recipe.setItemWidget(recipeListItem, line_widget)
     
     def on_update_line_widget(self, recipeIndex):
         recipeListItem = self.lW_recipe.item(recipeIndex)
@@ -880,7 +885,7 @@ class MainGUI(QWidget):
         stack = self.stacks[id]
         recipe_name = stack.get_current_recipe().name
         self.tW.setCurrentWidget(self.tab_recipe)
-        self.reset_recipes_list()
+        # self.reset_recipes_list()
         self.reset_filters()
         lwi = self.lW_recipe.findItems(recipe_name, Qt.MatchExactly)[0]
         self.lW_recipe.scrollToItem(lwi)
@@ -910,6 +915,18 @@ class MainGUI(QWidget):
         if self.lW_recipe.count() > 0:
             #display title
             recipe_name = self.lW_recipe.currentItem().text()
+            
+            #reset former line background
+            try:
+                former_line_text = self.label_recipe_title.text()
+                former_line_qlwi = self.lW_recipe.findItems(former_line_text, Qt.MatchExactly)[0]
+                former_line_widget = self.lW_recipe.itemWidget(former_line_qlwi)
+                former_line_widget.reset_style()
+            except:
+                print('No previous line to reset')
+            #apply selected style to new line background
+            self.lW_recipe.itemWidget(self.lW_recipe.currentItem()).set_selected_style()
+            
             self.label_recipe_title.setText(recipe_name)
             if self.recipe_db.contains(recipe_name):
                 recipe_object = self.recipe_db.get_recipe_object(recipe_name)
@@ -935,7 +952,7 @@ class MainGUI(QWidget):
                 # self.display_error("La recette '%s' n'est plus dans la base de données, elle a peut-être été modifiée ou supprimée" % recipe_name)
         
     def on_recipe_link(self, link):
-        self.reset_recipes_list()
+        # self.reset_recipes_list()
         self.previous_recipe_name = self.label_recipe_title.text()
         lwi = self.lW_recipe.findItems(link.toString(), Qt.MatchFixedString)[0]
         self.lW_recipe.scrollToItem(lwi)
@@ -1041,10 +1058,7 @@ class MainGUI(QWidget):
     def on_calendar(self):
         self.movie = cw.gif_to_button(self.icon_folder + 'icon_calendar.gif', self.pB_calendar)
         
-        # my_calendar_worker = cal.MyCalendar(self.current_menu)
         my_calendar_worker = gapi.MyCalendar(self.current_menu)
-        
-        # my_calendar_worker.signal.sig.connect(self.print_thread_function)
         my_calendar_worker.on_message.connect(self.print_thread_function)
         my_calendar_worker.on_finish.connect(self.on_calendar_gif_stop)
         self.myThreads.append(my_calendar_worker)
@@ -1053,6 +1067,9 @@ class MainGUI(QWidget):
     def on_calendar_gif_stop(self):
         self.movie.stop()
         self.pB_calendar.setIcon(QIcon(self.icon_folder + 'icon_calendar.png'))
+        
+        if self.history_popup.isVisible() and self.cB_history.isChecked():
+            self.history_popup.activateWindow()
         
     def on_ingredient_selection(self):
         #reset list menu background
@@ -1116,7 +1133,7 @@ class MainGUI(QWidget):
         # my_mailbox_worker = mail.Mailbox('shopping', [self.current_menu, self.default_email, images, icon_dict])
         my_mailbox_worker = gapi.MyMailbox('shopping', [self.current_menu, self.default_email, images, icon_dict])
         
-        my_mailbox_worker.signal.sig.connect(self.print_thread_function)
+        my_mailbox_worker.on_message.connect(self.print_thread_function)
         
         self.myThreads.append(my_mailbox_worker)
         my_mailbox_worker.start()
@@ -1129,7 +1146,6 @@ class MainGUI(QWidget):
         images.append(self.icon_folder + 'icon_shopping_cart_LD.png')
         images.append(self.icon_folder + 'icon_user_color.png')
         my_printer = printer.Printer(pdf_title)
-        # my_printer = printer.Printer('test.pdf')
         my_printer.print_shopping_list(self.current_menu, icons=images, images=self.compute_score(draw=False))
         
         self.print_thread_function('Les menus du %s au %s ont été enregistrés<br/><a href="%s">%s</a>' % (self.current_menu.start_day.strftime('%d/%m/%Y'),
@@ -1221,15 +1237,15 @@ class MainGUI(QWidget):
         self.cB_search_recipe_name.setChecked(True)
         self.cB_search_ingredients.setChecked(True)
         self.cB_search_preparation.setChecked(True)
-        self.cB_search_tag_lunch.setChecked(False)
-        self.cB_search_tag_dinner.setChecked(False)
-        self.cB_search_tag_dessert.setChecked(False)
-        self.cB_search_tag_double.setChecked(False)
-        self.cB_search_tag_kids.setChecked(False)
-        self.cB_search_tag_summer.setChecked(False)
-        self.cB_search_tag_tips.setChecked(False)
-        self.cB_search_tag_vegan.setChecked(False)
-        self.cB_search_tag_winter.setChecked(False)
+        self.cB_search_tag_lunch_.setUnselected()
+        self.cB_search_tag_dinner_.setUnselected()
+        self.cB_search_tag_dessert_.setUnselected()
+        self.cB_search_tag_double_.setUnselected()
+        self.cB_search_tag_kids_.setUnselected()
+        self.cB_search_tag_summer_.setUnselected()
+        self.cB_search_tag_tips_.setUnselected()
+        self.cB_search_tag_vegan_.setUnselected()
+        self.cB_search_tag_winter_.setUnselected()
         if self.frame_search.isVisible():
             self.cB_search.click()
 
@@ -1243,10 +1259,10 @@ class MainGUI(QWidget):
 
     def disable_other_tabs(self):
         self.tW.setTabEnabled(0, False)
-        self.tW.setTabEnabled(2, False)
+        # self.tW.setTabEnabled(2, False)
         self.cB_search.setEnabled(False)
         self.pB_new_recipe.setEnabled(False)
-        self.pB_modif_2.setEnabled(False)
+        self.pB_action_menu.close()
 
     def on_new_recipe(self):
         self.disable_other_tabs()
@@ -1274,11 +1290,13 @@ class MainGUI(QWidget):
                 initial_recipe_name = self.lW_recipe.currentItem().text()
                 index_of_recipe = recipe_db.get_recipe_names(self.recipe_db.recipe_list).index(initial_recipe_name)
                 self.recipe_db.recipe_list[index_of_recipe] = recipe
+                option = 'edit'
             else:   #add new recipe
                 self.recipe_db.recipe_list.append(recipe)
+                option = 'new'
                 
             #update qlw
-            self.update_recipe_list()
+            self.update_recipe_list_smart(recipe, option)
             # self.lW_recipe.clear()
             # recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
             # self.lW_recipe.addItems(recipe_list)
@@ -1306,14 +1324,16 @@ class MainGUI(QWidget):
 
     def reenable_other_tabs(self):
         self.tW.setTabEnabled(0, True)
-        self.tW.setTabEnabled(2, True)
+        # self.tW.setTabEnabled(2, True)
         self.cB_search.setEnabled(True)
         self.pB_new_recipe.setEnabled(True)
-        self.pB_modif_2.setEnabled(True)
-        self.pB_delete.setEnabled(True)
         self.pB_new_recipe.setChecked(False)
-        self.pB_modif_2.setChecked(False)
         self.edit_recipe.cB_web.setChecked(False)
+
+        self.frame_edit_recipe.setVisible(False)
+        self.frame_details.setHidden(False)
+        self.frame_list_recipes.setHidden(False)
+        self.pB_modif_2.setChecked(False)
 
     def on_delete_recipe(self):
         #check if a recipe is selected
@@ -1339,7 +1359,7 @@ class MainGUI(QWidget):
                 self.recipe_db.remove_recipe(recipe_name)
                 #update qlw
                 self.delete_flag = True #to avoid error message displayed twice
-                self.update_recipe_list()
+                self.update_recipe_list_smart(recipe_object, 'delete')
                 self.delete_flag = False
                 lwi = self.lW_recipe.item(0)
                 self.lW_recipe.scrollToItem(lwi)
@@ -1355,10 +1375,27 @@ class MainGUI(QWidget):
     def on_cancel_recipe(self):
         self.reenable_other_tabs()
     
-    def update_recipe_list(self):
-        self.lW_recipe.clear()
-        recipe_list = sorted(recipe_db.get_recipe_names(self.recipe_db.recipe_list), key=str.lower)
-        self.lW_recipe.addItems(recipe_list)
+    def update_recipe_list_smart(self, recipe: Recipe, option):
+        if option == 'new':
+            #add item to lw
+            self.lW_recipe.addItem(recipe.name)
+            #keep lwi ref
+            lwi = self.lW_recipe.findItems(recipe.name, Qt.MatchExactly)[0]
+            #sort lW
+            self.lW_recipe.sortItems()
+            #find new lwi index
+            recipeIndex = self.lW_recipe.row(lwi)
+            #create associated line_widget
+            self.add_recipe_line_widget(recipeIndex)
+            
+        elif option == 'edit':
+            #delete and recreate item
+            self.update_recipe_list_smart(recipe, 'delete')
+            self.update_recipe_list_smart(recipe, 'new')
+            
+        elif option == 'delete':
+            #delete item in list
+            lwi = self.lW_recipe.takeItem(self.lW_recipe.currentRow())
     
     def display_error(self, text, title = 'Attention'):
         error_dialog = QMessageBox(self)
@@ -1397,16 +1434,12 @@ class MainGUI(QWidget):
                     self.default_nb_days = int(nb_days)
                     self.homepage = QUrl(homepage)
         
-        
         self.user_settings = UserSettings()
         self.user_settings.on_save.connect(self.on_save_settings)
         self.user_settings.on_quit.connect(self.on_quit_settings)
         self.user_settings.on_error.connect(self.display_error)
         self.user_settings.on_history.connect(self.on_display_history)
         self.vL_settings.addWidget(self.user_settings)
-        
-        # qmlview = QtQuickWidgets.QQuickWidget(source= QUrl(self.dirname + '/UI/MyElement.qml'))
-        # self.vL_settings.addWidget(qmlview)
         
         self.history_popup = History(history = self.recipe_db.history, new_history = [])
         self.history_popup.on_switch_to_recipe.connect(self.switch_to_recipe)
@@ -1456,7 +1489,7 @@ class MainGUI(QWidget):
     def user_settings_pB(self):
         self.pB_user = QPushButton('', self.pW)
         self.pB_user.setIconSize(QSize(60,60))
-        self.pB_user.setToolTip('Préférences')
+        self.pB_user.setToolTip('Réglages')
         stylesheet = '''
                                 QPushButton{
                                     image: url(file:///../UI/images/icon_user.png);
@@ -1479,6 +1512,108 @@ class MainGUI(QWidget):
             
         self.pB_user.setStyleSheet(stylesheet)
         self.tW.setCornerWidget(self.pB_user)
+    
+    def recipe_action_menu(self):
+        self.pB_action_menu = QMenu(self)
+        self.actionWidget = QWidgetAction(self.pB_action_menu)
+        ui_actions = cw.dirname('UI') + 'actions_recipe.ui'
+        self.widget_menu = QUiLoader().load(ui_actions)
+        # self.widget_menu.pB_modif_2.setIcon(QIcon(self.icon_folder + 'icon_edit.png'))
+        cw.pb_hover_stylesheet(self.widget_menu.pB_modif_2, 'icon_edit', 'icon_edit_')
+        
+        # self.widget_menu.pB_send_2.setIcon(QIcon(self.icon_folder + 'icon_send.png'))
+        cw.pb_hover_stylesheet(self.widget_menu.pB_send_2, 'icon_send', 'icon_send_')
+        
+        # self.widget_menu.pB_print_2.setIcon(QIcon(self.icon_folder + 'icon_print.png'))
+        cw.pb_hover_stylesheet(self.widget_menu.pB_print_2, 'icon_print', 'icon_print_')
+        
+        # self.widget_menu.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
+        cw.pb_hover_stylesheet(self.widget_menu.pB_delete, 'icon_bin', 'icon_bin_')
+        
+        self.actionWidget.setDefaultWidget(self.widget_menu)
+        self.pB_action_menu.addAction(self.actionWidget)
+        self.pB_action_recipe.setMenu(self.pB_action_menu)
+        
+        cw.pb_hover_stylesheet(self.pB_action_menu, 'icon_actions_', 'icon_actions')
+        
+        self.pB_modif_2 = self.widget_menu.pB_modif_2
+        self.pB_send_2 = self.widget_menu.pB_send_2
+        self.pB_print_2 = self.widget_menu.pB_print_2
+        self.pB_delete = self.widget_menu.pB_delete
+    
+    def cB_search_init(self):
+        #cB_double
+        icons_double = [self.icon_folder + 'tag_double_black_LD.png',
+                        self.icon_folder + 'tag_double_color_LD.png',
+                        self.icon_folder + 'tag_no_double_LD.png']
+        
+        self.cB_search_tag_double_ = cw.ThreeStatesButton('Peut servir pour 2 repas', icons=icons_double)
+        
+        #cB_kids
+        icons_kids = [self.icon_folder + 'tag_kids_black_LD.png',
+                        self.icon_folder + 'tag_kids_color_LD.png',
+                        self.icon_folder + 'tag_no_kids_LD.png']
+        
+        self.cB_search_tag_kids_ = cw.ThreeStatesButton('Les enfants aiment', icons=icons_kids)
+        
+        #cB_vegan
+        icons_vegan = [self.icon_folder + 'tag_vegan_black_LD.png',
+                        self.icon_folder + 'tag_vegan_color_LD.png',
+                        self.icon_folder + 'tag_no_vegan_LD.png']
+        
+        self.cB_search_tag_vegan_ = cw.ThreeStatesButton('Vegan', icons=icons_vegan)
+        
+        #cB_summer
+        icons_summer = [self.icon_folder + 'tag_ete_black_LD.png',
+                        self.icon_folder + 'tag_ete_color_LD.png',
+                        self.icon_folder + 'tag_no_summer_LD.png']
+        
+        self.cB_search_tag_summer_ = cw.ThreeStatesButton("Plat d'été", icons=icons_summer)
+        
+        #cB_winter
+        icons_winter = [self.icon_folder + 'tag_hiver_black_LD.png',
+                        self.icon_folder + 'tag_hiver_color_LD.png',
+                        self.icon_folder + 'tag_no_winter_LD.png']
+        
+        self.cB_search_tag_winter_ = cw.ThreeStatesButton("Plat d'hiver", icons=icons_winter)
+        
+        #cB_dessert
+        icons_dessert = [self.icon_folder + 'tag_dessert_black_LD.png',
+                        self.icon_folder + 'tag_dessert_color_LD.png',
+                        self.icon_folder + 'tag_no_dessert_LD.png']
+        
+        self.cB_search_tag_dessert_ = cw.ThreeStatesButton('Dessert', icons=icons_dessert)
+        
+        #cB_lunch
+        icons_lunch = [self.icon_folder + 'tag_lunch_black_LD.png',
+                        self.icon_folder + 'tag_lunch_color_LD.png',
+                        self.icon_folder + 'tag_no_lunch_LD.png']
+        
+        self.cB_search_tag_lunch_ = cw.ThreeStatesButton('Midi', icons=icons_lunch)
+        
+        #cB_dinner
+        icons_dinner = [self.icon_folder + 'tag_dinner_black_LD.png',
+                        self.icon_folder + 'tag_dinner_color_LD.png',
+                        self.icon_folder + 'tag_no_dinner_LD.png']
+        
+        self.cB_search_tag_dinner_ = cw.ThreeStatesButton('Soir', icons=icons_dinner)
+        
+        #cB_tips
+        icons_tips = [self.icon_folder + 'tag_tips_black_LD.png',
+                        self.icon_folder + 'tag_tips_color_LD.png',
+                        self.icon_folder + 'tag_no_tips_LD.png']
+        
+        self.cB_search_tag_tips_ = cw.ThreeStatesButton('Préparation', icons=icons_tips)
+        
+        self.hL_cB_search.addWidget(self.cB_search_tag_double_)
+        self.hL_cB_search.addWidget(self.cB_search_tag_kids_)
+        self.hL_cB_search.addWidget(self.cB_search_tag_vegan_)
+        self.hL_cB_search.addWidget(self.cB_search_tag_summer_)
+        self.hL_cB_search.addWidget(self.cB_search_tag_winter_)
+        self.hL_cB_search.addWidget(self.cB_search_tag_dessert_)
+        self.hL_cB_search.addWidget(self.cB_search_tag_lunch_)
+        self.hL_cB_search.addWidget(self.cB_search_tag_dinner_)
+        self.hL_cB_search.addWidget(self.cB_search_tag_tips_)
 
 def image_from_base64(base64_table, image_name):#Legacy function to store and read images -- can be removed
     with open(base64_table, 'r') as f:

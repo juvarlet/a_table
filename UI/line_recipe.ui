@@ -41,7 +41,8 @@ QPushButton{
         border-radius: 13px;
         font:  15px;
         border-color: #fe6d73;
-    }</string>
+    }
+</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">

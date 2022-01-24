@@ -120,15 +120,15 @@ class EditRecipe(QWidget):
         self.pB_ok_2.setToolTip(['Il manque un titre pour la recette', 'Enregistrer'][title_ok])
 
     def on_tag_selected(self, cB):
-        tags = {'cB_tagdinner': [1, 0, 1, 1, 0, 1, 1, 1, 0],
+        tags = {'cB_tagdinner' : [1, 0, 1, 1, 0, 1, 1, 1, 0],
                 'cB_tagdessert': [0, 1, 0, 1, 0, 1, 1, 1, 0],
-                'cB_tagdouble': [1, 0, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagkids': [1, 1, 1, 1, 1, 1, 1, 1, 0],
-                'cB_taglunch': [0, 0, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagwinter': [1, 1, 1, 1, 1, 1, 0, 1, 0],
-                'cB_tagsummer': [1, 1, 1, 1, 1, 0, 1, 1, 0],
-                'cB_tagvegan': [1, 1, 1, 1, 1, 1, 1, 1, 0],
-                'cB_tagtips': [0, 0 ,0, 0, 0, 0, 0, 0, 1]
+                'cB_tagdouble' : [1, 0, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagkids'   : [1, 1, 1, 1, 1, 1, 1, 1, 0],
+                'cB_taglunch'  : [0, 0, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagwinter' : [1, 1, 1, 1, 1, 1, 0, 1, 0],
+                'cB_tagsummer' : [1, 1, 1, 1, 1, 0, 1, 1, 0],
+                'cB_tagvegan'  : [1, 1, 1, 1, 1, 1, 1, 1, 0],
+                'cB_tagtips'   : [0, 0 ,0, 0, 0, 0, 0, 0, 1]
         }
         
         if cB.isChecked():
@@ -293,7 +293,7 @@ class EditRecipe(QWidget):
             if time_cell != '':
                 time = time_cell
 
-        self.reset_fields()
+        self.reset_fields()#TODO check if necessary
         
         self.on_ok.emit([title,
                          image_cell,
