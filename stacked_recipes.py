@@ -508,11 +508,7 @@ class StackedRecipes(QWidget):
     
 
         
-class RecipeCard(QThread):#QThread
-    
-    on_init = Signal(StackedRecipes)
-    on_connect = Signal(StackedRecipes)
-    on_stop = Signal()
+class StackUpdate(QThread):#QThread
     
     def __init__(self, stacked_recipes_list):
         QThread.__init__(self)
@@ -520,9 +516,7 @@ class RecipeCard(QThread):#QThread
     
     def run(self):
         for stacked_recipe in self.stacked_recipe_list:
-            self.on_init.emit(stacked_recipe)
-            self.on_connect.emit(stacked_recipe)
-        self.on_stop.emit()
+            stacked_recipe.update_recipes()
         
 
         
