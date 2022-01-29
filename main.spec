@@ -1,5 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+root_folder = os.getcwd()
+print(root_folder)
 
 block_cipher = None
 
@@ -29,7 +31,7 @@ pyz = PYZ(a.pure, a.zipped_data,
 exe = EXE(pyz,
           a.scripts,
           a.binaries,
-          Tree('..\\UI\\', prefix='UI\\'),
+          Tree(os.path.join(root_folder, 'UI'), prefix='UI/'),
           a.zipfiles,
           a.datas,  
           [],
@@ -45,7 +47,7 @@ exe = EXE(pyz,
           target_arch=None,
           codesign_identity=None,
           entitlements_file=None,
-          icon='..\\UI\\images\\donut.ico')
+          icon=os.path.join(root_folder, 'UI', 'images', 'donut.ico')
 #coll = COLLECT(exe,
 #               a.binaries,
 #               a.zipfiles,
