@@ -47,7 +47,7 @@ exe = EXE(pyz,
           target_arch=None,
           codesign_identity=None,
           entitlements_file=None,
-          icon=os.path.join(root_folder, 'UI', 'images', 'donut.ico')
+          icon=os.path.join(root_folder, 'UI', 'images', 'donut.ico'))
 #coll = COLLECT(exe,
 #               a.binaries,
 #               a.zipfiles,
