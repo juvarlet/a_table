@@ -1137,6 +1137,15 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                         </item>
                         <item row="0" column="1">
                          <widget class="QLabel" name="label_calendar">
+                          <property name="font">
+                           <font>
+                            <family>Poiret One</family>
+                            <pointsize>-1</pointsize>
+                            <weight>75</weight>
+                            <italic>false</italic>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Copier dans l'Agenda</string>
                           </property>

@@ -598,10 +598,6 @@ class MainGUI(QWidget):
         # QCoreApplication.processEvents()
         # self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
         self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
-        
-        stack_update_worker = StackUpdate(self.stacks.values())
-        self.myThreads.append(stack_update_worker)
-        stack_update_worker.start()
     
     def new_menu(self):
         # current_QDate = self.dateEdit.date()
@@ -666,19 +662,25 @@ class MainGUI(QWidget):
         
         QCoreApplication.processEvents()
         # self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
+        
+        stack_update_worker = StackUpdate(self.stacks.values())
+        self.myThreads.append(stack_update_worker)
+        stack_update_worker.start()
 
     def on_new_stack(self, recipe_stack, id, k, length):
-        qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
+        # qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
         stack = StackedRecipes(recipe_stack, self.recipe_db, id)
         stack.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
         stack.on_lock_for_edition.connect(self.on_lock_for_edition)
         stack.on_update_current_menu.connect(self.on_update_current_menu)
         self.stacks[id] = stack
         if id[0] == '+':
+            qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
             self.tW_menu.setItem(0, k, qtwi)
             self.tW_menu.setCellWidget(0, k, stack)
             x = (k * 2) % (length+1)
         elif id[0] == '-':
+            qtwi = QTableWidgetItem(sr.row_column_to_id(1,k))
             self.tW_menu.setItem(1, k, qtwi)
             self.tW_menu.setCellWidget(1, k, stack)
             x = (k * 2 + 1) % (length+1)
@@ -820,6 +822,10 @@ class MainGUI(QWidget):
                 qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
                 self.tW_menu.setItem(0, i, qtwi_lunch)
                 self.tW_menu.setItem(1, i, qtwi_dinner)
+            
+            stack_update_worker = StackUpdate(self.stacks.values())
+            self.myThreads.append(stack_update_worker)
+            stack_update_worker.start()
 
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent) -> bool:
 
