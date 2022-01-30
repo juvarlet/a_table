@@ -1,5 +1,5 @@
 import datetime
-from stacked_recipes import StackedRecipes
+from stacked_recipes import StackedRecipes, StackUpdate
 from user_settings import UserSettings
 from history import History
 from edit_recipe import EditRecipe
@@ -84,6 +84,8 @@ class MainGUI(QWidget):
         self.tW_menu.verticalHeader().setFont(QFont('Poiret One', 10, QtGui.QFont.Bold))
         self.tW_menu.horizontalHeader().setFont(QFont('Poiret One', 10, QtGui.QFont.Bold))
         self.cB_restes.setFont(QFont('Poiret One', 14, QtGui.QFont.Bold))
+        
+        QApplication.setFont(QFont('Poiret One'))
 
     def save_components(self):
         self.pW = self.parentWidget()
@@ -154,8 +156,8 @@ class MainGUI(QWidget):
         self.pB_print = self.pW.pB_print
         self.pB_send: QPushButton
         self.pB_send = self.pW.pB_send
-        self.pB_copy: QPushButton
-        self.pB_copy = self.pW.pB_copy
+        # self.pB_copy: QPushButton
+        # self.pB_copy = self.pW.pB_copy
         #-tab recettes
         self.tab_recipe: QWidget
         self.tab_recipe = self.pW.tab_recettes
@@ -351,12 +353,12 @@ class MainGUI(QWidget):
         #self.tW_ingredients.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
          
         #images
-        self.window().setWindowIcon(QIcon(self.icon_folder + 'donut.png'))
+        self.window().setWindowIcon(QIcon(self.icon_folder + 'donut_LD.png'))
         self.tW.setTabIcon(0,QIcon(self.icon_folder + 'icon_chef_LD.png'))
-        self.tW.setTabIcon(1,QIcon(self.icon_folder + 'icon_recipe_3colors.png'))
-        self.tW.setTabIcon(2,QIcon(self.icon_folder + 'icon_plate_3colors.png'))
-        self.tB.setItemIcon(0, QIcon(self.icon_folder + 'icon_menu_3colors.png'))
-        self.tB.setItemIcon(1, QIcon(self.icon_folder + 'icon_shopping_cart.png'))
+        self.tW.setTabIcon(1,QIcon(self.icon_folder + 'icon_recipe_LD.png'))
+        # self.tW.setTabIcon(2,QIcon(self.icon_folder + 'icon_plate_3colors.png'))
+        self.tB.setItemIcon(0, QIcon(self.icon_folder + 'icon_menu_3colors_LD.png'))
+        self.tB.setItemIcon(1, QIcon(self.icon_folder + 'icon_shopping_cart_LD.png'))
         self.pB_user.setIcon(QIcon(self.icon_folder + 'icon_user_t.png'))
         self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
         self.pB_calendar.setIcon(QIcon(self.icon_folder + 'icon_calendar.png'))
@@ -368,7 +370,7 @@ class MainGUI(QWidget):
         cw.load_pic(self.tag_dessert, self.icon_folder + 'tag_dessert_black_LD.png')
         cw.load_pic(self.tag_tips, self.icon_folder + 'tag_tips_black_LD.png')
         cw.load_pic(self.tag_lunchdinner, self.icon_folder + 'tag_lunch_black_LD.png')
-        self.pB_back.setIcon(QIcon(self.icon_folder + 'icon_back.png'))
+        self.pB_back.setIcon(QIcon(self.icon_folder + 'icon_back_LD.png'))
         cw.load_pic(self.label_lunch, self.icon_folder + 'tag_lunch_color_LD.png')
         cw.load_pic(self.label_dinner, self.icon_folder + 'tag_dinner_color_LD.png')
         cw.load_pic(self.score_vegan, self.icon_folder + 'score_vegan_0.png')
@@ -379,7 +381,7 @@ class MainGUI(QWidget):
         cw.load_pic(self.label_top, self.icon_folder + 'icon_list.png')
         cw.load_pic(self.label_icon_carte, self.icon_folder + 'icon_menu_3colors_LD.png')
         cw.load_pic(self.label_cocktail, self.icon_folder + 'icon_cocktail_3colors_LD.png')
-        self.pB_copy.setIcon(QIcon(self.icon_folder + 'icon_copy.png'))
+        # self.pB_copy.setIcon(QIcon(self.icon_folder + 'icon_copy.png'))
         
         cw.pb_hover_stylesheet(self.pB_send, 'icon_send', 'icon_send_')
         cw.pb_hover_stylesheet(self.pB_print, 'icon_print', 'icon_print_')
@@ -394,7 +396,7 @@ class MainGUI(QWidget):
         self.pB_calendar.clicked.connect(self.on_export_menu)
         self.tE_ingredients.anchorClicked.connect(self.on_recipe_link)
         self.pB_back.clicked.connect(self.on_previous_recipe)
-        self.pB_copy.clicked.connect(self.on_copy_shopping_list)
+        # self.pB_copy.clicked.connect(self.on_copy_shopping_list)
         self.pB_send.clicked.connect(self.on_send_shopping_list)
         self.pB_print.clicked.connect(self.on_print_shopping_list)
         self.pB_send_2.clicked.connect(self.on_send_recipe)
@@ -662,19 +664,25 @@ class MainGUI(QWidget):
         
         QCoreApplication.processEvents()
         # self.pB_new_menu.setIcon(QIcon(self.icon_folder + 'icon_cover_5.png'))
+        
+        stack_update_worker = StackUpdate(self.stacks.values())
+        self.myThreads.append(stack_update_worker)
+        stack_update_worker.start()
 
     def on_new_stack(self, recipe_stack, id, k, length):
-        qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
+        # qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
         stack = StackedRecipes(recipe_stack, self.recipe_db, id)
         stack.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
         stack.on_lock_for_edition.connect(self.on_lock_for_edition)
         stack.on_update_current_menu.connect(self.on_update_current_menu)
         self.stacks[id] = stack
         if id[0] == '+':
+            qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
             self.tW_menu.setItem(0, k, qtwi)
             self.tW_menu.setCellWidget(0, k, stack)
             x = (k * 2) % (length+1)
         elif id[0] == '-':
+            qtwi = QTableWidgetItem(sr.row_column_to_id(1,k))
             self.tW_menu.setItem(1, k, qtwi)
             self.tW_menu.setCellWidget(1, k, stack)
             x = (k * 2 + 1) % (length+1)
@@ -816,6 +824,10 @@ class MainGUI(QWidget):
                 qtwi_lunch, qtwi_dinner = (QTableWidgetItem(sr.row_column_to_id(0,i)), QTableWidgetItem(sr.row_column_to_id(1,i)))
                 self.tW_menu.setItem(0, i, qtwi_lunch)
                 self.tW_menu.setItem(1, i, qtwi_dinner)
+            
+            stack_update_worker = StackUpdate(self.stacks.values())
+            self.myThreads.append(stack_update_worker)
+            stack_update_worker.start()
 
     def eventFilter(self, watched: PySide2.QtCore.QObject, event: PySide2.QtCore.QEvent) -> bool:
 
@@ -1099,12 +1111,12 @@ class MainGUI(QWidget):
                     item.setBackground(QBrush(QColor(self.colors['#color3_bright#'])))
                     item.setTextColor(QColor(self.colors['#color1_dark#']))
     
-    def on_copy_shopping_list(self):
-        string_to_copy = 'Liste de courses:\n'
-        for item in [self.lW_shopping.item(i) for i in range(self.lW_shopping.count())]:
-            string_to_copy += item.text() + '\n'
-        # print(string_to_copy)
-        copy(string_to_copy)
+    # def on_copy_shopping_list(self):
+    #     string_to_copy = 'Liste de courses:\n'
+    #     for item in [self.lW_shopping.item(i) for i in range(self.lW_shopping.count())]:
+    #         string_to_copy += item.text() + '\n'
+    #     # print(string_to_copy)
+    #     copy(string_to_copy)
 
     def on_send_shopping_list(self):        
         if os.path.isfile(self.user_id_file):
