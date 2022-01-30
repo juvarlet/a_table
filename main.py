@@ -84,6 +84,8 @@ class MainGUI(QWidget):
         self.tW_menu.verticalHeader().setFont(QFont('Poiret One', 10, QtGui.QFont.Bold))
         self.tW_menu.horizontalHeader().setFont(QFont('Poiret One', 10, QtGui.QFont.Bold))
         self.cB_restes.setFont(QFont('Poiret One', 14, QtGui.QFont.Bold))
+        
+        QApplication.setFont(QFont('Poiret One'))
 
     def save_components(self):
         self.pW = self.parentWidget()
