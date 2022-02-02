@@ -1,4 +1,4 @@
-name: Generate Diagram
+name: Generate Repo visualizer
 on:
   push:
     branches:
