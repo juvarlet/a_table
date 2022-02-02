@@ -49,11 +49,13 @@ fi # [ -f $5 ]
 
 # if [[ "$@" == "" ]]; then
 pyinstaller --clean -y --dist ./dist/windows --workpath /tmp $SPEC_FILE
+
 echo "Copying images for recipes"
 cp ./images -r ./dist/windows/images
-echo "Copying Recipes and History"
+echo "Copying Recipes and History files"
 cp ./MesRecettes.csv ./dist/windows/MesRecettes.csv
 cp ./Historique.csv ./dist/windows/Historique.csv
+
 chown -R --reference=. ./dist/windows
 # else
     # sh -c "$@"

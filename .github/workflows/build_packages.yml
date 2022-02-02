@@ -1,0 +1,40 @@
+name: Package Application with Pyinstaller
+
+on:
+  push:
+    branches: [ main, dev ]
+
+jobs:
+  build_Windows_pkg:
+    name: Build Windows exe
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Package Application
+      uses: ./action_windows_pkg
+      with:
+        path: ./
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: a_table_windows
+        path: ./dist/windows
+
+  build_Linux_pkg:
+    name: Build Linux bin
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Package Application
+      uses: ./action_linux_pkg
+      with:
+        path: ./
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: a_table_linux
+        path: ./dist/linux
