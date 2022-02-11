@@ -5,6 +5,7 @@ from history import History
 from edit_recipe import EditRecipe
 from time_edition import TimeEdition
 from line_recipe import LineRecipe
+from shopping_list import ShoppingList
 from stylesheet_update import COLORS
 import os
 from os.path import basename
@@ -78,8 +79,8 @@ class MainGUI(QWidget):
        
         self.parentWidget().setStyleSheet("QWidget{font-family:Poiret One;}" + self.parentWidget().styleSheet())
         self.tB.setFont(QFont('Poiret One', 20, QtGui.QFont.Light))
-        self.lW_shopping.setFont(QFont('Poiret One', 13, QtGui.QFont.Bold))
-        self.lW_menu.setFont(QFont('Poiret One', 13, QtGui.QFont.Bold))
+        # self.lW_shopping.setFont(QFont('Poiret One', 13, QtGui.QFont.Bold))
+        # self.lW_menu.setFont(QFont('Poiret One', 13, QtGui.QFont.Bold))
         self.tW_menu.setFont(QFont('Poiret One', 13, QtGui.QFont.Light))
         self.tW_menu.verticalHeader().setFont(QFont('Poiret One', 10, QtGui.QFont.Bold))
         self.tW_menu.horizontalHeader().setFont(QFont('Poiret One', 10, QtGui.QFont.Bold))
@@ -138,26 +139,8 @@ class MainGUI(QWidget):
         #--page shopping
         self.p_list: QWidget
         self.p_list = self.pW.page_liste
-        self.lW_shopping: QListWidget
-        self.lW_shopping = self.pW.lW_courses
-        self.lW_menu: QListWidget
-        self.lW_menu = self.pW.lW_menu
-        self.frame_shopping: QFrame
-        self.frame_shopping = self.pW.frame_shopping
-        self.label_top: QLabel
-        self.label_top = self.pW.label_top
-        self.label_icon_carte: QLabel
-        self.label_icon_carte = self.pW.label_icon_carte
-        self.frame_bottom: QFrame
-        self.frame_bottom = self.pW.frame_bottom
-        self.label_cocktail: QLabel
-        self.label_cocktail = self.pW.label_cocktail
-        self.pB_print: QPushButton
-        self.pB_print = self.pW.pB_print
-        self.pB_send: QPushButton
-        self.pB_send = self.pW.pB_send
-        # self.pB_copy: QPushButton
-        # self.pB_copy = self.pW.pB_copy
+        self.vL_shopping: QVBoxLayout
+        self.vL_shopping = self.pW.vL_shopping
         #-tab recettes
         self.tab_recipe: QWidget
         self.tab_recipe = self.pW.tab_recettes
@@ -332,6 +315,10 @@ class MainGUI(QWidget):
         self.frame_settings.hide()
         self.frame_search.hide()
         
+        #shopping list
+        self.shopping_list = ShoppingList()
+        self.vL_shopping.addWidget(self.shopping_list)
+        
         #User settings
         self.init_user_settings()
         self.user_settings_pB()
@@ -378,13 +365,6 @@ class MainGUI(QWidget):
         cw.load_pic(self.score_double, self.icon_folder + 'score_double_0.png')
         cw.load_pic(self.score_summer, self.icon_folder + 'score_ete_0.png')
         cw.load_pic(self.score_winter, self.icon_folder + 'score_hiver_0.png')
-        cw.load_pic(self.label_top, self.icon_folder + 'icon_list.png')
-        cw.load_pic(self.label_icon_carte, self.icon_folder + 'icon_menu_3colors_LD.png')
-        cw.load_pic(self.label_cocktail, self.icon_folder + 'icon_cocktail_3colors_LD.png')
-        # self.pB_copy.setIcon(QIcon(self.icon_folder + 'icon_copy.png'))
-        
-        cw.pb_hover_stylesheet(self.pB_send, 'icon_send', 'icon_send_')
-        cw.pb_hover_stylesheet(self.pB_print, 'icon_print', 'icon_print_')
         cw.pb_hover_stylesheet(self.pB_new_recipe, 'icon_recipe_3colors_LD_t', 'icon_new_recipe')
         
     def main(self):
@@ -396,9 +376,6 @@ class MainGUI(QWidget):
         self.pB_calendar.clicked.connect(self.on_export_menu)
         self.tE_ingredients.anchorClicked.connect(self.on_recipe_link)
         self.pB_back.clicked.connect(self.on_previous_recipe)
-        # self.pB_copy.clicked.connect(self.on_copy_shopping_list)
-        self.pB_send.clicked.connect(self.on_send_shopping_list)
-        self.pB_print.clicked.connect(self.on_print_shopping_list)
         self.pB_send_2.clicked.connect(self.on_send_recipe)
         self.pB_send_2.clicked.connect(self.pB_action_menu.close)
         self.pB_print_2.clicked.connect(self.on_print_recipe)
@@ -418,7 +395,7 @@ class MainGUI(QWidget):
         self.pB_modif_2.toggled.connect(self.frame_edit_recipe.setVisible)
         self.pB_modif_2.toggled.connect(self.frame_details.setHidden)
         self.pB_modif_2.toggled.connect(self.frame_list_recipes.setHidden)
-        self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
+        # self.lW_shopping.itemSelectionChanged.connect(self.on_ingredient_selection)
         self.tW.currentChanged.connect(self.on_tab_changed)
         self.lE_with.textChanged.connect(self.dynamic_filter)
         self.cB_search_ingredients.stateChanged.connect(self.dynamic_filter)
