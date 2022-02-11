@@ -618,8 +618,6 @@ class MainGUI(QWidget):
         self.current_menu.generate_smart_menu_v2(self.recipe_db, options = options)
         self.current_menu.use_double()
 
-        # print(self.current_menu)
-
     def populate_tW_menu(self, menu):
         # movie = cw.gif_to_button(self.icon_folder + 'icon_cover.gif', self.pB_new_menu)
         
@@ -727,7 +725,6 @@ class MainGUI(QWidget):
         self.populate_shopping_list()
         self.populate_menu_list()
         self.compute_score()
-        # print(self.current_menu.table)
     
     def on_update_full_menu(self, table):
         self.current_menu.table = [
