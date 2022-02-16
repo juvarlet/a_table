@@ -13,10 +13,15 @@ from ingredient import Ingredient
 UI_FILE = cw.dirname('UI') + 'line_ingredient.ui'
 
 class LineIngredient(QWidget):
-    def __init__(self, ingredient: Ingredient, parent=None):
+    
+    on_reset = Signal()
+    on_delete = Signal()
+    
+    def __init__(self, ingredient: Ingredient, checked = False, parent=None):
         super(LineIngredient, self).__init__(parent)
 
         self.ingredient = ingredient
+        self.checked = checked
         self.loadUI()
         self.saveComponents()
         
@@ -46,11 +51,20 @@ class LineIngredient(QWidget):
     def initial_state(self):
         cw.pb_hover_stylesheet(self.pB_delete, 'icon_bin', 'icon_bin_')
         cw.pb_hover_stylesheet(self.pB_reset, 'icon_reset_LD', 'icon_reset_LD_')
-        
+        # self.pB_delete.setIcon(QIcon(self.dirname + '/icon_bin.png'))
+        # self.pB_reset.setIcon(QIcon(self.dirname + '/icon_reset_LD.png'))
         self.label_name.setText(self.ingredient.name)
+        self.label_unit.setText(self.ingredient.qty_unit)
+        self.sB_qty.setValue(self.ingredient.qty)
+        self.cB_done.setChecked(self.checked)
         
     def connect_actions(self):
         pass
     
     def update_modif(self):
+        # self.sB_qty.valueChanged.connect(self.on_value_changed)
         pass
+
+    def on_value_changed(self, new_value):
+        print(str(new_value))
+        self.sB_qty.setDecimals(not new_value.is_integer())

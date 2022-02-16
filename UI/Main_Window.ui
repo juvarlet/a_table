@@ -136,7 +136,7 @@
         border-color: #ffc05c;
         font: bold 18px;
         /*min-width: 10em;*/
-        padding: 8px;
+        padding: 4px;
         color:#1a5d75;
     
     }

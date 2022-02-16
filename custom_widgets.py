@@ -397,6 +397,7 @@ def pb_hover_stylesheet(pb, image, image_hover, image_pressed = None):
     stylesheet = '''
             QPushButton{
                 image: url(file:///../UI/images/%s.png);
+                padding: 0px;
             }
 
             QPushButton:hover{

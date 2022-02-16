@@ -18,9 +18,11 @@ UI_FILE = cw.dirname('UI') + 'shopping_list.ui'
 
 
 class ShoppingList(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, ingredient_list=None, parent=None):
         super(ShoppingList, self).__init__(parent)
-    
+
+        self.ingredient_list = ingredient_list
+        
         self.loadUI()
         self.saveComponents()
         
@@ -53,9 +55,15 @@ class ShoppingList(QWidget):
         cw.pb_hover_stylesheet(self.pB_send, 'icon_send', 'icon_send_')
         cw.pb_hover_stylesheet(self.pB_print, 'icon_print', 'icon_print_')
         cw.pb_hover_stylesheet(self.pB_reset, 'icon_reset_LD', 'icon_reset_LD_')
+        cw.pb_hover_stylesheet(self.pB_sort, 'icon_filter_LD', 'icon_filter_LD_')
         cw.load_pic(self.label_icon, self.dirname + 'icon_list.png')
+        # self.pB_sort.setIcon(QIcon(self.dirname + '/icon_filter_LD.png'))
         
         self.add_ingredient(Ingredient('example'))
+        self.add_ingredient(Ingredient('example2', 10, 'kg'))
+        
+        if self.ingredient_list:
+            self.add_ingredients(self.ingredient_list)
         
     def connect_actions(self):
         pass
@@ -66,6 +74,11 @@ class ShoppingList(QWidget):
     def add_ingredient(self, ingredient: Ingredient, checked = False):
         self.lW_shopping.addItem(ingredient.name)
         line_item = self.lW_shopping.item(self.lW_shopping.count()-1)
-        line_item.setSizeHint(QSize(0,40))
-        line_widget = LineIngredient(ingredient)
+        line_item.setSizeHint(QSize(0,35))
+        line_widget = LineIngredient(ingredient, checked)
         self.lW_shopping.setItemWidget(line_item, line_widget)
+    
+    def add_ingredients(self, ingredient_list):
+        #ingredient_list = [(ingredient, checked),()...]
+        for ingredient, checked in ingredient_list:
+            self.add_ingredient(ingredient, checked)
