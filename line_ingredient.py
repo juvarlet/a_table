@@ -15,7 +15,7 @@ UI_FILE = cw.dirname('UI') + 'line_ingredient.ui'
 class LineIngredient(QWidget):
     
     on_reset = Signal()
-    on_delete = Signal()
+    on_delete = Signal(Ingredient)
     
     def __init__(self, ingredient: Ingredient, checked = False, parent=None):
         super(LineIngredient, self).__init__(parent)
@@ -35,10 +35,10 @@ class LineIngredient(QWidget):
     def saveComponents(self):
         self.dirname = cw.dirname('UI/images')
         
-        self.label_name: QLabel
-        self.label_name = self.pW.label_name
-        self.label_unit: QLabel
-        self.label_unit = self.pW.label_unit
+        self.lE_name: QLineEdit
+        self.lE_name = self.pW.lE_name
+        self.lE_unit: QLineEdit
+        self.lE_unit = self.pW.lE_unit
         self.cB_done: QCheckBox
         self.cB_done = self.pW.cB_done
         self.sB_qty: QDoubleSpinBox
@@ -53,18 +53,89 @@ class LineIngredient(QWidget):
         cw.pb_hover_stylesheet(self.pB_reset, 'icon_reset_LD', 'icon_reset_LD_')
         # self.pB_delete.setIcon(QIcon(self.dirname + '/icon_bin.png'))
         # self.pB_reset.setIcon(QIcon(self.dirname + '/icon_reset_LD.png'))
-        self.label_name.setText(self.ingredient.name)
-        self.label_unit.setText(self.ingredient.qty_unit)
+        self.lE_name.setText(self.ingredient.name)
+        self.lE_unit.setText(self.ingredient.unit)
         self.sB_qty.setValue(self.ingredient.qty)
         self.cB_done.setChecked(self.checked)
+        self.pB_reset.hide()
         
     def connect_actions(self):
-        pass
+        self.pB_reset.clicked.connect(self.reset)
+        self.pB_delete.clicked.connect(self.delete)
     
     def update_modif(self):
         # self.sB_qty.valueChanged.connect(self.on_value_changed)
-        pass
+        self.cB_done.stateChanged.connect(self.check_style)
+        self.lE_name.textChanged.connect(self.on_modif)
+        self.lE_unit.textChanged.connect(self.on_modif)
+        self.sB_qty.valueChanged.connect(self.on_modif)
 
     def on_value_changed(self, new_value):
         print(str(new_value))
         self.sB_qty.setDecimals(not new_value.is_integer())
+    
+    def check_style(self):
+        self.on_modif()
+        if self.cB_done.isChecked():
+            self.sB_qty.setEnabled(False)
+            self.lE_name.setStyleSheet('''
+                            QLineEdit#lE_name{
+                                color:#ffc05c;
+                            }
+                            ''')
+            self.lE_unit.setStyleSheet('''
+                            QLineEdit#lE_unit{
+                                color:#ffc05c;
+                            }
+                            ''')
+            self.sB_qty.setStyleSheet('''
+                            QDoubleSpinBox#sB_qty{
+                                font: bold 18px;
+                                background-color: #ffe0ad;
+                                border-width: 0px;
+                                color:#ffc05c;
+                            }
+                            QDoubleSpinBox#sB_qty::up-button{
+                                border:none;
+                            }
+                            ''')
+        else:
+            self.sB_qty.setEnabled(True)
+            self.lE_name.setStyleSheet('''
+                            QLineEdit#lE_name{
+                                color:#1a5d75;
+                            }
+                            ''')
+            self.lE_unit.setStyleSheet('''
+                            QLineEdit#lE_unit{
+                                color:#1a5d75;
+                            }
+                            ''')
+            self.sB_qty.setStyleSheet('''
+                            QDoubleSpinBox#sB_qty{
+                                font: bold 18px;
+                                background-color: #ffe0ad;
+                                border-width: 0px;
+                                color:#1a5d75;
+                            }
+                            QDoubleSpinBox#sB_qty::up-button{
+                                border:none;
+                            }
+                            ''')
+    
+    def on_modif(self):
+        isModified = self.lE_name.text() != self.ingredient.name
+        isModified += self.lE_unit.text() != self.ingredient.unit
+        isModified += self.sB_qty.value() != self.ingredient.qty
+        isModified += self.cB_done.isChecked() != self.checked
+        self.pB_reset.setVisible(isModified)
+    
+    def reset(self):
+        self.lE_name.setText(self.ingredient.name)
+        self.lE_unit.setText(self.ingredient.unit)
+        self.sB_qty.setValue(self.ingredient.qty)
+        self.cB_done.setChecked(self.checked)
+        self.on_modif()
+    
+    def delete(self):
+        self.on_delete.emit(self.ingredient)

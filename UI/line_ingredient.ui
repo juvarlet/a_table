@@ -57,6 +57,14 @@ QDoubleSpinBox{
 }
 QDoubleSpinBox::up-button{
 border:none;
+}
+
+QLineEdit{
+	border:none;
+	background:transparent;
+}
+QFrame#frame_action{
+	background:transparent;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -67,12 +75,15 @@ border:none;
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>2</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="spacing">
+   <property name="horizontalSpacing">
+    <number>2</number>
+   </property>
+   <property name="verticalSpacing">
     <number>0</number>
    </property>
    <item row="0" column="0">
@@ -112,16 +123,6 @@ border:none;
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="QLabel" name="label_unit">
-        <property name="text">
-         <string>unit</string>
-        </property>
-        <property name="textInteractionFlags">
-         <set>Qt::LinksAccessibleByMouse|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="2">
        <widget class="QDoubleSpinBox" name="sB_qty">
         <property name="maximumSize">
@@ -150,60 +151,128 @@ border:none;
         </property>
        </widget>
       </item>
-      <item row="0" column="5">
-       <widget class="QPushButton" name="pB_delete">
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>images/icon_bin.png</normaloff>images/icon_bin.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="label_name">
+       <widget class="QLineEdit" name="lE_name">
         <property name="text">
          <string>name</string>
         </property>
-        <property name="textInteractionFlags">
-         <set>Qt::LinksAccessibleByMouse|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="lE_unit">
+        <property name="text">
+         <string>unit</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
       <item row="0" column="4">
-       <widget class="QPushButton" name="pB_reset">
+       <widget class="QFrame" name="frame_action">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>80</width>
+          <height>16777215</height>
          </size>
         </property>
-        <property name="text">
-         <string/>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
         </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>images/icon_reset_LD.png</normaloff>images/icon_reset_LD.png</iconset>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
         </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="horizontalSpacing">
+          <number>2</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pB_delete">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>images/icon_bin.png</normaloff>images/icon_bin.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pB_reset">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>images/icon_reset_LD.png</normaloff>images/icon_reset_LD.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>

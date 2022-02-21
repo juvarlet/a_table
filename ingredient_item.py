@@ -32,7 +32,7 @@ class IngredientItem(UIDWidget):
         else:
             self.lbl_ing_name.setText(ingredient.name)
         self.lbl_ing_qty.setText(str(ingredient.qty))
-        self.lbl_ing_qty_unit.setText(ingredient.qty_unit)
+        self.lbl_ing_qty_unit.setText(ingredient.unit)
 
         #TODO : IMPROVE THE WAY YOU AUTOCOMPLETE UNITES
         ing_possible_units = ["", "c.a.s", "g", "Kg", "cl", "c.a.c"]

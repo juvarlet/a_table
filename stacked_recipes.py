@@ -12,7 +12,7 @@ import recipe_db
 from stylesheet_update import COLORS
 import time
 
-UI_FILE = cw.dirname('UI') + 'stacked_recipes_.ui'
+UI_FILE = cw.dirname('UI') + 'stacked_recipes.ui'
 
 class StackedRecipes(QWidget):
     
@@ -262,18 +262,8 @@ class StackedRecipes(QWidget):
         recipe = self.recipe_list[index]
         if type(recipe) is str:
             recipe = self.recipe_db.get_recipe_object(recipe)
-
-        image_path = self.dirname + recipe.image + '_icon.jpg'
-        qpix = QPixmap(image_path)
-        if recipe.image != '' and recipe.image != '/images/':
-            if qpix.height() < qpix.width():
-                p1 = qpix.scaledToHeight(self.height()*1, Qt.SmoothTransformation)
-            else:
-                p1 = qpix.scaledToWidth(self.width()*1, Qt.SmoothTransformation)
-            self.label_image.setPixmap(p1)
-        else:
-            self.label_image.setPixmap(qpix)
-        self.label_title.setText(recipe.name)
+        
+        recipe.render_card(self.label_title, self.label_image)
     
     def update_list(self):
         self.list_stack.clear()

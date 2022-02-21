@@ -13,67 +13,75 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QTableWidget{
+	background-color:#ffe0ad
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QSplitter" name="splitter">
+   <item row="0" column="0">
+    <widget class="QFrame" name="frame">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-       <horstretch>60</horstretch>
-       <verstretch>80</verstretch>
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>50</horstretch>
+       <verstretch>90</verstretch>
       </sizepolicy>
      </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
      </property>
-     <widget class="QFrame" name="frame">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>60</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QListWidget" name="lW_shopping">
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QFrame" name="frame_3">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>40</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QListWidget" name="listWidget">
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QListWidget" name="lW_shopping">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="0" column="1">
+    <widget class="QFrame" name="frame_4">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>50</horstretch>
+       <verstretch>90</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="0" column="0">
+       <widget class="QTableWidget" name="tW_link_menus">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="showGrid">
+         <bool>false</bool>
+        </property>
+        <property name="gridStyle">
+         <enum>Qt::NoPen</enum>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
     <widget class="QFrame" name="frame_actions">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -88,7 +96,7 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="3">
+      <item row="0" column="4">
        <widget class="QPushButton" name="pB_print">
         <property name="text">
          <string/>
@@ -96,53 +104,6 @@
         <property name="icon">
          <iconset>
           <normaloff>images/icon_print.png</normaloff>images/icon_print.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>50</width>
-          <height>50</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pB_reset">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>images/icon_reset_LD.png</normaloff>images/icon_reset_LD.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>50</width>
-          <height>50</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="pB_send">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>images/icon_send.png</normaloff>images/icon_send.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -169,54 +130,52 @@
         </property>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QFrame" name="frame_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>10</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_icon">
+      <item row="0" column="5">
+       <widget class="QPushButton" name="pB_send">
         <property name="text">
-         <string>Icon</string>
+         <string/>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+        <property name="icon">
+         <iconset>
+          <normaloff>images/icon_send.png</normaloff>images/icon_send.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
         </property>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="1" rowspan="2">
-    <widget class="QFrame" name="frame_4">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>40</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_6">
-      <item row="0" column="0">
-       <widget class="QTableWidget" name="tW_link_menus"/>
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pB_reset">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>images/icon_reset_LD.png</normaloff>images/icon_reset_LD.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

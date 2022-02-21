@@ -1,4 +1,5 @@
 import datetime
+from card_recipe import CardRecipe
 from stacked_recipes import StackedRecipes, StackUpdate
 from user_settings import UserSettings
 from history import History
@@ -10,6 +11,7 @@ from stylesheet_update import COLORS
 import os
 from os.path import basename
 import time
+import math
 
 from PySide2 import QtCore
 from PySide2 import QtGui
@@ -270,10 +272,10 @@ class MainGUI(QWidget):
         self.window().setWindowState(Qt.WindowMaximized)
         #-replace qtablewidget tW_menu by custom class
         new_tW_menu = cw.TableWidgetCustom(self.pW)
-        new_tW_menu.setRowCount(3)
+        new_tW_menu.setRowCount(2)
         # new_tW_menu.setVerticalHeaderLabels([' Midi ', ' Soir ', ' Desserts '])
         new_tW_menu.verticalHeader().hide()
-        new_tW_menu.hideRow(2)
+        # new_tW_menu.hideRow(2)
         
         new_tW_menu.setMouseTracking(True)
         new_tW_menu.setEditTriggers(self.tW_menu.editTriggers())
@@ -291,6 +293,10 @@ class MainGUI(QWidget):
         self.pW.gridLayout_4.replaceWidget(self.tW_menu, new_tW_menu)
         self.tW_menu = new_tW_menu
         self.pW.tW_menu.setParent(None)
+        
+        # self.tW_menu.horizontalHeader().setDefaultSectionSize(260)
+        # self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        # self.tW_menu.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
         
         self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_menu.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -568,7 +574,7 @@ class MainGUI(QWidget):
         self.populate_tW_menu(self.current_menu)
         # self.populate_lW_recipe()
         self.populate_shopping_list()
-        self.populate_menu_list()
+        # self.populate_menu_list()
         self.compute_score()
         
         # self.pB_save.setEnabled(True)
@@ -597,7 +603,7 @@ class MainGUI(QWidget):
 
     def populate_tW_menu(self, menu):
         # movie = cw.gif_to_button(self.icon_folder + 'icon_cover.gif', self.pB_new_menu)
-        
+
         #reset tW_Menu
         self.tW_menu.setColumnCount(0)
         #update tW_menu with days
@@ -693,14 +699,14 @@ class MainGUI(QWidget):
             # self.pB_save.setEnabled(True)
             self.pB_calendar.setEnabled(True)
             self.populate_shopping_list()
-            self.populate_menu_list()
+            # self.populate_menu_list()
             self.compute_score()
     
     def on_update_current_menu(self, recipe_list, row, column):
         table_index = row + column*2
         self.current_menu.table[table_index] = recipe_list
         self.populate_shopping_list()
-        self.populate_menu_list()
+        # self.populate_menu_list()
         self.compute_score()
     
     def on_update_full_menu(self, table):
@@ -710,7 +716,7 @@ class MainGUI(QWidget):
         ]
         self.populate_tW_menu(self.current_menu)
         self.populate_shopping_list()
-        self.populate_menu_list()
+        # self.populate_menu_list()
         self.compute_score()
     
     def on_drag_drop_event(self, row, column):
@@ -821,49 +827,8 @@ class MainGUI(QWidget):
         return super().eventFilter(watched, event)
     
     def populate_shopping_list(self):
-        #reset list
-        self.lW_shopping.clear()
-        # print(self.current_menu.get_shopping_list())
-        options = []
-        missing = []
-        for ingredient, qty_unit in self.current_menu.get_shopping_list().items():
-            if ingredient != 'missing information':
-                string = ''
-                string_option = ''
-                qty, unit = qty_unit
-                if ingredient != '':
-                    if ingredient[0] == '[' and ingredient[-1] == ']':
-                        string_option += '- %s : %s' % (ingredient, qty)
-                        if unit != '()':
-                            string_option += unit
-                        options.append(string_option)
-                    else:
-                        string += '- %s : %s' % (ingredient, qty)
-                        if unit != '()':
-                            string += unit
-                        self.lW_shopping.addItem(string)
-            else:
-                missing.append(qty_unit) #in that case qty_unit is recipe name
+        self.shopping_list.update(self.current_menu)
         
-        if len(options) > 0:
-            qlwi = QListWidgetItem('\nOptionnel :')
-            qlwi.setFlags(qlwi.flags() & ~Qt.ItemIsSelectable)
-            self.lW_shopping.addItem(qlwi)
-            self.lW_shopping.addItems(options)
-        
-        if len(missing) > 0:
-            qlwi = QListWidgetItem(u'\n-> Ingrédients manquants pour :')
-            qlwi.setFlags(qlwi.flags() & ~Qt.ItemIsSelectable)
-            self.lW_shopping.addItem(qlwi)
-            self.lW_shopping.addItems(missing[0])
-
-    def populate_menu_list(self):
-        #reset list
-        self.lW_menu.clear()
-        self.lW_menu.addItems(list(dict.fromkeys(['  -  ' + name for name in recipe_db.get_recipe_names(self.current_menu.table)])))
-        #+dessert list
-        self.lW_menu.addItems(list(dict.fromkeys(['  -  ' + name for name in recipe_db.get_recipe_names(self.dessert_list)])))
-
     def on_card_recipe_selection(self, row, column):
  
         # recipe_name = self.tW_menu.item(row, column).text()
@@ -989,7 +954,7 @@ class MainGUI(QWidget):
         self.populate_tW_menu(self.current_menu)
         #update shopping list and menu list
         self.populate_shopping_list()
-        self.populate_menu_list()
+        # self.populate_menu_list()
         self.compute_score()
     
     def on_export_menu(self):
@@ -1260,7 +1225,7 @@ class MainGUI(QWidget):
         self.edit_recipe.edit_mode(recipe)
         
     def on_confirm_recipe(self, input):
-        title, image_cell, ing_dict, preparation_cell, time, tag_checked_list, mode, auto_switch = input
+        title, image_cell, ing_list, preparation_cell, time, tag_checked_list, mode, auto_switch = input
         
         if auto_switch != 'edit':
             image = ''
@@ -1271,7 +1236,7 @@ class MainGUI(QWidget):
             
 
             #add recipe to database
-            recipe = Recipe(uuid.uuid4(), title, ing_dict, preparation_cell, time, tag_checked_list, image)
+            recipe = Recipe(uuid.uuid4(), title, ing_list, preparation_cell, time, tag_checked_list, image)
             if self.edit_recipe.label_newedit.text() == 'Modifier la recette':  #update existing recipe
                 initial_recipe_name = self.lW_recipe.currentItem().text()
                 index_of_recipe = recipe_db.get_recipe_names(self.recipe_db.recipe_list).index(initial_recipe_name)

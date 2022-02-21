@@ -936,7 +936,7 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
               <enum>QFrame::NoFrame</enum>
              </property>
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="page_carte">
               <property name="geometry">
@@ -1338,6 +1338,9 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                        <property name="showGrid">
                         <bool>false</bool>
                        </property>
+                       <property name="rowCount">
+                        <number>2</number>
+                       </property>
                        <attribute name="verticalHeaderVisible">
                         <bool>false</bool>
                        </attribute>
@@ -1366,14 +1369,6 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                           <weight>75</weight>
                           <bold>true</bold>
                          </font>
-                        </property>
-                        <property name="textAlignment">
-                         <set>AlignCenter</set>
-                        </property>
-                       </row>
-                       <row>
-                        <property name="text">
-                         <string/>
                         </property>
                         <property name="textAlignment">
                          <set>AlignCenter</set>
