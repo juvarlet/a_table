@@ -19,11 +19,13 @@ UI_FILE = cw.dirname('UI') + 'shopping_list.ui'
 
 
 class ShoppingList(QWidget):
-    def __init__(self, ingredient_list=None, parent=None):
+    
+    def __init__(self, parent=None):
         super(ShoppingList, self).__init__(parent)
 
-        self.ingredient_list = ingredient_list
         self.cards = {}
+        self.resets = {'deletion':False}
+        self.current_menu = None
         
         self.loadUI()
         self.saveComponents()
@@ -58,12 +60,6 @@ class ShoppingList(QWidget):
         cw.pb_hover_stylesheet(self.pB_sort, 'icon_filter_LD', 'icon_filter_LD_')
         # self.pB_sort.setIcon(QIcon(self.dirname + '/icon_filter_LD.png'))
         
-        self.add_ingredient(Ingredient('example'))
-        self.add_ingredient(Ingredient('example2', 10, 'kg'))
-        
-        if self.ingredient_list:
-            self.add_ingredients(self.ingredient_list)
-        
         self.tW_link_menus.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_link_menus.verticalHeader().setDefaultSectionSize(200)
         self.tW_link_menus.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
@@ -71,19 +67,27 @@ class ShoppingList(QWidget):
         self.tW_link_menus.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
         # self.tW_link_menus.setRowHeight(0,200)
         
+        self.on_reset_update()
+        
     def connect_actions(self):
-        pass
+        self.pB_reset.clicked.connect(self.reset_all)
     
     def update_modif(self):
         pass
 
     def add_ingredient(self, ingredient: Ingredient, checked = False):
         self.lW_shopping.addItem(ingredient.name)
+        
         line_item = self.lW_shopping.item(self.lW_shopping.count()-1)
         line_item.setSizeHint(QSize(0,35))
+        
         line_widget = LineIngredient(ingredient, checked)
         line_widget.on_delete.connect(self.delete_line)
+        line_widget.on_reset.connect(self.update_reset)
+        line_widget.on_search.connect(self.update_cards_status)
         self.lW_shopping.setItemWidget(line_item, line_widget)
+        
+        self.resets[ingredient.name] = False
     
     def add_ingredients(self, ingredient_list):
         #ingredient_list = [(ingredient, checked),()...]
@@ -122,16 +126,57 @@ class ShoppingList(QWidget):
                 for recipe_name in value:
                     self.add_missing_information(recipe_name)
 
-    def update(self, menu: Menu):
+    def update(self, menu: Menu=None):
         self.clear()
+        if menu: #new current menu assigned to this object
+            self.current_menu = menu
+        elif self.current_menu: #using previous menu assigned
+            menu = self.current_menu
+        else:
+            return
         recipe_list = menu.get_recipe_list(no_double=True)
         self.populate_menu_list(recipe_list)
         shopping_list = menu.get_shopping_list().items()
         self.populate_ingredient_list(shopping_list)
+        self.on_reset_update()
     
     def delete_line(self, ingredient: Ingredient):
         item = self.lW_shopping.findItems(ingredient.name, Qt.MatchExactly)[0]
-        self.lW_shopping.takeItem(item)
+        row = self.lW_shopping.row(item)
+        self.lW_shopping.takeItem(row)
         
+        self.resets.pop(ingredient.name)
+        self.resets['deletion'] = True
+        self.on_reset_update()
+    
+    def update_reset(self, ingredient: Ingredient, visible: bool):
+        self.resets[ingredient.name] = visible
+        self.on_reset_update()
         
+    def on_reset_update(self):
+        self.pB_reset.setVisible(sum(self.resets.values()))
+    
+    def reset_all(self):
+        self.resets = {'deletion':False}
+        self.update()
+    
+    def update_cards_status(self, ingredient: Ingredient, highlight: bool):
+        for card in self.cards.values():
+            if card.recipe.hasIngredient(ingredient.name):
+                card.apply_status(highlight)
         
+                
+        
+    
+    def get_line_widget(self, ingredient: Ingredient) -> LineIngredient:
+        qlwi_list = [self.lW_shopping.item(r) for r in self.lW_shopping.count()]
+        for qlwi in qlwi_list:
+            if qlwi.text() == ingredient.name:
+                return self.lW_shopping.itemWidget(qlwi)
+        
+        return None
+    
+    def get_linked_LineIngredients(self, card: CardRecipe):
+        return [self.get_line_widget(ingredient) for ingredient in card.recipe.ing_list]
+    
+    

@@ -88,6 +88,31 @@ class CardRecipe(QWidget):
     
     def highlight(self):
         self.status = 1
+        
+        self.frame_card.setStyleSheet('''
+            QFrame#frame_card{
+                border: 5px solid #36a9d3;
+                border-radius: 10px;
+                background-color:#36a9d3;
+            }
+            ''')
+        self.label_title.setStyleSheet('''
+            QLabel#label_title{
+                border: 1px solid #36a9d3;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                background-color:#36a9d3;
+            }
+            ''')
+        
+        self.label_image.setStyleSheet('''
+            QLabel#label_image{
+                border: 1px solid #36a9d3;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                background-color:#36a9d3;
+            }
+            ''')
     
     def no_ingredient(self):
         self.status = 2

@@ -116,7 +116,7 @@ class Recipe:
             string_list += string_option_list
         return string_list
     
-    def hasIngredient(self, ingredient):
+    def hasIngredient(self, ingredient: str):
         try:
             if ingredient in [ing.name for ing in self.ing_list]:
                 return True

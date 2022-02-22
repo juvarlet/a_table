@@ -829,6 +829,7 @@ class MainGUI(QWidget):
     def populate_shopping_list(self):
         self.shopping_list.update(self.current_menu)
         
+        
     def on_card_recipe_selection(self, row, column):
  
         # recipe_name = self.tW_menu.item(row, column).text()

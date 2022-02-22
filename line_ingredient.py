@@ -14,14 +14,16 @@ UI_FILE = cw.dirname('UI') + 'line_ingredient.ui'
 
 class LineIngredient(QWidget):
     
-    on_reset = Signal()
+    on_reset = Signal(Ingredient, bool)
     on_delete = Signal(Ingredient)
+    on_search = Signal(Ingredient, bool)
     
     def __init__(self, ingredient: Ingredient, checked = False, parent=None):
         super(LineIngredient, self).__init__(parent)
 
         self.ingredient = ingredient
         self.checked = checked
+        self.selected = False
         self.loadUI()
         self.saveComponents()
         
@@ -47,10 +49,17 @@ class LineIngredient(QWidget):
         self.pB_delete = self.pW.pB_delete
         self.pB_reset: QPushButton
         self.pB_reset = self.pW.pB_reset
+        self.pB_search: QPushButton
+        self.pB_search = self.pW.pB_search
+        self.frame: QFrame
+        self.frame = self.pW.frame
         
     def initial_state(self):
+        self.setMouseTracking(True)
+        
         cw.pb_hover_stylesheet(self.pB_delete, 'icon_bin', 'icon_bin_')
         cw.pb_hover_stylesheet(self.pB_reset, 'icon_reset_LD', 'icon_reset_LD_')
+        cw.pb_hover_stylesheet(self.pB_search, 'icon_search', 'icon_search_')
         # self.pB_delete.setIcon(QIcon(self.dirname + '/icon_bin.png'))
         # self.pB_reset.setIcon(QIcon(self.dirname + '/icon_reset_LD.png'))
         self.lE_name.setText(self.ingredient.name)
@@ -62,6 +71,7 @@ class LineIngredient(QWidget):
     def connect_actions(self):
         self.pB_reset.clicked.connect(self.reset)
         self.pB_delete.clicked.connect(self.delete)
+        self.pB_search.clicked.connect(self.search)
     
     def update_modif(self):
         # self.sB_qty.valueChanged.connect(self.on_value_changed)
@@ -70,6 +80,30 @@ class LineIngredient(QWidget):
         self.lE_unit.textChanged.connect(self.on_modif)
         self.sB_qty.valueChanged.connect(self.on_modif)
 
+    def enterEvent(self, event: PySide2.QtCore.QEvent) -> None:
+        self.frame.setStyleSheet('''
+                           QFrame#frame{
+                               background-color: #ffe0ad;
+                               border-width:2px;
+                               border-radius:5px;
+                               border-color: #ffe0ad;
+                           }
+                           
+                           ''')
+        return super().enterEvent(event)
+
+    def leaveEvent(self, event: PySide2.QtCore.QEvent) -> None:
+        self.frame.setStyleSheet('''
+                           QFrame#frame{
+                               background-color: transparent;
+                               border-width:2px;
+                               border-radius:5px;
+                               border-color: transparent;
+                           }
+                           
+                           ''')
+        return super().leaveEvent(event)
+    
     def on_value_changed(self, new_value):
         print(str(new_value))
         self.sB_qty.setDecimals(not new_value.is_integer())
@@ -129,13 +163,19 @@ class LineIngredient(QWidget):
         isModified += self.sB_qty.value() != self.ingredient.qty
         isModified += self.cB_done.isChecked() != self.checked
         self.pB_reset.setVisible(isModified)
+        self.on_reset.emit(self.ingredient, isModified)
     
     def reset(self):
         self.lE_name.setText(self.ingredient.name)
         self.lE_unit.setText(self.ingredient.unit)
         self.sB_qty.setValue(self.ingredient.qty)
         self.cB_done.setChecked(self.checked)
+        self.pB_search.setChecked(False)
         self.on_modif()
     
     def delete(self):
         self.on_delete.emit(self.ingredient)
+    
+    def search(self):
+        self.selected = self.pB_search.isChecked()
+        self.on_search.emit(self.ingredient, self.selected)
