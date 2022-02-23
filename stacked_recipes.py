@@ -19,6 +19,7 @@ class StackedRecipes(QWidget):
     on_enter_recipe_stack = Signal(str)
     on_lock_for_edition = Signal([str,bool])
     on_update_current_menu = Signal([list, int, int])
+    on_details = Signal(int, int)
     
     def __init__(self, recipe_list, recipe_db = None, id = '000', parent=None):
         super(StackedRecipes, self).__init__(parent)
@@ -69,11 +70,12 @@ class StackedRecipes(QWidget):
 
         self.pB_add: QPushButton
         self.pB_add = self.pW.pB_add
-        # self.pB_add = QPushButton()
         self.pB_delete: QPushButton
         self.pB_delete = self.pW.pB_delete
         self.pB_edit: QPushButton
         self.pB_edit = self.pW.pB_edit
+        self.pB_details: QPushButton
+        self.pB_details = self.pW.pB_details
 
         self.pB_list: QPushButton
         self.pB_list = self.pW.pB_list
@@ -88,6 +90,8 @@ class StackedRecipes(QWidget):
         self.pB_delete_2 = self.pW.pB_delete_2
         self.pB_edit_2: QPushButton
         self.pB_edit_2 = self.pW.pB_edit_2
+        self.pB_details_2: QPushButton
+        self.pB_details_2 = self.pW.pB_details_2
         self.pB_stack: QPushButton
         self.pB_stack = self.pW.pB_stack
 
@@ -146,6 +150,8 @@ class StackedRecipes(QWidget):
         self.pB_next.setIcon(QIcon(self.icon_folder + 'icon_right_arrow.png'))
         self.pB_edit.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
         self.pB_edit_2.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
+        self.pB_details.setIcon(QIcon(self.icon_folder + 'icon_search.png'))
+        self.pB_details_2.setIcon(QIcon(self.icon_folder + 'icon_search.png'))
         self.pB_stack.setIcon(QIcon(self.icon_folder + 'icon_stack.png'))
         self.pB_ok.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
         self.pB_cancel.setIcon(QIcon(self.icon_folder + 'icon_cancel.png'))
@@ -188,6 +194,8 @@ class StackedRecipes(QWidget):
         self.pB_next.setIcon(QIcon(self.icon_folder + 'icon_right_arrow.png'))
         self.pB_edit.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
         self.pB_edit_2.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
+        self.pB_details.setIcon(QIcon(self.icon_folder + 'icon_search.png'))
+        self.pB_details_2.setIcon(QIcon(self.icon_folder + 'icon_search.png'))
         self.pB_stack.setIcon(QIcon(self.icon_folder + 'icon_stack.png'))
         self.pB_ok.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
         self.pB_cancel.setIcon(QIcon(self.icon_folder + 'icon_cancel.png'))
@@ -225,6 +233,8 @@ class StackedRecipes(QWidget):
         self.pB_next.clicked.connect(self.on_right)
         self.pB_edit.clicked.connect(self.on_edit_recipe)
         self.pB_edit_2.clicked.connect(self.on_edit_recipe)
+        self.pB_details.clicked.connect(self.on_display_details)
+        self.pB_details_2.clicked.connect(self.on_display_details)
         self.pB_list.clicked.connect(self.on_list_view)
         self.pB_stack.clicked.connect(self.on_stack_view)
         self.list_stack.itemSelectionChanged.connect(self.on_recipe_selection)
@@ -342,6 +352,7 @@ class StackedRecipes(QWidget):
         # print(self.list_stack.currentItem().text())
         isItemSelected = self.list_stack.currentItem() is not None
         self.pB_edit_2.setVisible(isItemSelected)
+        self.pB_details_2.setVisible(isItemSelected)
         self.pB_delete_2.setVisible(isItemSelected and len(self.recipe_list) > 1)
         if isItemSelected:
             self.current_index = self.list_stack.currentRow()
@@ -496,7 +507,9 @@ class StackedRecipes(QWidget):
         #     self.init4()
         #     self.initIsComplete = True
     
-
+    def on_display_details(self):
+        row, col = id_to_row_column(self.id)
+        self.on_details.emit(row, col)
         
 class StackUpdate(QThread):#QThread
     

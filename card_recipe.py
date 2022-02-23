@@ -13,6 +13,9 @@ from recipe import Recipe
 UI_FILE = cw.dirname('UI') + 'card_recipe.ui'
 
 class CardRecipe(QWidget):
+
+    on_list_ingredients = Signal(QWidget, bool)
+
     def __init__(self, recipe: Recipe, status=0, parent=None):
         super(CardRecipe, self).__init__(parent)
 
@@ -39,13 +42,16 @@ class CardRecipe(QWidget):
         self.label_title = self.pW.label_title
         self.frame_card: QFrame
         self.frame_card = self.pW.frame_card
+        self.pB_list: QPushButton
+        self.pB_list = self.pW.pB_list
         
     def initial_state(self):
         self.recipe.render_card(self.label_title, self.label_image, 4/5)
         self.apply_status(self.status)
+        self.pB_list.setIcon(QIcon(self.dirname + '/icon_list.png'))
         
     def connect_actions(self):
-        pass
+        self.pB_list.clicked.connect(self.on_select_ingredients)
     
     def update_modif(self):
         pass
@@ -60,6 +66,7 @@ class CardRecipe(QWidget):
         
     def reset_status(self):
         self.status = 0
+        self.pB_list.setVisible(True)
         
         self.frame_card.setStyleSheet('''
             QFrame#frame_card{
@@ -88,6 +95,7 @@ class CardRecipe(QWidget):
     
     def highlight(self):
         self.status = 1
+        self.pB_list.setVisible(True)
         
         self.frame_card.setStyleSheet('''
             QFrame#frame_card{
@@ -116,6 +124,7 @@ class CardRecipe(QWidget):
     
     def no_ingredient(self):
         self.status = 2
+        self.pB_list.hide()
         
         self.frame_card.setStyleSheet('''
             QFrame#frame_card{
@@ -141,3 +150,7 @@ class CardRecipe(QWidget):
                 background-color:#fdf1d9;
             }
             ''')
+    
+    def on_select_ingredients(self):
+        self.apply_status(self.pB_list.isChecked())
+        self.on_list_ingredients.emit(self, self.pB_list.isChecked())

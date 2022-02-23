@@ -656,6 +656,7 @@ class MainGUI(QWidget):
         stack.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
         stack.on_lock_for_edition.connect(self.on_lock_for_edition)
         stack.on_update_current_menu.connect(self.on_update_current_menu)
+        stack.on_details.connect(self.on_card_recipe_selection)
         self.stacks[id] = stack
         if id[0] == '+':
             qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
@@ -760,10 +761,12 @@ class MainGUI(QWidget):
             new_stacked_to.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
             new_stacked_to.on_lock_for_edition.connect(self.on_lock_for_edition)
             new_stacked_to.on_update_current_menu.connect(self.on_update_current_menu)
+            new_stacked_to.on_details.connect(self.on_card_recipe_selection)
             new_stacked_from.on_enter_recipe_stack.connect(self.on_enter_recipe_stack)
             new_stacked_from.on_lock_for_edition.connect(self.on_lock_for_edition)
             new_stacked_from.on_update_current_menu.connect(self.on_update_current_menu)
-            
+            new_stacked_from.on_details.connect(self.on_card_recipe_selection)
+
             self.stacks[sr.row_column_to_id(row, column)] = new_stacked_to
             self.stacks[sr.row_column_to_id(from_row, from_column)] = new_stacked_from
             

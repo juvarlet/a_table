@@ -66,9 +66,7 @@ QDoubleSpinBox{
 	border-width: 0px;
 	color:#1a5d75;
 }
-QDoubleSpinBox::up-button{
-border:none;
-}
+
 
 QLineEdit{
 	border:none;

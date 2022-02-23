@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>396</width>
-    <height>289</height>
+    <width>392</width>
+    <height>279</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -349,20 +349,7 @@ QLabel#label_title{
              <property name="verticalSpacing">
               <number>2</number>
              </property>
-             <item row="4" column="0">
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="3" column="1">
+             <item row="5" column="1">
               <widget class="QPushButton" name="pB_delete">
                <property name="maximumSize">
                 <size>
@@ -388,7 +375,33 @@ QLabel#label_title{
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
+             <item row="1" column="1">
+              <widget class="QPushButton" name="pB_add">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Ajouter une recette</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_add_recipe.png</normaloff>images/icon_add_recipe.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
               <widget class="QPushButton" name="pB_edit">
                <property name="maximumSize">
                 <size>
@@ -417,7 +430,20 @@ QLabel#label_title{
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
+             <item row="6" column="0">
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="6" column="1">
               <spacer name="verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -430,8 +456,8 @@ QLabel#label_title{
                </property>
               </spacer>
              </item>
-             <item row="1" column="1">
-              <widget class="QPushButton" name="pB_add">
+             <item row="4" column="1">
+              <widget class="QPushButton" name="pB_details">
                <property name="maximumSize">
                 <size>
                  <width>35</width>
@@ -439,14 +465,14 @@ QLabel#label_title{
                 </size>
                </property>
                <property name="toolTip">
-                <string>Ajouter une recette</string>
+                <string>Détails de cette recette</string>
                </property>
                <property name="text">
                 <string/>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>images/icon_add_recipe.png</normaloff>images/icon_add_recipe.png</iconset>
+                 <normaloff>images/icon_search.png</normaloff>images/icon_search.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -736,33 +762,7 @@ QLabel#label_title{
              <property name="verticalSpacing">
               <number>2</number>
              </property>
-             <item row="0" column="1">
-              <widget class="QPushButton" name="pB_add_2">
-               <property name="maximumSize">
-                <size>
-                 <width>35</width>
-                 <height>35</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Ajouter une recette</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>images/icon_add_recipe.png</normaloff>images/icon_add_recipe.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>27</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
+             <item row="3" column="1">
               <widget class="QPushButton" name="pB_delete_2">
                <property name="maximumSize">
                 <size>
@@ -817,7 +817,7 @@ QLabel#label_title{
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
+             <item row="4" column="1">
               <spacer name="verticalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -829,6 +829,58 @@ QLabel#label_title{
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="pB_add_2">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Ajouter une recette</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_add_recipe.png</normaloff>images/icon_add_recipe.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QPushButton" name="pB_details_2">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Détails de cette recette</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>images/icon_search.png</normaloff>images/icon_search.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>27</width>
+                 <height>27</height>
+                </size>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

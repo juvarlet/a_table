@@ -1,3 +1,4 @@
+from recipe import Recipe
 import PySide2
 from PySide2.QtWidgets import*
 from PySide2.QtCore import*
@@ -15,8 +16,6 @@ from card_recipe import CardRecipe
 from menu import Menu
 
 UI_FILE = cw.dirname('UI') + 'shopping_list.ui'
-
-
 
 class ShoppingList(QWidget):
     
@@ -113,6 +112,7 @@ class ShoppingList(QWidget):
         #populate table with menus
         for i, recipe in enumerate(recipe_list):
             card = CardRecipe(recipe)
+            card.on_list_ingredients.connect(self.on_select_ingredients)
             qtwi = QTableWidgetItem(recipe.name)
             self.tW_link_menus.setItem(int(i/columnCount), i%columnCount, qtwi)
             self.tW_link_menus.setCellWidget(int(i/columnCount), i%columnCount, card)
@@ -160,16 +160,14 @@ class ShoppingList(QWidget):
         self.resets = {'deletion':False}
         self.update()
     
-    def update_cards_status(self, ingredient: Ingredient, highlight: bool):
+    def update_cards_status(self, ingredient: Ingredient):
         for card in self.cards.values():
             if card.recipe.hasIngredient(ingredient.name):
+                highlight = bool(sum([line.selected for line in self.get_linked_LineIngredients(card)]))
                 card.apply_status(highlight)
-        
-                
-        
     
     def get_line_widget(self, ingredient: Ingredient) -> LineIngredient:
-        qlwi_list = [self.lW_shopping.item(r) for r in self.lW_shopping.count()]
+        qlwi_list = [self.lW_shopping.item(r) for r in range(self.lW_shopping.count())]
         for qlwi in qlwi_list:
             if qlwi.text() == ingredient.name:
                 return self.lW_shopping.itemWidget(qlwi)
@@ -179,4 +177,6 @@ class ShoppingList(QWidget):
     def get_linked_LineIngredients(self, card: CardRecipe):
         return [self.get_line_widget(ingredient) for ingredient in card.recipe.ing_list]
     
-    
+    def on_select_ingredients(self, card: CardRecipe, boolean):
+        for line in self.get_linked_LineIngredients(card):
+            line.select(boolean)

@@ -16,7 +16,7 @@ class LineIngredient(QWidget):
     
     on_reset = Signal(Ingredient, bool)
     on_delete = Signal(Ingredient)
-    on_search = Signal(Ingredient, bool)
+    on_search = Signal(Ingredient)
     
     def __init__(self, ingredient: Ingredient, checked = False, parent=None):
         super(LineIngredient, self).__init__(parent)
@@ -178,4 +178,8 @@ class LineIngredient(QWidget):
     
     def search(self):
         self.selected = self.pB_search.isChecked()
-        self.on_search.emit(self.ingredient, self.selected)
+        self.on_search.emit(self.ingredient)
+    
+    def select(self, boolean):
+        self.pB_search.setChecked(boolean)
+        self.search()

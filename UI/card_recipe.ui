@@ -38,7 +38,9 @@ QFrame #frame_card{
 		border-radius: 10px;
 		background-color:#fdf1d9;
 }
-
+QFrame #frame{
+		background-color:transparent;
+}
 QFrame #frame_2{
 		background-color:transparent;
 }
@@ -56,7 +58,35 @@ QLabel#label_image{
 		border-top-right-radius: 5px;
 		background-color:#fdf1d9;
     }
+QPushButton{
+        background-color: #ffc05c;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 13px;
+        border-color: #ffc05c;
+        font: bold 18px;
+        /*min-width: 10em;*/
+        padding: 0px;
+        color:#1a5d75;
+    }
+    
+    QPushButton:hover{
+        border-color: #fe6d73;
+    }
+    
+    QPushButton:pressed{
+        border-width: 5px;
+        border-radius: 17px;
+        font:  15px;
+        border-color: #fe6d73;
+    }
 
+QPushButton:checked{
+        border-width: 5px;
+        border-radius: 17px;
+        font:  15px;
+        border-color: #36a9d3;
+    }
 /**/
 </string>
   </property>
@@ -91,23 +121,7 @@ QLabel#label_image{
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="0" rowspan="2" colspan="2">
-       <widget class="QLabel" name="label_image">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
+      <item row="2" column="0" colspan="2">
        <widget class="QFrame" name="frame_2">
         <property name="maximumSize">
          <size>
@@ -171,6 +185,92 @@ QLabel#label_image{
             <size>
              <width>0</width>
              <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="2" colspan="2">
+       <widget class="QLabel" name="label_image">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QFrame" name="frame">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pB_list">
+           <property name="minimumSize">
+            <size>
+             <width>42</width>
+             <height>42</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>42</width>
+             <height>42</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>images/icon_list.png</normaloff>images/icon_list.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="1">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
             </size>
            </property>
           </spacer>
