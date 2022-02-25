@@ -36,7 +36,12 @@ class Ingredient:
             return [self, other]
     
     def __str__(self) -> str:
-        return '%s (%f %s)' % (self.name, self.qty, self.unit)
+        output = self.name
+        if self.mixed_qty != '':
+            output += ' (%s)' % self.mixed_qty
+        elif self.qty != -1:
+            output += ' (%f%s)' % (self.qty, self.unit)
+        return output
 
 
 def debug():

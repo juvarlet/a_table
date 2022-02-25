@@ -104,7 +104,9 @@ class Menu:
     #table = full_menu[0][1], full_menu[0][2], full_menu[1][1], full_menu[1][2], ...
 
     def get_recipe_list(self, no_double=False):
-        recipe_list = recipe_db.extract_recipes(self.table + self.desserts, no_double)
+        recipe_list = recipe_db.extract_recipes(self.table + self.desserts)
+        if no_double:
+            recipe_list = list(dict.fromkeys(recipe_list))
         return recipe_list
       
     def tag_score(self, tag):

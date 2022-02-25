@@ -20,6 +20,7 @@ import sys
 import recipe_db
 import menu
 import google_api as gapi
+import keep_api as kapi
 import printer
 import custom_widgets as cw
 import stacked_recipes as sr
@@ -323,6 +324,7 @@ class MainGUI(QWidget):
         
         #shopping list
         self.shopping_list = ShoppingList()
+        self.shopping_list.on_gkeep.connect(self.to_google_keep)
         self.vL_shopping.addWidget(self.shopping_list)
         
         #User settings
@@ -1061,7 +1063,21 @@ class MainGUI(QWidget):
     #     # print(string_to_copy)
     #     copy(string_to_copy)
 
-    def on_send_shopping_list(self):        
+    def to_google_keep(self):
+        try:
+            keep = kapi.login_with_token(self.user_settings.get_email())
+        except:
+            #TODO ask for password
+            password = ''
+            keep = kapi.login_with_password(self.user_settings.get_email(), password)
+        
+        gkeep_worker = kapi.GKeepList(keep, self.shopping_list.get_all_line_widgets())
+        gkeep_worker.on_finish.connect(self.confirm_message)
+        self.myThreads.append(gkeep_worker)
+        gkeep_worker.start()
+        
+        
+    def on_send_shopping_list(self):#TODO use get method from user settings
         if os.path.isfile(self.user_id_file):
             with open(self.user_id_file, 'r') as f:
                 self.default_email = f.readline().strip().split(';')[0]
@@ -1108,7 +1124,7 @@ class MainGUI(QWidget):
                                                                                         pdf_title, pdf_title),
                                    icon_path = self.icon_folder + 'icon_print.png')
     
-    def on_send_recipe(self):
+    def on_send_recipe(self):#TODO use get method from user settings
         user_id_file = self.dirname + '/user.id'
         if os.path.isfile(user_id_file):
             with open(user_id_file, 'r') as f:
@@ -1374,7 +1390,7 @@ class MainGUI(QWidget):
             else:
                 self.display_error("La recette '%s' a bien été supprimée" % recipe_name)
     
-    def init_user_settings(self):
+    def init_user_settings(self):#TODO store this info only in user settings class
         if os.path.isfile(self.user_id_file):
             with open(self.user_id_file, 'r') as f:
                 #for legacy compatibility

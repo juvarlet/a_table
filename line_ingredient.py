@@ -185,3 +185,7 @@ class LineIngredient(QWidget):
     def select(self, boolean):
         self.pB_search.setChecked(boolean)
         self.search()
+
+    def toIngredient(self):
+        #create new ingredient based on current texts
+        pass

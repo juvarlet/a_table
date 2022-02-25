@@ -148,6 +148,8 @@ class UserSettings(QWidget):
         self.lE_storage.setText(self.default_storage)
         self.lE_homepage.setText(self.homepage.toString())
     
+    #TODO get method for user settings info
+    #TODO factorize code duplicate (init/highlight)
     def highlight_diff(self):
         if os.path.isfile(self.user_id_file):
             with open(self.user_id_file, 'r') as f:

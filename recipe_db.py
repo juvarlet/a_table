@@ -293,12 +293,11 @@ def write_recipe(input_csv, input_list, sheet_name=""):
         with ExcelWriter(input_csv) as writer:
             df.to_excel(writer, sheet_name = sheet_name, index = False)
 
-def extract_recipes(initial_list, no_double=False):#to handle both cases with recipe or list of recipes
+def extract_recipes(initial_list):#to handle both cases with recipe or list of recipes
     recipe_list = []
     for element in initial_list:
         if type(element) == Recipe:
-            if not no_double or not element.name in [r.name for r in recipe_list]:
-                recipe_list.append(element)
+            recipe_list.append(element)
 
         elif type(element) == list:
             recipe_list = recipe_list + extract_recipes(element)

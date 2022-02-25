@@ -14,10 +14,13 @@ from line_ingredient import LineIngredient
 from ingredient import Ingredient
 from card_recipe import CardRecipe
 from menu import Menu
+import keep_api
 
 UI_FILE = cw.dirname('UI') + 'shopping_list.ui'
 
 class ShoppingList(QWidget):
+    
+    on_gkeep = Signal()
     
     def __init__(self, parent=None):
         super(ShoppingList, self).__init__(parent)
@@ -51,13 +54,15 @@ class ShoppingList(QWidget):
         self.pB_send = self.pW.pB_send
         self.pB_add: QPushButton
         self.pB_add = self.pW.pB_add
+        self.pB_keep: QPushButton
+        self.pB_keep = self.pW.pB_keep
         
     def initial_state(self):
         cw.pb_hover_stylesheet(self.pB_send, 'icon_send', 'icon_send_')
         cw.pb_hover_stylesheet(self.pB_print, 'icon_print', 'icon_print_')
         cw.pb_hover_stylesheet(self.pB_reset, 'icon_reset_LD', 'icon_reset_LD_')
         cw.pb_hover_stylesheet(self.pB_add, 'icon_ingredient', 'icon_ingredient_')
-        # self.pB_sort.setIcon(QIcon(self.dirname + '/icon_filter_LD.png'))
+        cw.pb_hover_stylesheet(self.pB_keep, 'icon_keep', 'icon_keep_')
         
         self.tW_link_menus.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_link_menus.verticalHeader().setDefaultSectionSize(200)
@@ -71,6 +76,7 @@ class ShoppingList(QWidget):
     def connect_actions(self):
         self.pB_reset.clicked.connect(self.reset_all)
         self.pB_add.clicked.connect(self.on_add_empty_ingredient)
+        self.pB_keep.clicked.connect(self.execute_gkeep_process)
     
     def update_modif(self):
         pass
@@ -179,6 +185,13 @@ class ShoppingList(QWidget):
         
         return None
     
+    def get_all_line_widgets(self):
+        return [self.lW_shopping.itemWidget(qlwi) 
+                for qlwi in [self.lW_shopping.item(r) 
+                             for r in range(self.lW_shopping.count())
+                             ]
+                ]
+    
     def get_linked_LineIngredients(self, card: CardRecipe):
         return [self.get_line_widget(ingredient) for ingredient in card.recipe.ing_list]
     
@@ -187,4 +200,6 @@ class ShoppingList(QWidget):
             if line:#in case ingredient has been deleted
                 line.select(boolean)
     
+    def execute_gkeep_process(self):
+        self.on_gkeep.emit()
     
