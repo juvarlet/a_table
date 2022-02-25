@@ -49,14 +49,14 @@ class ShoppingList(QWidget):
         self.pB_reset = self.pW.pB_reset
         self.pB_send: QPushButton
         self.pB_send = self.pW.pB_send
-        self.pB_sort: QPushButton
-        self.pB_sort = self.pW.pB_sort
+        self.pB_add: QPushButton
+        self.pB_add = self.pW.pB_add
         
     def initial_state(self):
         cw.pb_hover_stylesheet(self.pB_send, 'icon_send', 'icon_send_')
         cw.pb_hover_stylesheet(self.pB_print, 'icon_print', 'icon_print_')
         cw.pb_hover_stylesheet(self.pB_reset, 'icon_reset_LD', 'icon_reset_LD_')
-        cw.pb_hover_stylesheet(self.pB_sort, 'icon_filter_LD', 'icon_filter_LD_')
+        cw.pb_hover_stylesheet(self.pB_add, 'icon_ingredient', 'icon_ingredient_')
         # self.pB_sort.setIcon(QIcon(self.dirname + '/icon_filter_LD.png'))
         
         self.tW_link_menus.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -70,23 +70,28 @@ class ShoppingList(QWidget):
         
     def connect_actions(self):
         self.pB_reset.clicked.connect(self.reset_all)
+        self.pB_add.clicked.connect(self.on_add_empty_ingredient)
     
     def update_modif(self):
         pass
 
-    def add_ingredient(self, ingredient: Ingredient, checked = False):
+    def add_ingredient(self, ingredient: Ingredient, checked=False, user_input=False):
         self.lW_shopping.addItem(ingredient.name)
         
         line_item = self.lW_shopping.item(self.lW_shopping.count()-1)
         line_item.setSizeHint(QSize(0,35))
         
-        line_widget = LineIngredient(ingredient, checked)
+        line_widget = LineIngredient(ingredient, checked, user_input)
         line_widget.on_delete.connect(self.delete_line)
         line_widget.on_reset.connect(self.update_reset)
         line_widget.on_search.connect(self.update_cards_status)
         self.lW_shopping.setItemWidget(line_item, line_widget)
         
         self.resets[ingredient.name] = False
+    
+    def on_add_empty_ingredient(self):
+        ingredient = Ingredient()
+        self.add_ingredient(ingredient, checked=False, user_input=True)
     
     def add_ingredients(self, ingredient_list):
         #ingredient_list = [(ingredient, checked),()...]
@@ -179,4 +184,7 @@ class ShoppingList(QWidget):
     
     def on_select_ingredients(self, card: CardRecipe, boolean):
         for line in self.get_linked_LineIngredients(card):
-            line.select(boolean)
+            if line:#in case ingredient has been deleted
+                line.select(boolean)
+    
+    

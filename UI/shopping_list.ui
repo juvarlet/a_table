@@ -98,6 +98,9 @@
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="4">
        <widget class="QPushButton" name="pB_print">
+        <property name="toolTip">
+         <string>Imprimer</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -114,13 +117,16 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QPushButton" name="pB_sort">
+       <widget class="QPushButton" name="pB_add">
+        <property name="toolTip">
+         <string>Ajouter un ingrédient</string>
+        </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/icon_filter_LD.png</normaloff>images/icon_filter_LD.png</iconset>
+          <normaloff>images/icon_ingredient.png</normaloff>images/icon_ingredient.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -132,6 +138,9 @@
       </item>
       <item row="0" column="5">
        <widget class="QPushButton" name="pB_send">
+        <property name="toolTip">
+         <string>Envoyer</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -162,6 +171,9 @@
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="pB_reset">
+        <property name="toolTip">
+         <string>Reset</string>
+        </property>
         <property name="text">
          <string/>
         </property>

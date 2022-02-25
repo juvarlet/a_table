@@ -231,6 +231,9 @@ QPushButton:checked{
              <height>42</height>
             </size>
            </property>
+           <property name="toolTip">
+            <string>Identifier les ingrédients</string>
+           </property>
            <property name="text">
             <string/>
            </property>

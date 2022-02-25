@@ -18,11 +18,12 @@ class LineIngredient(QWidget):
     on_delete = Signal(Ingredient)
     on_search = Signal(Ingredient)
     
-    def __init__(self, ingredient: Ingredient, checked = False, parent=None):
+    def __init__(self, ingredient: Ingredient, checked=False, user_input=False, parent=None):
         super(LineIngredient, self).__init__(parent)
 
         self.ingredient = ingredient
         self.checked = checked
+        self.user_input = user_input
         self.selected = False
         self.loadUI()
         self.saveComponents()
@@ -67,6 +68,7 @@ class LineIngredient(QWidget):
         self.sB_qty.setValue(self.ingredient.qty)
         self.cB_done.setChecked(self.checked)
         self.pB_reset.hide()
+        self.pB_search.setVisible(not self.user_input)
         
     def connect_actions(self):
         self.pB_reset.clicked.connect(self.reset)
@@ -162,7 +164,7 @@ class LineIngredient(QWidget):
         isModified += self.lE_unit.text() != self.ingredient.unit
         isModified += self.sB_qty.value() != self.ingredient.qty
         isModified += self.cB_done.isChecked() != self.checked
-        self.pB_reset.setVisible(isModified)
+        self.pB_reset.setVisible(isModified and not self.user_input)
         self.on_reset.emit(self.ingredient, isModified)
     
     def reset(self):
