@@ -4,19 +4,21 @@ import keyring
 from PySide2.QtCore import QThread
 from PySide2.QtCore import *
 
+import custom_widgets as cw
+
 class GKeepList(QThread):
     
     color = gkeepapi.node.ColorValue.Green
     pinned = True
     title = 'À Table !'
-    on_user_input = Signal(str)
-    on_error = Signal(str)
+    on_message = Signal(str, str)
     on_finish = Signal()
     
     def __init__(self, keep, line_ingredient_list):
         QThread.__init__(self)
         self.keep = keep
         self.line_ingredient_list = line_ingredient_list
+        self.icon_path = cw.dirname('UI/images') + 'icon_keep.png'
     
     def run(self):
         #create list
@@ -31,10 +33,10 @@ class GKeepList(QThread):
         #push to Google Keep
         self.keep.sync()
 
-        self.on_finish.emit()
+        self.on_message.emit('La liste Google Keep a bien été créée', self.icon_path)
 
 def to_gkeeplist(line_ingredient_list):
-    return [(str(line_ingredient.toIngredient), line_ingredient.checked) for line_ingredient in line_ingredient_list]
+    return [(str(line_ingredient.toIngredient()), line_ingredient.checked) for line_ingredient in line_ingredient_list]
 
 def login_with_token(username):#to try, except with password
     keep = gkeepapi.Keep()#case token already stored

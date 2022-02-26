@@ -221,12 +221,6 @@ class MainGUI(QWidget):
         self.to_cell = ()
         self.html_source_file_shopping = self.dirname + '/shopping_core.html'
         
-        self.default_email = ''
-        self.default_nb_days = 7
-        self.default_storage = self.dirname + '/Mes_Fiches/'
-        self.homepage = QUrl("https://www.google.com/")
-        self.user_id_file = self.dirname + '/user.id'
-        
         self.recipe_image_path = ''
         self.myThreads = []
         self.delete_flag = False
@@ -337,7 +331,7 @@ class MainGUI(QWidget):
         #cB_search
         self.cB_search_init()
 
-        self.time_edition = TimeEdition(self.default_nb_days)
+        self.time_edition = TimeEdition(self.user_settings.get_nb_days())
         self.vL_time.addWidget(self.time_edition)
         
         #init edit_recipe
@@ -1028,34 +1022,6 @@ class MainGUI(QWidget):
         if self.history_popup.isVisible() and self.cB_history.isChecked():
             self.history_popup.activateWindow()
         
-    def on_ingredient_selection(self):
-        #reset list menu background
-        for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
-            # r,g,b = self.colors['#color3_bright#'][1]
-            # item.setBackground(QBrush(QColor(r,g,b)))
-            item.setBackground(QBrush(QColor(self.colors['#color3_bright#'])))
-            # item.setTextColor(QColor(0, 0, 0))
-            item.setTextColor(QColor(self.colors['#color1_dark#']))
-        
-        #get ingredient text
-        if len(self.lW_shopping.selectedItems()) > 0:
-            text = self.lW_shopping.selectedItems()[0].text()
-            ingredient = text.split(' : ')[0][2:]
-            for item in [self.lW_menu.item(i) for i in range(self.lW_menu.count())]:
-
-                if self.recipe_db.get_recipe_object(item.text()[5:]).hasIngredient(ingredient):
-                    # r,g,b = self.colors['#color3#'][1]
-                    # item.setBackground(QBrush(QColor(r,g,b)))
-                    item.setBackground(QBrush(QColor(self.colors['#color3#'])))
-                    # r,g,b = self.colors['#color4#'][1]
-                    # item.setTextColor(QColor(r,g,b))
-                    item.setTextColor(QColor(self.colors['#color1_dark#']))
-                else:
-                    # r,g,b = self.colors['#color4_bright#'][1]
-                    # item.setBackground(QBrush(QColor(r,g,b)))
-                    item.setBackground(QBrush(QColor(self.colors['#color3_bright#'])))
-                    item.setTextColor(QColor(self.colors['#color1_dark#']))
-    
     # def on_copy_shopping_list(self):
     #     string_to_copy = 'Liste de courses:\n'
     #     for item in [self.lW_shopping.item(i) for i in range(self.lW_shopping.count())]:
@@ -1067,32 +1033,21 @@ class MainGUI(QWidget):
         try:
             keep = kapi.login_with_token(self.user_settings.get_email())
         except:
-            #TODO ask for password
-            password = ''
-            keep = kapi.login_with_password(self.user_settings.get_email(), password)
+            password, ok = QInputDialog.getText(self, 
+                                                "Demande d'accès au compte %s" % self.user_settings.get_email(), 
+                                                'Mot de passe pour Google Keep :',
+                                                QLineEdit.Password)
+		
+            if ok:
+                keep = kapi.login_with_password(self.user_settings.get_email(), password)
         
         gkeep_worker = kapi.GKeepList(keep, self.shopping_list.get_all_line_widgets())
-        gkeep_worker.on_finish.connect(self.confirm_message)
+        gkeep_worker.on_message.connect(self.print_thread_function)
         self.myThreads.append(gkeep_worker)
         gkeep_worker.start()
         
-        
-    def on_send_shopping_list(self):#TODO use get method from user settings
-        if os.path.isfile(self.user_id_file):
-            with open(self.user_id_file, 'r') as f:
-                self.default_email = f.readline().strip().split(';')[0]
-            # print(self.default_email)
-        else:
-            text, ok = QInputDialog.getText(self, 'Enregistrement de votre adresse email', 'Votre adresse email:')
-		
-            if ok:
-                self.default_email = text
-
-                with open(self.user_id_file, 'w') as f:
-                    f.write(';'.join([self.default_email, 
-                                    str(self.default_nb_days), 
-                                    self.default_storage,
-                                    self.homepage.toString()]))
+    def on_send_shopping_list(self):
+        email = self.user_settings.get_email()
 
         images = [self.icon_folder + 'icon_menu_3colors_LD.png']
         images.append(self.icon_folder + 'icon_shopping_cart_LD.png')
@@ -1102,7 +1057,7 @@ class MainGUI(QWidget):
         icon_dict['[ICON_TABLE_PATH]'] = 'cid:%s' % (basename(images[2]))
 
         # my_mailbox_worker = mail.Mailbox('shopping', [self.current_menu, self.default_email, images, icon_dict])
-        my_mailbox_worker = gapi.MyMailbox('shopping', [self.current_menu, self.default_email, images, icon_dict])
+        my_mailbox_worker = gapi.MyMailbox('shopping', [self.current_menu, email, images, icon_dict])
         
         my_mailbox_worker.on_message.connect(self.print_thread_function)
         
@@ -1110,8 +1065,9 @@ class MainGUI(QWidget):
         my_mailbox_worker.start()
 
     def on_print_shopping_list(self):
-        os.makedirs(self.default_storage + '/Menus/', exist_ok=True)
-        pdf_title = self.default_storage + '/Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
+        storage = self.user_settings.get_storage()
+        os.makedirs(storage + '/Menus/', exist_ok=True)
+        pdf_title = storage + '/Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
                                                                             self.current_menu.to_day().strftime('%d_%m_%Y'))
         images = [self.icon_folder + 'icon_menu_3colors_LD.png']
         images.append(self.icon_folder + 'icon_shopping_cart_LD.png')
@@ -1124,23 +1080,8 @@ class MainGUI(QWidget):
                                                                                         pdf_title, pdf_title),
                                    icon_path = self.icon_folder + 'icon_print.png')
     
-    def on_send_recipe(self):#TODO use get method from user settings
-        user_id_file = self.dirname + '/user.id'
-        if os.path.isfile(user_id_file):
-            with open(user_id_file, 'r') as f:
-                self.default_email = f.readline().strip().split(';')[0]
-            # print(self.default_email)
-        else:
-            text, ok = QInputDialog.getText(self, 'Enregistrement de votre adresse email', 'Votre adresse email:')
-		
-            if ok:
-                self.default_email = text
-
-                with open(self.user_id_file, 'w') as f:
-                    f.write(';'.join([self.default_email, 
-                                    str(self.default_nb_days), 
-                                    self.default_storage,
-                                    self.homepage.toString()]))
+    def on_send_recipe(self):
+        email = self.user_settings.get_email()
 
         recipe_name = self.lW_recipe.currentItem().text()
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
@@ -1154,7 +1095,7 @@ class MainGUI(QWidget):
         
         if os.path.isfile(recipe_pdf):
             # my_mailbox_worker = mail.Mailbox('recipe', [recipe_object, self.default_email, images, icon_dict, recipe_pdf])
-            my_mailbox_worker = gapi.MyMailbox('recipe', [recipe_object, self.default_email, images, icon_dict, recipe_pdf])
+            my_mailbox_worker = gapi.MyMailbox('recipe', [recipe_object, email, images, icon_dict, recipe_pdf])
             
             my_mailbox_worker.signal.sig.connect(self.print_thread_function)
             
@@ -1164,9 +1105,10 @@ class MainGUI(QWidget):
             print('error while creating pdf')
 
     def on_print_recipe(self, silent = False):
+        storage = self.user_settings.get_storage()
         recipe_name = self.lW_recipe.currentItem().text()
-        os.makedirs(self.default_storage + '/Recettes/', exist_ok=True)
-        pdf_title = self.default_storage + '/Recettes/%s.pdf' % recipe_name
+        os.makedirs(storage + '/Recettes/', exist_ok=True)
+        pdf_title = storage + '/Recettes/%s.pdf' % recipe_name
         recipe_object = self.recipe_db.get_recipe_object(recipe_name)
 
         tags_names = ['vegan', 'kids', 'double', 'ete', 'hiver', 'dessert']
@@ -1390,21 +1332,7 @@ class MainGUI(QWidget):
             else:
                 self.display_error("La recette '%s' a bien été supprimée" % recipe_name)
     
-    def init_user_settings(self):#TODO store this info only in user settings class
-        if os.path.isfile(self.user_id_file):
-            with open(self.user_id_file, 'r') as f:
-                #for legacy compatibility
-                data = f.readline().strip().split(';')
-                if len(data) == 1:
-                    self.default_email = data[0]
-                elif len(data) == 3:
-                    self.default_email, nb_days, self.default_storage = data
-                    self.default_nb_days = int(nb_days)
-                elif len(data) == 4:
-                    self.default_email, nb_days, self.default_storage, homepage = data
-                    self.default_nb_days = int(nb_days)
-                    self.homepage = QUrl(homepage)
-        
+    def init_user_settings(self):
         self.user_settings = UserSettings()
         self.user_settings.on_save.connect(self.on_save_settings)
         self.user_settings.on_quit.connect(self.on_quit_settings)
@@ -1422,13 +1350,7 @@ class MainGUI(QWidget):
         #test if values are different than user file and highlight accordingly
         self.user_settings.highlight_diff()
         
-    def on_save_settings(self, input):
-        email, nb_days, storage, homepage = input
-        self.default_email = email
-        self.default_nb_days = int(nb_days)
-        self.default_storage = storage
-        self.homepage = QUrl(homepage)
-        
+    def on_save_settings(self):
         self.frame_settings.hide()
         self.frame.show()
         

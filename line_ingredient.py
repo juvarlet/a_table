@@ -1,3 +1,4 @@
+from unicodedata import name
 import PySide2
 from PySide2.QtWidgets import*
 from PySide2.QtCore import*
@@ -112,6 +113,7 @@ class LineIngredient(QWidget):
     
     def check_style(self):
         self.on_modif()
+        self.checked = self.cB_done.isChecked()
         if self.cB_done.isChecked():
             self.sB_qty.setEnabled(False)
             self.lE_name.setStyleSheet('''
@@ -188,4 +190,7 @@ class LineIngredient(QWidget):
 
     def toIngredient(self):
         #create new ingredient based on current texts
-        pass
+        name = self.lE_name.text()
+        qty = self.sB_qty.value()
+        unit = self.lE_unit.text()
+        return Ingredient(name, qty, unit)

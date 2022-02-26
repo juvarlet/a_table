@@ -39,8 +39,8 @@ class Ingredient:
         output = self.name
         if self.mixed_qty != '':
             output += ' (%s)' % self.mixed_qty
-        elif self.qty != -1:
-            output += ' (%f%s)' % (self.qty, self.unit)
+        elif self.qty != -1 and self.qty != 0:
+            output += ' (%.1f%s)' % (self.qty, self.unit)
         return output
 
 
