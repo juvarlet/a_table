@@ -284,14 +284,14 @@ def is_filter_in_recipe_name(filter, recipe, cB = None):
     return filter in recipe.name.lower()
 
 def is_filter_in_ing_list(filter,recipe, cB = None):
-    if recipe.ingredients_list_qty is not None:
+    if len(recipe.ing_list) > 0:
         if type(cB) is QCheckBox:
             if cB.isChecked(): 
-                for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
+                for ingredient in list(map(str.lower, [ing.name for ing in recipe.ing_list])):
                     if filter in ingredient:
                         return True
             return False
-        for ingredient in list(map(str.lower, recipe.ingredients_list_qty)):
+        for ingredient in list(map(str.lower, [ing.name for ing in recipe.ing_list])):
             if filter in ingredient:
                 return True
     return False
@@ -397,6 +397,7 @@ def pb_hover_stylesheet(pb, image, image_hover, image_pressed = None):
     stylesheet = '''
             QPushButton{
                 image: url(file:///../UI/images/%s.png);
+                padding: 0px;
             }
 
             QPushButton:hover{

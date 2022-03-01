@@ -1,6 +1,8 @@
 
 from ingredient import Ingredient
-from PySide2.QtUiTools import QUiLoader
+from PySide2.QtCore import*
+from PySide2.QtGui import QPixmap
+from PySide2.QtWidgets import QLabel
 import custom_widgets as cw
 import os
 from stylesheet_update import COLORS
@@ -8,11 +10,12 @@ from stylesheet_update import COLORS
 LINE_RECIPE_UI = cw.dirname('UI') + 'line_recipe.ui'
 
 class Recipe:
-    def __init__(self, uid, name, ingredients_list_qty = {}, preparation = '', time = 0, tags = [], image = ''):
+    def __init__(self, uid, name, ing_list = [], preparation = '', time = 0, tags = [], image = ''):
         self.uid = uid
         self.name = name
-        self.ingredients_list_qty = ingredients_list_qty
-        self.ing_list = self.init_ing_list()  #new implementation using the Ingredient class
+        self.ing_list = ing_list  #new implementation using the Ingredient class
+        if self.ing_list is None:
+            self.ing_list = []
         self.preparation = preparation
         self.time = time
         self.tags = tags
@@ -30,26 +33,26 @@ class Recipe:
         except:
             return False
     
-    def init_ing_list(self):
-        output = []
-        if self.ingredients_list_qty is not None: 
-            for ing, qty_unit in self.ingredients_list_qty.items():
-                if ing[0] == '[' and ing[-1] == ']':
-                    name = ing[1:-1]
-                    is_optional = True
-                else :
-                    name = ing
-                    is_optional = False
-                qty, unit = qty_unit
+    # def init_ing_list(self):#DEPRECATED
+    #     output = []
+    #     if self.ingredients_list_qty is not None: 
+    #         for ing, qty_unit in self.ingredients_list_qty.items():
+    #             if ing[0] == '[' and ing[-1] == ']':
+    #                 name = ing[1:-1]
+    #                 is_optional = True
+    #             else :
+    #                 name = ing
+    #                 is_optional = False
+    #             qty, unit = qty_unit
 
-                ingredient = Ingredient(name, qty, unit, is_optional)
-                output.append(ingredient)
-        return output
+    #             ingredient = Ingredient(name, qty, unit, is_optional)
+    #             output.append(ingredient)
+    #     return output
 
     def get_mandatory_and_optional_ing_lists(self):
         mand_ing_list = []
         opt_ing_list = []
-        if self.ing_list is None:
+        if len(self.ing_list) == 0:
             return
         for ing in self.ing_list:
             if ing.is_optional:
@@ -62,21 +65,22 @@ class Recipe:
         string = ''
         string_option = '\nOptionnel :\n'
         options = False
-        if self.ingredients_list_qty is not None:
-            for ing, qty_unit in self.ingredients_list_qty.items():
-                qty, unit = qty_unit
-                if ing != '':
-                    if ing[0] == '[' and ing[-1] == ']':
+        if len(self.ing_list) > 0:
+            for ingredient in self.ing_list:
+                qty = ingredient.qty
+                unit = ingredient.unit
+                if ingredient.name != '':
+                    if ingredient.is_optional:
                         options = True
                         #include links
-                        e_ing = my_recipe_db.find_links(ing[1:-1])
+                        e_ing = my_recipe_db.find_links(ingredient.name)
                         string_option += '- %s : %s' % (e_ing, qty)
                         if unit != '()':
                             string_option += unit
                         string_option += '\n'
                     else:
                         #include links
-                        e_ing = my_recipe_db.find_links(ing)
+                        e_ing = my_recipe_db.find_links(ingredient.name)
                         string += '- %s : %s' % (e_ing, qty)
                         if unit != '()':
                             string += unit
@@ -92,17 +96,18 @@ class Recipe:
         string_list = []
         string_option_list = ['', 'Optionnel :']
 
-        if self.ingredients_list_qty is not None:
-            for ing, qty_unit in self.ingredients_list_qty.items():
-                qty, unit = qty_unit
-                if ing != '':
-                    if ing[0] == '[' and ing[-1] == ']':
-                        string_option = '- %s : %s' % (ing[1:-1], qty)
+        if len(self.ing_list) > 0:
+            for ingredient in self.ing_list:
+                qty = ingredient.qty
+                unit = ingredient.unit
+                if ingredient.name != '':
+                    if ingredient.is_optional:
+                        string_option = '- %s : %s' % (ingredient.name, qty)
                         if unit != '()':
                             string_option += unit
                         string_option_list.append(string_option)
                     else:
-                        string = '- %s : %s' % (ing, qty)
+                        string = '- %s : %s' % (ingredient.name, qty)
                         if unit != '()':
                             string += unit
                         string_list.append(string)
@@ -111,9 +116,9 @@ class Recipe:
             string_list += string_option_list
         return string_list
     
-    def hasIngredient(self, ingredient):
+    def hasIngredient(self, ingredient: str):
         try:
-            if ingredient in self.ingredients_list_qty.keys():
+            if ingredient in [ing.name for ing in self.ing_list]:
                 return True
             else:
                 return False
@@ -127,8 +132,8 @@ class Recipe:
             meets = with_text in self.name.lower()
             if self.tags is not None:
                 meets += with_text in list(map(str.lower, self.tags))
-            if self.ingredients_list_qty is not None:
-                meets += with_text in list(map(str.lower, self.ingredients_list_qty))
+            if len(self.ing_list) > 0:
+                meets += with_text in list(map(str.lower, [ing.name for ing in self.ing_list]))
             if self.preparation is not None:
                 meets += with_text in self.preparation.lower()
             return bool(meets)
@@ -142,10 +147,11 @@ class Recipe:
         cells = 7*[None]
         cells[0] = self.uid
         cells[1] = self.name
-        if self.ingredients_list_qty is not None:
+        if len(self.ing_list) > 0:
             ing_strings = []
-            for ingredient, qty_unit in self.ingredients_list_qty.items():
-                qty, unit = qty_unit
+            for ingredient in self.ing_list:
+                qty = ingredient.qty
+                unit = ingredient.unit
                 ing_strings.append('%s,%s,%s' % (ingredient, qty, unit))
             cells[2] = '/'.join(ing_strings)
         cells[3] = self.time
@@ -154,4 +160,18 @@ class Recipe:
         cells[5] = self.image.split('/')[-1]
         cells[6] = self.preparation
         return cells
-        
+    
+    def render_card(self, label_title: QLabel, label_image: QLabel, scale = 1):
+        image_path = self.dirname + self.image + '_icon.jpg'
+        qpix = QPixmap(image_path)
+        if self.image != '' and self.image != '/images/':
+            if qpix.height() < qpix.width():#landscape w:400, h:300
+                # p1 = qpix.scaledToHeight(self.height()*1, Qt.SmoothTransformation)
+                p1 = qpix.scaledToHeight(int(label_title.screen().geometry().height()*1/5*scale), Qt.SmoothTransformation)
+            else:#portrait w:300, h:400
+                # p1 = qpix.scaledToWidth(self.width()*1, Qt.SmoothTransformation)
+                p1 = qpix.scaledToWidth(int(label_title.screen().geometry().height()*1/5*scale), Qt.SmoothTransformation)
+            label_image.setPixmap(p1)
+        else:
+            label_image.setPixmap(qpix)
+        label_title.setText(self.name)

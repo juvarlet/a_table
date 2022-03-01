@@ -197,15 +197,15 @@ class WebBrowser(QWidget):
             # self.lE_title.setText('Nouvelle Recette')
 
         if ingredients_list != []:
-            ing_dict = {}
+            ing_list = []
             for ing in ingredients_list:
                 try:
                     ing_qty, ing_name = ing.split(" ", 1)
                 except:
                     ing_name = ing
                     ing_qty = ''
-                ing_dict[ing_name] = [ing_qty,""]
-            recipe = Recipe(uuid.uuid4(), "", ing_dict)
+                ing_list.append(Ingredient(ing_name, ing_qty))
+            recipe = Recipe(uuid.uuid4(), "", ing_list)
             self.recipe.emit(recipe)
             # self.populate_ing_list(recipe)
         else:

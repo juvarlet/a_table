@@ -15,7 +15,7 @@ CONTACT = 'notification.a.table@gmail.com'
 
 class UserSettings(QWidget):
     
-    on_save = Signal(list)
+    on_save = Signal()
     on_quit = Signal()
     on_history = Signal()
     on_error = Signal(str)
@@ -128,7 +128,7 @@ class UserSettings(QWidget):
         self.lE_storage.textChanged.connect(self.highlight_diff)
         self.lE_homepage.textChanged.connect(self.highlight_diff)
     
-    def init_user_settings(self):
+    def read_user_file(self):
         if os.path.isfile(self.user_id_file):
             with open(self.user_id_file, 'r') as f:
                 #for legacy compatibility
@@ -142,6 +142,36 @@ class UserSettings(QWidget):
                     self.default_email, nb_days, self.default_storage, homepage = data
                     self.default_nb_days = int(nb_days)
                     self.homepage = QUrl(homepage)
+        else:
+            text, ok = QInputDialog.getText(self, 'Enregistrement de votre adresse email', 'Votre adresse email :')
+		
+            if ok:
+                self.default_email = text
+
+                with open(self.user_id_file, 'w') as f:
+                    f.write(';'.join([self.default_email, 
+                                    str(self.default_nb_days), 
+                                    self.default_storage,
+                                    self.homepage.toString()]))
+    
+    def get_values(self):
+        self.read_user_file()
+        return self.default_email, self.default_nb_days, self.default_storage, self.homepage
+    
+    def get_email(self):
+        return self.get_values()[0]
+    
+    def get_nb_days(self):
+        return self.get_values()[1]
+    
+    def get_storage(self):
+        return self.get_values()[2]
+    
+    def get_homepage(self):
+        return self.get_values()[3]
+    
+    def init_user_settings(self):
+        self.read_user_file()
         
         self.lE_email.setText(self.default_email)
         self.slider.setValue(self.default_nb_days)
@@ -149,19 +179,7 @@ class UserSettings(QWidget):
         self.lE_homepage.setText(self.homepage.toString())
     
     def highlight_diff(self):
-        if os.path.isfile(self.user_id_file):
-            with open(self.user_id_file, 'r') as f:
-                #for legacy compatibility
-                data = f.readline().strip().split(';')
-                if len(data) == 1:
-                    self.default_email = data[0]
-                elif len(data) == 3:
-                    self.default_email, nb_days, self.default_storage = data
-                    self.default_nb_days = int(nb_days)
-                elif len(data) == 4:
-                    self.default_email, nb_days, self.default_storage, homepage = data
-                    self.default_nb_days = int(nb_days)
-                    self.homepage = QUrl(homepage)
+        self.read_user_file()
         
         email_diff = (self.lE_email.text() != self.default_email)
         days_diff = (self.slider.value() != self.default_nb_days)
@@ -200,7 +218,7 @@ class UserSettings(QWidget):
             with open(self.user_id_file, 'w') as f:
                 f.write(';'.join(output))
             
-            self.on_save.emit(output)
+            self.on_save.emit()
         else:#no modification, no need to save
             self.on_quit_settings()
         

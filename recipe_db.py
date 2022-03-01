@@ -1,4 +1,5 @@
 
+from ingredient import Ingredient
 from recipe import Recipe
 from pandas_ods_reader import read_ods
 from pandas import read_csv, read_excel, DataFrame, ExcelWriter
@@ -112,21 +113,21 @@ class RecipeDB:
             return "<a href='%s'>%s</a>" % (ingredient, ingredient)
         return ingredient
 
-    def get_ingredients_units_list(self):
-        ingredients_list = []
-        units_list = []
-        for recipe in self.recipe_list:
-            if recipe.ingredients_list_qty is not None:
-                for ing, qty_unit in recipe.ingredients_list_qty.items():
-                    qty, unit = qty_unit
-                    if ing != '':
-                        if ing[0] == '[' and ing[-1] == ']':
-                            ing = ing[1:-1]
-                        if ing not in ingredients_list:
-                            ingredients_list.append(ing)
-                        if unit not in units_list:
-                            units_list.append(unit)
-        return sorted(ingredients_list, key=str.lower), sorted(units_list, key=str.lower)
+    # def get_ingredients_units_list(self):#DEPRECATED
+    #     ingredients_list = []
+    #     units_list = []
+    #     for recipe in self.recipe_list:
+    #         if recipe.ingredients_list_qty is not None:
+    #             for ing, qty_unit in recipe.ingredients_list_qty.items():
+    #                 qty, unit = qty_unit
+    #                 if ing != '':
+    #                     if ing[0] == '[' and ing[-1] == ']':
+    #                         ing = ing[1:-1]
+    #                     if ing not in ingredients_list:
+    #                         ingredients_list.append(ing)
+    #                     if unit not in units_list:
+    #                         units_list.append(unit)
+    #     return sorted(ingredients_list, key=str.lower), sorted(units_list, key=str.lower)
 
     def contains(self, recipe_name):
         return recipe_name in get_recipe_names(self.recipe_list)
@@ -199,7 +200,7 @@ def read_recipe(input_csv):
         df = DataFrame()
     for row in df.itertuples(index=True, name=None):
         i, uid, name, ingredients_list_qty_cell, time_cell, tags_cell, image_cell, preparation = row
-        ingredients_list_qty = cell_to_recipe_input(ingredients_list_qty_cell, 'dict')
+        ing_list = cell_to_recipe_input(ingredients_list_qty_cell, 'ingredients')
         time = cell_to_recipe_input(time_cell, 'time')
         tags = cell_to_recipe_input(tags_cell, 'tags')
         image = ''
@@ -207,20 +208,20 @@ def read_recipe(input_csv):
             preparation = ''
         if image_cell is not None and not pd.isna(image_cell):
             image = '/images/' + image_cell
-        recipe_list.append(Recipe(uid, name, ingredients_list_qty, preparation, time, tags, image))
+        recipe_list.append(Recipe(uid, name, ing_list, preparation, time, tags, image))
     return recipe_list
 
 def cell_to_recipe_input(cell_value, recipe_input_type):
     recipe_input = None
     if cell_value is not None and cell_value != '' and not pd.isna(cell_value):
-        if recipe_input_type == 'dict': #ingredients
-            recipe_input = {}
+        if recipe_input_type == 'ingredients': #ingredients
+            recipe_input = []
             ingredients = cell_value.split('/')
             #iterate over ingredients
             for ingredient in ingredients:
                 ingredient += ',1,()' #append default optional values to string
                 name, qty, unit = ingredient.split(',')[:3]
-                recipe_input[name] = [qty, unit]
+                recipe_input.append(Ingredient(name, qty, unit))
 
         elif recipe_input_type == 'tags':
             recipe_input = cell_value.split('/')
@@ -292,11 +293,12 @@ def write_recipe(input_csv, input_list, sheet_name=""):
         with ExcelWriter(input_csv) as writer:
             df.to_excel(writer, sheet_name = sheet_name, index = False)
 
-def extract_recipes(initial_list):
+def extract_recipes(initial_list):#to handle both cases with recipe or list of recipes
     recipe_list = []
     for element in initial_list:
         if type(element) == Recipe:
             recipe_list.append(element)
+
         elif type(element) == list:
             recipe_list = recipe_list + extract_recipes(element)
     return recipe_list

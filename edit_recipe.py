@@ -186,7 +186,7 @@ class EditRecipe(QWidget):
         ing_item = IngredientItem(ingredient)
         ing_item.on_btn_confirm_changes_clicked.connect(self.on_btn_confirm_changes_clicked)
         ing_item.on_btn_rm_item_clicked.connect(self.rm_ing_item_from_list)
-        if ingredient.name == "" and ingredient.qty_unit == "" and ingredient.qty == -1:
+        if ingredient.name == "" and ingredient.unit == "" and ingredient.qty == -1:
             ing_item.selectWidgetMode(IngredientItem.WIDGET_EDIT_ING_MODE)
 
         list_widget_item = QListWidgetItem()
@@ -227,7 +227,7 @@ class EditRecipe(QWidget):
         #init output
         title = self.lE_title.text()
         image_cell = ''
-        ing_dict = {}
+        ing_list = []
         preparation_cell = ''
         time = None
         tag_checked_list = []
@@ -275,8 +275,9 @@ class EditRecipe(QWidget):
                 # ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index)).findChild(IngredientItem)
                 ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(ing_index))
                 # print(ing_item)
-                ing_dict[ing_item.lbl_ing_name.text()] = [float(ing_item.lbl_ing_qty.text()), ing_item.lbl_ing_qty_unit.text()]
-
+                ing_list.append(Ingredient(ing_item.lbl_ing_name.text(),
+                                           float(ing_item.lbl_ing_qty.text()),
+                                           ing_item.lbl_ing_qty_unit.text()))
             #combine tags to string
             tags = [self.cB_tagdessert, self.cB_tagdinner, self.cB_tagdouble, self.cB_tagkids, self.cB_taglunch,
                     self.cB_tagsummer, self.cB_tagwinter, self.cB_tagvegan, self.cB_tagtips]
@@ -297,7 +298,7 @@ class EditRecipe(QWidget):
         
         self.on_ok.emit([title,
                          image_cell,
-                         ing_dict,
+                         ing_list,
                          preparation_cell,
                          time,
                          tag_checked_list,

@@ -1,6 +1,7 @@
 from datetime import datetime
 from datetime import timedelta
 import random
+from ingredient import Ingredient
 import recipe_db
 from recipe import Recipe
 import custom_widgets as cw
@@ -102,6 +103,12 @@ class Menu:
     #full_menu = [[day1, menu1lunch, menu1dinner], [day2, menu2lunch, menu2dinner], ...]
     #table = full_menu[0][1], full_menu[0][2], full_menu[1][1], full_menu[1][2], ...
 
+    def get_recipe_list(self, no_double=False):
+        recipe_list = recipe_db.extract_recipes(self.table + self.desserts)
+        if no_double:
+            recipe_list = list(dict.fromkeys(recipe_list))
+        return recipe_list
+      
     def tag_score(self, tag):
         score = 0
         for recipe in recipe_db.extract_recipes(self.table):
@@ -118,50 +125,25 @@ class Menu:
     def get_shopping_list(self): #TODO return list of string with ingredients and qty with units converted when needed
         shopping_list = {}
         shopping_list['missing information'] = []
+        
         #count recipe once when tagged double (appears twice in table)
         recipe_double = []
         missing_recipe_double = []
-        recipe_list = recipe_db.extract_recipes(self.table + self.desserts)
+        recipe_list = self.get_recipe_list()
         for recipe in recipe_list:
             
-            if recipe.ingredients_list_qty is not None:
+            if len(recipe.ing_list) > 0:
                 if recipe.name not in recipe_double:
                     recipe_double.append(recipe.name)
 
-                    for ingredient, qty_unit in recipe.ingredients_list_qty.items():
-                        qty, unit = qty_unit
-                        if not ingredient in shopping_list:
-                            try:
-                                shopping_list[ingredient] = [int(qty), unit]
-                            except:
-                                try:
-                                    shopping_list[ingredient] = [float(qty), unit]
-                                except:
-                                    shopping_list[ingredient] = [qty, unit]
+                    for ingredient in recipe.ing_list:
+                        qty = ingredient.qty
+                        unit = ingredient.unit
+                        if not ingredient.name in shopping_list:
+                            shopping_list[ingredient.name] = ingredient
+                            
                         else:
-                            if unit == shopping_list[ingredient][1]:
-                                try:
-                                    shopping_list[ingredient][0] += int(qty)
-                                except:
-                                    shopping_list[ingredient][0] += float(qty)
-                            else:
-                                from_unit = unit
-                                to_unit = shopping_list[ingredient][1]
-                                try:
-                                    converted_value = unit_conversion(from_unit, to_unit, int(qty))
-                                except:
-                                    converted_value = unit_conversion(from_unit, to_unit, float(qty))
-                                if converted_value is not None:
-                                    shopping_list[ingredient][0] += converted_value
-                                    print('converted %s from %s to %s (=%s) for %s in %s' % (qty, from_unit, to_unit, str(converted_value), ingredient, recipe.name))
-                                else:
-                                    print('conversion needed for recipe %s, ingredient "%s", unit "%s" (%s expected)' % (recipe.name, ingredient, from_unit, to_unit))
-                                    try:
-                                        shopping_list[ingredient + ' '] = [int(qty), unit]
-                                    except:
-                                        shopping_list[ingredient + ' '] = [float(qty), unit]
-                                #c a c = 5mL
-                                #c a s = 15mL
+                            shopping_list[ingredient.name] += ingredient
             else:
                 if recipe.name not in missing_recipe_double:
                     missing_recipe_double.append(recipe.name)
@@ -386,7 +368,7 @@ def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = []
     smart_table = [j for i in zip(lunch_list, dinner_list) for j in i]
     #assign this smart table to menu
     return smart_table
-        
+
 def debug():
     dirname = cw.dirname('')
     input_recipe = dirname + '/MesRecettes.ods'
