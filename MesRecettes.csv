@@ -1,5 +1,5 @@
 UID;Nom;Ingredients (nom,qty,unit/...);Temps (mn);Tags;Image;Preparation
-abd8dd50-d7e4-4138-989d-3d1b0d8c0063;Amandine aux fruits rouges;1 pâte brisée pré-étalée (1.0) (1.0),1.0,/110 g de poudre d'amandes (1.0) (1.0),1.0,/1 œuf (1.0) (1.0),1.0,/80 g de sucre glace (1.0) (1.0),1.0,/70 g de beurre à température ambiante (1.0) (1.0),1.0,/10 cl de crème fraîche (1.0) (1.0),1.0,/10 g de Maïzena (1.0) (1.0),1.0,/1 cuillère à soupe de sucre roux (1.0) (1.0),1.0,/200 g de fruits rouges (ici des fruits rouges surgelés) (1.0) (1.0),1.0,;;dessert/kids;amandine;"Beurrez et farinez votre moule à tarte, disposez-y la pâte brisée et foncez-le tout. 
+abd8dd50-d7e4-4138-989d-3d1b0d8c0063;Amandine aux fruits rouges;1 pâte brisée pré-étalée,1,/110 g de poudre d'amandes,1,/1 œuf,1,/80 g de sucre glace,1,/70 g de beurre à température ambiante,1,/10 cl de crème fraîche,1,/10 g de Maïzena,1,/1 cuillère à soupe de sucre roux,1,/200 g de fruits rouges (ici des fruits rouges surgelés),1,;;dessert/kids;amandine;"Beurrez et farinez votre moule à tarte, disposez-y la pâte brisée et foncez-le tout. 
 Réservez 30 minutes au réfrigérateur.
 Le fait de laisser 30 minutes la pâte au frais permet d'éviter qu'elle ne se rétracte à la cuisson.
 Pendant ce temps, préchauffez votre four à 180°C.
@@ -15,9 +15,9 @@ Les 30 minutes de repos de la pâte passées, sortez-la du frigo, versez-y la cr
 Enfournez 45 à 50 minutes.
 Laissez tiédir avant de déguster.
 <a href='https://cuisine.journaldesfemmes.fr/recette/1004695-tarte-amandine-aux-fruits-rouges'>https://cuisine.journaldesfemmes.fr/recette/1004695-tarte-amandine-aux-fruits-rouges</a>"
-3d389e1b-7db3-4549-8749-f6d6372ffca6;Apéro ++;chips (1.0sachet) (1.0sachet),1.0,sachet/gressins (10.0) (10.0),10.0,/pistaches (1.0bol) (1.0bol),1.0,bol/saucisson (1.0) (1.0),1.0,/tapenade (1.0pot) (1.0pot),1.0,pot/tomates cerise (20.0) (20.0),20.0,/bière (2.0) (2.0),2.0,;;soir/kids;apero;Tout ce qui se grignote, disposé dans plein de jolis récipients !
-f7ef5cb5-8c4b-4794-9e24-c93a9863c9ba;Aubergines roulées;aubergine (2.0) (2.0),2.0,/pesto (1.0pot) (1.0pot),1.0,pot/ricotta (200.0g) (200.0g),200.0,g;;double/vegan;aubergines;
-769bf512-266d-4d96-874c-50fae46e1d8a;Banoffee Cake;bananes (3.0) (3.0),3.0,/beurre (75.0g) (75.0g),75.0,g/biscuit sablé anglais (150.0g) (150.0g),150.0,g/boîte de lait concentré sucré (1.0) (1.0),1.0,/cacao amer (1.0) (1.0),1.0,/crème fraîche liquide (25.0cl) (25.0cl),25.0,cl/sucre glace (1.0c.a.s) (1.0c.a.s),1.0,c.a.s;;dessert;banoffee_cake;"Pour préparer le ""Toffee"" (confiture de lait) :
+3d389e1b-7db3-4549-8749-f6d6372ffca6;Apéro ++;(chips),1.0,sachet/(gressins),10.0,/(pistaches),1.0,bol/(saucisson),1.0,/(tapenade),1.0,pot/(tomates cerise),20.0,/bière,2.0,;;soir/kids;apero;Tout ce qui se grignote, disposé dans plein de jolis récipients !
+f7ef5cb5-8c4b-4794-9e24-c93a9863c9ba;Aubergines roulées;aubergine,2.0,/pesto,1.0,pot/ricotta,200.0,g;;double/vegan;aubergines;
+0ce995bd-c5e3-434b-bacc-80df25aa7c4a;Banoffee Cake;bananes,3.0,/beurre,75.0,g/biscuit sablé anglais,150.0,g/boîte de lait concentré sucré,1.0,/cacao amer,1.0,/crème fraîche liquide,25.0,cl/sucre glace,1.0,c.a.s;;dessert;;"Pour préparer le ""Toffee"" (confiture de lait) :
 Il est possible de le préparer jusqu'à une semaine avant. Dans une cocotte minute, immerger la boite de lait concentré sucrée dont vous aurez préalablement enlevé l'étiquette. Fermer, mettre sur le feu et à partir de la mise sous pression (1er sifflement) compter 45 minutes. Puis retirer du feu, laisser la pression s'échapper puis ouvrir mais ne pas vider l'eau ni retirer la boite, laisser refroidir tel quel, boite dans l'eau. Une fois bien refroidi, vous pouvez ouvrir la boite et transférer le toffee dans un pot de confiture par exemple.
 Pour la préparation du Banoffee :
 Placer la crème, un saladier et le un fouet au réfrigérateur en prévision du montage de la chantilly.
@@ -33,10 +33,10 @@ Placer le tout au minimum une heure au réfrigérateur.
 Au moment de servir, saupoudrer de cacao amer.
 Et régalez vous ! (Après un repas léger, bien sur...)
 <a href='https://www.marmiton.org/recettes/recette_banoffee-cake_227576.aspx'>https://www.marmiton.org/recettes/recette_banoffee-cake_227576.aspx</a>"
-184f70df-d184-47ed-86a2-7d78e14506aa;BBQ;boeuf (1.0) (1.0),1.0,/magret (2.0) (2.0),2.0,/saucisse (4.0) (4.0),4.0,;;midi/ete;bbq;"Allumer le barbecue
+184f70df-d184-47ed-86a2-7d78e14506aa;BBQ;boeuf,1.0,/magret,2.0,/saucisse,4.0,;;midi/ete;bbq;"Allumer le barbecue
 Faire cuire
 Déguster"
-99eba5fa-f37b-47f6-99ff-872e81c95752;Bechamel;25 cl de lait (1.0) (1.0),1.0,/2 cuillères à soupe de farine (1.0) (1.0),1.0,/sel (1.0) (1.0),1.0,/poivre (1.0) (1.0),1.0,/20 g de beurre (1.0) (1.0),1.0,;;tips;;"Dans un grand récipient, faire fondre le beurre 1 minute au micro-ondes.
+99eba5fa-f37b-47f6-99ff-872e81c95752;Bechamel;25 cl de lait,1,()/2 cuillères à soupe de farine,1,()/sel,1,()/poivre,1,()/20 g de beurre,1,();;tips;;"Dans un grand récipient, faire fondre le beurre 1 minute au micro-ondes.
 Le sortir et ajouter la farine en remuant bien.
 Porter le lait à ébullition, le laisser bouillir quelques instants.
 Verser le lait sur le mélange farine/beurre en fouettant. Assaisonner.
@@ -47,8 +47,8 @@ Bien fouetter, c'est prêt !
 c80961f0-8639-453a-aa33-9d0e5dd17de5;Burritos;;;;;
 4b40dcdc-764c-42a0-85df-6262610eb4ea;Cannelés;;;dessert;canneles;
 d22aa308-db9c-4769-8d8b-3c54e555450d;Carbonade flamande;;;midi/double;carbonade;
-4a75df20-5d25-4b7c-aba2-3e0c65fbb7e2;Champignons farci;;;soir/vegan;champignons_farci;
-a4edaafb-fdf8-45d7-b5e5-7df07817ce41;Chewy cookies;farine (280.0g) (280.0g),280.0,g/bicarbonate de soude (1.0c. à c.) (1.0c. à c.),1.0,c. à c./fécule de mais (1.5c. à c.) (1.5c. à c.),1.5,c. à c./sel (1.0c. à c.) (1.0c. à c.),1.0,c. à c./beurre (170.0g) (170.0g),170.0,g/cassonade (150.0g) (150.0g),150.0,g/sucre (100.0g) (100.0g),100.0,g/oeufs (2.0) (2.0),2.0,/extrait de vanille (2.0c. à c.) (2.0c. à c.),2.0,c. à c./pépites de chocolat (180.0g) (180.0g),180.0,g;25;dessert;soft_cookies;"Mélanger ensemble la farine, le bicarbonate de soude, la fécule de maïs et le sel.
+ec7c2653-e22d-4d5d-8e53-32fbfab7f91b;Champignons farci;;;vegan/soir;;
+a4edaafb-fdf8-45d7-b5e5-7df07817ce41;Chewy cookies;farine,280,g/bicarbonate de soude,1,c. à c./fécule de mais,1.5,c. à c./sel,1,c. à c./beurre,170,g/cassonade,150,g/sucre,100,g/oeufs,2,()/extrait de vanille,2,c. à c./pépites de chocolat,180,g;25;dessert;soft_cookies;"Mélanger ensemble la farine, le bicarbonate de soude, la fécule de maïs et le sel.
 Dans un bol de taille moyenne, fouetter le beurre fondu, la cassonade et le sucre blanc. Ajouter l'oeuf, puis le jaune d'oeuf. et la vanille.
 Verser les ingrédients humides dans les ingrédients secs et mélanger avec une grande cuillère. Incorporer les pépites de chocolat.
 Couvrir la pâte et réfrigérer pendant 2 heures, ou jusqu'à 3 jours en couvrant.
@@ -64,7 +64,7 @@ c89bf579-5656-4494-afb9-485f6efff3db;Chili sin carne;;;vegan/double;chili_sin;
 2cfee2e8-3471-4e2d-9227-08889966a86c;Chou rouge boudin;;;kids/midi/hiver;;
 fd7fc8c0-d5bb-40e3-9f00-b9d4523b3e63;Choucroute;;;double/midi;;
 0badc747-b78d-429a-b765-7e996ba7536f;Choux de bruxelles graines;;;vegan;;
-cc6d11f5-0d33-4350-9cd2-016d6866b8a0;Clafoutis marbré tomates tapenade;farine (120.0g) (120.0g),120.0,g/parmesan (35.0g) (35.0g),35.0,g/herbes de provence (1.0c. à c.) (1.0c. à c.),1.0,c. à c./oeufs (3.0) (3.0),3.0,/huile d’olive (3.0c. à s.) (3.0c. à s.),3.0,c. à s./lait vegetal (250.0mL) (250.0mL),250.0,mL/feta (100.0g) (100.0g),100.0,g/tapenade (50.0g) (50.0g),50.0,g/tomate (2.0) (2.0),2.0,;;vegan/double;clafoutis_tomate;"Dans un grand saladier, mélanger la farine, 1 pincée de sel, le parmesan et les herbes de Provence. 
+cc6d11f5-0d33-4350-9cd2-016d6866b8a0;Clafoutis marbré tomates tapenade;farine,120,g/parmesan,35,g/herbes de provence,1,c. à c./oeufs,3,()/huile d’olive,3,c. à s./lait vegetal,250,mL/[feta],100,g/tapenade,50,g/tomate,2,();;vegan/double;clafoutis_tomate;"Dans un grand saladier, mélanger la farine, 1 pincée de sel, le parmesan et les herbes de Provence. 
 Incorporer les œufs, puis l’huile et le lait. 
 Ajouter la feta émiettée. Verser la pâte dans un plat à gratin. 
 A l’aide d’une petite cuillère, incorporer la tapenade en faisant des marbrures. 
@@ -74,7 +74,7 @@ a3731d49-4df4-4206-8371-0d4ef28bc47a;Cordon bleu;;;midi;;
 5d823dc7-923b-410b-82b4-b5d58497b3b3;Courge spaghetti;;;hiver;;
 9397a340-bfc0-4366-9dde-1962301b03c7;Couscous merguez;;;double/midi;;
 fe8038c9-a27e-410a-b751-87c8a87df148;Couscous vegan;;;vegan/double;couscous_vegan;
-e8c43ff1-c1c6-47ed-85c8-f16732b144b8;Crepes;farine (500.0g) (500.0g),500.0,g/oeufs (6.0) (6.0),6.0,/lait (500.0mL) (500.0mL),500.0,mL/eau (500.0mL) (500.0mL),500.0,mL/sucre (1.0) (1.0),1.0,/sel (1.0) (1.0),1.0,/huile de tournesol (2.0c. à s.) (2.0c. à s.),2.0,c. à s.;60;dessert;crepes;"Dans un grand saladier, mélanger la farine, le sucre et le sel. 
+e8c43ff1-c1c6-47ed-85c8-f16732b144b8;Crepes;farine,500,g/oeufs,6,()/lait,500,mL/eau,500,mL/sucre,1,()/sel,1,()/huile de tournesol,2,c. à s.;60;dessert;crepes;"Dans un grand saladier, mélanger la farine, le sucre et le sel. 
 Incorporer les œufs, puis le mélange lait/eau et l’huile de tournesol."
 62fca483-1fa8-4f45-bf5d-0feb0f8d4acb;Crevettes ABAM;;;;abam;
 d14110f3-db05-4b8a-adbf-e20604d5dc43;Croque monsieur;;;kids;;
@@ -92,14 +92,14 @@ f1d6c41a-e19f-4b92-90a4-8aabb132f406;Fondue de poireaux;;;vegan/hiver;;
 32314b40-f995-44ae-8953-b8ac3f24ea62;Gaufres salées;;;kids/soir;gaufres_salees;
 84b29022-4435-4865-b468-70986a4e056e;Gnocchi haricots verts;;;vegan/kids/soir;gnocchis_haricots;
 4992a7eb-ceed-4a68-bd11-7a9205788037;Gratin butternut chataigne;;;vegan/hiver;;
-768ad13b-ba5d-4a83-9049-4f622ff86a96;Gratin de chou-fleur;chou-fleur (1.0) (1.0),1.0,/bechamel (1.0) (1.0),1.0,/fromage (1.0) (1.0),1.0,/jambon (1.0) (1.0),1.0,;30;double;;"Cuire le chou-fleur
+768ad13b-ba5d-4a83-9049-4f622ff86a96;Gratin de chou-fleur;chou-fleur,1,()/bechamel,1,()/fromage,1,()/[jambon],1,();30;double;;"Cuire le chou-fleur
 Faire la bechamel"
 d427efba-f5f7-4df0-9cb1-0eed964a86e9;Gratin de poireaux;;;vegan/hiver;;
 a17c37d1-26f0-49f0-810a-cfbe11bdfa58;Lasagnes épinards ricotta;;;vegan/double;lasagnes_vegan;
 f8756c51-fde5-478c-a86f-3cf5f400ac7c;Lasagnes viande;;;double/midi;lasagnes;
-ee4894be-a473-4608-a24c-4fe92e0d912e;Melon garni;melon (1.0) (1.0),1.0,/tomate (1.0) (1.0),1.0,/mozza (1.0) (1.0),1.0,/crevette (1.0) (1.0),1.0,/avocat (1.0) (1.0),1.0,;;ete;;
+ee4894be-a473-4608-a24c-4fe92e0d912e;Melon garni;melon,1,()/tomate,1,()/mozza,1,()/crevette,1,()/avocat,1,();;ete;;
 c167f488-89a6-4dac-a8ff-fd32cb2352c9;Muffins chorizo;;;soir/double/kids;muffins_chorizo;
-ae109859-0b09-4800-9d0a-10fc4b11d0b1;Muffins vegan;lait de soja (100.0mL) (100.0mL),100.0,mL/vinaigre de cidre (2.0c. à c.) (2.0c. à c.),2.0,c. à c./lait de coco (250.0mL) (250.0mL),250.0,mL/petits pois (100.0g) (100.0g),100.0,g/carottes (2.0) (2.0),2.0,/farine d’epeautre (150.0g) (150.0g),150.0,g/farine de ble (50.0g) (50.0g),50.0,g/poudre à lever (2.0c. à s.) (2.0c. à s.),2.0,c. à s./bicarbonate de soude (1.0c. à c.) (1.0c. à c.),1.0,c. à c./sel (1.0) (1.0),1.0,/fromage (1.0) (1.0),1.0,/mais (1.0) (1.0),1.0,;60;vegan/soir/double/kids;muffin_vegan;"-Pour 12 muffins-
+ae109859-0b09-4800-9d0a-10fc4b11d0b1;Muffins vegan;lait de soja,100,mL/vinaigre de cidre,2,c. à c./lait de coco,250,mL/petits pois,100,g/carottes,2,()/farine d’epeautre,150,g/farine de ble,50,g/poudre à lever,2,c. à s./bicarbonate de soude,1,c. à c./sel,1,()/[fromage],1,()/[mais],1,();60;vegan/soir/double/kids;muffin_vegan;"-Pour 12 muffins-
 Dans un bol, mélanger le lait de soja et le vinaigre. Laisser cailler 5mn.
 Dans un saladier, mélanger les ingrédients secs.
 Ajouter le lait de coco au lait de soja caille et incorporer au mélange sec.
@@ -107,33 +107,33 @@ Ajouter les petits pois et les carottes finement rapées.
 Bien mélanger et garnir 12 moules à muffins.
 Cuire 30mn à 180ºC"
 76caa479-8942-4b7c-afb8-b988fe058ca6;Nuggets poulet haricots;;;kids/midi;nuggets;
-cbdb53e5-228b-492f-9bd5-2dacb70ff9bf;Oeufs à la coque;oeufs (4.0) (4.0),4.0,;10;soir/kids;oeufs_à_la_coque;"Temps de cuisson : 3mn dans l’eau bouillante
+cbdb53e5-228b-492f-9bd5-2dacb70ff9bf;Oeufs à la coque;oeufs,4,;10;soir/kids;oeufs_à_la_coque;"Temps de cuisson : 3mn dans l’eau bouillante
 Accompagner de mouillettes généreusement beurrées."
-e5491dc3-53ee-4ef0-9721-2803a79a2712;Oeufs brouillés;oeufs (4.0) (4.0),4.0,/fromage (1.0) (1.0),1.0,;;soir;oeufs_brouilles;
-72789b8e-1c96-498c-bc08-f782974a1300;Omelette;oeufs (4.0) (4.0),4.0,/fromage (1.0) (1.0),1.0,;;soir;;
+e5491dc3-53ee-4ef0-9721-2803a79a2712;Oeufs brouillés;oeufs,4,()/[fromage],1,();;soir;oeufs_brouilles;
+72789b8e-1c96-498c-bc08-f782974a1300;Omelette;oeufs,4,()/[fromage],1,();;soir;;
 4308f812-f20f-4e6a-a343-c93e8fe72471;Parmentier canard;;;midi/double;;
-d7c5dcbc-fa22-4436-9a49-2f838324fc7c;Parmentier lentilles patates douces;lentilles vertes (200.0g) (200.0g),200.0,g/patates douces (800.0g) (800.0g),800.0,g/huile d’olive (2.0c. à s.) (2.0c. à s.),2.0,c. à s./échalotes (2.0) (2.0),2.0,/ail (2.0gousses) (2.0gousses),2.0,gousses/ciboulette (1.0c. à s.) (1.0c. à s.),1.0,c. à s./persil (2.0c. à s.) (2.0c. à s.),2.0,c. à s./tamari (2.0c. à s.) (2.0c. à s.),2.0,c. à s./creme de soja (100.0mL) (100.0mL),100.0,mL/levure maltée (2.0c. à s.) (2.0c. à s.),2.0,c. à s./sel (1.0) (1.0),1.0,/poivre (1.0) (1.0),1.0,;90;vegan/double;parmentier_lentilles;"Cuire les lentilles pendant 20mn. Cuire les patates douces.
+d7c5dcbc-fa22-4436-9a49-2f838324fc7c;Parmentier lentilles patates douces;lentilles vertes,200,g/patates douces,800,g/huile d’olive,2,c. à s./échalotes,2,()/ail,2,gousses/ciboulette,1,c. à s./persil,2,c. à s./tamari,2,c. à s./creme de soja,100,mL/levure maltée,2,c. à s./sel,1,()/poivre,1,();90;vegan/double;parmentier_lentilles;"Cuire les lentilles pendant 20mn. Cuire les patates douces.
 Faire revenir l’ail et les échalotes a l’huile d’olive. Ajouter les lentilles, les herbes et le tamari.
 Cuire pendant 5 a 10 minutes. Répartir dans le fond d’un plat à gratin.
 Passer les patates douces au presse-purée et étaler sur les lentilles.
 Répartir la creme et saupoudrer de levure maltée.
 Cuire 15mn à 180ºC puis quelques minutes sous le grill pour gratiner."
 47c3e272-b676-4508-8cff-81b05817bbaf;Pate à tartiner;;;tips;pate_tartiner;
-3f73ca3b-341b-4b2a-8dc3-aee2b77093d8;Pâte brisée;farine (200.0g) (200.0g),200.0,g/beurre (100.0g) (100.0g),100.0,g/eau (1.0) (1.0),1.0,/sel (1.0) (1.0),1.0,;10;tips;pâte_brisée;"Malaxer le beurre en pommade et la farine.
+3f73ca3b-341b-4b2a-8dc3-aee2b77093d8;Pâte brisée;farine,200,g/beurre,100,g/eau,1,/sel,1,;10;tips;pâte_brisée;"Malaxer le beurre en pommade et la farine.
 Quand la preparation a la texture de la semoule, incorporer une petite quantite d'eau salee.
 Former une boule de pate.
 Abaisser la pate.
 C'est pret !"
-2230d077-10f5-48fe-a059-c0ce95a1d702;Pates au pesto;Pates (500.0g) (500.0g),500.0,g/Pesto (1.0) (1.0),1.0,;;kids/vegan;pates_au_pesto;Faire cuire les pates, ajouter le pesto
+2230d077-10f5-48fe-a059-c0ce95a1d702;Pates au pesto;Pates,500.0,g/Pesto,1.0,;;kids/vegan;pates_au_pesto;Faire cuire les pates, ajouter le pesto
 277c981b-a648-4502-a154-e6240f88d7e0;Pates carbonara;;;kids;;
 83ad4c4a-2080-4cdf-9e47-26327577795b;Pates épinards creme champignons;;;vegan;;
-8d88df34-3359-4623-b007-d559e6e46346;Pates gorgonzola poires;Pates (500.0g) (500.0g),500.0,g;;vegan;pates_poires;
+8d88df34-3359-4623-b007-d559e6e46346;Pates gorgonzola poires;Pates,500,g;;vegan;pates_poires;
 f3219504-7bfb-454a-8e2b-0d9f306e9446;Pates jambon champignon;;;kids;pates_jambon;
 fa99e057-1cd6-42a9-b125-b2feb90c473d;Pesto;;;tips;pesto;
 699776f6-f49f-4e5d-a42a-0a748958588c;Pétoncles;;;;petoncles;
 5ca0a21e-8536-49f5-a3be-b47fb2db9a4c;Pizza;;;kids;pizza;
 e04a617d-eedc-4261-936e-276ac56d0f90;Plancha;;;midi;;
-abd1c6c6-b1e4-4ebe-b4e7-8a4bca1843dd;Poelée butternut prot soja;Butternut (1.0) (1.0),1.0,/eau bouillante (250.0mL) (250.0mL),250.0,mL/protéines de soja (40.0g) (40.0g),40.0,g/oignon (1.0) (1.0),1.0,/ail (2.0gousses) (2.0gousses),2.0,gousses/creme végétale (100.0mL) (100.0mL),100.0,mL/sel (1.0) (1.0),1.0,/poivre (1.0) (1.0),1.0,/ail moulu (1.0c. à c.) (1.0c. à c.),1.0,c. à c./tamari (2.0c. à s.) (2.0c. à s.),2.0,c. à s./huile de sésame (1.0c. à s.) (1.0c. à s.),1.0,c. à s./miso blanc (2.0c. à s.) (2.0c. à s.),2.0,c. à s./sauge (1.0c. à c.) (1.0c. à c.),1.0,c. à c./huile d’olive (1.0c. à s.) (1.0c. à s.),1.0,c. à s.;;hiver/vegan;poelée_butternut_prot_soja;"Couper la butternut en 2, l’évider partiellement et la cuire 45mn au four a 180ºC.
+abd1c6c6-b1e4-4ebe-b4e7-8a4bca1843dd;Poelée butternut prot soja;Butternut,1,/eau bouillante,250,mL/protéines de soja,40,g/oignon,1,/ail,2,gousses/creme végétale,100,mL/sel,1,/poivre,1,/ail moulu,1,c. à c./tamari,2,c. à s./huile de sésame,1,c. à s./miso blanc,2,c. à s./sauge,1,c. à c./huile d’olive,1,c. à s.;;hiver/vegan;poelée_butternut_prot_soja;"Couper la butternut en 2, l’évider partiellement et la cuire 45mn au four a 180ºC.
 Dans un grand bol, mélanger le tamari avec l’huile de sésame, le miso, la sauge, l’ail et du poivre.
 Ajouter l’eau bouillante pour former un bouillon et y réhydrater les protéines de soja pendant 30mn.
 Faire revenir l’oignon et l’ail émincés avec l’huile d’olive. Laisser dorer.
@@ -145,23 +145,23 @@ b00a6803-a352-47d8-8692-975c89283129;Poisson purée;;;midi;poisson_puree;
 023bff83-0d16-435d-9eb2-6845d7e63a20;Poivrons farcis aux lentilles;;;vegan;;
 44352109-7d2c-495c-9611-fe85e8222ef5;Poulet brique;;;midi;poulet;
 11f04c44-876a-4512-a5b0-7f2017a6e5e3;Purée saucisse;;;kids/midi;;
-5c669b3c-8038-475b-a661-6a28a9c32b22;Quiche champignon;champignons (1.0boite) (1.0boite),1.0,boite/fromage (1.0) (1.0),1.0,/oeufs (1.0) (1.0),1.0,/lait (1.0) (1.0),1.0,/pâte brisée (1.0) (1.0),1.0,;;soir/vegan;quiche_champignons;
-db2b3d3b-15f8-4f98-95fb-04cc2a063bef;Quiche classique;lardons (1.0) (1.0),1.0,/fromage (1.0) (1.0),1.0,/oeufs (1.0) (1.0),1.0,/lait (1.0) (1.0),1.0,/pâte brisée (1.0) (1.0),1.0,/champignons (1.0boite) (1.0boite),1.0,boite;;soir;;
+5c669b3c-8038-475b-a661-6a28a9c32b22;Quiche champignon;champignons,1,boite/fromage,1,/oeufs,1,/lait,1,/pâte brisée,1,;;soir/vegan;quiche_champignons;
+db2b3d3b-15f8-4f98-95fb-04cc2a063bef;Quiche classique;lardons,1,/fromage,1,/oeufs,1,/lait,1,/pâte brisée,1,/[champignons],1,boite;;soir;;
 cddfdb01-754d-468a-b272-1816d8bcd5d1;Quiche saumon;;;;;
 52e8bf65-d656-4a25-823a-d8bc9cef8741;Quinoa brocoli canneberges;;;vegan/midi;quinoa_brocoli;
 d96f0ffc-a477-4ebf-9952-3adfa84871e1;Raclette;;;hiver;;
 ff56b9ea-fff5-4d56-80f6-779d1167a4b4;Ratatouille;;;vegan/ete;;
 17d40796-6e2b-4ef4-9907-8c1530e54bd6;Ravioli;;;kids;ravioli;
-8c04fad1-4746-474e-8524-c9508db0251b;Restes;les restes (1.0) (1.0),1.0,;10;restes;restes;Réchauffer, c’est prêt!
+8c04fad1-4746-474e-8524-c9508db0251b;Restes;les restes,1,();10;restes;restes;Réchauffer, c’est prêt!
 957890f7-b83a-46f0-8f0b-299e773983a8;Ribs marinés;;;kids/midi;ribs;
 ed054dc7-44e6-4173-85e1-97c0fbf2d3c9;Risotto épinards champignons;;;vegan/double;risotto;
-feeae35a-306f-4f4f-8014-557abf645cfd;Rosties;pommes de terre (1.0),1.0,;;vegan;rosties;
-747a40da-fba5-42ef-a7ef-b08f94fe18f6;Salade chou rouge pomme canneberge;chou rouge (1.0) (1.0),1.0,/oignons verts (4.0) (4.0),4.0,/persil (2.0c. à s.) (2.0c. à s.),2.0,c. à s./ail (1.0gousses) (1.0gousses),1.0,gousses/huile d’olive (60.0mL) (60.0mL),60.0,mL/vinaigre de cidre (45.0mL) (45.0mL),45.0,mL/sirop d’érable (15.0mL) (15.0mL),15.0,mL/pomme (1.0) (1.0),1.0,/canneberges séchées (75.0g) (75.0g),75.0,g;30;vegan/midi/hiver;salade_chou;"Couper le chou en quartiers en gardant le coeur. À l’aide d’une mandoline, trancher finement les quartiers de chou de manière à obtenir 680 g de chou. 
+479111c0-4f41-4732-a9ca-16d23e4a0ca4;Rosties;pommes de terre,1,();;vegan;;
+747a40da-fba5-42ef-a7ef-b08f94fe18f6;Salade chou rouge pomme canneberge;chou rouge,1,()/oignons verts,4,()/persil,2,c. à s./ail,1,gousses/huile d’olive,60,mL/vinaigre de cidre,45,mL/sirop d’érable,15,mL/pomme,1,()/canneberges séchées,75,g;30;vegan/midi/hiver;salade_chou;"Couper le chou en quartiers en gardant le coeur. À l’aide d’une mandoline, trancher finement les quartiers de chou de manière à obtenir 680 g de chou. 
 Déposer dans un grand bol. Ajouter les oignons, le persil et l’ail.
 Dans un petit bol, mélanger l’huile, le vinaigre et le sirop d’érable. Saler et poivrer. Verser sur les légumes et bien mélanger. Couvrir et réfrigérer 30 minutes ou toute une nuit.
 Au moment de servir, ajouter la pomme et les canneberges."
-365b2fc6-4328-410f-bc99-e1d6e7f04667;Salade de riz;riz (1.0) (1.0),1.0,/mais (1.0) (1.0),1.0,/tomate (1.0) (1.0),1.0,;;midi/ete;salade_riz;
-7d63ac5a-9bb8-4a04-8d6c-a073dd182ca1;Salade Louise;pasteque (1.0) (1.0),1.0,/pignon de pin (1.0) (1.0),1.0,/menthe (1.0) (1.0),1.0,/huile d’olive (1.0) (1.0),1.0,;;vegan/ete/midi;;
+365b2fc6-4328-410f-bc99-e1d6e7f04667;Salade de riz;riz,1,()/mais,1,()/tomate,1,();;midi/ete;salade_riz;
+7d63ac5a-9bb8-4a04-8d6c-a073dd182ca1;Salade Louise;pasteque,1,()/pignon de pin,1,()/menthe,1,()/huile d’olive,1,();;vegan/ete/midi;;
 36ee255e-2aa2-4ef6-9009-2ccc89c475b2;Saucisses lentilles;;;midi/double;;
 957eb5b8-aa78-4455-9680-f43dba62cbe5;Shortbread millionaire;;;dessert;;
 afd559a4-fc8e-4334-88bf-d65ab491bcc6;Soufflé au fromage;;;soir/vegan;soufflé_au_fromage;
@@ -183,17 +183,17 @@ b40c0d72-65d2-4b15-b18c-ffeb15aa5458;Tarte tomate;;;soir/vegan;tarte_tomate;
 2aeeaf17-c4de-4cd4-9c0b-22688cc9b096;Tartiflette;;;double/hiver;tartiflette;
 29396a30-d731-4079-aeda-dfc3d61cbfdb;Tatin d’endives;;;vegan/soir/hiver;tatin_endive;
 df1f9f8b-082a-4ea9-b915-348ec13e1fb1;Tatin de poivron;;;vegan;tatin_poivron;
-9613ee66-eac3-4756-bd3a-0c6deac110c4;Tortilla;oeufs (1.0) (1.0),1.0,/pommes de terre (1.0) (1.0),1.0,;;vegan;tortilla;
+9613ee66-eac3-4756-bd3a-0c6deac110c4;Tortilla;oeufs,1.0,()/pommes de terre,1.0,();;vegan;tortilla;
 b0c96e74-b58a-4ea6-b5f0-67d91da589a9;Tourte à la viande;;;;tourte_viande;
 33015397-1fc2-466c-9190-04c1ca9375e5;Tresse;;;dessert;tresse;
-749206e1-7b8d-4eb2-aa74-5aa11e721900;Wok nouilles;nouilles soba (1.0) (1.0),1.0,/carottes (1.0) (1.0),1.0,/oeufs (1.0) (1.0),1.0,/champignons (1.0) (1.0),1.0,;60;;wok_nouilles;
-d1fdb76f-5e7e-40ef-b84b-591a4bc7490a;Salade endives betteraves;endives (1.0) (1.0),1.0,/fromage (1.0) (1.0),1.0,/betteraves (1.0) (1.0),1.0,/pomme (1.0) (1.0),1.0,/noix (1.0) (1.0),1.0,;30;soir/hiver/vegan;salade_endives_betteraves;
-23aa4918-3e1d-4b4f-a788-e98c033406f2;Paupiettes de veau;paupiette (1.0) (1.0),1.0,/pommes de terre (1.0kg) (1.0kg),1.0,kg;;;;
+749206e1-7b8d-4eb2-aa74-5aa11e721900;Wok nouilles;nouilles soba,1,()/carottes,1,()/oeufs,1,()/champignons,1,();60;;wok_nouilles;
+d1fdb76f-5e7e-40ef-b84b-591a4bc7490a;Salade endives betteraves;endives,1,/fromage,1,/betteraves,1,/pomme,1,/noix,1,;30;soir/hiver/vegan;salade_endives_betteraves;
+23aa4918-3e1d-4b4f-a788-e98c033406f2;Paupiettes de veau;paupiette,1,()/pommes de terre,1,kg;;;;
 2f5cfaa2-6d4c-48a1-be35-047ebc8e6bb3;Grillades de porc;;;;;
-a16a8022-4aad-45c2-80b7-d166c7a8f6b9;Lapin a la moutarde;lapin (1.0) (1.0),1.0,/moutarde (1.0) (1.0),1.0,/tagliatelles (1.0) (1.0),1.0,;;;;
+a16a8022-4aad-45c2-80b7-d166c7a8f6b9;Lapin a la moutarde;lapin,1,()/moutarde,1,()/tagliatelles,1,();;;;
 e22fd976-0431-4d8f-bc5b-a94070b0ab3c;Magret de canard;;;;magret;
-7dc9629e-9aa2-4e75-8a9e-af32263bb5d4;Boudin antillais;boudin (1.0) (1.0),1.0,/pommes (2.0) (2.0),2.0,/pommes de terre (1.0) (1.0),1.0,;;kids/midi;;
-cf0a571a-551d-4ec5-abb3-5fe4c418ead9;Veau citron;veau (1.0) (1.0),1.0,/citron (1.0) (1.0),1.0,/riz (1.0) (1.0),1.0,;;midi;;
+7dc9629e-9aa2-4e75-8a9e-af32263bb5d4;Boudin antillais;boudin,1,/pommes,2,/[pommes de terre],1,;;kids/midi;;
+cf0a571a-551d-4ec5-abb3-5fe4c418ead9;Veau citron;veau,1,()/citron,1,()/riz,1,();;midi;;
 c933b8f0-2430-4459-a06c-6fced97b56ee;Roules au fromage;;;vegan;;
 884565d1-7000-4d40-a082-c40e22730835;Surprises du marché;;;midi;;
 65601584-b314-49b6-95d8-f2ecbb4ad4dd;Pique-nique;;;kids/midi/ete;pique-nique;
@@ -204,16 +204,16 @@ f38e3afc-14a3-4fa1-8c2c-b765c3893c26;Soupe Céleri branche;;;soir/double/vegan;;
 55adc2a4-859b-441a-a00a-2d3883927bf3;Quiche brocoli chêvre;;;soir/vegan;;
 42afbff5-5615-4c3f-b427-338fc50dd670;Tarte aux blettes;;;vegan;tarte_aux_blettes;
 9be5313a-9fb3-48be-ba76-9aad778db370;Soupe poireaux pois cassés;;;soir/vegan;;
-e27c81c2-f625-46db-8e79-a9f1c3bd2d76;Salade nouilles soba;nouilles soba (1.0) (1.0),1.0,/avocat (1.0) (1.0),1.0,/poivron (1.0) (1.0),1.0,/carottes (1.0) (1.0),1.0,/mangue (1.0) (1.0),1.0,/asperges (1.0) (1.0),1.0,;;midi/ete/vegan;salade_nouilles_soba;
+e27c81c2-f625-46db-8e79-a9f1c3bd2d76;Salade nouilles soba;nouilles soba,1,/avocat,1,/poivron,1,/carottes,1,/[mangue],1,/[asperges],1,;;midi/ete/vegan;salade_nouilles_soba;
 143b73a3-ad37-47a9-99cc-65724a7190aa;Fruits de mer;;;;fruits_de_mer;
 da5f8095-ce71-4513-91ad-74736cf14fb7;Tarte fraises verveine;;;dessert;;
 12a81670-bd47-471f-81ea-b6dc536ac347;Lasagnes aux blettes;;;double/vegan;;
 798bbe7d-4cff-4880-a70c-830b3ba20e64;Légumes rotis;;;vegan;légumes_rotis;
 41afde43-83d0-4d88-a8e4-7bccc8e1b75a;Absent;;;;;Rien du tout
-09367367-a167-4641-9248-c862e39cfcd6;Pates pois carrés;Pates (500.0g) (500.0g),500.0,g/carottes (1.0) (1.0),1.0,/ail (1.0gousses) (1.0gousses),1.0,gousses/sauce tomate (1.0) (1.0),1.0,/pois carrés (1.0) (1.0),1.0,/laurier (1.0) (1.0),1.0,;;kids/vegan;pates_pois_carrés;
+09367367-a167-4641-9248-c862e39cfcd6;Pates pois carrés;Pates,500,g/carottes,1,/ail,1,gousses/sauce tomate,1,/pois carrés,1,/laurier,1,;;kids/vegan;pates_pois_carrés;
 17511a17-14ca-486c-8f27-ccfe2a345247;Poisson fenouil purée pommes de terre;;;midi;poisson_fenouil_purée_pommes_de_terre;
 eefba3bc-1a7c-42f0-af43-f85a0e1dc90e;Chorba;;;;chorba;
-2b28b492-e9dc-496e-8a8d-d4f61dbee441;Quiche aux poireaux;250 g de poireaux (1.0) (1.0),1.0,/20 cl de lait (1.0) (1.0),1.0,/muscade (1.0) (1.0),1.0,/poivre (1.0) (1.0),1.0,/sel (1.0) (1.0),1.0,/25 cl de crème fraîche (1.0) (1.0),1.0,/4 oeufs (1.0) (1.0),1.0,/50 g de beurre (1.0) (1.0),1.0,/chapelure (1.0) (1.0),1.0,/pâte brisée (1.0) (1.0),1.0,;;vegan;;"Lavez et coupez les blancs de poireaux en tronçons.
+2b28b492-e9dc-496e-8a8d-d4f61dbee441;Quiche aux poireaux;250 g de poireaux,1,/20 cl de lait,1,/muscade,1,/poivre,1,/sel,1,/25 cl de crème fraîche,1,/4 oeufs,1,/50 g de beurre,1,/chapelure,1,/pâte brisée,1,;;vegan;;"Lavez et coupez les blancs de poireaux en tronçons.
 Faites-les cuire dans une sauteuse couverte avec le beurre
 et un peu d'eau environ 20 minutes.
 Une fois cuits, travaillez-les en purée à la fourchette.
@@ -226,7 +226,7 @@ Faites cuire 40 min au four préchauffé à 220°C (thermostat 7-8).
 714b79dc-0539-41be-9f00-3121557be44a;Sandwich;;;kids;;
 7ee4d514-b8e6-473a-97f1-fdb927215ab7;Wrap crudités;;;soir/kids;;
 ef544c51-eda0-4557-9a1b-2c9b8ac9ab90;Crumble de légumes rotis;;;vegan;crumble_de_légumes_rotis;
-928f1a1d-ef79-46f5-a713-e54798331e61;Fondant chocolat framboises (comme un cupcake);creme fraiche (25.0cl) (25.0cl),25.0,cl/mascarpone (375.0g) (375.0g),375.0,g/sucre glace (125.0g) (125.0g),125.0,g/chocolat noir (200.0g) (200.0g),200.0,g/oeufs (4.0) (4.0),4.0,/farine (40.0g) (40.0g),40.0,g/beurre (1.0) (1.0),1.0,/framboises (1.0) (1.0),1.0,/cacao en poudre (4.0c. à s.) (4.0c. à s.),4.0,c. à s.;;dessert/kids/ete/vegan;fondant_chocolat_framboises_(comme_un_cupcake);"Pour le glaçage : 
+928f1a1d-ef79-46f5-a713-e54798331e61;Fondant chocolat framboises (comme un cupcake);creme fraiche,25,cl/mascarpone,375,g/sucre glace,125,g/chocolat noir,200,g/oeufs,4,/farine,40,g/beurre,1,/framboises,1,/cacao en poudre,4,c. à s.;;dessert/kids/ete/vegan;fondant_chocolat_framboises_(comme_un_cupcake);"Pour le glaçage : 
 25 cl de crème fraiche entière froide, 125 g de mascarpone, 50 g de sucre glace, 4 c.à.s de cacao en poudre amer (sans sucre).
 
 Dans le bol de votre robot, fouettez la crème fraiche froide. Lorsqu'elle commence à prendre ajoutez le sucre glace puis le mascarpone pour obtenir une texture homogène. 
@@ -252,7 +252,7 @@ Beurrez votre moule et versez-y la pâte.
 Inserez des framboises au coeur.
 Enfournez pendant 25 minutes.
 Lorsque le gâteau est cuit, sortez-le du four et faites-le refroidir au réfrigérateur, quelques minutes, afin qu'il se raffermisse."
-a01a8e02-e048-4e60-9728-9c4f9c0b92fc;Tiramisu (recette originale);3 oeufs (1.0) (1.0),1.0,/100 g de sucre roux (1.0) (1.0),1.0,/1 sachets de sucre vanillé (1.0) (1.0),1.0,/250 g de mascarpone (1.0) (1.0),1.0,/24 biscuits à la cuillère (1.0) (1.0),1.0,/50 cl de café noir non sucré (1.0) (1.0),1.0,/30 g de cacao amer (1.0) (1.0),1.0,;;dessert;;"Séparer les blancs des jaunes d'oeufs.
+a01a8e02-e048-4e60-9728-9c4f9c0b92fc;Tiramisu (recette originale);3 oeufs,1,/100 g de sucre roux,1,/1 sachets de sucre vanillé,1,/250 g de mascarpone,1,/24 biscuits à la cuillère,1,/50 cl de café noir non sucré,1,/30 g de cacao amer,1,;;dessert;;"Séparer les blancs des jaunes d'oeufs.
 Mélanger les jaunes avec le sucre roux et le sucre vanillé. 
 Ajouter le mascarpone au fouet.
 Monter les blancs en neige et les incorporer délicatement à la spatule au mélange précédent. Réserver.
@@ -264,10 +264,10 @@ Mettre au réfrigérateur 4 heures minimum puis déguster frais.
 8d5648bd-250b-470d-80fc-cc2a8aefbf07;Soupe de poisson;;;;;
 96eed766-3f0d-4d33-aa3d-39e87e0dea4c;Tomates Mozzarella;;;ete/vegan;;
 c71e72da-0fd4-4ffc-b0af-8fc9cdabf914;Moules frites;;;kids/midi/vegan;;
-cfeb5d3f-836c-41aa-b8aa-e9325d1df67a;Salade de légumineuses;sauce vinaigrette (1.0) (1.0),1.0,/pois chiches (1.0) (1.0),1.0,/lentilles (1.0) (1.0),1.0,;;midi/vegan;;
-aeed8818-a2d4-4d61-b7d0-10f7bec066a3;Purée de patates douces;patates douces (1.0) (1.0),1.0,;;vegan;;
-3af2010c-352f-4e8d-8ec5-fcc5b85e7681;Blanc de poulet;poulet (1.0) (1.0),1.0,;;;;
-eaa17f73-1051-48eb-b3c4-8d819c982d58;Gaspacho (Andalousie);9 tomates bien mûres (1.0) (1.0),1.0,/1.5 poivrons rouges (1.0) (1.0),1.0,/1.5 poivrons verts (1.0) (1.0),1.0,/1.5 concombres (1.0) (1.0),1.0,/1 oignons (1.0) (1.0),1.0,/1 gousses d'ail (1.0) (1.0),1.0,/4 oignons nouveaux (1.0) (1.0),1.0,/2 cuillères à soupe de vinaigre de xérès (1.0) (1.0),1.0,/1 tranches de pain de mie (1.0) (1.0),1.0,/2 oeufs durs (1.0) (1.0),1.0,/basilic frais (1.0) (1.0),1.0,/huile d'olive (1.0) (1.0),1.0,/poivre et piment (1.0) (1.0),1.0,/sel (1.0) (1.0),1.0,;;ete/vegan;gaspacho_(andalousie);"Couper les tomates, 1 poivron vert et un rouge, 1 concombre, l'oignon et l'ail, passer le tout au mixer.
+cfeb5d3f-836c-41aa-b8aa-e9325d1df67a;Salade de légumineuses;sauce vinaigrette,1,/[pois chiches],1,/[lentilles],1,;;midi/vegan;;
+aeed8818-a2d4-4d61-b7d0-10f7bec066a3;Purée de patates douces;patates douces,1,;;vegan;;
+3af2010c-352f-4e8d-8ec5-fcc5b85e7681;Blanc de poulet;poulet,1.0,;;;;
+eaa17f73-1051-48eb-b3c4-8d819c982d58;Gaspacho (Andalousie);9 tomates bien mûres,1,/1.5 poivrons rouges,1,/1.5 poivrons verts,1,/1.5 concombres,1,/1 oignons,1,/1 gousses d'ail,1,/4 oignons nouveaux,1,/2 cuillères à soupe de vinaigre de xérès,1,/1 tranches de pain de mie,1,/2 oeufs durs,1,/basilic frais,1,/huile d'olive,1,/poivre et piment,1,/sel,1,;;ete/vegan;gaspacho_(andalousie);"Couper les tomates, 1 poivron vert et un rouge, 1 concombre, l'oignon et l'ail, passer le tout au mixer.
 Ajouter le pain de mie, mixer une nouvelle fois.
 Assaisonner avec sel,poivre, 4 cuillères à soupe d'huile d'olive, 2 cuillères à soupe de vinaigre de Xérès et de piment (selon les goûts).
 Laisser reposer au frais au minimum 2 heures.
@@ -276,18 +276,18 @@ Disposer les garnitures dans des ramequins et chacun accommodera son gaspacho se
 <a href='https://www.marmiton.org/recettes/recette_gaspacho-andalousie_16193.aspx'>https://www.marmiton.org/recettes/recette_gaspacho-andalousie_16193.aspx</a>"
 8dcd2a4c-8e2f-459e-8a14-b70d14506d30;Escalope de veau;;;midi;escalope_de_veau;
 69c972b2-7d2b-4040-818e-f06665fbdd07;Crèpes forestières;;;;crèpes_forestières;
-f0150d24-7a5f-4c15-87a1-6d87c5f0a430;Clafoutis à la mirabelle;450 g de mirabelle (1.0) (1.0),1.0,/75 g de farine (1.0) (1.0),1.0,/3 oeufs (1.0) (1.0),1.0,/75 g de sucre (1.0) (1.0),1.0,/30 cl de lait (1.0) (1.0),1.0,/60 g de beurre (1.0) (1.0),1.0,;;dessert/ete;clafoutis_à_la_mirabelle;"Préchauffer votre four à 210°C (thermostat 7).
+f0150d24-7a5f-4c15-87a1-6d87c5f0a430;Clafoutis à la mirabelle;450 g de mirabelle,1,/75 g de farine,1,/3 oeufs,1,/75 g de sucre,1,/30 cl de lait,1,/60 g de beurre,1,;;dessert/ete;clafoutis_à_la_mirabelle;"Préchauffer votre four à 210°C (thermostat 7).
 Dénoyauter les mirabelles et les disposer dans un moule beurré.
 Mélanger la farine avec les oeufs, le beurre, le sucre et le lait.
 Recouvrir les mirabelles de ce mélange et enfourner pour 15 minutes de cuisson.
 Baisser le four à 150°C (thermostat 5) et poursuivre la cuisson durant 30 minutes.
 <a href='https://www.marmiton.org/recettes/recette_clafoutis-a-la-mirabelle_30982.aspx'>https://www.marmiton.org/recettes/recette_clafoutis-a-la-mirabelle_30982.aspx</a>"
-fb4d5cf0-9bf2-4c24-807d-c33af277acca;Tarte au Maroilles;Pâte levée (pâte à pizza ou à pain) (1.0) (1.0),1.0,/1 maroilles (1.0) (1.0),1.0,/1 petits pots de crème fraîche épaisse (20 cl) (1.0) (1.0),1.0,/1 jaunes d'oeuf (1.0) (1.0),1.0,/1 paprika (1.0) (1.0),1.0,;;soir;;"Etaler la pâte.
+fb4d5cf0-9bf2-4c24-807d-c33af277acca;Tarte au Maroilles;"Pâte levée (pâte à pizza ou à pain)",1,/1 maroilles,1,()/1 petits pots de crème fraîche épaisse (20 cl),1,()/1 jaunes d'oeuf,1,()/1 paprika,1,();;soir;;"Etaler la pâte.
 Gratter la croûte du maroilles (ne pas la retirer). Le couper en tranches fines que l'on dépose sur la pâte.
 Ajouter de la crème fraîche mélangée à un jaune d'oeuf. Ajouter un peu de paprika.
 Faire cuire environ 10 min, à four bien chaud (thermostat 8 / 240°C).
 <a href='https://www.marmiton.org/recettes/recette_tarte-au-maroilles_11435.aspx'>https://www.marmiton.org/recettes/recette_tarte-au-maroilles_11435.aspx</a>"
-a77108cf-8b58-4b0b-b532-8c3b40610cc8;Soupe thaï crevettes ou poulet;3 blancs de poulet en lamelles ou 16 grosses crevettes crues (1.0) (1.0),1.0,/40 cl de bouillon de poule (1.0) (1.0),1.0,/25 cl de lait de coco (1.0) (1.0),1.0,/3 citronnelle en tronçons (1.0) (1.0),1.0,/15 rondelles de galanga (ou de gingembre) (1.0) (1.0),1.0,/2 piments oiseau coupés en lamelles (1.0) (1.0),1.0,/1 brocolis coupé en petites fleurs (1.0) (1.0),1.0,/1 carottes en rondelles (1.0) (1.0),1.0,/champignons (100.0g) (100.0g),100.0,g/3 cuillères à soupe de nuoc mam (1.0) (1.0),1.0,/4 cuillères à soupe de jus de citron vert (1.0) (1.0),1.0,/coriandre fraîche hachée (1.0) (1.0),1.0,;;;;"Eplucher, couper, émincer tout les ingrédients avant de se lancer.
+a77108cf-8b58-4b0b-b532-8c3b40610cc8;Soupe thaï crevettes ou poulet;3 blancs de poulet en lamelles ou 16 grosses crevettes crues,1,()/40 cl de bouillon de poule,1,()/25 cl de lait de coco,1,()/3 citronnelle en tronçons,1,()/15 rondelles de galanga (ou de gingembre),1,()/2 piments oiseau coupés en lamelles,1,()/1 brocolis coupé en petites fleurs,1,()/1 carottes en rondelles,1,()/champignons,100,g/3 cuillères à soupe de nuoc mam,1,()/4 cuillères à soupe de jus de citron vert,1,()/coriandre fraîche hachée,1,();;;;"Eplucher, couper, émincer tout les ingrédients avant de se lancer.
 Porter le bouillon à ébullition. Baisser le feu, ajouter la citronnelle, le gingembre, le piment, puis laisser mijoter 3 min.
 Ajouter le brocoli, la carotte, le poulet dans la version au poulet (surtout pas les crevettes!!) et le lait de coco. Laisser frémir doucement 10 15 min, les légumes doivent rester croquants, mais pas trop (à vous de juger et de faire selon vos goûts).
 Ajouter les crevettes dans la version crevettes, ainsi que le nam pla et jus de citron, puis laisser frémir 3 à 4 min, jusqu'à ce que les crevettes soient roses.
@@ -325,7 +325,7 @@ Mélanger avant de déguster. Vous pouvez également placer la salade de lentill
 "
 8929520e-9d57-4f5f-adbb-482aeab67a13;Nouilles soba shiitake tofu;;;vegan;;
 52ed8d72-16b3-4e42-8832-0b2d5e04b75d;Gateau au chocolat;;;dessert;;
-a85eab3c-60bf-4c5c-abad-8a052988c4ab;Moussaka vegetarienne;Aubergines (2.0) (2.0),2.0,/tomate (2.0) (2.0),2.0,/oignon (2.0) (2.0),2.0,/tofu (250.0g) (250.0g),250.0,g/oeufs (2.0) (2.0),2.0,/lait (200.0mL) (200.0mL),200.0,mL/fromage (50.0g) (50.0g),50.0,g/origan (1.0) (1.0),1.0,/estragon (1.0) (1.0),1.0,/cannelle (1.0) (1.0),1.0,;;double/kids/ete/vegan;;"1. Couper les aubergines en rondelles et faites-les dorer a la poele dans de l'huile d'olive
+a85eab3c-60bf-4c5c-abad-8a052988c4ab;Moussaka vegetarienne;Aubergines,2,/tomate,2,/oignon,2,/tofu,250,g/oeufs,2,/lait,200,mL/fromage,50,g/origan,1,/estragon,1,/cannelle,1,;;double/kids/ete/vegan;;"1. Couper les aubergines en rondelles et faites-les dorer a la poele dans de l'huile d'olive
 
 2. Dans une cocotte, faites revenir les tomates, les oignons haches et le tofu emiette pendant 10 minutes.
 
@@ -336,12 +336,12 @@ a85eab3c-60bf-4c5c-abad-8a052988c4ab;Moussaka vegetarienne;Aubergines (2.0) (2.0
 5. Battre les oeufs et le lait, puis napper le gratin
 
 6. Parsemer de fromage rape et faire cuire 30 minutes a 180 deg."
-61c27b32-f487-40f1-8cb4-bd583c9019a8;Gâteau à l'ananas;Sucre (14.0morceaux) (14.0morceaux),14.0,morceaux/eau (2.0c. a s.) (2.0c. a s.),2.0,c. a s./sucre (150.0g) (150.0g),150.0,g/beurre (150.0g) (150.0g),150.0,g/farine (150.0g) (150.0g),150.0,g/levure (0.5paquet) (0.5paquet),0.5,paquet/oeufs (3.0) (3.0),3.0,/jus d’ananas (3.0cas ) (3.0cas ),3.0,cas ;60;dessert;gâteau_à_l'ananas;"Faire du caramel avec le sucre et l’eau, puis etaler au fond du moule.
+6a8054c0-ffff-4e68-bc1a-c1fa9dc84e76;Gâteau à l'ananas;Sucre,14.0,morceaux/eau,2.0,c. a s./sucre,150.0,g/beurre,150.0,g/farine,150.0,g/levure,0.5,paquet/oeufs,3.0,/jus d’ananas,3.0,cas ;60;dessert;;"Faire du caramel avec le sucre et l’eau, puis etaler au fond du moule.
 
 Disposer les rondelles d’ananas dans le moule. 
 
 Dans un saladier, melanger tous les ingredients restants, puis verser dans le moule.Cuire a 180 degres pendant 40/50 min."
-abb19932-729d-446c-b60e-9a763f395832;Cake de Mickey;yaourt nature (1.0) (1.0),1.0,/oeufs (2.0) (2.0),2.0,/huile (0.5pot de yaourt) (0.5pot de yaourt),0.5,pot de yaourt/sucre (2.0pots de yaourt) (2.0pots de yaourt),2.0,pots de yaourt/farine (3.0pots de yaourt) (3.0pots de yaourt),3.0,pots de yaourt/levure (1.0c. a c.) (1.0c. a c.),1.0,c. a c.;;dessert;;Prechauffer le four a 190 degre.Dans un bol, verser le yaourt nature, les deux oeufs et l’huile.Ajouter la sucre et melanger le tout.Ajouter la farine et la levureRemuer jusqu’a obtenir une belle pate. Huiler le moule et verser la pate, puis mettre au four.Cuire 35 a 40 min. Variantes : remplacer un pot de farine par - un pot de noix de coco- chocolat- poudre d’amandes.
+abb19932-729d-446c-b60e-9a763f395832;Cake de Mickey;yaourt nature,1,()/oeufs,2,()/huile,0.5,pot de yaourt/sucre,2,pots de yaourt/farine,3,pots de yaourt/levure,1,c. a c.;;dessert;;Prechauffer le four a 190 degre.Dans un bol, verser le yaourt nature, les deux oeufs et l’huile.Ajouter la sucre et melanger le tout.Ajouter la farine et la levureRemuer jusqu’a obtenir une belle pate. Huiler le moule et verser la pate, puis mettre au four.Cuire 35 a 40 min. Variantes : remplacer un pot de farine par - un pot de noix de coco- chocolat- poudre d’amandes.
 9ea54f26-b4d3-4cc5-9ed8-da9ba59d4600;Poulpe;;;;;"Nettoyer
 Vider : Il faut tout d'abord retourner le manteau, partie au dessus des yeux, pour retirer les intestins. Enlever tout ce qui n'est pas blanc.
 Couper : A la limite entre les tentacules et les yeux et juste au dessus des yeux.
@@ -366,22 +366,22 @@ snacké à la poêle : 5 minutes de chaque côté à l'huile d'olive."
 acb9fd53-9a9f-496e-a03e-38b1991574c3;Porridge avoine potimarron;;;vegan;;
 ec60d477-3bf5-4d6f-8c8d-1d437410fd96;Poêlée chou rouge chataignes;;;vegan;;
 50aef3b2-c83b-41bd-a833-750e514afe96;Steak;;;midi;;
-61ed6a43-2028-4f1b-a7b2-db6931ed73f6;Chou au lard;;;midi/hiver;chou_au_lard;
+442cc614-0fab-4af5-9934-4244c2f00d42;Chou au lard;;;midi/hiver;;
 0e93f160-217a-4e57-9d47-1c6913e9480a;Piperade;;;ete/vegan;;
 6b86603e-0675-47ed-982d-ecf97fef6f1c;Poêlée de légumes;;;vegan;;
 9e2fa0cc-be6e-4761-a8c4-6145faa27294;Quiche aux blettes;;;vegan;;
 72d270e1-b54c-4f74-9ea0-77b4f33e6f77;Purée céleri pomme de terre;;;vegan;;
 ea78c3b0-f3ba-42f9-9638-3d7eac606b9a;Pates bolognese;;;kids;;
-61dab39d-0309-4848-9197-b83809210dc0;Boudin noir St Jacques;boudin noir (1.0) (1.0),1.0,/noix de st jacques (10.0) (10.0),10.0,;;soir;boudin_noir_st_jacques;
+61dab39d-0309-4848-9197-b83809210dc0;Boudin noir St Jacques;boudin noir,1.0,/noix de st jacques,10.0,;;soir;boudin_noir_st_jacques;
 484c2c69-3c4a-4fb3-9e5a-47a56e7dcc27;Purée chataigne potimarron;;;vegan;;
 25bd4c02-0f25-4c1e-af90-23460930c343;Salade d'endives;;;midi/vegan;;
-e5c98e97-fbe5-40ba-9218-b0929e7f060b;Petits pois carotte jambon;carottes (1.0) (1.0),1.0,/jambon (1.0) (1.0),1.0,/petits pois (1.0) (1.0),1.0,;;kids;;
-2cff5160-f166-4ea3-81d1-fc1a1c851e0a;Curry de pois chiche et riz aux choux de bruxelle;huile de sésame (1.0c.a.s) (1.0c.a.s),1.0,c.a.s/oignon (1.0) (1.0),1.0,/ail (3.0gousses) (3.0gousses),3.0,gousses/butternut (0.5) (0.5),0.5,/pois chiche cuit (250.0g) (250.0g),250.0,g/lait de coco (300.0ml) (300.0ml),300.0,ml/curry (1.0) (1.0),1.0,/coriandre fraiche (1.0) (1.0),1.0,/basilic frais (1.0) (1.0),1.0,/choux de bruxelle (250.0g) (250.0g),250.0,g/huile d'olive (3.0c.a.s) (3.0c.a.s),3.0,c.a.s/riz (300.0g) (300.0g),300.0,g/coriandre (1.0c.a.c) (1.0c.a.c),1.0,c.a.c/colombo (1.0c.a.c) (1.0c.a.c),1.0,c.a.c/noix de cajou (1.0) (1.0),1.0,/sel (1.0) (1.0),1.0,/poivre (1.0) (1.0),1.0,;;hiver/vegan;curry_de_pois_chiche_et_riz_aux_choux_de_bruxelle;"- Faire revenir oignon, ail et curry dans l'huile de sésame
+e5c98e97-fbe5-40ba-9218-b0929e7f060b;Petits pois carotte jambon;carottes,1.0,/jambon,1.0,/petits pois,1.0,;;kids;;
+2cff5160-f166-4ea3-81d1-fc1a1c851e0a;Curry de pois chiche et riz aux choux de bruxelle;huile de sésame,1.0,c.a.s/oignon,1.0,/ail,3.0,gousses/butternut,0.5,/pois chiche cuit,250.0,g/lait de coco,300.0,ml/curry,1.0,/coriandre fraiche,1.0,/basilic frais,1.0,/choux de bruxelle,250.0,g/huile d'olive,3.0,c.a.s/riz,300.0,g/coriandre,1.0,c.a.c/colombo,1.0,c.a.c/noix de cajou,1.0,/sel,1.0,/poivre,1.0,;;hiver/vegan;curry_de_pois_chiche_et_riz_aux_choux_de_bruxelle;"- Faire revenir oignon, ail et curry dans l'huile de sésame
 - Ajouter les pois chiches cuits et le butternut. Faire dorer quelques minutes
 - Ajouter le lait de coco et cuire environ 10mn. Ajouter un peu d'eau si besoin, assaisoner. Ajouter les herbes ciselées avant de servir
 
 - Faire dorer les choux de bruxelle dans l'huile d'olive.
 - Ajouter le riz, 1 c.à.s d'huile supplémentaire, les épices et les noix de cajou. Mélanger et cuire quelques minutes"
-670c6697-057e-4e8c-8874-60ac2d4eb9e0;Poêlée boulgour shiitake;huile de sésame (2.0c.a.c) (2.0c.a.c),2.0,c.a.c/huile d'olive (2.0c.a.s) (2.0c.a.s),2.0,c.a.s/shiitake (100.0g) (100.0g),100.0,g/oignon (1.0) (1.0),1.0,/tofu fumé (200.0g) (200.0g),200.0,g/tamari (2.0c.a.s) (2.0c.a.s),2.0,c.a.s/miso (2.0c.a.s) (2.0c.a.s),2.0,c.a.s/eau (8.0c.a.s) (8.0c.a.s),8.0,c.a.s/boulgour (400.0g) (400.0g),400.0,g/ciboulette (1.0) (1.0),1.0,;;midi/vegan;;"- Faire sauter shiitake, oignon, tofu dans l'huile et le tamari.
+670c6697-057e-4e8c-8874-60ac2d4eb9e0;Poêlée boulgour shiitake;huile de sésame,2.0,c.a.c/huile d'olive,2.0,c.a.s/shiitake,100.0,g/oignon,1.0,/tofu fumé,200.0,g/tamari,2.0,c.a.s/miso,2.0,c.a.s/eau,8.0,c.a.s/boulgour,400.0,g/ciboulette,1.0,;;midi/vegan;;"- Faire sauter shiitake, oignon, tofu dans l'huile et le tamari.
 - Ajouter le miso dilué dans l'eau. Cuire 1mn.
 - Ajouter le boulgour et mouiller au fur et à mesure"
