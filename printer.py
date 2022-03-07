@@ -132,25 +132,26 @@ class Printer:
 
         options = []
         missing = []
-        for ingredient, qty_unit in my_menu.get_shopping_list().items():
-            if ingredient != 'missing information':
+        for ingredient_name, ingredient_object in my_menu.get_shopping_list().items():
+            if ingredient_name != 'missing information':
                 string = ''
                 string_option = ''
-                qty, unit = qty_unit
-                if ingredient[0] == '[' and ingredient[-1] == ']':
-                    string_option += '%s : %s' % (ingredient, qty)
+                qty = ingredient_object.qty
+                unit = ingredient_object.unit
+                if ingredient_name[0] == '[' and ingredient_name[-1] == ']':
+                    string_option += '%s : %s' % (ingredient_name, qty)
                     if unit != '()':
                         string_option += unit
 
                     options.append(string_option)
                 else:
-                    string += '%s : %s' % (ingredient, qty)
+                    string += '%s : %s' % (ingredient_name, qty)
                     if unit != '()':
                         string += unit
 
                     INGREDIENTS.append(string)
             else:
-                missing.append(qty_unit) #in that case qty_unit is recipe name
+                missing.append(ingredient_object) #in that case ingredient_object is recipe name
         
         self.write_list(INGREDIENTS)
         
