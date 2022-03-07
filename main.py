@@ -315,6 +315,8 @@ class MainGUI(QWidget):
         #shopping list
         self.shopping_list = ShoppingList()
         self.shopping_list.on_gkeep.connect(self.to_google_keep)
+        self.shopping_list.on_print.connect(self.on_print_shopping_list)
+        self.shopping_list.on_send.connect(self.on_send_shopping_list)
         self.vL_shopping.addWidget(self.shopping_list)
         
         #User settings

@@ -21,6 +21,8 @@ UI_FILE = cw.dirname('UI') + 'shopping_list.ui'
 class ShoppingList(QWidget):
     
     on_gkeep = Signal()
+    on_print = Signal()
+    on_send = Signal()
     
     def __init__(self, parent=None):
         super(ShoppingList, self).__init__(parent)
@@ -77,6 +79,8 @@ class ShoppingList(QWidget):
         self.pB_reset.clicked.connect(self.reset_all)
         self.pB_add.clicked.connect(self.on_add_empty_ingredient)
         self.pB_keep.clicked.connect(self.execute_gkeep_process)
+        self.pB_print.clicked.connect(self.on_print.emit)
+        self.pB_send.clicked.connect(self.on_send.emit)
     
     def update_modif(self):
         pass
