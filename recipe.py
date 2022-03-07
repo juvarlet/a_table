@@ -150,9 +150,10 @@ class Recipe:
         if len(self.ing_list) > 0:
             ing_strings = []
             for ingredient in self.ing_list:
+                name = ingredient.name
                 qty = ingredient.qty
                 unit = ingredient.unit
-                ing_strings.append('%s,%s,%s' % (ingredient, qty, unit))
+                ing_strings.append('%s,%s,%s' % (name, qty, unit))
             cells[2] = '/'.join(ing_strings)
         cells[3] = self.time
         if self.tags is not None:
