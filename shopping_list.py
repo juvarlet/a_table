@@ -98,6 +98,7 @@ class ShoppingList(QWidget):
     def on_add_empty_ingredient(self):
         ingredient = Ingredient()
         self.add_ingredient(ingredient, checked=False, user_input=True)
+        self.lW_shopping.scrollToBottom()
     
     def add_ingredients(self, ingredient_list):
         #ingredient_list = [(ingredient, checked),()...]

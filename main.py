@@ -115,10 +115,6 @@ class MainGUI(QWidget):
         self.p_carte = self.pW.page_carte
         # self.pB_save: QPushButton
         # self.pB_save = self.pW.pB_save
-        self.cB_calendar: QCheckBox
-        self.cB_calendar = self.pW.cB_calendar
-        self.cB_history: QCheckBox
-        self.cB_history = self.pW.cB_history
         self.pB_calendar: QPushButton
         self.pB_calendar = self.pW.pB_calendar
         self.pB_new_menu: QPushButton
@@ -391,8 +387,6 @@ class MainGUI(QWidget):
         self.tW_menu.cellChanged.connect(self.on_drag_drop_event)
         self.time_edition.on_start_date_changed.connect(self.on_date_changed)
         self.time_edition.on_nb_days_changed.connect(self.on_nb_days_changed)
-        self.cB_calendar.stateChanged.connect(self.on_export_condition)
-        self.cB_history.stateChanged.connect(self.on_export_condition)
         self.lW_recipe.itemSelectionChanged.connect(self.on_recipe_selection)
         self.pB_modif_2.toggled.connect(self.frame_edit_recipe.setVisible)
         self.pB_modif_2.toggled.connect(self.frame_details.setHidden)
@@ -958,23 +952,8 @@ class MainGUI(QWidget):
         self.compute_score()
     
     def on_export_menu(self):
-        if self.cB_calendar.isChecked():
-            self.on_calendar()
-        if self.cB_history.isChecked():
-            self.on_save_menu()
-    
-    def on_export_condition(self):
-        self.pB_calendar.setEnabled(True)
-        if self.cB_calendar.isChecked():
-            tooltip = "Copier dans l'Agenda"
-            if self.cB_history.isChecked():
-                tooltip += " + Sauvegarder l'Historique"
-        elif self.cB_history.isChecked():
-            tooltip = "Sauvegarder l'Historique"
-        else:
-            tooltip = "Sélectionner au moins une option !"
-            self.pB_calendar.setEnabled(False)
-        self.pB_calendar.setToolTip(tooltip)
+        self.on_calendar()
+        self.on_save_menu()
 
     def on_save_menu(self):
         new_history = []
@@ -1046,7 +1025,7 @@ class MainGUI(QWidget):
         self.myThreads.append(gkeep_worker)
         gkeep_worker.start()
         
-    def on_send_shopping_list(self):
+    def on_send_shopping_list(self):#TODO reconnect with new design
         email = self.user_settings.get_email()
 
         images = [self.icon_folder + 'icon_menu_3colors_LD.png']
@@ -1064,7 +1043,7 @@ class MainGUI(QWidget):
         self.myThreads.append(my_mailbox_worker)
         my_mailbox_worker.start()
 
-    def on_print_shopping_list(self):
+    def on_print_shopping_list(self):#TODO reconnect with new design
         storage = self.user_settings.get_storage()
         os.makedirs(storage + '/Menus/', exist_ok=True)
         pdf_title = storage + '/Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
