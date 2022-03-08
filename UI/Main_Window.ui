@@ -508,8 +508,16 @@ QLabel#label_calendar, QLabel#label_history {
     QSpinBox {
         background-color: #36a9d3;
         color: #1a5d75;
+        border: none;
     }
-    
+    QSpinBox::up-button{
+        border:none;
+        image: url(file:///../UI/images/icon_up_arrow.png);
+    }
+    QSpinBox::down-button{
+        border:none;
+        image: url(file:///../UI/images/icon_down_arrow.png);
+    }
     QListWidget {
         background-color: #fdf1d9;
         selection-background-color: #ffc05c;
@@ -613,12 +621,18 @@ QLabel#label_calendar, QLabel#label_history {
     
     }
     
-    QScrollBar:vertical, QScrollBar:horizontal {
+    QScrollBar:vertical {
         border: 0px solid #fdf1d9;
 		border-radius: 5px;
-        /*background:#fdf1d9;*/
 		background:transparent;
         width:10px; 
+        margin: 0px 0px 0px 0px;
+      }
+    QScrollBar:horizontal {
+        border: 0px solid #fdf1d9;
+		border-radius: 5px;
+		background:transparent;
+        height:10px; 
         margin: 0px 0px 0px 0px;
       }
     QScrollBar::handle:vertical, QScrollBar::handle:horizontal {

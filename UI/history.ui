@@ -93,15 +93,25 @@
         background-color: transparent;
     }
 
-    QScrollBar:vertical, QScrollBar:horizontal {
-        border: 1px solid #1a5d75;
-        background:#fdf1d9;
+    QScrollBar:vertical {
+        border: 0px solid #fdf1d9;
+		border-radius: 5px;
+		background:transparent;
         width:10px; 
         margin: 0px 0px 0px 0px;
-    }
+      }
+    QScrollBar:horizontal {
+        border: 0px solid #fdf1d9;
+		border-radius: 5px;
+		background:transparent;
+        height:10px; 
+        margin: 0px 0px 0px 0px;
+      }
     QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
         background: #ffc05c;
         min-height: 0px;
+		border: 0px solid #fdf1d9;
+		border-radius: 5px;
     }
     QScrollBar::add-line:vertical, QScrollBar::add-line:horizontal {
         background: #ffc05c;

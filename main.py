@@ -285,11 +285,11 @@ class MainGUI(QWidget):
         self.tW_menu = new_tW_menu
         self.pW.tW_menu.setParent(None)
         
-        # self.tW_menu.horizontalHeader().setDefaultSectionSize(260)
-        # self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
-        # self.tW_menu.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.tW_menu.horizontalHeader().setDefaultSectionSize(260)
+        self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.tW_menu.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
         
-        self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_menu.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tW_menu.setIconSize(QSize(160, 160))
         self.tW_menu.verticalHeader().setDefaultAlignment(Qt.AlignCenter)

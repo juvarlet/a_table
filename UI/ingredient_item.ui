@@ -36,6 +36,19 @@ QPushButton#btn_ing_is_optional:pressed, QPushButton#btn_ing_is_optional_2:press
     color:#ffc05c;
     font: bold 20px;
 }
+QDoubleSpinBox {
+        background-color: #36a9d3;
+        color: #1a5d75;
+        border: none;
+    }
+    QDoubleSpinBox::up-button{
+        border:none;
+        image: url(file:///../UI/images/icon_up_arrow.png);
+    }
+    QDoubleSpinBox::down-button{
+        border:none;
+        image: url(file:///../UI/images/icon_down_arrow.png);
+    }
 /**/
 </string>
   </property>

@@ -52,8 +52,8 @@ class Recipe:
     def get_mandatory_and_optional_ing_lists(self):
         mand_ing_list = []
         opt_ing_list = []
-        if len(self.ing_list) == 0:
-            return
+        # if len(self.ing_list) == 0:
+        #     return
         for ing in self.ing_list:
             if ing.is_optional:
                 opt_ing_list.append(ing)

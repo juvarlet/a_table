@@ -485,8 +485,16 @@
     QSpinBox {
         background-color: ##color1_bright#;
         color: ##color1_dark#;
+        border: none;
     }
-    
+    QSpinBox::up-button{
+        border:none;
+        image: url(file:///../UI/images/icon_up_arrow.png);
+    }
+    QSpinBox::down-button{
+        border:none;
+        image: url(file:///../UI/images/icon_down_arrow.png);
+    }
     QListWidget {
         background-color: ##color5#;
         selection-background-color: ##color3_dark#;
@@ -589,15 +597,25 @@
     
     }
     
-    QScrollBar:vertical, QScrollBar:horizontal {
-        border: 1px solid ##color1_dark#;
-        background:##color5#;
+    QScrollBar:vertical {
+        border: 0px solid ##color5#;
+		border-radius: 5px;
+		background:transparent;
         width:10px; 
+        margin: 0px 0px 0px 0px;
+      }
+    QScrollBar:horizontal {
+        border: 0px solid ##color5#;
+		border-radius: 5px;
+		background:transparent;
+        height:10px; 
         margin: 0px 0px 0px 0px;
       }
     QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
         background: ##color3_dark#;
         min-height: 0px;
+		border: 0px solid ##color5#;
+		border-radius: 5px;
     }
     QScrollBar::add-line:vertical, QScrollBar::add-line:horizontal {
         background: ##color3_dark#;

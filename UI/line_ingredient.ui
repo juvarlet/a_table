@@ -63,13 +63,17 @@ QPushButton:checked{
 QDoubleSpinBox{
 	font: bold 18px;
 	background-color: #ffe0ad;
-	border-width: 0px;
+    border:none;
 	color:#1a5d75;
 }
 QDoubleSpinBox::up-button{
-border:none;
+    border:none;
+    image: url(file:///../UI/images/icon_up_arrow.png);
 }
-
+QDoubleSpinBox::down-button{
+    border:none;
+    image: url(file:///../UI/images/icon_down_arrow.png);
+}
 QLineEdit{
 	border:none;
 	background:transparent;

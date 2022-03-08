@@ -51,6 +51,15 @@ QPushButton{
     QSpinBox {
         background-color: #36a9d3;
         color: #1a5d75;
+        border: none;
+    }
+    QSpinBox::up-button{
+        border:none;
+        image: url(file:///../UI/images/icon_up_arrow.png);
+    }
+    QSpinBox::down-button{
+        border:none;
+        image: url(file:///../UI/images/icon_down_arrow.png);
     }
 
 QLabel {

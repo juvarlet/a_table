@@ -130,11 +130,16 @@ class LineIngredient(QWidget):
                             QDoubleSpinBox#sB_qty{
                                 font: bold 18px;
                                 background-color: #ffe0ad;
-                                border-width: 0px;
+                                border:none;
                                 color:#ffc05c;
                             }
-                            QDoubleSpinBox#sB_qty::up-button{
+                            QDoubleSpinBox::up-button{
                                 border:none;
+                                image: url(file:///../UI/images/icon_up_arrow.png);
+                            }
+                            QDoubleSpinBox::down-button{
+                                border:none;
+                                image: url(file:///../UI/images/icon_down_arrow.png);
                             }
                             ''')
         else:
@@ -150,14 +155,19 @@ class LineIngredient(QWidget):
                             }
                             ''')
             self.sB_qty.setStyleSheet('''
-                            QDoubleSpinBox#sB_qty{
+                            QDoubleSpinBox{
                                 font: bold 18px;
                                 background-color: #ffe0ad;
-                                border-width: 0px;
+                                border:none;
                                 color:#1a5d75;
                             }
-                            QDoubleSpinBox#sB_qty::up-button{
+                            QDoubleSpinBox::up-button{
                                 border:none;
+                                image: url(file:///../UI/images/icon_up_arrow.png);
+                            }
+                            QDoubleSpinBox::down-button{
+                                border:none;
+                                image: url(file:///../UI/images/icon_down_arrow.png);
                             }
                             ''')
     
