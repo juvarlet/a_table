@@ -39,7 +39,8 @@ QPushButton#btn_ing_is_optional:pressed, QPushButton#btn_ing_is_optional_2:press
 QDoubleSpinBox {
         background-color: #36a9d3;
         color: #1a5d75;
-        border: none;
+        border: 1px solid #36a9d3;
+        border-radius: 5px;
     }
     QDoubleSpinBox::up-button{
         border:none;

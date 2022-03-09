@@ -130,7 +130,8 @@ class LineIngredient(QWidget):
                             QDoubleSpinBox#sB_qty{
                                 font: bold 18px;
                                 background-color: #ffe0ad;
-                                border:none;
+                                border: 1px solid #ffe0ad;
+                                border-radius: 5px;
                                 color:#ffc05c;
                             }
                             QDoubleSpinBox::up-button{
@@ -158,7 +159,8 @@ class LineIngredient(QWidget):
                             QDoubleSpinBox{
                                 font: bold 18px;
                                 background-color: #ffe0ad;
-                                border:none;
+                                border: 1px solid #ffe0ad;
+                                border-radius: 5px;
                                 color:#1a5d75;
                             }
                             QDoubleSpinBox::up-button{

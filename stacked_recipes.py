@@ -28,6 +28,7 @@ class StackedRecipes(QWidget):
         self.recipe_list = recipe_list
         self.recipe_db = recipe_db
         self.id = id
+        self.locked = False
         self.saveComponents()
         # QCoreApplication.processEvents()
         # self.initial_state()
@@ -63,6 +64,10 @@ class StackedRecipes(QWidget):
         self.frame_buttons = self.pW.frame_buttons
         self.frame_buttons_2: QFrame
         self.frame_buttons_2 = self.pW.frame_buttons_2
+        self.frame_edit: QFrame
+        self.frame_edit = self.pW.frame_edit
+        self.frame_lock: QFrame
+        self.frame_lock = self.pW.frame_lock
         self.frame: QFrame
         self.frame = self.pW.frame
         self.frame_4: QFrame
@@ -94,6 +99,8 @@ class StackedRecipes(QWidget):
         self.pB_details_2 = self.pW.pB_details_2
         self.pB_stack: QPushButton
         self.pB_stack = self.pW.pB_stack
+        self.pB_lock: QPushButton
+        self.pB_lock = self.pW.pB_lock
 
         self.list_stack: QListWidget
         self.list_stack = self.pW.list_stack
@@ -120,49 +127,11 @@ class StackedRecipes(QWidget):
         self.hL = self.pW.hL
     
     # @cw.decoratortimer(1)
-    def initial_state(self):
-        self.colors = COLORS
-        self.frame_buttons.setVisible(False)
-        self.pB_list.setVisible(False)
-        # self.comboBox.setVisible(False)
-        self.current_index = len(self.recipe_list) - 1
-        self.layout_widgets = []
-        
-        self.setMouseTracking(True)
-        self.installEventFilter(self)
-        self.frame_card.installEventFilter(self)
-        self.frame_card_2.installEventFilter(self)
-        self.frame_card_3.installEventFilter(self)
-        for child in self.frame_card.children() + self.frame_card_2.children() + self.frame_card_3.children():
-            if child.isWidgetType():
-                # print('installed')
-                child.installEventFilter(self)
-                
-        self.update_recipes()      
-        self.show_hide_buttons()
-        self.update_index()
-        self.update_list()
-        
-        self.pB_add.setIcon(QIcon(self.icon_folder + 'icon_add_recipe.png'))
-        self.pB_add_2.setIcon(QIcon(self.icon_folder + 'icon_add_recipe.png'))
-        self.pB_delete.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
-        self.pB_delete_2.setIcon(QIcon(self.icon_folder + 'icon_bin.png'))
-        self.pB_next.setIcon(QIcon(self.icon_folder + 'icon_right_arrow.png'))
-        self.pB_edit.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
-        self.pB_edit_2.setIcon(QIcon(self.icon_folder + 'icon_edit_2.png'))
-        self.pB_details.setIcon(QIcon(self.icon_folder + 'icon_search.png'))
-        self.pB_details_2.setIcon(QIcon(self.icon_folder + 'icon_search.png'))
-        self.pB_stack.setIcon(QIcon(self.icon_folder + 'icon_stack.png'))
-        self.pB_ok.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
-        self.pB_cancel.setIcon(QIcon(self.icon_folder + 'icon_cancel.png'))
-        self.pB_list.setIcon(QIcon(self.icon_folder + 'icon_list_view.png'))
-        
-        self.add_button_menu()
-    
-    # @cw.decoratortimer(1)
     def init1(self):
         self.colors = COLORS
-        self.frame_buttons.setVisible(False)
+        # self.frame_buttons.setVisible(False)
+        self.frame_edit.setVisible(False)
+        self.frame_lock.setVisible(False)
         self.pB_list.setVisible(False)
         # self.comboBox.setVisible(False)
         self.current_index = len(self.recipe_list) - 1
@@ -200,6 +169,8 @@ class StackedRecipes(QWidget):
         self.pB_ok.setIcon(QIcon(self.icon_folder + 'icon_ok.png'))
         self.pB_cancel.setIcon(QIcon(self.icon_folder + 'icon_cancel.png'))
         self.pB_list.setIcon(QIcon(self.icon_folder + 'icon_list_view.png'))
+        # self.pB_lock.setIcon(QIcon(self.icon_folder + 'icon_unlock.png'))
+        self.on_lock() #to display the correct icon for pB_lock
     
     # @cw.decoratortimer(1)
     def init4(self):
@@ -242,6 +213,7 @@ class StackedRecipes(QWidget):
         self.lE_search.textChanged.connect(self.dynamic_filter)
         self.pB_ok.clicked.connect(self.on_ok)
         self.pB_cancel.clicked.connect(self.on_cancel)
+        self.pB_lock.clicked.connect(self.on_lock)
         
     def connect_action_menu(self):
         self.widget_menu.pB_random_recipe.clicked.connect(self.on_add_random_recipe)
@@ -495,7 +467,9 @@ class StackedRecipes(QWidget):
         self.stackedWidget.setCurrentIndex(0)
 
     def on_enter_exit_stack(self, isHovered):
-        self.frame_buttons.setVisible(isHovered)
+        # self.frame_buttons.setVisible(isHovered)
+        self.frame_edit.setVisible(isHovered)
+        self.frame_lock.setVisible(isHovered or self.locked)
         self.pB_list.setVisible(isHovered)
         self.pB_next.setVisible(isHovered and len(self.recipe_list) > 1)
         self.pB_stack.setVisible(isHovered)
@@ -510,6 +484,19 @@ class StackedRecipes(QWidget):
     def on_display_details(self):
         row, col = id_to_row_column(self.id)
         self.on_details.emit(row, col)
+    
+    def on_lock(self):
+        self.locked = self.pB_lock.isChecked()
+        icon = [QIcon(self.icon_folder + 'icon_unlock.png'),
+                QIcon(self.icon_folder + 'icon_redlock.png')]
+        self.pB_lock.setIcon(icon[self.locked])
+        self.frame_lock.setVisible(self.locked)
+    
+    def lock(self):
+        self.pB_lock.setChecked(True)
+        self.on_lock()
+
+
         
 class StackUpdate(QThread):#QThread
     
@@ -532,6 +519,11 @@ def id_to_row_column(id):
         row = 2
     col = int(id[1:]) - 1
     return row, col
+
+def id_to_table_index(id):
+    row, col = id_to_row_column(id)
+    return row + col * 2
+
 
 def row_column_to_id(row, column):
     id = '0' + str(column + 1)

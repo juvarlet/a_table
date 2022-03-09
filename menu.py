@@ -32,7 +32,7 @@ class Menu:
         length = self.number_of_days * 2
         self.table = random_sublist(my_recipe_db.recipe_list, length)
     
-    #table = [menu1lunch, menu1dinner, menu2lunch, menu2dinner...]
+    #table = [recipe1lunch, recipe1dinner, recipe2lunch, recipe2dinner...]
 
     def use_double(self):
         #if 'double' tag found, leftovers are used within 2-3 days (only once)
@@ -86,9 +86,16 @@ class Menu:
         self.desserts = dessert_list
         return dessert_list
     
-    def generate_smart_menu_v2(self, my_recipe_db, options = []):
-        self.table = generate_smart_menu_v2(my_recipe_db, self.start_day, self.number_of_days, options)
-  
+    def generate_smart_menu_v2(self, my_recipe_db, options = {}):
+        #skip protected indexes defined in options
+        table = generate_smart_menu_v2(my_recipe_db, self.start_day, self.number_of_days, options)
+        if 'protected' in options:
+            for idx in options['protected']:
+                #replace with protected recipes
+                table[idx] = self.table[idx]
+        # self.table = generate_smart_menu_v2(my_recipe_db, self.start_day, self.number_of_days, options)
+        self.table = list(table)
+
     def full_menu(self):
         full_menu = []
         if len(self.table) == self.number_of_days * 2: #table has been generated correctly
@@ -100,7 +107,7 @@ class Menu:
         
         return full_menu
     
-    #full_menu = [[day1, menu1lunch, menu1dinner], [day2, menu2lunch, menu2dinner], ...]
+    #full_menu = [[day1, recipe1lunch, recipe1dinner], [day2, recipe2lunch, recipe2dinner], ...]
     #table = full_menu[0][1], full_menu[0][2], full_menu[1][1], full_menu[1][2], ...
 
     def get_recipe_list(self, no_double=False):
@@ -306,7 +313,7 @@ def unit_conversion(from_unit, to_unit, value):
 #     text = pattern.sub(lambda m: rep[re.escape(m.group(0))], string)
 #     return text
 
-def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = [], tagsOUt = ['dessert', 'restes', 'tips']):
+def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = {}, tagsOUt = ['dessert', 'restes', 'tips']):
     initial_pool = []
     #remove 'dessert', 'leftovers', 'tips' from list
     initial_pool = recipe_db.get_recipe_sublist(my_recipe_db.recipe_list, tagsOut = tagsOUt)
@@ -361,9 +368,9 @@ def generate_smart_menu_v2(my_recipe_db, start_day, number_of_days, options = []
             super_lunch_pool = list(filter(lambda l: l != dinner_list[i], super_lunch_pool))
             super_dinner_pool = list(filter(lambda l: l != dinner_list[i], super_dinner_pool))
 
-
     if 'leftovers' in options:
-        dinner_list[-1] = my_recipe_db.get_recipe_object('Restes')
+        if options['leftovers']:
+            dinner_list[-1] = my_recipe_db.get_recipe_object('Restes')
 
     smart_table = [j for i in zip(lunch_list, dinner_list) for j in i]
     #assign this smart table to menu

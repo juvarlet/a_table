@@ -1,6 +1,6 @@
 import datetime
 from card_recipe import CardRecipe
-from stacked_recipes import StackedRecipes, StackUpdate
+from stacked_recipes import StackedRecipes, StackUpdate, id_to_table_index
 from user_settings import UserSettings
 from history import History
 from edit_recipe import EditRecipe
@@ -225,8 +225,10 @@ class MainGUI(QWidget):
         self.lockKeyId = 'xx'
         self.lockedForEdition = False
         self.recipeMultiSelection = []
-        
-        
+        self.options = {
+            'leftovers': True,
+            'protected': []
+        }
 
         self.init_colors = {'RED' :         ('#d72631', [215,38,49]),
                     'LIGHT_GREEN' :         ('#a2d5c6', [162,213,198]),
@@ -526,15 +528,6 @@ class MainGUI(QWidget):
     
     def populate_lW_recipe(self):
         for recipeIndex in range(self.lW_recipe.count()):
-            # recipeListItem = self.lW_recipe.item(recipeIndex)
-            # recipeListItem.setSizeHint(QSize(0,27))
-            # recipe_object = self.recipe_db.get_recipe_object(recipeListItem.text())
-            
-            # line_widget = LineRecipe(recipe_object, recipeIndex)
-            # line_widget.on_menu_request.connect(self.on_update_line_widget)
-            # line_widget.on_validate.connect(self.on_update_full_menu)
-            # self.lW_recipe.setItemWidget(recipeListItem, line_widget)
-            
             self.add_recipe_line_widget(recipeIndex)
             
             QCoreApplication.processEvents()
@@ -587,10 +580,15 @@ class MainGUI(QWidget):
         self.current_menu.number_of_days = self.time_edition.slider.value()
 
         # self.current_menu.generate_random_menu(self.recipe_db)
-        options = []
-        if self.cB_restes.isChecked():
-            options = ['leftovers']
-        self.current_menu.generate_smart_menu_v2(self.recipe_db, options = options)
+        self.options['leftovers'] = self.cB_restes.isChecked()
+
+        #store protected indexes in options
+        self.options['protected'] = []
+        for id, stack in self.stacks.items():
+            if stack.locked:
+                self.options['protected'].append(id_to_table_index(id))
+
+        self.current_menu.generate_smart_menu_v2(self.recipe_db, options = self.options)
         self.current_menu.use_double()
 
     def populate_tW_menu(self, menu):
@@ -649,6 +647,10 @@ class MainGUI(QWidget):
         stack.on_lock_for_edition.connect(self.on_lock_for_edition)
         stack.on_update_current_menu.connect(self.on_update_current_menu)
         stack.on_details.connect(self.on_card_recipe_selection)
+
+        if id_to_table_index(id) in self.options['protected']:
+            stack.lock()
+
         self.stacks[id] = stack
         if id[0] == '+':
             qtwi = QTableWidgetItem(sr.row_column_to_id(0,k))
@@ -921,32 +923,9 @@ class MainGUI(QWidget):
         self.tW_menu.setHorizontalHeaderLabels([m[0] for m in table_menu])
         
     def on_nb_days_changed(self, number):
-        # #add/remove columns to table
-        # adding = (number - self.tW_menu.columnCount()) == 1
-        # self.tW_menu.setColumnCount(number)
-        # self.tW_menu.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)        
         # #update existing menu
         self.current_menu.update(self.recipe_db, number)
-        # #update tW_menu with menus
-        # table_menu = self.current_menu.full_menu()
-        # self.tW_menu.setHorizontalHeaderLabels([m[0] for m in table_menu])
 
-        # #update tW_menu with menus
-        # recipe_list_lunch = [m[1] for m in table_menu]
-        # recipe_list_dinner = [m[2] for m in table_menu]
-        # for i, recipes_of_day in enumerate(zip(recipe_list_lunch, recipe_list_dinner)):
-        #     recipe_lunch, recipe_dinner = recipes_of_day
-        #     text_lunch, text_dinner = (recipe_lunch.name, recipe_dinner.name)
-        #     # print((text_lunch, self.recipe_db.background_score(recipe_lunch, self.current_menu.start_day)))
-        #     qtwi_lunch, qtwi_dinner = (QTableWidgetItem(text_lunch), QTableWidgetItem(text_dinner))
-        #     qtwi_lunch.setTextAlignment(Qt.AlignCenter)
-        #     qtwi_dinner.setTextAlignment(Qt.AlignCenter)
-
-        #     self.tW_menu.setItem(0, i, qtwi_lunch)
-        #     self.tW_menu.setItem(1, i, qtwi_dinner)
-
-        #     cw.display_image(recipe_lunch, self.dirname, qtwi_lunch, icon = True)
-        #     cw.display_image(recipe_dinner, self.dirname, qtwi_dinner, icon = True)
         self.populate_tW_menu(self.current_menu)
         #update shopping list and menu list
         self.populate_shopping_list()
@@ -1027,7 +1006,7 @@ class MainGUI(QWidget):
         self.myThreads.append(gkeep_worker)
         gkeep_worker.start()
         
-    def on_send_shopping_list(self):#TODO reconnect with new design
+    def on_send_shopping_list(self):
         email = self.user_settings.get_email()
 
         images = [self.icon_folder + 'icon_menu_3colors_LD.png']
@@ -1045,7 +1024,7 @@ class MainGUI(QWidget):
         self.myThreads.append(my_mailbox_worker)
         my_mailbox_worker.start()
 
-    def on_print_shopping_list(self):#TODO reconnect with new design
+    def on_print_shopping_list(self):
         storage = self.user_settings.get_storage()
         os.makedirs(storage + '/Menus/', exist_ok=True)
         pdf_title = storage + '/Menus/Menus(%s-%s).pdf' % (self.current_menu.start_day.strftime('%d_%m_%Y'), 
@@ -1177,7 +1156,6 @@ class MainGUI(QWidget):
             if image_cell != '':
                 image = '/images/' + image_cell
             
-
             #add recipe to database
             recipe = Recipe(uuid.uuid4(), title, ing_list, preparation_cell, time, tag_checked_list, image)
             if self.edit_recipe.label_newedit.text() == 'Modifier la recette':  #update existing recipe
@@ -1596,56 +1574,7 @@ def main(): #Entry point
     #Launch app
     start(my_recipe_DB)
 
-
-
 if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
     main()
     # debug()
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #def on_filter_selection(self): #DEPRECATED - first recipe search algorithm relying on a button. 
-    #    if self.pB_filter.isChecked():
-    #        #extract filter values
-    #        with_list = self.lE_with.text().split(',')
-    #        #without_list = self.lE_without.text().split(',')
-    #        filtered_list = []
-    #        total_recipe_count = self.lW_recipe.count()
-    #        for recipe_object in [self.recipe_db.get_recipe_object(self.lW_recipe.item(i).text()) for i in range(total_recipe_count)]:
-    #            #with
-    #            is_selected = True
-    #            for with_text in with_list: #must meet all the with criteria
-    #                is_selected *= recipe_object.meet_with_criteria(with_text)
-    #            #without
-    #            for without_text in without_list: #must meet all the without criteria
-    #                is_selected *= recipe_object.meet_without_criteria(without_text)
-    #            if is_selected:
-    #                filtered_list.append(recipe_object)
-    #
-    #        #reset list
-    #        self.lW_recipe.clear()
-    #        self.lW_recipe.addItems(recipe_db.get_recipe_names(filtered_list))
-    #        if filtered_list != []:
-    #            self.lW_recipe.setCurrentRow(0)
-    #
-    #        #display result summary on search label
-    #        self.cB_search.setText('Recherche (%s/%s)' % (len(filtered_list), total_recipe_count))
-    #    else:
-    #        self.reset_recipes_list()
-    #        self.cB_search.setText('Recherche')

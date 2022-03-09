@@ -485,7 +485,8 @@
     QSpinBox {
         background-color: ##color1_bright#;
         color: ##color1_dark#;
-        border: none;
+        border: 1px solid ##color1_bright#;
+        border-radius: 5px;
     }
     QSpinBox::up-button{
         border:none;

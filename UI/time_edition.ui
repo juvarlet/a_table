@@ -51,7 +51,8 @@ QPushButton{
     QSpinBox {
         background-color: #36a9d3;
         color: #1a5d75;
-        border: none;
+        border: 1px solid #36a9d3;
+        border-radius: 5px;
     }
     QSpinBox::up-button{
         border:none;

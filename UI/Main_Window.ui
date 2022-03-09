@@ -508,7 +508,8 @@ QLabel#label_calendar, QLabel#label_history {
     QSpinBox {
         background-color: #36a9d3;
         color: #1a5d75;
-        border: none;
+        border: 1px solid #36a9d3;
+        border-radius: 5px;
     }
     QSpinBox::up-button{
         border:none;
@@ -958,7 +959,7 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                 <x>0</x>
                 <y>0</y>
                 <width>933</width>
-                <height>462</height>
+                <height>463</height>
                </rect>
               </property>
               <attribute name="label">
@@ -998,23 +999,7 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                      <enum>QFrame::Raised</enum>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_13">
-                     <item row="0" column="3">
-                      <spacer name="horizontalSpacer_3">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
                      <item row="0" column="2">
-                      <layout class="QVBoxLayout" name="vL_time"/>
-                     </item>
-                     <item row="0" column="4">
                       <widget class="QCheckBox" name="cB_restes_2">
                        <property name="font">
                         <font>
@@ -1066,145 +1051,135 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                       </widget>
                      </item>
                      <item row="0" column="1">
-                      <spacer name="horizontalSpacer_5">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
+                      <layout class="QVBoxLayout" name="vL_time"/>
                      </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item row="2" column="0" colspan="2">
-                   <widget class="QFrame" name="frame_button_2">
-                    <property name="frameShape">
-                     <enum>QFrame::NoFrame</enum>
-                    </property>
-                    <property name="frameShadow">
-                     <enum>QFrame::Raised</enum>
-                    </property>
-                    <layout class="QGridLayout" name="gridLayout_14">
-                     <property name="leftMargin">
-                      <number>1</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>1</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>1</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>1</number>
-                     </property>
                      <item row="0" column="3">
-                      <spacer name="horizontalSpacer">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item row="0" column="0">
-                      <spacer name="horizontalSpacer_2">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item row="0" column="4">
-                      <widget class="QPushButton" name="pB_calendar">
-                       <property name="toolTip">
-                        <string>Copier dans l'Agenda + Sauvegarder l'Historique</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="icon">
-                        <iconset>
-                         <normaloff>images/icon_calendar.png</normaloff>images/icon_calendar.png</iconset>
-                       </property>
-                       <property name="iconSize">
-                        <size>
-                         <width>50</width>
-                         <height>50</height>
-                        </size>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="0" column="1" alignment="Qt::AlignHCenter">
-                      <widget class="QFrame" name="frame_score">
+                      <widget class="QFrame" name="frame_button_2">
                        <property name="frameShape">
                         <enum>QFrame::NoFrame</enum>
                        </property>
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QGridLayout" name="gridLayout_11">
-                        <item row="0" column="2">
-                         <widget class="QLabel" name="label_s_vegan">
-                          <property name="toolTip">
-                           <string>Plats vegan</string>
-                          </property>
-                          <property name="text">
-                           <string>s_vegan</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="4">
-                         <widget class="QLabel" name="label_s_hiver">
-                          <property name="toolTip">
-                           <string>Plats d'hiver</string>
-                          </property>
-                          <property name="text">
-                           <string>s_winter</string>
-                          </property>
-                         </widget>
-                        </item>
+                       <layout class="QGridLayout" name="gridLayout_14">
+                        <property name="leftMargin">
+                         <number>1</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>1</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>1</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>1</number>
+                        </property>
                         <item row="0" column="3">
-                         <widget class="QLabel" name="label_s_ete">
-                          <property name="toolTip">
-                           <string>Plats d'été</string>
+                         <spacer name="horizontalSpacer">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
                           </property>
-                          <property name="text">
-                           <string>s_sum</string>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
                           </property>
-                         </widget>
+                         </spacer>
                         </item>
                         <item row="0" column="0">
-                         <widget class="QLabel" name="label_s_double">
+                         <spacer name="horizontalSpacer_2">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item row="0" column="4">
+                         <widget class="QPushButton" name="pB_calendar">
                           <property name="toolTip">
-                           <string>Plats en double</string>
+                           <string>Copier dans l'Agenda + Sauvegarder l'Historique</string>
                           </property>
                           <property name="text">
-                           <string>s_double</string>
+                           <string/>
+                          </property>
+                          <property name="icon">
+                           <iconset>
+                            <normaloff>images/icon_calendar.png</normaloff>images/icon_calendar.png</iconset>
+                          </property>
+                          <property name="iconSize">
+                           <size>
+                            <width>50</width>
+                            <height>50</height>
+                           </size>
                           </property>
                          </widget>
                         </item>
-                        <item row="0" column="1">
-                         <widget class="QLabel" name="label_s_kids">
-                          <property name="toolTip">
-                           <string>Plats enfants</string>
+                        <item row="0" column="1" alignment="Qt::AlignHCenter">
+                         <widget class="QFrame" name="frame_score">
+                          <property name="frameShape">
+                           <enum>QFrame::NoFrame</enum>
                           </property>
-                          <property name="text">
-                           <string>s_kids</string>
+                          <property name="frameShadow">
+                           <enum>QFrame::Raised</enum>
                           </property>
+                          <layout class="QGridLayout" name="gridLayout_11">
+                           <item row="0" column="2">
+                            <widget class="QLabel" name="label_s_vegan">
+                             <property name="toolTip">
+                              <string>Plats vegan</string>
+                             </property>
+                             <property name="text">
+                              <string>s_vegan</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="4">
+                            <widget class="QLabel" name="label_s_hiver">
+                             <property name="toolTip">
+                              <string>Plats d'hiver</string>
+                             </property>
+                             <property name="text">
+                              <string>s_winter</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="3">
+                            <widget class="QLabel" name="label_s_ete">
+                             <property name="toolTip">
+                              <string>Plats d'été</string>
+                             </property>
+                             <property name="text">
+                              <string>s_sum</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="0">
+                            <widget class="QLabel" name="label_s_double">
+                             <property name="toolTip">
+                              <string>Plats en double</string>
+                             </property>
+                             <property name="text">
+                              <string>s_double</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="1">
+                            <widget class="QLabel" name="label_s_kids">
+                             <property name="toolTip">
+                              <string>Plats enfants</string>
+                             </property>
+                             <property name="text">
+                              <string>s_kids</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
                          </widget>
                         </item>
                        </layout>
@@ -1343,7 +1318,7 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                 <x>0</x>
                 <y>0</y>
                 <width>933</width>
-                <height>462</height>
+                <height>463</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1917,8 +1892,8 @@ QCheckBox#cB_search_tag_tips::indicator:unchecked:hover {
                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Poiret One'; font-size:11pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Poiret One'; font-size:9.75pt; font-weight:600; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:11pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                       <property name="textInteractionFlags">
                        <set>Qt::TextBrowserInteraction</set>

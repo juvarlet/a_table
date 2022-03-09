@@ -116,6 +116,7 @@ class History(QWidget):
         if len(new_history) > 0:
             self.frame_confirm.show()
             #populate table with new history entries
+            self.pB_ok.click() #auto-save, no confirmation
         else:
             self.frame_confirm.hide()
             self.reset_history()

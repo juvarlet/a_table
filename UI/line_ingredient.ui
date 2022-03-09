@@ -63,7 +63,8 @@ QPushButton:checked{
 QDoubleSpinBox{
 	font: bold 18px;
 	background-color: #ffe0ad;
-    border:none;
+    border: 1px solid #ffe0ad;
+    border-radius: 5px;
 	color:#1a5d75;
 }
 QDoubleSpinBox::up-button{
