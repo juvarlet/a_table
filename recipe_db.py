@@ -141,6 +141,20 @@ class RecipeDB:
                 if date_text == h_date_text:
                     
                     break
+    
+    def get_ingredients_list(self):
+        full_ingredients_list = []
+        for recipe in self.recipe_list:
+            for new_ingredient in recipe.ing_list:
+                found = False
+                for selected_ingredient in full_ingredients_list:
+                    if new_ingredient == selected_ingredient:
+                        found = True
+                        break
+                if not found:
+                    full_ingredients_list.append(new_ingredient.get_generic_version())
+                
+        return full_ingredients_list
                 
 
     

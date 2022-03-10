@@ -21,7 +21,7 @@ class Ingredient:
         self.mixed_qty = '' #when mixing different units
     
     def __add__(self, other):
-        if self.name == other.name:
+        if self == other:
             if self.unit == other.unit:
                 qty = self.qty + other.qty
                 return Ingredient(self.name, qty, self.unit)
@@ -35,6 +35,18 @@ class Ingredient:
             print('Unable to add apples and oranges ! (%s and %s)' % (self, other))
             return [self, other]
     
+    def __eq__(self, other):
+        if isinstance(other, Ingredient):
+            self_name = self.name.lower()
+            other_name = other.name.lower()
+            if self_name[-1] == 's':
+                self_name = self_name[:-1]
+            if other_name[-1] == 's':
+                other_name = other_name[:-1]
+            return self_name == other_name
+
+        return False
+
     def __str__(self) -> str:
         output = self.name
         if self.mixed_qty != '':
@@ -42,6 +54,10 @@ class Ingredient:
         elif self.qty != -1 and self.qty != 0:
             output += ' (%.1f%s)' % (self.qty, self.unit)
         return output
+
+    def get_generic_version(self):
+        #will be enhanced with image
+        return Ingredient(self.name)
 
 
 def debug():

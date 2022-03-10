@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>960</width>
+    <width>1119</width>
     <height>769</height>
    </rect>
   </property>
@@ -48,7 +48,7 @@
     
     QFrame#frame_details, QFrame#frame_new_recipe, QFrame#frame_6, 
     QFrame#frame_4, QFrame#frame_16, QFrame#frame_8, QFrame#frame_9, 
-    QFrame#frame_7, QFrame#frame_10, QFrame#frame_20, QFrame#frame_ingredients,
+    QFrame#frame_7, QFrame#frame_10, QFrame#frame_20, QFrame#frame_ingredients, QFrame#frame_ingredients, QFrame#frame_ing_title,
     QFrame#frame_wB, QFrame#frame_17, QFrame#frame_19{
         border: 2px solid #ffe0ad;
         border-radius: 10px;
@@ -669,7 +669,7 @@
          <x>0</x>
          <y>0</y>
          <width>800</width>
-         <height>765</height>
+         <height>782</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
@@ -1218,6 +1218,74 @@
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
+                 <item row="1" column="0">
+                  <widget class="QFrame" name="frame_ing_title">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_3">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_2">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Poiret One</family>
+                        <pointsize>16</pointsize>
+                        <weight>75</weight>
+                        <italic>false</italic>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Ingrédients :</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QPushButton" name="pB_details">
+                      <property name="maximumSize">
+                       <size>
+                        <width>35</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>27</width>
+                        <height>27</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
                  <item row="2" column="0">
                   <widget class="QListWidget" name="lw_ingredients">
                    <property name="sizePolicy">
@@ -1228,28 +1296,6 @@
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_2">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Poiret One</family>
-                     <pointsize>16</pointsize>
-                     <weight>75</weight>
-                     <italic>false</italic>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Ingrédients :</string>
                    </property>
                   </widget>
                  </item>

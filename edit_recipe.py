@@ -1,3 +1,4 @@
+from recipe_db import RecipeDB
 import PySide2
 from PySide2.QtWidgets import*
 from PySide2.QtCore import*
@@ -11,6 +12,7 @@ import custom_widgets as cw
 import html_parser as web
 from ingredient import Ingredient
 from ingredient_item import IngredientItem
+import ingredients_selection
 from recipe import Recipe
 from stylesheet_update import COLORS
 from web_browser import WebBrowser
@@ -31,6 +33,7 @@ class EditRecipe(QWidget):
         self.recipe_image_path = ''
         self.mode = 0 #0:new ; 1:edit
         self.user_settings = user_settings
+        self.recipe_db: RecipeDB
         self.recipe_db = recipe_db
         
         self.loadUI()
@@ -88,6 +91,8 @@ class EditRecipe(QWidget):
         self.cB_web = self.pW.cB_web
         self.vL_web_browser: QVBoxLayout
         self.vL_web_browser = self.pW.vL_web_browser
+        self.pB_details: QPushButton
+        self.pB_details = self.pW.pB_details
         
     def initial_state(self):
         self.pB_cancel_2.setIcon(QIcon(cw.dirname('UI/images') + 'icon_cancel.png'))
@@ -104,6 +109,7 @@ class EditRecipe(QWidget):
         self.pB_cancel_2.clicked.connect(self.on_cancel_recipe)
         self.pB_photo.clicked.connect(self.on_add_photo)
         self.cB_web.stateChanged.connect(self.on_show_web)
+        self.pB_details.clicked.connect(self.on_ingredients_selection)
     
     def update_modif(self):
         self.lE_title.textChanged.connect(self.on_title_changed)
@@ -158,7 +164,7 @@ class EditRecipe(QWidget):
         self.label_newedit.setText('Nouvelle Recette')
         self.lE_title.setText('Nouveau Titre')
         
-        self.add_new_ingredient_to_list(Ingredient()) #Add empty ing for input
+        ingredients_selection.add_new_ingredient_to_list(Ingredient(), self.lw_ingredients) #Add empty ing for input
         
         self.mode = 0
         
@@ -181,48 +187,9 @@ class EditRecipe(QWidget):
         
         self.mode = 1
         
-    def add_new_ingredient_to_list(self, ingredient:Ingredient):
-        #TODO : handle the case were the ingredient is already in the list
-        ing_item = IngredientItem(ingredient)
-        ing_item.on_btn_confirm_changes_clicked.connect(self.on_btn_confirm_changes_clicked)
-        ing_item.on_btn_rm_item_clicked.connect(self.rm_ing_item_from_list)
-        if ingredient.name == "" and ingredient.unit == "" and ingredient.qty == -1:
-            ing_item.selectWidgetMode(IngredientItem.WIDGET_EDIT_ING_MODE)
-
-        list_widget_item = QListWidgetItem()
-        list_widget_item.setSizeHint(QSize(0,30))
-        self.lw_ingredients.addItem(list_widget_item)
-        self.lw_ingredients.setItemWidget(list_widget_item,ing_item)
-    
     def populate_ing_list(self, recipe:Recipe): #OK but can be improved
-        if self.lw_ingredients.count : #vider la liste si elle n'est pas deja vide
-            self.lw_ingredients.clear()
-        if recipe.ing_list is None:
-            return
-        mand_ing_list, opt_ing_list = recipe.get_mandatory_and_optional_ing_lists()
-        for ingredient in mand_ing_list:
-            self.add_new_ingredient_to_list(ingredient)
-        #self.lw_ingredients.addItem(QListWidgetItem("Optionels : "))
-        for ingredient in opt_ing_list:
-            self.add_new_ingredient_to_list(ingredient)
-        self.add_new_ingredient_to_list(Ingredient()) # Add extra line for new ing input
+        ingredients_selection.populate_ing_list(recipe, self.lw_ingredients)
 
-    def on_btn_confirm_changes_clicked(self, ing_item_id):
-        ing_item:IngredientItem
-        # ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(self.lw_ingredients.count()-1)).findChild(IngredientItem)
-        ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(self.lw_ingredients.count()-1))
-        if ing_item.getUID() == ing_item_id:
-            self.add_new_ingredient_to_list(Ingredient())
-
-    def rm_ing_item_from_list(self, ing_item_id):
-        for i in range(0, self.lw_ingredients.count()):
-            ing_item:IngredientItem
-            # ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(i)).findChild(IngredientItem)
-            ing_item = self.lw_ingredients.itemWidget(self.lw_ingredients.item(i))
-            if ing_item_id == ing_item.getUID():
-                self.lw_ingredients.takeItem(i)
-                break
-    
     def on_confirm_recipe(self):
         #init output
         title = self.lE_title.text()
@@ -354,6 +321,12 @@ class EditRecipe(QWidget):
             self.lw_ingredients.clear()
         elif object == 'preparation':
             self.tB_preparation.clear()
+    
+    def on_ingredients_selection(self):
+        ingredient_list = self.recipe_db.get_ingredients_list()
+        edited_recipe = self.recipe_db.get_recipe_object(self.lE_title.text())
+        self.new_selection = ingredients_selection.IngredientsSelection(ingredient_list, edited_recipe)
+        self.new_selection.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
