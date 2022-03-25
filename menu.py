@@ -37,19 +37,22 @@ class Menu:
     def use_double(self):
         #if 'double' tag found, leftovers are used within 2-3 days (only once)
         list_of_double = []
-        for i, recipe in enumerate(self.table):
-            if recipe.isTagged('double'):
-                if not recipe.name in list_of_double:
-                    try:#try to replace recipe 2 days after, only once, except when leftovers
-                        if self.table[i+4].name != 'Restes':
-                            self.table[i+4] = recipe
-                            list_of_double.append(recipe.name)
-                    except:
-                        try:#if unsuccessful, try to replace 2 days before
-                            self.table[i-4] = recipe
-                            list_of_double.append(recipe.name)
-                        except:#if still unsuccessful, do nothing
-                            pass
+        for i, stack in enumerate(self.table):
+            if type(stack) is Recipe:
+                stack = [stack]
+            for recipe in stack:
+                if recipe.isTagged('double'):
+                    if not recipe.name in list_of_double:
+                        try:#try to replace recipe 2 days after, only once, except when leftovers
+                            if self.table[i+4].name != 'Restes':
+                                self.table[i+4] = recipe
+                                list_of_double.append(recipe.name)
+                        except:
+                            try:#if unsuccessful, try to replace 2 days before
+                                self.table[i-4] = recipe
+                                list_of_double.append(recipe.name)
+                            except:#if still unsuccessful, do nothing
+                                pass
     
     def generate_smart_menu(self, my_recipe_db, options = []):
         smart_table = []

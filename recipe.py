@@ -29,7 +29,9 @@ class Recipe:
     
     def isTagged(self, tag):
         try:
-            return tag in self.tags
+            if self.tags:
+                return tag in self.tags
+            return False
         except:
             return False
     

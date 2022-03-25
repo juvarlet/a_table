@@ -237,6 +237,10 @@ class StackedRecipes(QWidget):
         
         if event.type() == QEvent.Enter:
             self.on_enter_recipe_stack.emit(self.id)
+            
+        if type(event) is QListWidgetItem:
+            print('catch one !')
+            print(event.text())
 
         return super().eventFilter(watched, event)
     
